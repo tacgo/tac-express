@@ -225,7 +225,7 @@ export function GlobeHero() {
           <Button
             asChild
             variant="default"
-            className="h-11 rounded-none font-mono font-bold text-xs tracking-paper-20 uppercase px-8 focus-visible:outline-none focus-visible:tac-focus-premium shadow-sm transition-transform hover:-translate-y-0.5"
+            className="h-11 rounded-none font-mono font-bold text-xs tracking-wordmark uppercase px-8 focus-visible:outline-none focus-visible:tac-focus-premium shadow-sm transition-transform hover:-translate-y-0.5"
           >
             <Link href="/quote">
               <Icon name="calculator" className="mr-2 w-4 h-4" />
@@ -235,7 +235,7 @@ export function GlobeHero() {
           <Button
             asChild
             variant="outline"
-            className="h-11 rounded-none font-mono font-bold text-xs tracking-paper-20 uppercase px-8 focus-visible:outline-none focus-visible:tac-focus-premium transition-transform hover:-translate-y-0.5"
+            className="h-11 rounded-none font-mono font-bold text-xs tracking-wordmark uppercase px-8 focus-visible:outline-none focus-visible:tac-focus-premium transition-transform hover:-translate-y-0.5"
           >
             <Link href="/contact">
               <Icon name="mail" className="mr-2 w-4 h-4" />

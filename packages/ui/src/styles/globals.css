@@ -618,7 +618,7 @@
   --tracking-paper-12:     0.12em;   /* button / label */
   --tracking-paper-14:     0.14em;   /* eyebrow / sidebar section */
   --tracking-paper-18:     0.18em;   /* sidebar subtitle / IMPHAL · PROD */
-  --tracking-paper-20:     0.20em;   /* display wordmark — landing + wasteland (7 callers in composed/) */
+  /* --tracking-paper-20 retired → --tracking-wordmark (paper-to-violet-grid Phase 3) */
   --tracking-paper-30:     0.30em;   /* display wordmark + LOCATE button — landing hero only */
   --tracking-tight:        -0.01em;  /* micro-kern for compact mono wordmarks (TAC EXPRESS sidebar logo) */
 

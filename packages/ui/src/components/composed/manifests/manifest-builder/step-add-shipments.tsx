@@ -399,7 +399,7 @@ function StatTile({
 }) {
   return (
     <div className="bg-background p-3">
-      <p className="font-mono text-paper-9 uppercase tracking-paper-20 text-muted-foreground">
+      <p className="font-mono text-paper-9 uppercase tracking-wordmark text-muted-foreground">
         {label}
       </p>
       <p

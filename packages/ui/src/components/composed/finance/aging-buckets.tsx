@@ -182,7 +182,7 @@ function BucketTile({
       <span aria-hidden="true" className={railClass} />
 
       <div className="flex items-baseline justify-between gap-2 pl-2">
-        <p className="font-mono text-paper-9 font-semibold uppercase tracking-paper-20 text-muted-foreground">
+        <p className="font-mono text-paper-9 font-semibold uppercase tracking-wordmark text-muted-foreground">
           {bucket.label}
           {bucket.label !== "Current" && (
             <span className="ml-1 font-normal opacity-70">days</span>

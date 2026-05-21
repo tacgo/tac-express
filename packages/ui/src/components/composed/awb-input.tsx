@@ -33,7 +33,7 @@ const SHELL_CLASS =
   "relative w-full bg-card border-2 border-border focus-within:border-primary focus-within:shadow-brutal-sm transition-colors p-0 overflow-hidden"
 
 const fieldVariants = cva(
-  "font-mono border-none focus-visible:ring-0 rounded-none bg-transparent text-foreground uppercase placeholder:text-muted-foreground font-bold tracking-paper-20 focus-visible:outline-none focus-visible:tac-focus-premium",
+  "font-mono border-none focus-visible:ring-0 rounded-none bg-transparent text-foreground uppercase placeholder:text-muted-foreground font-bold tracking-wordmark focus-visible:outline-none focus-visible:tac-focus-premium",
   {
     variants: {
       size: {
@@ -137,7 +137,7 @@ function AwbInput({
             disabled={loading}
             aria-busy={loading}
             aria-label="Track AWB"
-            className="h-10 rounded-none font-mono font-bold text-xs tracking-paper-20 uppercase px-4 w-full sm:w-auto border-t sm:border-t-0 sm:border-l border-border focus-visible:outline-none focus-visible:tac-focus-premium"
+            className="h-10 rounded-none font-mono font-bold text-xs tracking-wordmark uppercase px-4 w-full sm:w-auto border-t sm:border-t-0 sm:border-l border-border focus-visible:outline-none focus-visible:tac-focus-premium"
           >
             <Icon
               name={loading ? "loader" : "search"}
