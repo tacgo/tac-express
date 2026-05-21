@@ -18,19 +18,19 @@ interface ReachCard {
 const cards: ReachCard[] = [
   {
     icon: "hub",
-    stat: `${reachContent.stats[0]!.value} hubs · ${reachContent.stats[1]!.value} states`,
+    stat: `${reachContent.stats[0]?.value ?? "—"} hubs · ${reachContent.stats[1]?.value ?? "—"} states`,
     title: "Corridor coverage",
     text: "Operating hubs across every North-East state, plus the New Delhi feeder corridor.",
   },
   {
     icon: "truck",
-    stat: `${reachContent.stats[2]!.value} active lanes`,
+    stat: `${reachContent.stats[2]?.value ?? "—"} active lanes`,
     title: "Lane density",
     text: "Live hub-to-hub lanes, instrumented end to end on a 10-second telematics uplink.",
   },
   {
     icon: "checkCircle",
-    stat: `${reachContent.stats[3]!.value}% on-time`,
+    stat: `${reachContent.stats[3]?.value ?? "—"}% on-time`,
     title: "Reliability",
     text: "Predictive routing holds the corridor on schedule, lane by lane, hop by hop.",
   },

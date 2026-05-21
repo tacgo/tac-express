@@ -53,11 +53,19 @@ export function OpsPipeline() {
               <CardContent className="flex h-full flex-col justify-center gap-3 pt-6 text-center">
                 <span className="t-data tabular-nums t-gradient-primary">98.7%</span>
                 <span className="tac-mono-label">On-time delivery</span>
-                <div aria-hidden className="mt-1 grid grid-cols-10 items-end gap-1 h-10">
+                <svg aria-hidden viewBox="0 0 100 40" preserveAspectRatio="none" className="mt-1 h-10 w-full">
                   {[40, 55, 35, 70, 50, 65, 45, 80, 60, 75].map((h, i) => (
-                    <div key={i} className="bg-primary/30" style={{ height: `${h}%` }} />
+                    <rect
+                      key={i}
+                      x={i * 10 + 1}
+                      y={40 - (h / 100) * 40}
+                      width={8}
+                      height={(h / 100) * 40}
+                      className="fill-chart-primary"
+                      opacity={0.4}
+                    />
                   ))}
-                </div>
+                </svg>
               </CardContent>
             </Card>
           </motion.div>

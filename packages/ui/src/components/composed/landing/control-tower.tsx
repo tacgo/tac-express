@@ -61,11 +61,19 @@ export function ControlTower() {
                   </div>
                 ))}
               </dl>
-              <div aria-hidden className="mt-6 grid grid-cols-12 items-end gap-1 h-20">
+              <svg aria-hidden viewBox="0 0 120 40" preserveAspectRatio="none" className="mt-6 h-20 w-full">
                 {[42, 60, 35, 78, 52, 70, 46, 88, 58, 74, 50, 84].map((h, i) => (
-                  <div key={i} className="bg-primary/30" style={{ height: `${h}%` }} />
+                  <rect
+                    key={i}
+                    x={i * 10 + 1}
+                    y={40 - (h / 100) * 40}
+                    width={8}
+                    height={(h / 100) * 40}
+                    className="fill-chart-primary"
+                    opacity={0.4}
+                  />
                 ))}
-              </div>
+              </svg>
             </div>
           </motion.div>
         </div>

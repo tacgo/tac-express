@@ -10,6 +10,7 @@ import {
 } from "@workspace/ui/components/accordion"
 import { Icon, type IconName } from "@workspace/ui/icons"
 import { capabilitiesContent } from "./landing-data"
+import { EASE_SMOOTH } from "./motion"
 
 type ItemKey = "item-1" | "item-2" | "item-3" | "item-4"
 
@@ -76,8 +77,6 @@ const groups: CapabilityGroup[] = [
     ],
   },
 ]
-
-const EASE_SMOOTH = [0.4, 0, 0.2, 1] as const
 
 /**
  * §7 — Capabilities. Ports the template's accordion-drives-a-visual layout
