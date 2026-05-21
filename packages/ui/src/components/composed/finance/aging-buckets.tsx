@@ -99,7 +99,7 @@ export function AgingBuckets({
             aria-hidden="true"
             className="inline-block h-3 w-1 bg-primary"
           />
-          <h2 className="font-mono text-paper-10 font-semibold uppercase tracking-paper-18 text-foreground">
+          <h2 className="font-mono text-paper-10 font-semibold uppercase tracking-subtitle text-foreground">
             Receivables aging
           </h2>
           <span className="font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
@@ -215,7 +215,7 @@ function BucketTile({
       </p>
 
       <div className="flex items-center justify-between gap-2 pl-2">
-        <p className="font-mono text-paper-9 uppercase tracking-paper-18 text-muted-foreground">
+        <p className="font-mono text-paper-9 uppercase tracking-subtitle text-muted-foreground">
           {bucket.count} invoice{bucket.count === 1 ? "" : "s"}
         </p>
         {isActive && (

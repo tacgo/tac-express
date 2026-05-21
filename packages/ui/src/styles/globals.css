@@ -607,25 +607,22 @@
   --text-paper-28: 1.75rem;     /* 28px — stat card (alt) */
   --text-paper-32: 2rem;        /* 32px — stat-value / page H1 */
 
-  /* Paper Ops Console — letter-spacing scale */
-  --tracking-paper-tight: -0.02em;   /* H1 / display */
-  --tracking-paper-snug:  -0.01em;   /* H2 / brand wordmark */
-  --tracking-paper-id:     0.02em;   /* paper-id / CN numbers */
-  --tracking-paper-04:     0.04em;   /* breadcrumb / kbd */
-  --tracking-paper-06:     0.06em;   /* tag */
-  --tracking-paper-08:     0.08em;   /* nav items / staff name */
-  --tracking-paper-10:     0.10em;   /* badge / dense uppercase */
-  --tracking-paper-12:     0.12em;   /* button / label */
-  --tracking-paper-14:     0.14em;   /* eyebrow / sidebar section */
-  --tracking-paper-18:     0.18em;   /* sidebar subtitle / IMPHAL · PROD */
-  /* --tracking-paper-20 / -30 retired → --tracking-wordmark / --tracking-display (paper-to-violet-grid Phase 3) */
+  /* Letter-spacing scale — the former tracking-paper-* scale fully retired in
+     favour of the semantic --tracking-* tokens above (paper-to-violet-grid
+     Phase 3). Values were migrated 1:1 (zero metric change). */
   --tracking-tight:        -0.01em;  /* micro-kern for compact mono wordmarks (TAC EXPRESS sidebar logo) */
 
   /* Violet Grid — semantic uppercase letter-spacing scale.
      Value-preserving replacements for the tracking-paper-* scale; callers
      migrate off paper-* onto these (paper-to-violet-grid migration, Phase 3). */
+  --tracking-id:       0.02em;   /* CN / AWB numbers (was tracking-paper-id) */
+  --tracking-crumb:    0.04em;   /* breadcrumb / kbd (was tracking-paper-04) */
+  --tracking-tag:      0.06em;   /* tag (was tracking-paper-06) */
+  --tracking-nav:      0.08em;   /* nav items / staff name (was tracking-paper-08) */
+  --tracking-badge:    0.10em;   /* badge / dense uppercase (was tracking-paper-10) */
   --tracking-label:    0.12em;   /* buttons / form labels (was tracking-paper-12) */
   --tracking-eyebrow:  0.14em;   /* eyebrows / section labels (was tracking-paper-14) */
+  --tracking-subtitle: 0.18em;   /* sidebar subtitle (was tracking-paper-18) */
   --tracking-wordmark: 0.20em;   /* display wordmark / hero CTAs (was tracking-paper-20) */
   --tracking-display:  0.30em;   /* hero display wordmark / LOCATE (was tracking-paper-30) */
 

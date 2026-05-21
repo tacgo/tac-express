@@ -143,7 +143,7 @@ function OpsSettingsView({
                   key={label}
                   className="flex items-center justify-between mt-2"
                 >
-                  <span className="font-paper-mono uppercase text-paper-fg-3 text-[length:var(--text-paper-11)] tracking-[length:var(--tracking-paper-08)]">
+                  <span className="font-paper-mono uppercase text-paper-fg-3 text-[length:var(--text-paper-11)] tracking-[length:var(--tracking-nav)]">
                     {label}
                   </span>
                   <span className="font-paper-mono text-[length:var(--text-paper-11)]">
@@ -443,7 +443,7 @@ function OpsHubsSection({
                         className={cn(
                           "min-w-0 flex-1 bg-paper-bg border border-paper-line px-2 py-1",
                           "font-paper-display font-semibold text-[length:var(--text-paper-13)] text-paper-fg-1",
-                          "tracking-[length:var(--tracking-paper-10)]",
+                          "tracking-[length:var(--tracking-badge)]",
                           "focus:outline-none focus:border-paper-violet",
                         )}
                       />

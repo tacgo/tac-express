@@ -204,14 +204,14 @@ function OpsManifestsView({
                       <Link
                         href={m.detailHref}
                         aria-label="Open manifest details"
-                        className="font-paper-mono text-[length:var(--text-paper-11)] tracking-paper-10 uppercase text-paper-violet hover:underline underline-offset-4"
+                        className="font-paper-mono text-[length:var(--text-paper-11)] tracking-badge uppercase text-paper-violet hover:underline underline-offset-4"
                       >
                         View →
                       </Link>
                     ) : (
                       <span
                         aria-hidden
-                        className="font-paper-mono text-[length:var(--text-paper-11)] tracking-paper-10 uppercase text-paper-fg-4"
+                        className="font-paper-mono text-[length:var(--text-paper-11)] tracking-badge uppercase text-paper-fg-4"
                       >
                         —
                       </span>

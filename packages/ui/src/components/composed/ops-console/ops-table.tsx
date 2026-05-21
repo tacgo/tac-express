@@ -61,7 +61,7 @@ function OpsTableHeader({
       className={cn(
         "px-4 py-3 text-left bg-paper-bg border-b border-paper-line",
         "font-paper-mono font-medium uppercase",
-        "text-[length:var(--text-paper-10)] tracking-[length:var(--tracking-paper-12)]",
+        "text-[length:var(--text-paper-10)] tracking-[length:var(--tracking-label)]",
         "text-paper-fg-3",
         className,
       )}

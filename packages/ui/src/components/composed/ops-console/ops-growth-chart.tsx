@@ -172,7 +172,7 @@ function OpsGrowthAreaChart({ className }: OpsGrowthAreaChartProps) {
                 aria-selected={active}
                 onClick={() => setRange(r.value)}
                 className={cn(
-                  "px-2 py-1 font-paper-mono font-medium text-paper-10 tracking-paper-10 uppercase transition-colors",
+                  "px-2 py-1 font-paper-mono font-medium text-paper-10 tracking-badge uppercase transition-colors",
                   "border-l border-paper-line first:border-l-0",
                   active
                     ? "bg-paper-violet text-white"

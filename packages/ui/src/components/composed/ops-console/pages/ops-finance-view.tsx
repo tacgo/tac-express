@@ -101,7 +101,7 @@ function OpsFinanceView({
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <span aria-hidden className="w-1.5 h-3.5 bg-paper-err" />
-            <div className="paper-label text-paper-fg-1 tracking-[length:var(--tracking-paper-08)]">
+            <div className="paper-label text-paper-fg-1 tracking-[length:var(--tracking-nav)]">
               Receivables Aging · {totalInvoices} invoices
             </div>
           </div>

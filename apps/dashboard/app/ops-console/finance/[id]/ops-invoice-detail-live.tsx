@@ -548,7 +548,7 @@ export function OpsInvoiceDetailLive({ id }: OpsInvoiceDetailLiveProps) {
           </div>
 
           <div className="flex items-center justify-between border-t-2 border-paper-fg-1/80 pt-3 mt-3">
-            <span className="font-paper-mono text-[length:var(--text-paper-12)] font-bold uppercase tracking-[length:var(--tracking-paper-10)] text-paper-fg-1">
+            <span className="font-paper-mono text-[length:var(--text-paper-12)] font-bold uppercase tracking-[length:var(--tracking-badge)] text-paper-fg-1">
               Total
             </span>
             <span className="font-paper-display text-[length:var(--text-paper-18)] font-bold tabular-nums text-paper-violet">

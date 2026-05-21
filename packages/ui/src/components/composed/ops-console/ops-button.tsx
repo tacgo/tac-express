@@ -10,7 +10,7 @@ const opsButtonVariants = cva(
   // Base — mono uppercase, sharp corners, hairline border, paper hover.
   [
     "inline-flex items-center justify-center gap-1.5",
-    "font-paper-mono font-medium uppercase tracking-paper-12",
+    "font-paper-mono font-medium uppercase tracking-label",
     "border cursor-pointer",
     "transition-colors duration-fast ease-linear",
     "focus-visible:outline-none focus-visible:tac-focus-premium",

@@ -173,7 +173,7 @@ function OpsInventoryView({
                         className={cn(
                           "min-w-0 flex-1 bg-paper-bg border border-paper-line px-2 py-1",
                           "font-paper-display font-semibold text-[length:var(--text-paper-13)] text-paper-fg-1",
-                          "tracking-[length:var(--tracking-paper-10)]",
+                          "tracking-[length:var(--tracking-badge)]",
                           "focus:outline-none focus:border-paper-violet",
                         )}
                       />
@@ -197,7 +197,7 @@ function OpsInventoryView({
                   ) : (
                     <>
                       <div className="min-w-0">
-                        <div className="font-paper-display font-semibold text-[length:var(--text-paper-13)] text-paper-fg-1 tracking-[length:var(--tracking-paper-10)] truncate">
+                        <div className="font-paper-display font-semibold text-[length:var(--text-paper-13)] text-paper-fg-1 tracking-[length:var(--tracking-badge)] truncate">
                           {display}
                         </div>
                         <div className="paper-label mt-0.5 truncate">
@@ -229,7 +229,7 @@ function OpsInventoryView({
                   >
                     <span
                       className={cn(
-                        "font-paper-mono uppercase text-[length:var(--text-paper-11)] tracking-[length:var(--tracking-paper-10)]",
+                        "font-paper-mono uppercase text-[length:var(--text-paper-11)] tracking-[length:var(--tracking-badge)]",
                         isException ? "text-paper-err" : "text-paper-fg-3",
                       )}
                     >

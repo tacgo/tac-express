@@ -90,7 +90,7 @@ function OpsNotificationsView({
             </div>
             <div className="flex items-center gap-2 mt-2.5 mb-2">
               <span aria-hidden className="size-1.5 bg-paper-ok" />
-              <span className="paper-label text-paper-ok tracking-[length:var(--tracking-paper-12)]">
+              <span className="paper-label text-paper-ok tracking-[length:var(--tracking-label)]">
                 All Systems Normal
               </span>
             </div>
@@ -99,7 +99,7 @@ function OpsNotificationsView({
                 key={s.name}
                 className="flex items-center justify-between py-1.5 border-t border-paper-line"
               >
-                <span className="font-paper-mono uppercase text-paper-fg-3 text-[length:var(--text-paper-11)] tracking-[length:var(--tracking-paper-10)]">
+                <span className="font-paper-mono uppercase text-paper-fg-3 text-[length:var(--text-paper-11)] tracking-[length:var(--tracking-badge)]">
                   {s.name}
                 </span>
                 <span className="font-paper-mono text-paper-ok text-[length:var(--text-paper-11)]">
@@ -122,7 +122,7 @@ function OpsNotificationsView({
                     {c.key}
                   </OpsBadge>
                   <div className="min-w-0">
-                    <div className="font-paper-mono font-semibold uppercase text-[length:var(--text-paper-12)] tracking-[length:var(--tracking-paper-06)]">
+                    <div className="font-paper-mono font-semibold uppercase text-[length:var(--text-paper-12)] tracking-[length:var(--tracking-tag)]">
                       {c.title}
                     </div>
                     <div className="font-paper-display text-[length:var(--text-paper-13)] text-paper-fg-3 mt-0.5">

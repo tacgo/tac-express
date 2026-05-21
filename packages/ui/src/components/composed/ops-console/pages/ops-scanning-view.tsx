@@ -126,7 +126,7 @@ function OpsScanningView() {
         </OpsCard>
       </div>
 
-      <div className="flex items-center justify-between mt-3.5 font-paper-mono text-paper-fg-3 text-[length:var(--text-paper-11)] tracking-[length:var(--tracking-paper-10)]">
+      <div className="flex items-center justify-between mt-3.5 font-paper-mono text-paper-fg-3 text-[length:var(--text-paper-11)] tracking-[length:var(--tracking-badge)]">
         <span className="flex items-center gap-1.5">
           <RiSignalTowerLine aria-hidden className="size-3" />
           ONLINE · PENDING SYNC: 0 · FAILED: 0

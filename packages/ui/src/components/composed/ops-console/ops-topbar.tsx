@@ -64,7 +64,7 @@ function OpsTopbar({ crumbs }: OpsTopbarProps) {
       className="flex items-center px-6 h-14 border-b border-transparent"
     >
       {/* Breadcrumbs */}
-      <div className="font-paper-mono font-medium text-paper-12 tracking-paper-04 text-paper-fg-3">
+      <div className="font-paper-mono font-medium text-paper-12 tracking-crumb text-paper-fg-3">
         {crumbs.map((c, i) => (
           <React.Fragment key={`${c}-${i}`}>
             {i > 0 && <span className="mx-2 text-paper-fg-4">›</span>}

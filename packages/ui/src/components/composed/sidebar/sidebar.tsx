@@ -103,7 +103,7 @@ function SidebarItem({
       title={collapsed ? item.label : undefined}
       className={cn(
         "group/sidebar-item relative flex items-center gap-2.5 px-4 py-2",
-        "font-mono text-xs font-medium tracking-paper-10 uppercase",
+        "font-mono text-xs font-medium tracking-badge uppercase",
         "text-sidebar-foreground/75 hover:bg-sidebar-accent hover:text-sidebar-foreground",
         "focus-visible:outline-none focus-visible:tac-focus-premium",
         "transition-colors duration-fast ease-linear",
@@ -165,7 +165,7 @@ function SidebarGroup({
           aria-expanded={open}
           className={cn(
             "flex w-full items-center justify-between px-[length:var(--spacing-gutter-md)] py-1 mt-2",
-            "font-mono text-3xs font-medium tracking-paper-14 uppercase",
+            "font-mono text-3xs font-medium tracking-eyebrow uppercase",
             "text-sidebar-foreground/65 hover:text-sidebar-foreground",
             "focus-visible:outline-none focus-visible:tac-focus-premium",
             "transition-colors duration-fast ease-linear",
@@ -269,7 +269,7 @@ export function Sidebar({ collapsible = false }: SidebarProps = {}) {
                     EXPRESS →
                   </span>
                 </div>
-                <p className="font-mono text-3xs tracking-paper-18 uppercase text-sidebar-foreground/70 truncate mt-1.5">
+                <p className="font-mono text-3xs tracking-subtitle uppercase text-sidebar-foreground/70 truncate mt-1.5">
                   imphal // prod
                 </p>
               </Link>
@@ -359,10 +359,10 @@ export function Sidebar({ collapsible = false }: SidebarProps = {}) {
             )}
           </div>
           <div className="flex-1 min-w-0">
-            <div className="font-mono text-xs font-medium tracking-paper-08 uppercase text-sidebar-foreground truncate">
+            <div className="font-mono text-xs font-medium tracking-nav uppercase text-sidebar-foreground truncate">
               {rbac.name || "Operator"}
             </div>
-            <div className="font-mono text-3xs tracking-paper-14 uppercase text-sidebar-primary truncate mt-0.5">
+            <div className="font-mono text-3xs tracking-eyebrow uppercase text-sidebar-primary truncate mt-0.5">
               {rbac.role?.replace(/_/g, " ") ?? "guest"}
             </div>
           </div>

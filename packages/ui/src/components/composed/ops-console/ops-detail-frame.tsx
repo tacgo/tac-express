@@ -57,7 +57,7 @@ function OpsDetailFrame({
       <header className="flex items-start justify-between gap-4 mb-6 pb-4 border-b border-paper-line">
         <div className="min-w-0">
           <div className="paper-eyebrow">{eyebrow}</div>
-          <h1 className="paper-h1 font-paper-mono tabular-nums tracking-[length:var(--tracking-paper-id)] mt-1 break-all">
+          <h1 className="paper-h1 font-paper-mono tabular-nums tracking-[length:var(--tracking-id)] mt-1 break-all">
             {title}
           </h1>
           {sub && (

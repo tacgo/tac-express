@@ -8,7 +8,7 @@ const fieldInputClass = cn(
   "w-full border border-paper-line bg-paper-card text-paper-fg-1",
   "px-3 py-2.5 font-paper-mono",
   "text-[length:var(--text-paper-13)]",
-  "placeholder:text-paper-fg-4 placeholder:uppercase placeholder:tracking-[length:var(--tracking-paper-04)] placeholder:text-[length:var(--text-paper-12)]",
+  "placeholder:text-paper-fg-4 placeholder:uppercase placeholder:tracking-[length:var(--tracking-crumb)] placeholder:text-[length:var(--text-paper-12)]",
   "focus-visible:outline-none focus-visible:tac-focus-premium focus-visible:border-paper-violet",
 )
 
@@ -52,7 +52,7 @@ function OpsFieldLabel({ className, ...props }: OpsFieldLabelProps) {
       data-slot="ops-field-label"
       className={cn(
         "block mb-1.5 font-paper-mono font-medium uppercase",
-        "text-[length:var(--text-paper-11)] tracking-[length:var(--tracking-paper-10)]",
+        "text-[length:var(--text-paper-11)] tracking-[length:var(--tracking-badge)]",
         "text-paper-fg-3",
         className,
       )}
