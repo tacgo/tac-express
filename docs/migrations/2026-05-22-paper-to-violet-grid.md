@@ -1,16 +1,20 @@
 # Migration Spec — Retire `paper-*` → Pure shadcn + Violet Grid
 
 > **Status:** IN PROGRESS on branch `refactor/paper-to-violet-grid`.
-> - ✅ **Phase 1 complete** (commits `483fed9`, `4aed260`): 2 forms + 3 tables + 8 button
->   files → shadcn primitives. All gates green (typecheck, vitest 569/569, no new lint).
-> - 🔄 **Phase 2 started** (commit `f3b3b78`): dead `OpsListState` removed.
-> - ⏭️ **Remaining (Phase 2 core + Phase 3 + Phase 4):** the ops-console ivory→dark
->   visual flip + `paper-*` eradication. Per this spec's DoD these require **per-page
->   visual verification on a running dashboard** — to be executed as a focused, screenshot-
->   verified effort, not a blind bulk edit. 8 button files (invoice-wizard,
->   send-whatsapp-dialog, aging-buckets, smart-address-fields, saved-view-selector,
->   sidebar, notification-bell, scanning-console) are deferred here so each paper-entangled
->   file is touched once.
+> - ✅ **Phase 1 complete**: 2 forms + 3 tables + 8 button files → shadcn primitives.
+> - 🔄 **Phase 2 started**: dead `OpsListState` removed.
+> - ✅ **Phase 3 — `paper-*` *non-color* tokens fully eradicated:**
+>   - `tracking-paper-*` letter-spacing scale → semantic `--tracking-{id,crumb,tag,nav,badge,label,eyebrow,subtitle,wordmark,display}` (all callers migrated, paper tokens removed).
+>   - `text-paper-*` font-size scale → semantic `--text-ui-{9..32}` (all callers migrated, paper tokens removed).
+>   - All value-identical (zero metric change); verified live on the `apps/web` preview; gates green at every commit. `apps/web` public surface is fully paper-free.
+> - ⏭️ **Remaining — requires the auth-gated dashboard to verify (NOT value-identical / structural):**
+>   1. `paper-*` **color** tokens (`bg-paper-card`, `text-paper-fg-*`, ok/warn/err/info, `.paper-*` utility classes) → semantic. Real visual change on the ops-console.
+>   2. The three paper **fonts** (Inter / JetBrains Mono / Instrument Serif) → Outfit / IBM Plex Mono / Noto Serif (LAW 4).
+>   3. ops-console **structural** primitive swaps (`OpsCard`/`OpsTable`/`OpsButton`/`OpsField` → compose shadcn).
+>   4. Delete the `paper-*` block + paper fonts from `globals.css`; add the **Phase 4 regression gate**.
+>   8 paper-entangled button files (invoice-wizard, send-whatsapp-dialog, aging-buckets, smart-address-fields, saved-view-selector, sidebar, notification-bell, scanning-console) fold into (1)–(3) so each is touched once.
+>
+> **Blocker:** items 1–3 live behind `/ops-console` auth (Supabase backend unreachable in this env). They need a test login or dev auth-bypass to verify per this spec's DoD — they must not be done blind.
 > **Date:** 2026-05-22
 > **Origin:** [2026-05-22 shadcn purity audit](../audits/2026-05-22-shadcn-purity-audit.md)
 > **Brainstorming decisions:**
