@@ -6,7 +6,12 @@ import { Input } from "@workspace/ui/components/primitives/input"
 import { Label } from "@workspace/ui/components/primitives/label"
 import { Icon } from "@workspace/ui/icons"
 
-export function Footer() {
+export function Footer({
+  newsletterAction,
+}: {
+  /** App-supplied submit target (server action / route). Posts, never GETs. */
+  newsletterAction?: string
+} = {}) {
   return (
     <footer className="bg-card pt-24 pb-12 border-t-2 border-primary-medium">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -61,11 +66,12 @@ export function Footer() {
               New lanes, transit times, and service notes across the North-East — a few times a month.
             </p>
           </div>
-          <form action="/contact" className="flex w-full max-w-sm gap-2 md:ml-auto">
+          <form action={newsletterAction} method="post" className="flex w-full max-w-sm gap-2 md:ml-auto">
             <Input
               id="footer-newsletter"
               type="email"
               name="email"
+              required
               placeholder="you@company.com"
               aria-label="Email address"
               className="flex-1"

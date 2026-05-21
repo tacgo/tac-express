@@ -87,9 +87,9 @@
   --print-surface-muted: oklch(0.9700 0.0050 264); /* zinc-100 equivalent — invoice header gray */
 
   /* Typography — LAW 4 governed */
-  --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Outfit', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
-  --font-serif: 'Lora', ui-serif, serif;
+  --font-serif: 'Noto Serif', ui-serif, serif;
 
   --radius: 0; /* ZERO RADIUS — LAW 13 */
 
@@ -842,7 +842,7 @@
     font-family: var(--font-serif);
   }
   .prose h1, .prose h2, .prose h3, .prose h4 {
-    font-family: var(--font-sans);
+    font-family: var(--font-serif);
     font-weight: 700;
     letter-spacing: -0.03em;
     text-wrap: balance;

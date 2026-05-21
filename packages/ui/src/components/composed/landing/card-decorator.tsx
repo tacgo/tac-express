@@ -10,7 +10,7 @@ export function CardDecorator({ children }: { children: ReactNode }) {
   return (
     <div
       aria-hidden
-      className="relative mx-auto size-36 mask-radial-from-35% mask-radial-to-75%"
+      className="relative mx-auto size-36 overflow-hidden"
     >
       <div className="tac-fui-grid absolute inset-0 opacity-60" />
       <div className="absolute inset-0 m-auto flex size-12 items-center justify-center border border-border bg-card text-primary">

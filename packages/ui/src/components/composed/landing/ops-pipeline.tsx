@@ -91,8 +91,9 @@ export function OpsPipeline() {
           <motion.div variants={staggerItem} className="col-span-full">
             <Card variant="outline">
               <CardContent className="pt-6">
-                <ol className="relative grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-0">
+                <div className="relative">
                   <div aria-hidden className="hidden lg:block absolute left-0 right-0 top-5 h-px bg-border" />
+                  <ol className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-0">
                   {pipelineContent.steps.map((step) => (
                     <li key={step.step} className="relative flex flex-col items-center text-center lg:px-4">
                       <span className="relative z-10 inline-flex size-10 items-center justify-center border border-border bg-card text-primary">
@@ -103,7 +104,8 @@ export function OpsPipeline() {
                       <p className="t-body-sm text-muted-foreground mt-1 max-w-56">{step.text}</p>
                     </li>
                   ))}
-                </ol>
+                  </ol>
+                </div>
               </CardContent>
             </Card>
           </motion.div>
