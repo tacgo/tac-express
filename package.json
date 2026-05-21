@@ -1,0 +1,59 @@
+{
+  "name": "tac-express",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "audit:auth-boundary": "node scripts/audit-auth-boundary.mjs",
+    "audit:governance": "node scripts/audit-governance.mjs",
+    "audit:orphans:refresh-baseline": "AUDIT_ORPHANS_WRITE_BASELINE=1 node scripts/audit-governance.mjs",
+    "audit:design-spec": "node scripts/audit-design-spec.mjs",
+    "audit:db-types-fresh": "node scripts/audit-db-types-fresh.mjs",
+    "supabase:types": "node scripts/supabase-types.mjs --local",
+    "supabase:types:remote": "node scripts/supabase-types.mjs --remote",
+    "supabase:reset": "supabase db reset",
+    "supabase:start": "supabase start",
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "lint": "turbo lint",
+    "format": "turbo format",
+    "typecheck": "turbo typecheck",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "audit:skills": "pnpm dlx tsx scripts/audit-skills.ts",
+    "test:routing-eval": "pnpm dlx tsx scripts/test-routing-eval.ts",
+    "measure:bundle": "node scripts/measure-bundle-size.mjs",
+    "audit:all": "pnpm audit:governance && pnpm audit:auth-boundary && pnpm audit:skills && pnpm audit:design-spec && pnpm audit:db-types-fresh && pnpm test:routing-eval",
+    "clean": "node -e \"const fs=require('node:fs'),p=require('node:path'),roots=['.'].concat(fs.existsSync('apps')?fs.readdirSync('apps').map(d=>p.join('apps',d)):[]).concat(fs.existsSync('packages')?fs.readdirSync('packages').map(d=>p.join('packages',d)):[]),targets=['.next','.turbo','out','dist','coverage','playwright-report','test-results','.tsbuildinfo'];for(const r of roots){if(!fs.existsSync(r))continue;for(const t of targets){const f=p.join(r,t);if(fs.existsSync(f)){fs.rmSync(f,{recursive:true,force:true});console.log('removed',f)}}};for(const f of fs.readdirSync('.').filter(x=>x.endsWith('.tsbuildinfo'))){fs.rmSync(f,{force:true});console.log('removed',f)}\""
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^6.0.1",
+    "@workspace/eslint-config": "workspace:*",
+    "@workspace/typescript-config": "workspace:*",
+    "happy-dom": "^20.9.0",
+    "prettier": "^3.8.1",
+    "prettier-plugin-tailwindcss": "^0.7.2",
+    "supabase": "^2.98.2",
+    "tsx": "^4.21.0",
+    "turbo": "^2.9.6",
+    "typescript": "5.9.3",
+    "vitest": "^4.1.5"
+  },
+  "packageManager": "pnpm@10.33.3",
+  "engines": {
+    "node": ">=20"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "core-js-pure",
+      "esbuild",
+      "msw",
+      "sharp",
+      "supabase"
+    ],
+    "overrides": {
+      "fast-uri": ">=3.1.2",
+      "postcss": ">=8.5.10"
+    }
+  }
+}

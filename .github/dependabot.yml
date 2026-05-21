@@ -1,0 +1,62 @@
+# Dependabot config — keeps dependencies up to date with weekly PRs.
+# Closes one item from the production-readiness audit (#101 / #102):
+# "No dependency vulnerability scanning — no Dependabot."
+#
+# Strategy:
+#   - npm ecosystem at the monorepo root (covers root + all workspace packages
+#     — pnpm uses a single lockfile so one entry suffices)
+#   - github-actions ecosystem (keeps action versions current — addresses
+#     the Node.js 20 deprecation warnings we've been seeing on every push)
+#   - Weekly cadence on Monday morning so the maintainer can triage in one
+#     batch rather than getting sniped throughout the week
+#   - Group minor + patch updates per ecosystem to reduce noise; major
+#     bumps still arrive as individual PRs so they can be reviewed carefully
+
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:00"
+      timezone: "Asia/Kolkata"
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+      - tech-debt
+    groups:
+      patch-and-minor:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+    # Pin overrides for packages that are intentionally held at a specific
+    # version (none right now — add here if a future incompatibility forces
+    # us to hold).
+    ignore: []
+
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:00"
+      timezone: "Asia/Kolkata"
+    open-pull-requests-limit: 3
+    labels:
+      - dependencies
+      - tooling
+      - tech-debt
+    groups:
+      actions-bumps:
+        patterns:
+          - "*"
+        # Mirror the npm policy above: group minor + patch only. Major
+        # action bumps (e.g. actions/checkout v4 → v5) arrive as their
+        # own PR so breaking changes get reviewed in isolation instead
+        # of buried in a grouped bump.
+        update-types:
+          - "minor"
+          - "patch"

@@ -1,0 +1,27 @@
+{
+    "name":  "@workspace/auth",
+    "version":  "0.0.0",
+    "type":  "module",
+    "private":  true,
+    "scripts":  {
+                    "lint":  "node ../eslint-config/node_modules/eslint/bin/eslint.js src --max-warnings 0",
+                    "format":  "prettier --write \"**/*.{ts,tsx}\"",
+                    "typecheck":  "tsc --noEmit"
+                },
+    "dependencies":  {
+                         "@workspace/database":  "workspace:*",
+                         "@workspace/types":  "workspace:*"
+                     },
+    "devDependencies":  {
+                            "@types/node":  "^25.1.0",
+                            "@workspace/eslint-config":  "workspace:*",
+                            "@workspace/typescript-config":  "workspace:*",
+                            "typescript":  "^5.9.3"
+                        },
+    "exports":  {
+                    ".":  "./src/index.ts",
+                    "./rbac":  "./src/rbac.ts",
+                    "./client":  "./src/client.ts",
+                    "./server":  "./src/server.ts"
+                }
+}

@@ -1,0 +1,31 @@
+{
+    "name": "@workspace/database",
+    "version": "0.0.0",
+    "type": "module",
+    "private": true,
+    "scripts": {
+        "lint": "node ../eslint-config/node_modules/eslint/bin/eslint.js src --max-warnings 0",
+        "format": "prettier --write \"**/*.{ts,tsx}\"",
+        "typecheck": "tsc --noEmit"
+    },
+    "dependencies": {
+        "@supabase/ssr": "^0.6.1",
+        "@supabase/supabase-js": "^2.106.0",
+        "@workspace/types": "workspace:*"
+    },
+    "devDependencies": {
+        "@types/node": "^25.1.0",
+        "@workspace/eslint-config": "workspace:*",
+        "@workspace/typescript-config": "workspace:*",
+        "next": "16.2.6",
+        "typescript": "^5.9.3"
+    },
+    "exports": {
+        ".": "./src/index.ts",
+        "./client": "./src/client.ts",
+        "./middleware": "./src/middleware.ts",
+        "./supabase.types": "./src/supabase.types.ts",
+        "./database.types": "./src/database.types.ts",
+        "./repositories/*": "./src/repositories/*.ts"
+    }
+}

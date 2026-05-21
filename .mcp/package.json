@@ -1,0 +1,10 @@
+{
+  "name": "mcp-tools",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "@supabase/mcp-server-supabase": "^0.8.0",
+    "zod": "^4.4.1"
+  }
+}

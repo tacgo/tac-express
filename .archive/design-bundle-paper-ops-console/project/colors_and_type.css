@@ -1,0 +1,79 @@
+/* =====================================================================
+   TAC EXPRESS — COLORS & TYPE
+   Logistics ops console. Terminal-inspired hybrid:
+   warm cream paper + violet accent + monospace labels.
+   ===================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap');
+
+:root {
+  /* ---- BRAND ---- */
+  --tac-ink:        #0E0F12;   /* near-black headline / "TAC" wordmark */
+  --tac-orange:     #F59E0B;   /* "EXPRESS →" accent */
+  --tac-violet:     #6E40FF;   /* primary action / nav active */
+  --tac-violet-2:   #5B2EE6;   /* pressed */
+  --tac-violet-50:  #EFEAFF;   /* tinted surface (active row, sidebar selected) */
+  --tac-violet-100: #DCD0FF;
+  --tac-lavender:   #B7A4FF;   /* shipment-volume area fill */
+
+  /* ---- NEUTRALS (warm paper) ---- */
+  --paper:          #FAF8F2;   /* page bg */
+  --paper-2:        #F1ECE0;   /* sidebar bg / sunken */
+  --paper-3:        #E7E1D2;   /* hover row */
+  --line:           #D9D2C2;   /* primary 1px hairline */
+  --line-2:         #BFB6A2;   /* stronger divider */
+  --line-3:         #8A8674;   /* heavy / corner ticks */
+
+  --fg-1:           #0E0F12;   /* primary text */
+  --fg-2:           #3A3A3F;   /* secondary text */
+  --fg-3:           #6F6B5E;   /* muted / labels */
+  --fg-4:           #9A9484;   /* placeholders */
+
+  /* ---- SEMANTIC ---- */
+  --ok:             #1F8A5B;   /* operational / delivered */
+  --warn:           #C77A0E;   /* draft, in-transit warmth */
+  --err:            #C4341A;   /* exception / overdue */
+  --info:           #2A6FDB;
+  --ok-bg:          #E2F2EA;
+  --warn-bg:        #FBEDD7;
+  --err-bg:         #F8DAD3;
+  --info-bg:        #DCE6F8;
+
+  /* ---- TYPE ---- */
+  --font-display:   'Inter', system-ui, sans-serif;       /* page H1, "Dashboard" etc. */
+  --font-body:      'Inter', system-ui, sans-serif;       /* paragraph */
+  --font-mono:      'JetBrains Mono', ui-monospace, Menlo, monospace; /* labels, codes, nav, IDs */
+  --font-serif:     'Instrument Serif', Georgia, serif;   /* occasional editorial */
+
+  /* ---- RADII / SHADOW / SPACING ---- */
+  --r-sharp:        2px;
+  --r-1:            4px;
+  --r-2:            6px;
+  --r-pill:         999px;
+
+  --sh-1:           0 1px 0 rgba(14,15,18,.04);
+  --sh-2:           0 1px 2px rgba(14,15,18,.06), 0 0 0 1px var(--line);
+  --inset-line:     inset 0 0 0 1px var(--line);
+
+  --sp-1: 4px;  --sp-2: 8px;  --sp-3: 12px;  --sp-4: 16px;
+  --sp-5: 24px; --sp-6: 32px; --sp-7: 48px;  --sp-8: 64px;
+}
+
+/* ---- SEMANTIC TYPE TOKENS ---- */
+.h1, h1.tac { font: 800 32px/1.15 var(--font-display); letter-spacing: -0.02em; color: var(--fg-1); }
+.h2, h2.tac { font: 700 22px/1.2  var(--font-display); letter-spacing: -0.01em; color: var(--fg-1); }
+.h3, h3.tac { font: 600 16px/1.3  var(--font-display); color: var(--fg-1); }
+.body,
+p.tac      { font: 400 14px/1.5  var(--font-body);    color: var(--fg-2); }
+.small     { font: 400 12px/1.45 var(--font-body);    color: var(--fg-3); }
+
+/* console / label styles — uppercase mono is a TAC signature */
+.eyebrow   { font: 500 11px/1 var(--font-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--fg-3); }
+.label     { font: 500 11px/1 var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--fg-3); }
+.code      { font: 500 13px/1.4 var(--font-mono); color: var(--fg-1); }
+.id        { font: 600 13px/1.2 var(--font-mono); color: var(--tac-violet); letter-spacing: .02em; }
+.kbd       { font: 500 11px/1 var(--font-mono); padding: 3px 6px; border: 1px solid var(--line); border-radius: var(--r-1); background: #fff; color: var(--fg-2); }
+
+/* utility */
+.section-rule { border: 0; border-top: 1px solid var(--line); }
+.hatch-top    { background-image: repeating-linear-gradient(135deg, var(--line) 0 6px, transparent 6px 12px); height: 8px; }

@@ -1,0 +1,1491 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:is(.dark *));
+
+@source "../../../apps/**/*.{ts,tsx}";
+@source "../../../components/**/*.{ts,tsx}";
+@source "../**/*.{ts,tsx}";
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   TAC EXPRESS — GLOBAL DESIGN TOKENS
+   Design System: TAC Express v5 — Violet Grid
+   Authority: DESIGN_SYSTEM.md + AGENTS.md (The Fourteen Laws)
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* ══════════════════════════════════════════════════════════════════════════
+     LIGHT MODE — "Modern Ivory" (May 2026 refresh)
+     Restrained ivory white — brighter and cleaner than Warm Linen, but
+     still warm enough to avoid sterile pure white. Pairs with deep
+     violet-ink foreground, muted taupe hairlines, and the brand violet
+     accent. Harmonizes v6 Violet Grid with the Paper Ops Console.
+     Reference: Apple Music light / Linear refresh / Anthropic Paper.
+     Source palette (sRGB → oklch):
+       #FFFDF7 page · #FFFEFA card · #DED6C8 border · #7A746B muted text
+     ══════════════════════════════════════════════════════════════════════════ */
+  --background: oklch(0.9920 0.0070 88);   /* #FFFDF7 — modern ivory page bg */
+  --foreground: oklch(0.1700 0.0180 270);  /* deep violet-ink — sophisticated contrast vs flat black */
+  --card: oklch(0.9965 0.0035 88);         /* #FFFEFA — near-white card with a whisper of warmth */
+  --card-foreground: oklch(0.1700 0.0180 270);
+  --popover: oklch(0.9965 0.0035 88);
+  --popover-foreground: oklch(0.1700 0.0180 270);
+  --primary: oklch(0.5393 0.2713 286.7462);   /* brand violet — unchanged */
+  --primary-foreground: oklch(0.9920 0.0030 88);
+  --secondary: oklch(0.9720 0.0090 86);       /* #FAF6EE — muted ivory surface */
+  --secondary-foreground: oklch(0.1700 0.0180 270);
+  --muted: oklch(0.9650 0.0100 86);
+  --muted-foreground: oklch(0.5200 0.0140 78); /* #7A746B — warm muted text, accessibly readable */
+  --accent: oklch(0.9550 0.0220 285);          /* violet-tinted accent on ivory */
+  --accent-foreground: oklch(0.5393 0.2713 286.7462);
+  --destructive: oklch(0.5885 0.2090 24.0041);
+  --destructive-foreground: oklch(0.9920 0.0030 88);
+  --border: oklch(0.8650 0.0160 82);           /* #DED6C8 — muted taupe hairline */
+  --input: oklch(0.8650 0.0160 82);
+  --ring: oklch(0.5393 0.2713 286.7462);
+
+  --chart-1: oklch(0.5393 0.2713 286.7462);
+  --chart-2: oklch(0.6604 0.1500 286.7462);
+  --chart-3: oklch(0.4500 0.1800 286.7462);
+  --chart-4: oklch(0.7500 0.1200 286.7462);
+  --chart-5: oklch(0.3800 0.2200 286.7462);
+
+  --sidebar: oklch(0.9820 0.0090 86);          /* ivory sidebar — one subtle step from page bg */
+  --sidebar-foreground: oklch(0.1700 0.0180 270);
+  --sidebar-primary: oklch(0.5393 0.2713 286.7462);
+  --sidebar-primary-foreground: oklch(0.9920 0.0030 88);
+  --sidebar-accent: oklch(0.9550 0.0220 285);
+  --sidebar-accent-foreground: oklch(0.5393 0.2713 286.7462);
+  --sidebar-border: oklch(0.8650 0.0160 82);
+  --sidebar-ring: oklch(0.5393 0.2713 286.7462);
+
+  /* Semantic status colors */
+  --accent-success: oklch(0.60 0.18 150);
+  --accent-success-foreground: oklch(1 0 0);
+  /* warning: darkened from L=0.72 → L=0.52 on 2026-05-13 to clear WCAG
+     AA contrast (4.5:1) against --paper-bg on the brand wordmark + every
+     other text-accent-warning site. L=0.58 reached 4.1:1, L=0.52 clears 4.5:1.
+     Closes the last R0 contrast node. */
+  --accent-warning: oklch(0.52 0.14 80);
+  --accent-warning-foreground: oklch(0.25 0 0);
+  --accent-danger: oklch(0.5885 0.2090 24.0041);
+  --accent-danger-foreground: oklch(1 0 0);
+  --accent-info: oklch(0.5393 0.2713 286.7462);
+  --accent-info-foreground: oklch(1 0 0);
+
+  /* Semantic surface aliases */
+  --surface: oklch(0.9870 0.0070 86);
+  --surface-foreground: oklch(0.1700 0.0180 270);
+  --overlay: oklch(0.9965 0.0035 88);
+  --overlay-foreground: oklch(0.1700 0.0180 270);
+  --code-bg: oklch(0.9720 0.0090 86);
+
+  /* Print-safe forced tokens (for shipping labels + invoice views) */
+  --print-bg: oklch(1 0 0);
+  --print-fg: oklch(0 0 0);
+  --print-border: oklch(0 0 0);
+  --print-accent: oklch(0.5393 0.2713 286.7462);   /* violet primary on paper */
+  --print-surface-muted: oklch(0.9700 0.0050 264); /* zinc-100 equivalent — invoice header gray */
+
+  /* Typography — LAW 4 governed */
+  --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+  --font-serif: 'Lora', ui-serif, serif;
+
+  --radius: 0rem; /* ZERO RADIUS — LAW 13 */
+
+  /* Brutalist offset shadows — Violet Grid spec (LAW 13) */
+  --shadow-2xs: 1px 1px 0 0 var(--border);
+  --shadow-xs: 2px 2px 0 0 var(--border);
+  --shadow-sm: 3px 3px 0 0 var(--border);
+  --shadow: 4px 4px 0 0 var(--border);
+  --shadow-md: 6px 6px 0 0 var(--border);
+  --shadow-lg: 8px 8px 0 0 var(--border);
+  --shadow-xl: 12px 12px 0 0 var(--border);
+  --shadow-2xl: 16px 16px 0 0 var(--border);
+
+  /* Legacy brutalist aliases — kept for backward compat */
+  --shadow-brutal-sm: var(--shadow-sm);
+  --shadow-brutal: var(--shadow-md);
+
+  --tracking-normal: -0.025em;
+  --spacing: 0.25rem;
+
+  /* Animation tokens */
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-linear: linear;
+
+  --duration-fast: 80ms;
+  --duration-base: 150ms;
+  --duration-slow: 300ms;
+  --duration-slower: 500ms;
+  --duration-pulse: 2s;       /* loop animations: skeleton-pulse, shimmer, etc. */
+
+  --ease-in-out: cubic-bezier(0.4, 0, 0.6, 1); /* symmetric easing — pulse loops, fade transitions */
+
+  /* Focus-ring outline offset.
+     - `outset`: focus ring extends beyond the element border (typical
+       isolated button — used by Button primitive).
+     - `inset`: focus ring drawn 1px inside the element border (used by
+       elements that sit flush against neighbours, e.g. wizard step
+       cells with `border-r` between siblings — outset would clip
+       against the parent border). */
+  --outline-offset-outset: 1px;
+  --outline-offset-inset: -1px;
+
+  /* ── v6 — 3-layer motion vocabulary (semantic, intent-named) ──
+     instant     mission-control hover/toggle/data updates           (linear, 80ms)
+     smooth      modal/sheet/tab — branded but quick                 (smooth ease, 180ms)
+     expressive  hero entrance, KPI count-up, onboarding             (spring, 320ms)
+     Use these names instead of --duration-*. The duration tokens
+     stay for backward compat. */
+  --motion-instant:    80ms var(--ease-linear);
+  --motion-smooth:     180ms var(--ease-smooth);
+  --motion-expressive: 320ms var(--ease-spring);
+
+  /* ── v6 — Surface depth tiers (additive — coexist with --background/--card/--surface) ──
+     Six logical tiers. In dark mode each tier is +1.5% L from the previous.
+     Use `bg-surface-{base,elevated,floating,interactive,hover,active}` Tailwind utilities. */
+  --surface-base:        var(--background);
+  --surface-elevated:    var(--card);
+  --surface-floating:    var(--popover);
+  --surface-interactive: oklch(0.9780 0.0090 86);   /* ivory-aligned interactive */
+  --surface-hover:       oklch(0.9580 0.0120 84);   /* warm hover */
+  --surface-active:      oklch(0.9350 0.0140 82);   /* warm active */
+
+  /* ── v6 — Color-mix overlay tokens ──
+     Pre-mixed transparency layers so components stop inlining color-mix() ad-hoc. */
+  --overlay-primary-soft:    color-mix(in oklch, var(--primary) 5%, transparent);
+  --overlay-primary-subtle:  color-mix(in oklch, var(--primary) 10%, transparent);
+  --overlay-primary-medium:  color-mix(in oklch, var(--primary) 15%, transparent);
+  --overlay-primary-strong:  color-mix(in oklch, var(--primary) 25%, transparent);
+  --overlay-fg-soft:         color-mix(in oklch, var(--foreground) 4%, transparent);
+  --overlay-fg-subtle:       color-mix(in oklch, var(--foreground) 8%, transparent);
+
+  /* Text shadow scale (LAW 9 — no hardcoded values in components) */
+  --text-shadow-sm: 0 1px 2px hsl(0 0% 0% / 0.12);
+  --text-shadow-md: 0 2px 8px hsl(0 0% 0% / 0.18);
+  --text-shadow-lg: 0 4px 16px hsl(0 0% 0% / 0.24);
+  --text-glow-primary: 0 0 20px color-mix(in oklch, var(--primary) 30%, transparent), 0 0 40px color-mix(in oklch, var(--primary) 15%, transparent);
+
+  /* Prose (typography plugin) — Violet Grid theme */
+  --tw-prose-body: var(--foreground);
+  --tw-prose-headings: var(--foreground);
+  --tw-prose-lead: var(--muted-foreground);
+  --tw-prose-links: var(--primary);
+  --tw-prose-bold: var(--foreground);
+  --tw-prose-counters: var(--muted-foreground);
+  --tw-prose-bullets: var(--border);
+  --tw-prose-hr: var(--border);
+  --tw-prose-quotes: var(--foreground);
+  --tw-prose-quote-borders: var(--primary);
+  --tw-prose-captions: var(--muted-foreground);
+  --tw-prose-code: var(--primary);
+  --tw-prose-pre-code: var(--foreground);
+  --tw-prose-pre-bg: var(--code-bg);
+  --tw-prose-th-borders: var(--border);
+  --tw-prose-td-borders: var(--border);
+
+  /* ── TAC Orbital · Telemetry tokens (docs/CHARTS-ORBITAL.md) ──
+     Two-hue maximum per chart. Semantic green/amber/red are reserved
+     exclusively for SLA state (ontime / late / breached). Never use
+     them to communicate "high is good". */
+  --chart-primary: var(--primary);
+  --chart-primary-muted: color-mix(in oklch, var(--primary) 35%, transparent);
+  --chart-axis: var(--muted-foreground);
+  --chart-grid: var(--border);
+  --chart-track: var(--muted);
+
+  --chart-ontime:   oklch(0.72 0.15 152);
+  --chart-late:     oklch(0.78 0.15 75);
+  --chart-breached: oklch(0.62 0.22 25);
+
+  --chart-ramp-1: color-mix(in oklch, var(--primary) 12%, var(--background));
+  --chart-ramp-2: color-mix(in oklch, var(--primary) 28%, var(--background));
+  --chart-ramp-3: color-mix(in oklch, var(--primary) 48%, var(--background));
+  --chart-ramp-4: color-mix(in oklch, var(--primary) 70%, var(--background));
+  --chart-ramp-5: var(--primary);
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     PAPER OPS CONSOLE — additive design mode (LAW 1)
+     "A serious operator's terminal, dressed in warm paper."
+     Coexists with Violet Grid v6 — scoped via .ops-console wrapper class.
+     Source: .design-bundle (Anthropic Design export, May 2026).
+     ══════════════════════════════════════════════════════════════════════════ */
+
+  /* Brand — May 2026 Modern Ivory refresh, harmonized with v6 */
+  --paper-ink:       oklch(0.1700 0.0180 270);          /* deep violet-ink — replaces near-black for premium feel */
+  --paper-orange:    oklch(0.5200 0.1600  55);          /* "EXPRESS →" accent — darkened so the wordmark clears WCAG AA on the paper-2 sidebar background. Chroma kept low to avoid over-saturation on the brighter ivory base. */
+  --paper-violet:    oklch(0.5393 0.2713 286.7462);     /* primary action — unchanged brand */
+  --paper-violet-2:  oklch(0.4595 0.2713 286.7462);     /* pressed */
+  --paper-violet-50: oklch(0.9740 0.0210 286.7462);     /* tinted surface — sits on ivory.
+                                                            Lighter than the brand mid-tone so
+                                                            paper-violet text on this surface
+                                                            clears WCAG AA 4.5:1 at 10px. */
+
+  /* Modern Ivory neutrals — May 2026 evolution */
+  --paper-bg:        oklch(0.9920 0.0070 88);           /* #FFFDF7 — page bg, matches v6 --background */
+  --paper-2:         oklch(0.9780 0.0090 86);           /* sidebar bg — subtle step from page */
+  --paper-3:         oklch(0.9540 0.0120 84);           /* hover row */
+  --paper-line:      oklch(0.8650 0.0160 82);           /* #DED6C8 — muted taupe hairline */
+  --paper-line-2:    oklch(0.7800 0.0190 80);           /* stronger divider */
+  --paper-line-3:    oklch(0.5900 0.0180 78);           /* heavy / corner ticks */
+
+  --paper-fg-1:      oklch(0.1700 0.0180 270);          /* primary text — violet-ink */
+  --paper-fg-2:      oklch(0.3200 0.0100 280);          /* secondary text */
+  /* fg-3: muted / labels. Bumped from L=0.52 → L=0.44 on 2026-05-13 to
+     push WCAG AA contrast on table muted cells (text-paper-fg-3 on
+     --paper-card 0.9965 → contrast > 4.5:1) — closes R0 audit C2. */
+  --paper-fg-3:      oklch(0.4400 0.0140 78);
+  --paper-fg-4:      oklch(0.6700 0.0150 80);           /* placeholders */
+
+  /* Card surface — near-white-on-ivory for layered warmth (still not pure white) */
+  --paper-card:      oklch(0.9965 0.0035 88);           /* #FFFEFA — matches v6 --card */
+  --paper-card-2:    oklch(0.9870 0.0070 86);           /* deeper card for hovers */
+
+  /* Semantic — keep status hues distinct on the warmer base */
+  --paper-ok:        oklch(0.4700 0.1180 156);          /* darkened from oklch(0.535) for WCAG AA on paper-ok-bg (4.16:1 → 5.47:1) — affects ok-tone badges (Paid, Delivered) */
+  --paper-ok-bg:     oklch(0.9420 0.0320 156);
+  --paper-warn:      oklch(0.5000 0.1350  62);          /* darkened from oklch(0.595) so the warn-badge text (10px, normal weight on warn-bg #fbecce) clears WCAG AA 4.5:1 — was 3.58:1, now 5.32:1 */
+  --paper-warn-bg:   oklch(0.9470 0.0420  85);
+  --paper-err:       oklch(0.4900 0.1880  31);          /* darkened from oklch(0.52) for WCAG AA on paper-err-bg (4.45:1 → 5.06:1) — affects err-tone badges (Overdue, Failed, Exception) */
+  --paper-err-bg:    oklch(0.9020 0.0490  30);
+  --paper-info:      oklch(0.5200 0.1750 256);          /* darkened from oklch(0.56) for WCAG AA on paper-info-bg (3.82:1 → 4.53:1) — affects info-tone badges (Issued, In Transit) */
+  --paper-info-bg:   oklch(0.9270 0.0290 254);
+
+  /* Fonts — declared in apps/dashboard/app/layout.tsx (LAW 4) */
+  --paper-font-display: 'Inter', system-ui, sans-serif;
+  --paper-font-mono:    'JetBrains Mono', ui-monospace, Menlo, monospace;
+  --paper-font-serif:   'Instrument Serif', Georgia, serif;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   PAPER OPS CONSOLE — sidebar token overrides
+   The unified `<Sidebar>` component (packages/ui/src/components/composed/sidebar)
+   reads `--sidebar-*` variables for chrome. Inside the `.ops-console` scope we
+   re-bind those variables to the paper-* palette so the same component renders
+   with the warm-paper aesthetic without prop-level branching. Outside this
+   scope (i.e. on every v6 (dashboard) route) the sidebar falls back to the
+   `:root` definitions, which carry the Modern Ivory dashboard chrome.
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+.ops-console {
+  --sidebar:                     var(--paper-2);
+  --sidebar-foreground:          var(--paper-fg-1);
+  --sidebar-primary:             var(--paper-violet);
+  --sidebar-primary-foreground:  oklch(0.9850 0.0030 85);
+  --sidebar-accent:              var(--paper-violet-50);
+  --sidebar-accent-foreground:   var(--paper-violet);
+  --sidebar-border:              var(--paper-line);
+  --sidebar-ring:                var(--paper-violet);
+}
+
+.dark {
+  /* ── DARK MODE (Violet Grid — purple-tinted backgrounds) ── */
+  --background: oklch(0.2223 0.0060 271.1393);
+  --foreground: oklch(0.9556 0.0074 264.5319);
+  --card: oklch(0.2568 0.0076 274.6528);
+  --card-foreground: oklch(0.9556 0.0074 264.5319);
+  --popover: oklch(0.2568 0.0076 274.6528);
+  --popover-foreground: oklch(0.9556 0.0074 264.5319);
+  --primary: oklch(0.6132 0.2294 291.7437);
+  --primary-foreground: oklch(0.1573 0.0062 271.1393);
+  /* WCAG AA contrast variant of --primary for 11px mono-label text on dark
+   * backgrounds. The brand --primary at L=0.6132 yields 3.8:1 against
+   * --background; below the 4.5:1 normal-text minimum.
+   *
+   * Bumps L to 0.78 with slightly trimmed chroma (hue 291.7 unchanged —
+   * same violet, more luminous). sRGB ~ #bb9fff; computed contrast vs
+   * --background ~ 5.8:1.
+   *
+   * Used by .tac-mono-label ONLY — does NOT replace --primary anywhere
+   * else; buttons, focus rings, signal glows, and chart primary keep the
+   * brand violet. On bg-primary contexts, callers use .tac-mono-label-base
+   * + .text-primary-foreground (Option B / LB-3 / issue #173).
+   *
+   * Light mode has no override — .tac-mono-label there falls back to
+   * --primary, which already passes AA on the light background. */
+  --primary-mono-label: oklch(0.78 0.18 291.7437);
+  --secondary: oklch(0.3003 0.0094 271.1393);
+  --secondary-foreground: oklch(0.9556 0.0074 264.5319);
+  --muted: oklch(0.3003 0.0094 271.1393);
+  --muted-foreground: oklch(0.6351 0.0094 264.5319);
+  --accent: oklch(0.3280 0.0195 280.6754);
+  --accent-foreground: oklch(0.6132 0.2294 291.7437);
+  --destructive: oklch(0.6368 0.2078 25.3313);
+  --destructive-foreground: oklch(0.9812 0 0);
+  --border: oklch(0.3280 0.0195 280.6754);
+  --input: oklch(0.3280 0.0195 280.6754);
+  --ring: oklch(0.6132 0.2294 291.7437);
+
+  --chart-1: oklch(0.6132 0.2294 291.7437);
+  --chart-2: oklch(0.7200 0.1800 291.7437);
+  --chart-3: oklch(0.5000 0.2500 291.7437);
+  --chart-4: oklch(0.7800 0.1400 291.7437);
+  --chart-5: oklch(0.4200 0.2800 291.7437);
+
+  --sidebar: oklch(0.1956 0.0060 271.1393);
+  --sidebar-foreground: oklch(0.9556 0.0074 264.5319);
+  --sidebar-primary: oklch(0.6132 0.2294 291.7437);
+  --sidebar-primary-foreground: oklch(0.1573 0.0062 271.1393);
+  --sidebar-accent: oklch(0.2837 0.0137 274.6528);
+  --sidebar-accent-foreground: oklch(0.9556 0.0074 264.5319);
+  --sidebar-border: oklch(0.3280 0.0195 280.6754);
+  --sidebar-ring: oklch(0.6132 0.2294 291.7437);
+
+  --accent-success: oklch(0.60 0.18 150);
+  --accent-success-foreground: oklch(0.10 0 0);
+  --accent-warning: oklch(0.72 0.18 80);
+  --accent-warning-foreground: oklch(0.10 0 0);
+  --accent-danger: oklch(0.6368 0.2078 25.3313);
+  --accent-danger-foreground: oklch(1 0 0);
+  --accent-info: oklch(0.6132 0.2294 291.7437);
+  --accent-info-foreground: oklch(1 0 0);
+
+  /* Dark mode semantic surface aliases */
+  --surface: oklch(0.2837 0.0137 274.6528);
+  --surface-foreground: oklch(0.9556 0.0074 264.5319);
+  --overlay: oklch(0.2568 0.0076 274.6528);
+  --overlay-foreground: oklch(0.9556 0.0074 264.5319);
+  --code-bg: oklch(0.2223 0.0060 271.1393);
+
+  /* Dark mode brutalist offset shadows */
+  --shadow-2xs: 1px 1px 0 0 var(--border);
+  --shadow-xs: 2px 2px 0 0 var(--border);
+  --shadow-sm: 3px 3px 0 0 var(--border);
+  --shadow: 4px 4px 0 0 var(--border);
+  --shadow-md: 6px 6px 0 0 var(--border);
+  --shadow-lg: 8px 8px 0 0 var(--border);
+  --shadow-xl: 12px 12px 0 0 var(--border);
+  --shadow-2xl: 16px 16px 0 0 var(--border);
+
+  --shadow-brutal-sm: var(--shadow-sm);
+  --shadow-brutal: var(--shadow-md);
+
+  /* ── v6 — Surface depth tiers (DARK) ──
+     Each tier is roughly +1.5–2% L from the previous to stack subtly. */
+  --surface-base:        var(--background);
+  --surface-elevated:    var(--card);
+  --surface-floating:    var(--popover);
+  --surface-interactive: oklch(0.2837 0.0137 274.6528);
+  --surface-hover:       oklch(0.3050 0.0160 278);
+  --surface-active:      oklch(0.3280 0.0195 280.6754);
+
+  /* ── v6 — Color-mix overlay tokens (DARK) ──
+     Same definitions as light — `color-mix` resolves against the active
+     primary/foreground tokens so they automatically rebalance per theme. */
+  --overlay-primary-soft:    color-mix(in oklch, var(--primary) 5%, transparent);
+  --overlay-primary-subtle:  color-mix(in oklch, var(--primary) 10%, transparent);
+  --overlay-primary-medium:  color-mix(in oklch, var(--primary) 15%, transparent);
+  --overlay-primary-strong:  color-mix(in oklch, var(--primary) 25%, transparent);
+  --overlay-fg-soft:         color-mix(in oklch, var(--foreground) 4%, transparent);
+  --overlay-fg-subtle:       color-mix(in oklch, var(--foreground) 8%, transparent);
+
+  /* v6 density tokens (DARK) — same defaults; the [data-density] selectors below override */
+  --row-py: 0.625rem;
+  --cell-text: 0.75rem;
+  --panel-px: 1rem;
+
+  /* Text shadow — stronger in dark mode for depth */
+  --text-shadow-sm: 0 1px 2px hsl(0 0% 0% / 0.30);
+  --text-shadow-md: 0 2px 8px hsl(0 0% 0% / 0.40);
+  --text-shadow-lg: 0 4px 16px hsl(0 0% 0% / 0.50);
+  --text-glow-primary: 0 0 20px color-mix(in oklch, var(--primary) 45%, transparent), 0 0 48px color-mix(in oklch, var(--primary) 20%, transparent);
+
+  /* Prose invert — dark mode prose */
+  --tw-prose-body: var(--foreground);
+  --tw-prose-headings: var(--foreground);
+  --tw-prose-lead: var(--muted-foreground);
+  --tw-prose-links: var(--primary);
+  --tw-prose-bold: var(--foreground);
+  --tw-prose-counters: var(--muted-foreground);
+  --tw-prose-bullets: var(--border);
+  --tw-prose-hr: var(--border);
+  --tw-prose-quotes: var(--foreground);
+  --tw-prose-quote-borders: var(--primary);
+  --tw-prose-captions: var(--muted-foreground);
+  --tw-prose-code: var(--primary);
+  --tw-prose-pre-code: var(--foreground);
+  --tw-prose-pre-bg: var(--code-bg);
+  --tw-prose-th-borders: var(--border);
+  --tw-prose-td-borders: var(--border);
+
+  /* ── TAC Orbital · Telemetry tokens (DARK overrides) ──
+     Structural + ramp tokens above auto-track --primary/--background;
+     only the SLA semantic tones need a brighter dark-mode variant. */
+  --chart-ontime:   oklch(0.78 0.16 152);
+  --chart-late:     oklch(0.82 0.16 75);
+  --chart-breached: oklch(0.70 0.22 25);
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     PAPER OPS CONSOLE — Midnight palette (dark mode)
+     The 'M' theme on the C/M/S toggle. Inverts the warm-paper light values
+     to a deep ink-and-violet stack while preserving the same token names so
+     `.ops-console` components don't need any dark: variants.
+     ══════════════════════════════════════════════════════════════════════════ */
+
+  /* Brand — same violet hues; ink swaps to off-white */
+  --paper-ink:       oklch(0.9460 0.0048 264);          /* near-white headline */
+  --paper-orange:    oklch(0.7674 0.1700 68);           /* keep EXPRESS → warm orange */
+  --paper-violet:    oklch(0.6132 0.2294 291.7437);     /* matches v6 dark --primary */
+  --paper-violet-2:  oklch(0.7100 0.1900 291.7437);
+  --paper-violet-50: oklch(0.3280 0.0700 286);          /* tinted dark surface */
+
+  /* Midnight neutrals — ink stack instead of cream */
+  --paper-bg:        oklch(0.1900 0.0140 268);          /* page bg — deep ink */
+  --paper-2:        oklch(0.2300 0.0160 269);           /* sidebar */
+  --paper-3:        oklch(0.2800 0.0200 271);           /* hover row */
+  --paper-line:      oklch(0.3500 0.0210 272);          /* primary hairline */
+  --paper-line-2:    oklch(0.4400 0.0220 273);          /* stronger divider */
+  --paper-line-3:    oklch(0.6500 0.0230 274);          /* heavy / corner ticks */
+
+  --paper-fg-1:      oklch(0.9556 0.0074 264.5319);     /* primary text */
+  --paper-fg-2:      oklch(0.8200 0.0070 264);          /* secondary */
+  /* fg-3: muted / labels. Bumped from L=0.65 → L=0.74 on 2026-05-13 to
+     match the light-mode contrast bump (R0 audit C2). Dark theme has
+     inverse contrast logic — higher L on dark bg = more contrast. */
+  --paper-fg-3:      oklch(0.7400 0.0080 264);
+  --paper-fg-4:      oklch(0.5000 0.0090 264);          /* placeholders */
+
+  /* Card surface — dark mode flips to a slightly lighter ink for elevation */
+  --paper-card:      oklch(0.2568 0.0076 274.6528);
+  --paper-card-2:    oklch(0.2950 0.0100 273);
+
+  /* Semantic — brighter in dark mode */
+  --paper-ok:        oklch(0.7400 0.1500 152);
+  --paper-ok-bg:     oklch(0.2500 0.0500 152);
+  --paper-warn:      oklch(0.7800 0.1500 75);
+  --paper-warn-bg:   oklch(0.2700 0.0700 75);
+  --paper-err:       oklch(0.7000 0.2000 25);
+  --paper-err-bg:    oklch(0.2600 0.0700 25);
+  --paper-info:      oklch(0.7000 0.1700 256);
+  --paper-info-bg:   oklch(0.2400 0.0600 256);
+}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   TAILWIND v4 THEME BINDINGS
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  /* ── TAC Orbital telemetry tokens (Tailwind utilities) ──
+     Generates: bg-chart-primary, text-chart-axis, border-chart-grid,
+                fill-chart-ramp-3, stroke-chart-late, etc. */
+  --color-chart-primary:       var(--chart-primary);
+  --color-chart-primary-muted: var(--chart-primary-muted);
+  --color-chart-axis:          var(--chart-axis);
+  --color-chart-grid:          var(--chart-grid);
+  --color-chart-track:         var(--chart-track);
+  --color-chart-ontime:        var(--chart-ontime);
+  --color-chart-late:          var(--chart-late);
+  --color-chart-breached:      var(--chart-breached);
+  --color-chart-ramp-1:        var(--chart-ramp-1);
+  --color-chart-ramp-2:        var(--chart-ramp-2);
+  --color-chart-ramp-3:        var(--chart-ramp-3);
+  --color-chart-ramp-4:        var(--chart-ramp-4);
+  --color-chart-ramp-5:        var(--chart-ramp-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --color-accent-success: var(--accent-success);
+  --color-accent-success-foreground: var(--accent-success-foreground);
+  --color-accent-warning: var(--accent-warning);
+  --color-accent-warning-foreground: var(--accent-warning-foreground);
+  --color-accent-danger: var(--accent-danger);
+  --color-accent-danger-foreground: var(--accent-danger-foreground);
+  --color-accent-info: var(--accent-info);
+  --color-accent-info-foreground: var(--accent-info-foreground);
+
+  /* Semantic surface aliases */
+  --color-surface: var(--surface);
+  --color-surface-foreground: var(--surface-foreground);
+  --color-overlay: var(--overlay);
+  --color-overlay-foreground: var(--overlay-foreground);
+  --color-code-bg: var(--code-bg);
+
+  /* ── v6 — Surface depth tiers (Tailwind utilities: bg-surface-{tier}) ── */
+  --color-surface-base: var(--surface-base);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-surface-floating: var(--surface-floating);
+  --color-surface-interactive: var(--surface-interactive);
+  --color-surface-hover: var(--surface-hover);
+  --color-surface-active: var(--surface-active);
+
+  /* ── v6 — Color-mix overlay tokens (Tailwind utilities: bg-primary-{soft|subtle|medium|strong}, bg-fg-{soft|subtle}) ── */
+  --color-primary-soft: var(--overlay-primary-soft);
+  --color-primary-subtle: var(--overlay-primary-subtle);
+  --color-primary-medium: var(--overlay-primary-medium);
+  --color-primary-strong: var(--overlay-primary-strong);
+  --color-fg-soft: var(--overlay-fg-soft);
+  --color-fg-subtle: var(--overlay-fg-subtle);
+
+  /* Print tokens */
+  --color-print-bg: var(--print-bg);
+  --color-print-fg: var(--print-fg);
+  --color-print-border: var(--print-border);
+  --color-print-accent: var(--print-accent);
+  --color-print-surface-muted: var(--print-surface-muted);
+
+  /* ── Paper Ops Console — Tailwind utility bindings (bg-paper-*, text-paper-*) ── */
+  --color-paper-bg:        var(--paper-bg);
+  --color-paper-2:         var(--paper-2);
+  --color-paper-3:         var(--paper-3);
+  --color-paper-line:      var(--paper-line);
+  --color-paper-line-2:    var(--paper-line-2);
+  --color-paper-line-3:    var(--paper-line-3);
+  --color-paper-ink:       var(--paper-ink);
+  --color-paper-orange:    var(--paper-orange);
+  --color-paper-violet:    var(--paper-violet);
+  --color-paper-violet-2:  var(--paper-violet-2);
+  --color-paper-violet-50: var(--paper-violet-50);
+  --color-paper-fg-1:      var(--paper-fg-1);
+  --color-paper-fg-2:      var(--paper-fg-2);
+  --color-paper-fg-3:      var(--paper-fg-3);
+  --color-paper-fg-4:      var(--paper-fg-4);
+  --color-paper-ok:        var(--paper-ok);
+  --color-paper-ok-bg:     var(--paper-ok-bg);
+  --color-paper-warn:      var(--paper-warn);
+  --color-paper-warn-bg:   var(--paper-warn-bg);
+  --color-paper-err:       var(--paper-err);
+  --color-paper-err-bg:    var(--paper-err-bg);
+  --color-paper-info:      var(--paper-info);
+  --color-paper-info-bg:   var(--paper-info-bg);
+  --color-paper-card:      var(--paper-card);
+  --color-paper-card-2:    var(--paper-card-2);
+
+  --font-paper-display: var(--paper-font-display);
+  --font-paper-mono:    var(--paper-font-mono);
+  --font-paper-serif:   var(--paper-font-serif);
+
+  /* Paper Ops Console — text scale (LAW 11: extends Tailwind's text scale with the bundle's
+     pixel-perfect sizes — 9/10/11/12/13/14/16/18/22/26/28/32 — so components never reach
+     for `text-[Npx]` arbitrary values). */
+  --text-paper-9:  0.5625rem;   /* 9px  — sidebar subtitle */
+  --text-paper-10: 0.625rem;    /* 10px — eyebrow / sidebar section / mono labels */
+  --text-paper-11: 0.6875rem;   /* 11px — paper-eyebrow, paper-label, .kbd, badge */
+  --text-paper-12: 0.75rem;     /* 12px — nav items, breadcrumbs */
+  --text-paper-13: 0.8125rem;   /* 13px — paper-id, paper-code, body */
+  --text-paper-14: 0.875rem;    /* 14px — body alt */
+  --text-paper-16: 1rem;        /* 16px — h3, inbox header */
+  --text-paper-18: 1.125rem;    /* 18px — manifest stat values */
+  --text-paper-22: 1.375rem;    /* 22px — h2 */
+  --text-paper-26: 1.625rem;    /* 26px — hero h1 */
+  --text-paper-28: 1.75rem;     /* 28px — stat card (alt) */
+  --text-paper-32: 2rem;        /* 32px — stat-value / page H1 */
+
+  /* Paper Ops Console — letter-spacing scale */
+  --tracking-paper-tight: -0.02em;   /* H1 / display */
+  --tracking-paper-snug:  -0.01em;   /* H2 / brand wordmark */
+  --tracking-paper-id:     0.02em;   /* paper-id / CN numbers */
+  --tracking-paper-04:     0.04em;   /* breadcrumb / kbd */
+  --tracking-paper-06:     0.06em;   /* tag */
+  --tracking-paper-08:     0.08em;   /* nav items / staff name */
+  --tracking-paper-10:     0.10em;   /* badge / dense uppercase */
+  --tracking-paper-12:     0.12em;   /* button / label */
+  --tracking-paper-14:     0.14em;   /* eyebrow / sidebar section */
+  --tracking-paper-18:     0.18em;   /* sidebar subtitle / IMPHAL · PROD */
+  --tracking-paper-20:     0.20em;   /* display wordmark — landing + wasteland (7 callers in composed/) */
+  --tracking-paper-30:     0.30em;   /* display wordmark + LOCATE button — landing hero only */
+  --tracking-tight:        -0.01em;  /* micro-kern for compact mono wordmarks (TAC EXPRESS sidebar logo) */
+
+  /* Phase 5 — composed-component spacing tokens added during the design-
+     exceptions tokenisation pass. Each token replaces an arbitrary value
+     used 3+ times across composed/. */
+  --spacing-gutter-md: 1.125rem; /* 18px — settings two-col grid gap + OpsCard padding */
+  --spacing-chart-md: 12.5rem;   /* 200px — KPI chart container */
+  --spacing-chart-lg: 13.75rem;  /* 220px — Sprint 0 banner cap + KPI chart variant */
+  --spacing-chart-xl: 16.25rem;  /* 260px — banner full-bleed cap */
+
+  /* R0 audit — shared-chrome tokens added 2026-05-13 to retire pixel
+     literals + raw rgba shadows that recurred on every protected route.
+     Each closes a LAW 3 violation called out in docs/r0-audit-findings.md. */
+  --sidebar-w: 15rem;            /* 240px — root ops shell grid track (H4) */
+  --toggle-h: 1.875rem;          /* 30px — top-bar theme toggle button height (H3) */
+  --indicator-w: 3px;            /* 3px — active-row left accent + sidebar nav active mark (H3 / M5) */
+  --badge-min-w: 1.25rem;        /* 20px — sidebar badge minimum width (H3) */
+  --status-dot: 0.3125rem;       /* 5px — list-row status pill pseudo-element dot (H5) */
+  --shadow-paper-sticky: 0 1px 0 rgb(from var(--border) r g b / 0.06);
+  /* ↑ subtle bottom-line shadow on sticky table headers / list-page wrappers
+       — replaces shadow-[0_1px_0_rgba(14,15,18,0.06)] (H2). */
+
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --font-serif: var(--font-serif);
+
+  --text-3xs: 0.5625rem;
+  --text-2xs: 0.625rem;
+
+  /* ── Layout scale tokens (LAW 9 — no arbitrary [px] values in components) ──
+     Authored from observed design needs in dashboard panels + hero sections.
+     Reusable as `h-panel-sm`, `min-h-panel-xl`, `max-w-control`, etc. */
+  --spacing-control: 100rem;       /* 1600px — outer mission-control hardware frame */
+  --spacing-page-content: 80rem;   /* 1280px — canonical page-content width
+                                      (PageShell). Caps reading/working width
+                                      below the 1600px hardware frame so all
+                                      dashboard pages share one rhythm. */
+  --spacing-page-wide: 96rem;      /* 1536px — wide PageShell variant for
+                                      KPI-heavy dashboards (Operations, CRM,
+                                      Inventory). Sits between page-content
+                                      and the 1600px hardware frame. Added
+                                      Phase 1 of the NextAdmin refactor. */
+
+  /* ── Page-gutter + card-rhythm tokens (NextAdmin parity, Violet-Grid translated) ──
+     Responsive page padding scales by breakpoint; card padding + gap are
+     viewport-invariant so the rhythm reads the same on every screen size. */
+  --spacing-page-pad-x-sm: 1rem;     /* 16px  — mobile gutter   */
+  --spacing-page-pad-x-md: 1.5rem;   /* 24px  — tablet+ gutter  */
+  --spacing-page-pad-x-lg: 2.5rem;   /* 40px  — 2xl+ gutter     */
+  --spacing-page-pad-y-sm: 1rem;
+  --spacing-page-pad-y-md: 1.5rem;
+  --spacing-page-pad-y-lg: 2rem;
+  --spacing-card-pad:      1.5rem;   /* 24px  — internal padding (default card)  */
+  --spacing-card-pad-lg:   1.875rem; /* 30px  — hero / KPI card                  */
+  --spacing-card-gap:      1.5rem;   /* 24px  — gap between sibling cards        */
+  --spacing-panel-sm: 13.75rem;    /* 220px — chart container / hero (mobile)     */
+  --spacing-panel-md: 15rem;       /* 240px — scroll-list panel                   */
+  --spacing-panel-lg: 16.25rem;    /* 260px — hero (lg viewport)                  */
+  --spacing-panel-xl: 18.75rem;    /* 300px — KPI panel min-height                */
+  --spacing-hero-vh: 60vh;         /* 60vh   — auth/error hero vertical centering */
+
+  /* ── Print-surface tokens (LAW 1/9/11 for shipping/tax labels) ──
+     Print artifacts (thermal labels, tax-invoice headers) intentionally
+     bypass theming — they're physical paper outputs that must read the
+     same regardless of dark-mode preference. These tokens encode the
+     print invariants so the labels reference NAMED tokens rather than
+     hand-written `bg-white`/`text-black` literals.
+
+     `--print-bg` / `--print-fg` are physical ink colors on paper. They
+     are NOT thumbed at runtime by dark mode — see the absence of any
+     override in the `.dark` block below. */
+  --print-bg: #ffffff;        /* paper white — never themed */
+  --print-fg: #000000;        /* ink black — never themed */
+  --print-border: #000000;    /* solid black border for print rules */
+
+  /* Named print widths matching common thermal/laser label stocks.
+     Components reference these as `max-w-label-4in`, `w-label-a6`. */
+  --spacing-label-4in: 4in;       /* 4×6 thermal shipping label width */
+  --spacing-label-a6: 148mm;      /* A6 standard label width */
+  --spacing-label-preview: 26.25rem; /* 420px — screen-preview width */
+  --spacing-label-barcode: 5.375rem; /* 86px — square barcode side on shipping label */
+
+  /* ── Tax-invoice / PDF typography scale (LAW 11) ──
+     Sizes hand-tuned for one-page A4 fit on composed/finance/invoice-
+     print-view.tsx. Each step encodes a distinct visual role in the
+     document hierarchy (fine-print → body → label → name → headline).
+     Reuse aggressively before adding a new step.
+
+     Existing reuses (no new token needed):
+       9px → text-3xs · 10px → text-2xs · 12px → text-xs · 24px → text-2xl
+  */
+  --text-pdf-7p5: 0.469rem;   /* 7.5px — terms fine-print body            */
+  --text-pdf-8: 0.5rem;       /* 8px — shipping-label AWB caption          */
+  --text-pdf-8p5: 0.531rem;   /* 8.5px — "computer-generated" stamp       */
+  --text-pdf-9p5: 0.594rem;   /* 9.5px — shipping-label service-class tag */
+  --text-pdf-10p5: 0.656rem;  /* 10.5px — body mono (tel/email/address)  */
+  --text-pdf-11: 0.6875rem;   /* 11px — company address line              */
+  --text-pdf-11p5: 0.719rem;  /* 11.5px — service-table header / cells    */
+  --text-pdf-13: 0.8125rem;   /* 13px — company name / due-date value     */
+  --text-pdf-15: 0.9375rem;   /* 15px — balance-due value                 */
+  --text-pdf-17: 1.0625rem;   /* 17px — customer name (bill-to block)     */
+  --text-pdf-19: 1.1875rem;   /* 19px — invoice-number value              */
+
+  /* Letter-spacing scale for invoice/PDF surfaces. The Tailwind defaults
+     (tracking-wide 0.025em, wider 0.05em, widest 0.1em) jump too coarsely
+     for dense print-typography where 0.04 / 0.16 / 0.18 / 0.20 / 0.22em
+     differences carry intentional visual weight. */
+  --tracking-pdf-label: 0.04em;   /* section labels: "Bill to:" / "Notes:" */
+  --tracking-pdf-awb: 0.16em;     /* AWB number text                       */
+  --tracking-pdf-tag: 0.18em;     /* "Tracking" / meta tag                 */
+  --tracking-pdf-emboss: 0.2em;   /* vertical brand strip / "computer-gen" */
+  --tracking-pdf-terms: 0.22em;   /* "Terms & Conditions" heading          */
+  --tracking-pdf-band: 0.08em;    /* shipping-label horizontal info band  */
+  --tracking-pdf-id: 0.14em;      /* shipping-label AWB id hero           */
+  --tracking-pdf-strip: 0.25em;   /* manifest header strip / footer banner */
+
+  /* PDF-specific dimensions */
+  --spacing-pdf-rule: 0.1875rem;   /* 3px — vertical violet accent bar */
+  --spacing-pdf-signature: 14rem;  /* signature-line max-width         */
+  --spacing-print-a4-w: 210mm;     /* A4 portrait page width           */
+  --spacing-print-a4-h: 297mm;     /* A4 portrait page height          */
+
+  --radius-sm: var(--radius);
+  --radius-md: var(--radius);
+  --radius-lg: var(--radius);
+  --radius-xl: var(--radius);
+
+  --shadow-2xs: var(--shadow-2xs);
+  --shadow-xs: var(--shadow-xs);
+  --shadow-sm: var(--shadow-sm);
+  --shadow: var(--shadow);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+  --shadow-xl: var(--shadow-xl);
+  --shadow-2xl: var(--shadow-2xl);
+  --shadow-brutal-sm: var(--shadow-brutal-sm);
+  --shadow-brutal: var(--shadow-brutal);
+
+  /* Animation/easing tokens */
+  --ease-smooth: var(--ease-smooth);
+  --ease-in: var(--ease-in);
+  --ease-out: var(--ease-out);
+  --ease-spring: var(--ease-spring);
+  --ease-linear: var(--ease-linear);
+
+  --duration-fast: var(--duration-fast);
+  --duration-base: var(--duration-base);
+  --duration-slow: var(--duration-slow);
+  --duration-slower: var(--duration-slower);
+}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   BASE LAYER
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    letter-spacing: var(--tracking-normal);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "liga" 1, "kern" 1, "calt" 1;
+    font-optical-sizing: auto;
+  }
+
+  /* ── v6 — Density mode cascade ──
+     The DensityProvider sets `data-density` on a wrapper element; descendant
+     components (tables, lists, panels) read these tokens via CSS or the
+     `useDensity()` hook. */
+  [data-density="compact"] {
+    --row-py: 0.375rem;     /* py-1.5 */
+    --cell-text: 0.625rem;  /* text-2xs */
+    --panel-px: 0.75rem;    /* px-3 */
+  }
+  [data-density="comfortable"] {
+    --row-py: 0.625rem;     /* py-2.5 (default) */
+    --cell-text: 0.75rem;   /* text-xs */
+    --panel-px: 1rem;       /* px-4 */
+  }
+  [data-density="spacious"] {
+    --row-py: 1rem;         /* py-4 */
+    --cell-text: 0.875rem;  /* text-sm */
+    --panel-px: 1.5rem;     /* px-6 */
+  }
+  /* Override prose defaults to use our font stack and zero radius */
+  .prose {
+    font-family: var(--font-sans);
+    max-width: none;
+  }
+  .prose pre {
+    border-radius: 0;
+    border: 1px solid var(--border);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    background-color: var(--code-bg) !important;
+  }
+  .prose code {
+    border-radius: 0;
+    font-family: var(--font-mono);
+    color: var(--primary);
+    background: color-mix(in oklch, var(--primary) 10%, transparent);
+    padding: 0.15em 0.35em;
+    font-weight: 400;
+  }
+  .prose code::before,
+  .prose code::after {
+    content: none;
+  }
+  .prose blockquote {
+    border-radius: 0;
+    border-left-color: var(--primary);
+    font-style: italic;
+    font-family: var(--font-serif);
+  }
+  .prose h1, .prose h2, .prose h3, .prose h4 {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
+  .prose a {
+    color: var(--primary);
+    text-underline-offset: 3px;
+    font-weight: 500;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   TAC EXPRESS DESIGN UTILITIES — @layer utilities
+   All color references use CSS custom properties only (LAW 1 compliant).
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+@layer utilities {
+  /* 1. Structural Panel / Border Framing */
+  .tac-fui-panel {
+    position: relative;
+    background: var(--card);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+    overflow: visible !important;
+  }
+
+  .tac-fui-border {
+    position: relative;
+    background: var(--background);
+    border: 1px solid var(--border);
+  }
+
+  /* 2. Interactive Hover State */
+  .tac-fui-hover {
+    transition: all var(--duration-fast) var(--ease-linear);
+  }
+  .tac-fui-hover:hover {
+    border-color: var(--primary);
+    background: var(--overlay-primary-soft);
+  }
+
+  /* ── v6 — Hover Intelligence ──
+     Multi-axis hover signal: bg shift + border activate + sub-pixel lift.
+     Preserves brutalist offset (no soft shadow) — the lift is just 1px translate.
+     Use on cards / KPI panels / primary buttons. */
+  .tac-hover-lift {
+    transition: background-color var(--motion-instant),
+                border-color var(--motion-instant),
+                transform var(--motion-instant);
+    will-change: transform;
+  }
+  .tac-hover-lift:hover {
+    background-color: var(--surface-hover);
+    border-color: var(--primary);
+    transform: translate3d(-1px, -1px, 0);
+  }
+  .tac-hover-lift:active {
+    background-color: var(--surface-active);
+    transform: translate3d(0, 0, 0);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .tac-hover-lift,
+    .tac-hover-lift:hover,
+    .tac-hover-lift:active {
+      transform: none;
+      transition: background-color var(--motion-instant),
+                  border-color var(--motion-instant);
+    }
+  }
+
+  /* ── v6 — Focus Polish ──
+     2-layer focus signal: 1px hard outline (primary) + 8px primary bloom.
+     Apply via `focus-visible:tac-focus-premium`. Replaces generic `ring-[3px] ring-ring/50`. */
+  .tac-focus-premium {
+    outline: 1px solid var(--primary);
+    outline-offset: 1px;
+    box-shadow: 0 0 8px color-mix(in oklch, var(--primary) 40%, transparent);
+  }
+
+  /* 3. Mono Label
+   *
+   * Two-class split (LB-3 / Option B):
+   *
+   *   .tac-mono-label-base — non-color typography only (mono font family,
+   *     11px, semibold, 0.08em tracking, uppercase). Use on surfaces
+   *     where the design specifies a non-default color — most notably
+   *     bg-primary contexts, where pairing with the existing
+   *     text-primary-foreground token is the legible choice. Because
+   *     this class doesn't declare a color, the explicit text-* class
+   *     wins cleanly without cascade gymnastics.
+   *
+   *   .tac-mono-label — base typography + brand --primary color, with the
+   *     brighter --primary-mono-label variant in dark mode for WCAG AA
+   *     contrast on neutral surfaces. Light mode falls back to --primary
+   *     (already passes AA on the light background).
+   *
+   * Issue #173 / PR #176 / LB-3. */
+  .tac-mono-label-base,
+  .tac-mono-label {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .tac-mono-label {
+    color: var(--primary-mono-label, var(--primary));
+  }
+
+  /* 4. Signal Glow */
+  .tac-signal-glow {
+    box-shadow:
+      0 0 0 1px var(--primary),
+      0 0 8px color-mix(in oklch, var(--primary) 40%, transparent);
+  }
+
+  /* 5. Surface convenience classes */
+  .tac-surface {
+    background: var(--surface);
+    color: var(--surface-foreground);
+  }
+
+  .tac-overlay {
+    background: var(--overlay);
+    color: var(--overlay-foreground);
+  }
+
+  .tac-code-bg {
+    background: var(--code-bg);
+  }
+
+  /* 6. Scanline Effect */
+  .tac-scanline {
+    position: relative;
+    overflow: hidden;
+  }
+  .tac-scanline::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: color-mix(in oklch, var(--primary) 40%, transparent);
+    animation: scanline 8s linear infinite;
+    pointer-events: none;
+    z-index: 50;
+  }
+
+  /* 7. Hazard Stripes */
+  .tac-hazard-stripes {
+    background-image: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 10px,
+      color-mix(in oklch, var(--border) 50%, transparent) 10px,
+      color-mix(in oklch, var(--border) 50%, transparent) 20px
+    );
+  }
+
+  /* 8. Blinking Cursor/Element */
+  .tac-blink {
+    animation: blink 1s step-end infinite;
+  }
+
+  /* 6. Print-safe label wrapper */
+  .tac-print-label {
+    background: var(--print-bg);
+    color: var(--print-fg);
+    border-color: var(--print-border);
+  }
+
+  /* Full-bleed hero helper — compensates for layout padding at each breakpoint */
+  .tac-hero-bleed {
+    margin-left: calc(-1.25rem);   /* -mx-5 */
+    margin-right: calc(-1.25rem);
+    width: calc(100% + 2.5rem);
+  }
+  @media (min-width: 640px) {
+    .tac-hero-bleed {
+      margin-left: calc(-2rem);    /* sm:-mx-8 */
+      margin-right: calc(-2rem);
+      width: calc(100% + 4rem);
+    }
+  }
+  @media (min-width: 1024px) {
+    .tac-hero-bleed {
+      margin-left: calc(-2.5rem);  /* lg:-mx-10 */
+      margin-right: calc(-2.5rem);
+      width: calc(100% + 5rem);
+    }
+  }
+
+  /* ── TYPE SCALE — Violet Grid (premium rendering) ── */
+
+  .t-display {
+    font-family: var(--font-sans);
+    font-size: 3rem;
+    font-weight: 800;
+    letter-spacing: -0.045em;
+    line-height: 1.03;
+    text-wrap: balance;
+    font-feature-settings: "liga" 1, "kern" 1, "ss01" 1;
+  }
+
+  .t-h1 {
+    font-family: var(--font-sans);
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    line-height: 1.12;
+    text-wrap: balance;
+    font-feature-settings: "liga" 1, "kern" 1;
+  }
+
+  .t-h2 {
+    font-family: var(--font-sans);
+    font-size: 1.375rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.18;
+    text-wrap: balance;
+    font-feature-settings: "liga" 1, "kern" 1;
+  }
+
+  .t-h3 {
+    font-family: var(--font-sans);
+    font-size: 1.125rem;
+    font-weight: 600;
+    letter-spacing: -0.022em;
+    line-height: 1.28;
+    font-feature-settings: "liga" 1, "kern" 1;
+  }
+
+  .t-h4 {
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    letter-spacing: -0.016em;
+    line-height: 1.35;
+  }
+
+  .t-body {
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    line-height: 1.6;
+  }
+
+  .t-body-sm {
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    line-height: 1.55;
+  }
+
+  .t-caption {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: -0.005em;
+    line-height: 1.5;
+    color: var(--muted-foreground);
+  }
+
+  .t-overline {
+    font-family: var(--font-sans);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    line-height: 1.4;
+    text-transform: uppercase;
+  }
+
+  .t-data {
+    font-family: var(--font-mono);
+    font-size: 2.5rem;
+    font-weight: 600;
+    letter-spacing: -0.05em;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1, "zero" 1;
+  }
+
+  .t-data-sm {
+    font-family: var(--font-mono);
+    font-size: 1.25rem;
+    font-weight: 500;
+    letter-spacing: -0.018em;
+    line-height: 1.1;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1, "zero" 1;
+  }
+
+  .t-mono {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 400;
+    letter-spacing: 0em;
+    line-height: 1.5;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+  }
+
+  .t-mono-sm {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 400;
+    letter-spacing: 0em;
+    line-height: 1.4;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+  }
+
+  /* ── TEXT GRADIENTS (LAW 1: defined here, not in components) ── */
+
+  /* Violet primary gradient — for headings and key labels */
+  .t-gradient-primary {
+    background: linear-gradient(
+      135deg,
+      var(--primary) 0%,
+      color-mix(in oklch, var(--primary) 65%, oklch(0.72 0.18 320)) 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Hero gradient — wider sweep for display/h1 text */
+  .t-gradient-hero {
+    background: linear-gradient(
+      118deg,
+      color-mix(in oklch, var(--primary) 80%, oklch(0.60 0.22 250)) 0%,
+      var(--primary) 42%,
+      color-mix(in oklch, var(--primary) 72%, oklch(0.78 0.17 320)) 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Success gradient — for positive KPI values */
+  .t-gradient-success {
+    background: linear-gradient(
+      135deg,
+      var(--accent-success) 0%,
+      color-mix(in oklch, var(--accent-success) 60%, oklch(0.75 0.18 180)) 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ── TEXT SHADOWS & GLOW ── */
+
+  .text-shadow-sm {
+    text-shadow: var(--text-shadow-sm);
+  }
+
+  .text-shadow-md {
+    text-shadow: var(--text-shadow-md);
+  }
+
+  .text-shadow-lg {
+    text-shadow: var(--text-shadow-lg);
+  }
+
+  /* Primary violet glow — dark mode hero headings */
+  .text-glow-primary {
+    text-shadow: var(--text-glow-primary);
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════
+     TAC Orbital · Telemetry typography utilities (docs/CHARTS-ORBITAL.md)
+     Use ONLY inside chart primitives. Companions to the t-* type scale.
+     ══════════════════════════════════════════════════════════════════════ */
+
+  .tac-caption {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;          /* 11px */
+    line-height: 1rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted-foreground);
+  }
+
+  .tac-axis {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;          /* 11px */
+    line-height: 1rem;
+    letter-spacing: 0.04em;
+    font-variant-numeric: tabular-nums;
+    color: var(--chart-axis);
+  }
+
+  .tac-tag {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;           /* 10px */
+    line-height: 0.875rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted-foreground);
+  }
+
+  .tac-readout {
+    font-feature-settings: "tnum" 1, "lnum" 1;
+    font-variant-numeric: tabular-nums lining-nums;
+    letter-spacing: -0.01em;
+  }
+
+  /* Recharts override — dotted grid + muted cursor for Orbital chart family. */
+  .recharts-tooltip-cursor {
+    fill: var(--chart-track);
+    fill-opacity: 0.4;
+  }
+  .recharts-cartesian-grid line {
+    stroke: var(--chart-grid);
+    stroke-dasharray: 2 2;
+  }
+  .recharts-cartesian-axis-line {
+    stroke: var(--chart-grid);
+  }
+  .recharts-cartesian-axis-tick-line {
+    stroke: var(--chart-grid);
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════════
+     PAPER OPS CONSOLE UTILITIES
+     Scoped to elements rendered inside `.ops-console` so they never leak into
+     Violet Grid v6 pages. All values reference --paper-* tokens (LAW 1).
+     ══════════════════════════════════════════════════════════════════════════ */
+
+  /* Diagonal hatch stripe — top + bottom edge of every Frame */
+  .paper-hatch-band {
+    background-image: repeating-linear-gradient(
+      135deg,
+      var(--paper-line) 0 6px,
+      transparent 6px 12px
+    );
+    height: 0.5rem;
+  }
+
+  /* Corner brackets — 1.5px L-tick on top-left + bottom-right of cards */
+  .paper-card-ticks {
+    position: relative;
+  }
+  .paper-card-ticks::before,
+  .paper-card-ticks::after {
+    content: "";
+    position: absolute;
+    width: 0.625rem;
+    height: 0.625rem;
+    pointer-events: none;
+  }
+  .paper-card-ticks::before {
+    top: 0.375rem;
+    left: 0.375rem;
+    border-top: 1.5px solid var(--paper-line-2);
+    border-left: 1.5px solid var(--paper-line-2);
+  }
+  .paper-card-ticks::after {
+    bottom: 0.375rem;
+    right: 0.375rem;
+    border-bottom: 1.5px solid var(--paper-line-2);
+    border-right: 1.5px solid var(--paper-line-2);
+  }
+
+  /* Frame ticks — larger 2px L-tick at content frame corners */
+  .paper-frame-ticks {
+    position: relative;
+  }
+  .paper-frame-ticks > .paper-tick-tl,
+  .paper-frame-ticks > .paper-tick-br {
+    position: absolute;
+    width: 0.75rem;
+    height: 0.75rem;
+    pointer-events: none;
+  }
+  .paper-frame-ticks > .paper-tick-tl {
+    top: 0.875rem;
+    left: 0.375rem;
+    border-top: 2px solid var(--paper-line-3);
+    border-left: 2px solid var(--paper-line-3);
+  }
+  .paper-frame-ticks > .paper-tick-br {
+    bottom: 0.875rem;
+    right: 0.375rem;
+    border-bottom: 2px solid var(--paper-line-3);
+    border-right: 2px solid var(--paper-line-3);
+  }
+
+  /* Paper type — mono uppercase labels carry the operator-terminal voice */
+  .paper-eyebrow,
+  .paper-label {
+    font-family: var(--paper-font-mono);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--paper-fg-3);
+    line-height: 1;
+  }
+  .paper-id {
+    font-family: var(--paper-font-mono);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--paper-violet);
+  }
+  .paper-code {
+    font-family: var(--paper-font-mono);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    line-height: 1.4;
+    color: var(--paper-fg-1);
+  }
+  .paper-h1 {
+    font-family: var(--paper-font-display);
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    color: var(--paper-fg-1);
+  }
+  .paper-h2 {
+    font-family: var(--paper-font-display);
+    font-size: 1.375rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    color: var(--paper-fg-1);
+  }
+  .paper-h3 {
+    font-family: var(--paper-font-display);
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--paper-fg-1);
+  }
+  .paper-stat-value {
+    font-family: var(--paper-font-display);
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1.1;
+    color: var(--paper-fg-1);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Inset 1px line — the only "elevation" the paper system uses */
+  .paper-inset-line {
+    box-shadow: inset 0 0 0 1px var(--paper-line);
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   KEYFRAME ANIMATIONS
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+@keyframes shimmer {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(1000%); }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes marquee-x {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(-100% - var(--gap))); }
+}
+
+@keyframes marquee-y {
+  from { transform: translateY(0); }
+  to { transform: translateY(calc(-100% - var(--gap))); }
+}
+
+/* Skeleton-pulse — used by route-level loading.tsx skeletons. Custom keyframes
+   per LAW 3 (animations via motion/react, tw-animate-css, OR @keyframes in
+   globals.css). Mirrors the cadence of Tailwind's built-in animate-pulse but
+   keeps the animation name within the project's design system. */
+@keyframes skeleton-pulse {
+  50% { opacity: 0.5; }
+}
+
+@layer utilities {
+  .animate-marquee-x {
+    animation: marquee-x var(--duration) linear infinite;
+  }
+
+  .animate-marquee-y {
+    animation: marquee-y var(--duration) linear infinite;
+  }
+
+  .animate-skeleton-pulse {
+    animation: skeleton-pulse var(--duration-pulse) var(--ease-in-out) infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-skeleton-pulse {
+      animation: none;
+    }
+  }
+
+  .animate-reverse {
+    animation-direction: reverse;
+  }
+
+  .pause-on-hover:hover > div {
+    animation-play-state: paused;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   VIEW TRANSITIONS API
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   PRINT STYLES
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+@media print {
+  aside[data-slot="dashboard-sidebar"],
+  header[data-slot="dashboard-header"],
+  [data-slot="notifications-trigger"],
+  [data-slot="theme-toggle"],
+  [data-print-hide="true"] {
+    display: none !important;
+  }
+  body,
+  html {
+    background: white !important;
+  }
+}

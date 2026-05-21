@@ -1,0 +1,56 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# Dependencies
+node_modules
+.pnp
+.pnp.js
+
+# Local env files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Testing
+coverage
+
+# Playwright (visual + a11y)
+**/playwright-report/
+**/test-results/
+**/e2e/.auth/
+**/playwright/.cache/
+
+# Turbo
+.turbo
+
+# Vercel
+.vercel
+
+# Build Outputs
+.next/
+out/
+build
+dist
+*.tsbuildinfo
+**/.tsbuildinfo
+
+
+# Debug
+npm-debug.log*
+
+# Misc
+.DS_Store
+*.pem
+
+# Per-user Claude Code / editor / agent settings (never commit)
+.claude/settings.local.json
+.claude/worktrees/
+.cursor/
+.windsurf/settings.local.json
+.vscode/settings.local.json
+
+# Audit working scratch — per-route JSON + v6 recovery snapshots written by
+# Claude_Preview audit runs. The consolidated docs in docs/ are the
+# artifacts that matter.
+.audit-cache/

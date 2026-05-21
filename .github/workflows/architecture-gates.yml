@@ -1,0 +1,277 @@
+# Architecture gates — every PR runs these. Together with the existing
+# typecheck and lint workflows, this completes Sprint 5's CI hardening:
+#
+#   - registry-check: prevents the @tac registry from drifting out of sync
+#     with its source files. Catches a contributor editing
+#     packages/ui/src/components/button.tsx without re-running
+#     `pnpm --filter @workspace/ui registry:build`.
+#
+#   - audit:governance: enforces LAW 2 (no UI under apps/*/components/)
+#     and LAW 8 (no @supabase/supabase-js outside packages/database).
+#     Both are codified in scripts/audit-governance.mjs with exact-path
+#     allowlists, not pattern matching.
+#
+#   - bundle-size: enforces a hard budget per
+#     `apps/dashboard/.bundle-budget.json`. Exceeding any limit fails
+#     this workflow. Raise the budget deliberately, with a same-PR
+#     justification — the budget IS the contract.
+#
+#   - migrations-fresh-apply: runs `supabase db reset` against an empty
+#     Postgres so any migration that won't apply cleanly fails the PR.
+#     Catches the May 2026 broken-trigger-migration class of bug, where
+#     the SQL parsed at definition time but exploded on backfill / first
+#     INSERT. CodeRabbit / Macroscope cannot catch this — it requires
+#     actually executing the SQL.
+#
+
+name: architecture-gates
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "apps/**"
+      - "packages/**"
+      - "scripts/**"
+      - "supabase/**"
+      # Root dependency manifests — without these the npm-audit job
+      # below would skip on Dependabot-driven PRs (which are exactly the
+      # PRs that need it).
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - "pnpm-workspace.yaml"
+      - ".github/dependabot.yml"
+      - ".github/workflows/architecture-gates.yml"
+      # Authoritative production-readiness backlog. An edit-only PR to this
+      # file MUST trigger the backlog-refs-drift gate (added 2026-05-17 with
+      # the #136 sentinel) — without this entry, the workflow's paths filter
+      # would skip the entire run on a docs-only backlog edit, defeating the
+      # forcing function. The sentinel file itself lives under apps/dashboard
+      # and is already covered by the apps/** entry.
+      - "docs/backlog/**"
+  push:
+    branches: [main]
+
+concurrency:
+  group: arch-${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  registry-check:
+    name: "@tac registry sync + smoke"
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Verify @tac registry JSON files are in sync with sources
+        run: pnpm --filter @workspace/ui registry:check
+      - name: End-to-end smoke — local HTTP server + fetch + diff against source
+        run: pnpm --filter @workspace/ui registry:smoke
+
+  governance:
+    name: LAW gates
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Run governance audit (LAW 2 / LAW 8 / design-system specifics)
+        run: pnpm audit:governance
+
+  migrations-fresh-apply:
+    name: Migrations apply on fresh DB
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    # LOAD-BEARING — gate failures BLOCK merge.
+    # Soft-fail mode was removed 2026-05-15 after the Path A migration
+    # baseline (#96) + OPERATOR fix (#97) + advisor fix (#98) reconciled
+    # the repo with production. The gate has run green on every PR since
+    # the consolidated baseline replaced the divergent migration history.
+    # If you need to ship a migration that intentionally restructures
+    # state and `supabase db reset` fails, fix the migration — don't
+    # re-add continue-on-error.
+    # The workflow's top-level `paths:` filter already gates this whole
+    # workflow to PRs touching apps/packages/scripts/supabase/workflow,
+    # so this job runs whenever the workflow runs. Boot + reset + CLI
+    # install is ~2 min — acceptable cost for the safety net.
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Supabase CLI
+        uses: supabase/setup-cli@v1
+        with:
+          version: latest
+      - name: Start Supabase (db + auth + storage only — minimal)
+        # --exclude trims the boot to ~60s on GH runners by skipping
+        # services we don't need to validate migrations. Container names
+        # per `supabase start --help`: edge-runtime, gotrue, imgproxy, kong,
+        # logflare, mailpit, postgres-meta, postgrest, realtime, storage-api,
+        # studio, supavisor, vector. We keep gotrue + postgrest + kong so the
+        # auth template path validation still runs (catches our May 2026
+        # missing-template-files class of bug).
+        run: |
+          supabase start \
+            --exclude=studio,mailpit,realtime,storage-api,imgproxy,edge-runtime,logflare,vector,postgres-meta,supavisor
+      - name: Reset DB — apply every migration + seed against empty Postgres
+        # `db reset` drops the schema and replays migrations in order. Any
+        # migration that contains invalid SQL, references missing columns,
+        # uses an undefined enum value, or fails its own backfill will
+        # exit non-zero here.
+        run: supabase db reset --debug
+      - name: Stop Supabase (best effort)
+        if: always()
+        run: supabase stop --no-backup || true
+
+  npm-audit:
+    name: npm audit (production deps)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    # LOAD-BEARING — gate failures BLOCK merge.
+    # Soft-fail mode (continue-on-error: true) was removed 2026-05-15
+    # after PR #107 cleared the initial 23-vuln snapshot. Next + uuid
+    # were bumped to patched versions, and pnpm.overrides forced
+    # fast-uri / postcss to fixed versions until upstream catches up.
+    # `pnpm audit --prod --audit-level moderate` now returns "No known
+    # vulnerabilities found" — any new moderate-or-above finding on a
+    # PR is a real regression that should block.
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: pnpm audit (production-only)
+        # `--prod` excludes devDependencies. The dashboard runs the deps
+        # in production; devDeps surface in the dev workflow only and
+        # have a different threat model.
+        run: pnpm audit --prod --audit-level moderate
+
+  backlog-refs-drift:
+    name: Backlog references drift check
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    # LOAD-BEARING — gate failures BLOCK merge.
+    # Runs ONLY the backlog-drift sentinel (apps/dashboard/__tests__/
+    # backlog-refs-drift.test.ts). Verifies every code reference in
+    # docs/backlog/production-readiness.md still resolves on current main.
+    #
+    # Narrow on purpose — see PHASE-0 decision § E in
+    # docs/decisions/2026-05-17-backlog-drift-sentinel.md. The "Unit tests"
+    # job below ALSO runs this sentinel (it runs the full vitest suite),
+    # but this narrow job is kept for failure-message clarity on the PR
+    # check list — a backlog drift fires unambiguously as "Backlog
+    # references drift check ❌" instead of buried inside the broader
+    # "Unit tests ❌" surface. Also: the workflow's paths filter includes
+    # docs/backlog/**, so a backlog edit triggers this job specifically.
+    #
+    # The sentinel guards docs/backlog/production-readiness.md, which is
+    # AUTHORITATIVE for the open production-readiness item list — #102-the-
+    # GitHub-issue is a human-facing pointer. See PHASE-0 § B.
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Verify every backlog ref still exists on main
+        # Invoked from repo root via the root-level vitest config — the
+        # project has only ONE vitest config (./vitest.config.ts); the
+        # dashboard package does not have its own. Using the root-level
+        # config also ensures the test exclusion list (.claude/worktrees/**,
+        # node_modules/**, etc.) is honoured consistently.
+        run: pnpm test apps/dashboard/__tests__/backlog-refs-drift.test.ts
+
+  unit-tests:
+    name: Unit tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    # CodeRabbit PR #149 hardening: pin GITHUB_TOKEN to least-privilege
+    # (read-only contents) at job scope so a future repo/org default change
+    # cannot silently widen token access during test execution. Only this
+    # job carries the explicit block today; the other architecture-gates
+    # jobs inherit the GitHub default. Converging them is its own cleanup
+    # PR (outside this PR's "wire the gate" scope).
+    permissions:
+      contents: read
+    # LOAD-BEARING — gate failures BLOCK merge. Added by PR #<TBD> as the
+    # explicit policy decision PR #146's backlog-drift sentinel deferred:
+    #
+    # "We deliberately do NOT add a generic 'pnpm test' CI gate in this
+    # PR — that would promote every existing unit test (including the
+    # four other sentinels which today run locally-only) to a merge-
+    # blocker, which is a separate policy decision."
+    #                             — architecture-gates.yml, PR #146 comment
+    #
+    # This job is that separate policy decision. The 712-test vitest suite
+    # (including the five named sentinel tests — rbac-block-adoption,
+    # api-routes-no-console, silent-by-design, audit-doc-references,
+    # audit-logs-no-update-delete — plus backlog-refs-drift run separately
+    # above for name-level clarity) now runs on every architecture-gates-
+    # triggering PR. Test failures BLOCK merge.
+    #
+    # Pre-this-PR ground truth: NO workflow ran `pnpm test`. The five
+    # named sentinels above were believed CI-gated but ran only locally
+    # via the pre-commit checklist — a discipline gate, not a mechanical
+    # gate. With this job added, the project's test-based guardrails are
+    # genuinely load-bearing on CI.
+    #
+    # Failure surface: vitest's standard FAIL output names the failing
+    # test by file + describe > it chain (e.g., "FAIL packages/services/
+    # src/__tests__/silent-by-design.test.ts > silent-by-design sentinel
+    # > marker is at canonical site"). A reviewer drilling into a failed
+    # "Unit tests" check gets immediate diagnosis. The check NAME is
+    # generic ("Unit tests") but the OUTPUT is precise.
+    #
+    # Runtime budget: ~30 sec for the test suite on a warm vitest cache,
+    # plus install (~1 min) and node setup. ~3-4 min total. Acceptable.
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Run the full vitest unit suite (includes all sentinels)
+        run: pnpm test
+
+  bundle-size:
+    name: Bundle size
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Build dashboard
+        run: pnpm --filter dashboard build
+      - name: Measure bundle size
+        run: pnpm measure:bundle
+      - name: Upload bundle report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bundle-size-report
+          path: docs/BUNDLE-SIZE-LATEST.md
+          retention-days: 30

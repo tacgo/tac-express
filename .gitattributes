@@ -1,0 +1,58 @@
+# Normalise line endings for the entire monorepo.
+# Without this file, Windows clones produce CRLF-vs-LF noise diffs every
+# time someone touches a source file under Git's `core.autocrlf=true`
+# default. Pinning all text to LF keeps the working tree, the index, and
+# the remote consistent regardless of OS.
+
+# Default: detect text vs binary, store as LF in the repo.
+* text=auto eol=lf
+
+# Source — explicit LF for the formats we care about most.
+*.ts        text eol=lf
+*.tsx       text eol=lf
+*.js        text eol=lf
+*.jsx       text eol=lf
+*.mjs       text eol=lf
+*.cjs       text eol=lf
+*.json      text eol=lf
+*.yaml      text eol=lf
+*.yml       text eol=lf
+*.md        text eol=lf
+*.css       text eol=lf
+*.scss      text eol=lf
+*.html      text eol=lf
+*.svg       text eol=lf
+*.sql       text eol=lf
+*.toml      text eol=lf
+*.env       text eol=lf
+*.example   text eol=lf
+.gitattributes  text eol=lf
+.gitignore      text eol=lf
+
+# Shell scripts must be LF regardless of platform — CRLF breaks `bash`.
+*.sh        text eol=lf
+*.bash      text eol=lf
+
+# Windows-only scripts keep CRLF (PowerShell tolerates LF but cmd.exe
+# bat/cmd files are happier with CRLF).
+*.ps1       text eol=crlf
+*.bat       text eol=crlf
+*.cmd       text eol=crlf
+
+# Binary — never normalise.
+*.png       binary
+*.jpg       binary
+*.jpeg      binary
+*.gif       binary
+*.webp      binary
+*.ico       binary
+*.pdf       binary
+*.lottie    binary
+*.woff      binary
+*.woff2     binary
+*.ttf       binary
+*.otf       binary
+*.eot       binary
+*.zip       binary
+*.gz        binary
+*.tgz       binary

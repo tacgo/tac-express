@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 64" width="320" height="64">
+  
+  <text x="0" y="34" class="tac" fill="#0E0F12">TAC</text>
+  <text x="74" y="34" class="tac" fill="#F59E0B">EXPRESS</text>
+  <text x="248" y="34" class="tac" fill="#F59E0B">→</text>
+  <text x="0" y="52" class="sub">IMPHAL // PROD</text>
+</svg>

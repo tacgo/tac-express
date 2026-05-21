@@ -1,0 +1,165 @@
+# Production-DB migration deployment.
+#
+# Triggered on push to main whenever supabase/migrations/** changes. Applies
+# every NEW migration (since the last applied) to the production Supabase
+# project via `supabase db push`. The CI's existing `migrations-fresh-apply`
+# gate ALREADY proves each migration applies cleanly against an empty Postgres
+# on every PR; this workflow is the deployment half of that pair — it pushes
+# the verified migrations to remote production after merge.
+#
+# Why this exists (root fix for #174)
+# -----------------------------------
+# Pre-existing gap: between 2026-05-16 and 2026-05-18, four migrations were
+# merged to main but never reached the remote production database:
+#   - 20260516000001_audit_logs_destructive_op_hardening.sql
+#   - 20260516000002_audit_logs_check_manifest_shipment_remove.sql
+#   - 20260517000001_whatsapp_sends_table.sql
+#   - 20260518000001_contact_leads.sql
+#
+# The CI fresh-apply gate proved each applies cleanly, but no automation pushed
+# them. /api/contact (PL-2b) would 500 in production because contact_leads
+# doesn't exist. This workflow closes that hole: every future migration on main
+# is automatically pushed.
+#
+# Secret requirements
+# -------------------
+# Two GitHub Actions repository secrets must be set for this workflow to run:
+#   - SUPABASE_ACCESS_TOKEN — a Supabase personal-access token with permission
+#     to push migrations to the production project. Generate at
+#     https://supabase.com/dashboard/account/tokens.
+#   - SUPABASE_DB_PASSWORD — the production database's `postgres` user
+#     password. Set in Supabase Dashboard → Project Settings → Database.
+#
+# Without both secrets present the job exits with a clear "missing secret"
+# error — it never silently no-ops. The job is also opt-in via the
+# `MIGRATION_DEPLOY_ENABLED` repository variable (defaults off until the owner
+# is ready); this provides a one-flag kill switch without deleting the file.
+#
+# One-time backfill of the 4 already-merged-but-undeployed migrations
+# -------------------------------------------------------------------
+# This workflow only fires on FUTURE pushes to main that touch migrations. To
+# backfill the four already-merged migrations, the owner runs ONCE locally
+# (after setting the secrets above as a local export) OR triggers the
+# `workflow_dispatch` event manually:
+#
+#   # Option A — local
+#   cd <project-root>
+#   supabase login
+#   supabase link --project-ref <your-supabase-project-ref>
+#   supabase db push
+#
+#   # Option B — GH Actions
+#   gh workflow run migration-deploy.yml
+#
+# Verification after either path:
+#   psql / Supabase SQL editor →
+#     SELECT table_name FROM information_schema.tables
+#     WHERE table_schema='public'
+#     AND table_name IN ('contact_leads','whatsapp_sends');
+#   Both should appear.
+#
+# Safety posture
+# --------------
+# - Forward-only. `supabase db push` does not run down-migrations.
+# - Idempotent. Re-running against an up-to-date DB is a no-op.
+# - Manual trigger via workflow_dispatch is the only way to fire without
+#   merging a migration to main; the auto-trigger is path-filtered.
+# - The job is opt-in via `vars.MIGRATION_DEPLOY_ENABLED` so this workflow
+#   ships in a dormant state until the owner is ready.
+
+name: migration-deploy
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "supabase/migrations/**"
+      - ".github/workflows/migration-deploy.yml"
+  workflow_dispatch:
+    # Manual trigger for the one-time backfill of the four already-merged
+    # migrations + any future emergency-deploy scenarios.
+    inputs:
+      reason:
+        description: "Why this manual run? (audit trail)"
+        required: false
+        default: "Manual deploy / backfill"
+
+concurrency:
+  group: migration-deploy-${{ github.workflow }}-${{ github.ref }}
+  # Migrations are serial; never run two deploys concurrently. Cancel queued
+  # runs if a newer one arrives — the newer ref includes the older's changes.
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Deploy migrations to production
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      SUPABASE_PROJECT_REF: ${{ vars.SUPABASE_PROJECT_REF }}
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+
+    steps:
+      - name: Opt-in gate
+        # The repository variable MIGRATION_DEPLOY_ENABLED controls whether
+        # this workflow proceeds. Default-off until the owner has set the
+        # secrets above and is ready to switch on automatic deployment.
+        # To enable: Repository → Settings → Secrets and variables → Actions
+        # → Variables → New variable → MIGRATION_DEPLOY_ENABLED=true.
+        run: |
+          if [ "${{ vars.MIGRATION_DEPLOY_ENABLED }}" != "true" ]; then
+            echo "::notice::MIGRATION_DEPLOY_ENABLED is not 'true' — skipping deploy."
+            echo "To enable: set repository variable MIGRATION_DEPLOY_ENABLED=true."
+            exit 0
+          fi
+          if [ -z "$SUPABASE_ACCESS_TOKEN" ]; then
+            echo "::error::SUPABASE_ACCESS_TOKEN secret is not set. Cannot deploy."
+            exit 1
+          fi
+          if [ -z "$SUPABASE_DB_PASSWORD" ]; then
+            echo "::error::SUPABASE_DB_PASSWORD secret is not set. Cannot deploy."
+            exit 1
+          fi
+          echo "::notice::Opt-in checks passed — proceeding with deploy."
+
+      - uses: actions/checkout@v4
+        if: vars.MIGRATION_DEPLOY_ENABLED == 'true'
+
+      - name: Install Supabase CLI
+        if: vars.MIGRATION_DEPLOY_ENABLED == 'true'
+        uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - name: Link to production project
+        if: vars.MIGRATION_DEPLOY_ENABLED == 'true'
+        # The CLI reads SUPABASE_ACCESS_TOKEN from env automatically.
+        run: supabase link --project-ref "$SUPABASE_PROJECT_REF"
+
+      - name: Show pending migrations
+        if: vars.MIGRATION_DEPLOY_ENABLED == 'true'
+        # supabase migration list --linked shows local-vs-remote diff so the
+        # job log records exactly which migrations are about to be pushed.
+        run: supabase migration list --linked
+
+      - name: Push migrations
+        if: vars.MIGRATION_DEPLOY_ENABLED == 'true'
+        # `db push` applies every new migration in order. Forward-only.
+        # Idempotent: a re-run against an up-to-date DB is a no-op.
+        run: supabase db push
+
+      - name: Verify post-deploy state
+        if: vars.MIGRATION_DEPLOY_ENABLED == 'true'
+        # Re-list and assert no new pending entries. A non-empty pending list
+        # after `db push` indicates a partial deploy and the job MUST fail
+        # loudly.
+        run: |
+          set -e
+          OUT=$(supabase migration list --linked)
+          echo "$OUT"
+          if echo "$OUT" | grep -E '^\s+\d+' | grep -v ' applied '; then
+            echo "::error::Pending migrations remain after db push."
+            exit 1
+          fi
+          echo "::notice::All migrations applied. Production schema is up to date."

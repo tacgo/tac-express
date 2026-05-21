@@ -1,0 +1,98 @@
+{
+    "$schema":  "https://v2-9-6.turborepo.dev/schema.json",
+    "ui":  "tui",
+    "tasks":  {
+                  "build":  {
+                                "dependsOn":  [
+                                                  "^build"
+                                              ],
+                                "inputs":  [
+                                               "$TURBO_DEFAULT$",
+                                               ".env*"
+                                           ],
+                                "outputs":  [
+                                                ".next/**",
+                                                "!.next/cache/**"
+                                            ]
+                            },
+                  "lint":  {
+                               "dependsOn":  [
+                                                 "^lint"
+                                             ],
+                               "env":  [
+                                           "NODE_ENV",
+                                           "NEXT_RUNTIME",
+                                           "CI",
+                                           "LOG_LEVEL",
+                                           "SENTRY_ALERT_NOTIFICATION_ACTION",
+                                           "SENTRY_DSN",
+                                           "SENTRY_ENV",
+                                           "SENTRY_RELEASE",
+                                           "SENTRY_AUTH_TOKEN",
+                                           "NEXT_PUBLIC_SENTRY_DSN",
+                                           "NEXT_PUBLIC_SENTRY_ENV",
+                                           "NEXT_PUBLIC_SENTRY_RELEASE",
+                                           "UPSTASH_REDIS_REST_URL",
+                                           "UPSTASH_REDIS_REST_TOKEN",
+                                           "WPBOX_API_TOKEN",
+                                           "WPBOX_USER_ID",
+                                           "WPBOX_BASE_URL",
+                                           "WPBOX_LEAD_NOTIFICATION_PHONE",
+                                           "WPBOX_LEAD_TEMPLATE_NAME",
+                                           "WPBOX_LEAD_TEMPLATE_LANGUAGE",
+                                           "WHATSAPP_ENABLED",
+                                           "PLAYWRIGHT_BASE_URL",
+                                           "INVOICE_PDF_SIGNING_SECRET",
+                                           "NEXT_PUBLIC_DASHBOARD_URL",
+                                           "NEXT_PUBLIC_WHATSAPP_INVOICE_TEMPLATE",
+                                           "COMPANY_LEGAL_NAME",
+                                           "COMPANY_ADDRESS",
+                                           "COMPANY_TEL",
+                                           "COMPANY_EMAIL",
+                                           "COMPANY_WEB",
+                                           "COMPANY_GSTIN",
+                                           "COMPANY_PAN",
+                                           "COMPANY_CIN",
+                                           "BANK_NAME",
+                                           "BANK_ACCOUNT",
+                                           "BANK_IFSC",
+                                           "BANK_SWIFT",
+                                           "BANK_UPI",
+                                           "E2E_USER_EMAIL",
+                                           "E2E_USER_PASSWORD",
+                                           "E2E_INVOICE_ID",
+                                           "E2E_AWB",
+                                           "E2E_MANIFEST_ID",
+                                           "E2E_SEED_DB_OK",
+                                           "BOOTSTRAP_BASELINE",
+                                           "AXE_FAIL_ON_VIOLATIONS",
+                                           "SUPABASE_SERVICE_ROLE_KEY",
+                                           "NEXT_PUBLIC_SUPABASE_URL"
+                                       ]
+                           },
+                  "format":  {
+                                 "dependsOn":  [
+                                                   "^format"
+                                               ]
+                             },
+                  "typecheck":  {
+                                    "dependsOn":  [
+                                                      "^typecheck"
+                                                  ]
+                                },
+                  "test":  {
+                               "dependsOn":  [
+                                                 "^test"
+                                             ]
+                           },
+                  "e2e":  {
+                              "dependsOn":  [
+                                                "^e2e"
+                                            ]
+                          },
+                  "dev":  {
+                              "cache":  false,
+                              "persistent":  true
+                          }
+              }
+}

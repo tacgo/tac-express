@@ -1,0 +1,26 @@
+{
+    "name":  "@workspace/types",
+    "version":  "0.0.0",
+    "type":  "module",
+    "private":  true,
+    "scripts":  {
+                    "lint":  "node ../eslint-config/node_modules/eslint/bin/eslint.js src --max-warnings 0",
+                    "format":  "prettier --write \"**/*.{ts,tsx}\"",
+                    "typecheck":  "tsc --noEmit"
+                },
+    "dependencies":  {
+                         "zod":  "^3.25.76"
+                     },
+    "devDependencies":  {
+                            "@workspace/eslint-config":  "workspace:*",
+                            "@workspace/typescript-config":  "workspace:*",
+                            "typescript":  "^5.9.3"
+                        },
+    "exports":  {
+                    ".":  "./src/index.ts",
+                    "./domain":  "./src/domain.types.ts",
+                    "./orbital":  "./src/orbital.types.ts",
+                    "./data/*":  "./src/data/*.ts",
+                    "./schemas/*":  "./src/schemas/*.ts"
+                }
+}

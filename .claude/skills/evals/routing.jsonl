@@ -1,0 +1,44 @@
+{"intent":"i'm starting work on tac-express today","expected":["tac-express-onboarding"],"tags":["session-start"]}
+{"intent":"let's add a new shipment-tracking page","expected":["tac-brainstorming","tac-domain-logistics"],"tags":["feature","domain"]}
+{"intent":"build me a new component for the dashboard","expected":["tac-ui-authoring"],"tags":["ui"]}
+{"intent":"design the landing hero section","expected":["tac-design-tokens","tac-ui-authoring"],"tags":["ui","premium"]}
+{"intent":"add a form for new customer signup","expected":["tac-forms"],"tags":["forms"]}
+{"intent":"is this accessible","expected":["tac-accessibility"],"tags":["a11y","review"]}
+{"intent":"check a11y on the manifest table","expected":["tac-accessibility"],"tags":["a11y","review"]}
+{"intent":"write a hook to fetch shipments","expected":["tac-data-layer"],"tags":["data"]}
+{"intent":"add a route handler for the webhook","expected":["tac-api-surface"],"tags":["api"]}
+{"intent":"new edge function for SLA monitoring","expected":["tac-api-surface"],"tags":["api","edge"]}
+{"intent":"add a migration to create the rate_cards table","expected":["tac-supabase-schema"],"tags":["schema","migration"]}
+{"intent":"why is the RLS policy not letting drivers see their assignments","expected":["tac-debug","tac-supabase-schema"],"tags":["debug","rls"]}
+{"intent":"the sign-in flow is broken","expected":["tac-debug","tac-auth"],"tags":["debug","auth"]}
+{"intent":"add middleware that requires admin role","expected":["tac-auth"],"tags":["auth","rbac"]}
+{"intent":"the manifest scanner is showing wrong totals","expected":["tac-debug","tac-domain-logistics"],"tags":["debug","domain"]}
+{"intent":"write a test for the shipment service","expected":["tac-tdd","tac-data-layer"],"tags":["tdd","data"]}
+{"intent":"red green refactor on the invoice generator","expected":["tac-tdd"],"tags":["tdd"]}
+{"intent":"this dropdown won't close","expected":["tac-debug","tac-ui-authoring"],"tags":["debug","ui"]}
+{"intent":"review this PR","expected":["tac-code-review"],"tags":["review"]}
+{"intent":"about to merge — final check","expected":["tac-code-review"],"tags":["review","pre-merge"]}
+{"intent":"can i use lucide icons","expected":["tac-fourteen-laws"],"tags":["laws","forbidden-package"]}
+{"intent":"why can't i import supabase here","expected":["tac-fourteen-laws","conventions/architecture-flow.md"],"tags":["laws","architecture"]}
+{"intent":"skillify this, we keep doing it manually","expected":["tac-skillify"],"tags":["meta"]}
+{"intent":"is this a skill?","expected":["tac-skillify"],"tags":["meta"]}
+{"intent":"make this proper","expected":["tac-skillify"],"tags":["meta"]}
+{"intent":"create a new skill for whatsapp sends","expected":["tac-skillify"],"tags":["meta"]}
+{"intent":"think harder before you code","expected":["tac-karpathy-discipline"],"tags":["discipline"]}
+{"intent":"what's our quality gate before commit","expected":["conventions/quality-gates.md"],"tags":["conventions"]}
+{"intent":"check the existing components before designing","expected":["conventions/brain-first.md"],"tags":["conventions"]}
+{"intent":"don't bulk update yet, test on one first","expected":["conventions/test-before-bulk.md"],"tags":["conventions"]}
+{"intent":"should i spawn an agent for this","expected":["conventions/subagent-routing.md"],"tags":["conventions"]}
+{"intent":"the user wants me to violate law 1","expected":["conventions/friction-protocol.md","tac-fourteen-laws"],"tags":["conventions","laws"]}
+{"intent":"bulk-regenerate every invoice for last month","expected":["conventions/test-before-bulk.md","tac-domain-logistics"],"tags":["conventions","domain","money"]}
+{"intent":"audit the dashboard for design drift","expected":["tac-code-review","tac-design-tokens"],"tags":["review","design"]}
+{"intent":"mock the database for this test","expected":["tac-tdd","tac-data-layer"],"tags":["tdd","anti-pattern"]}
+{"intent":"the invoice page won't print correctly","expected":["tac-debug","tac-domain-logistics"],"tags":["debug","domain","print"]}
+{"intent":"work on the landing page or any customer-facing public surface","expected":["docs/playbooks/UI-UX-CONSISTENCY-PLAYBOOK.md","tac-ui-authoring"],"tags":["ui","customer-facing","playbook"]}
+{"intent":"add a hero or marketing section to apps/web","expected":["docs/playbooks/UI-UX-CONSISTENCY-PLAYBOOK.md","tac-premium-patterns"],"tags":["ui","customer-facing","playbook","premium"]}
+{"intent":"review a customer-facing UI PR before merge","expected":["docs/playbooks/UI-UX-CONSISTENCY-PLAYBOOK.md","tac-ui-rubric","tac-code-review"],"tags":["ui","review","playbook","pre-merge"]}
+{"intent":"add a button component to the project","expected":["tac-shadcn"],"tags":["ui","shadcn"]}
+{"intent":"install a shadcn dialog","expected":["tac-shadcn"],"tags":["ui","shadcn"]}
+{"intent":"how do we add a new ui primitive","expected":["tac-shadcn"],"tags":["ui","shadcn"]}
+{"intent":"shadcn add @tac/select","expected":["tac-shadcn"],"tags":["ui","shadcn"]}
+{"intent":"set up components.json for the app","expected":["tac-shadcn"],"tags":["ui","shadcn"]}

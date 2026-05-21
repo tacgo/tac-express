@@ -1,0 +1,61 @@
+{
+    "name": "@workspace/services",
+    "version": "0.0.0",
+    "type": "module",
+    "private": true,
+    "scripts": {
+        "lint": "node ../eslint-config/node_modules/eslint/bin/eslint.js src --max-warnings 0",
+        "format": "prettier --write \"**/*.{ts,tsx}\"",
+        "typecheck": "tsc --noEmit"
+    },
+    "dependencies": {
+        "@react-pdf/renderer": "^4.5.1",
+        "@tanstack/react-query": "^5.75.2",
+        "@workspace/database": "workspace:*",
+        "@workspace/types": "workspace:*",
+        "@zxing/browser": "^0.1.5",
+        "@zxing/library": "^0.21.3",
+        "bwip-js": "^4.9.2",
+        "date-fns": "^3.6.0",
+        "idb-keyval": "^6.2.2",
+        "uuid": "^11.1.1",
+        "zustand": "^5.0.5"
+    },
+    "devDependencies": {
+        "@types/node": "^25.1.0",
+        "@types/react": "^19.2.14",
+        "@types/uuid": "^10.0.0",
+        "@workspace/eslint-config": "workspace:*",
+        "@workspace/typescript-config": "workspace:*",
+        "react": "^19.2.4",
+        "typescript": "^5.9.3"
+    },
+    "exports": {
+        ".": "./src/index.ts",
+        "./stores/*": "./src/stores/*.ts",
+        "./hooks/*": "./src/hooks/*.ts",
+        "./hooks/use-hubs": "./src/hooks/use-hubs.ts",
+        "./dashboard.service": "./src/dashboard.service.ts",
+        "./shipment.service": "./src/shipment.service.ts",
+        "./manifest.service": "./src/manifest.service.ts",
+        "./invoice.service": "./src/invoice.service.ts",
+        "./customer.service": "./src/customer.service.ts",
+        "./payment.service": "./src/payment.service.ts",
+        "./exception.service": "./src/exception.service.ts",
+        "./analytics.service": "./src/analytics.service.ts",
+        "./orbital.service": "./src/orbital.service.ts",
+        "./admin.service": "./src/admin.service.ts",
+        "./scan-sync.service": "./src/scan-sync.service.ts",
+        "./rate-card.service": "./src/rate-card.service.ts",
+        "./public-tracking.service": "./src/public-tracking.service.ts",
+        "./whatsapp.service": "./src/whatsapp.service.ts",
+        "./whatsapp-tracked.service": "./src/whatsapp-tracked.service.ts",
+        "./whatsapp/invoice-replay-payload": "./src/whatsapp/invoice-replay-payload.ts",
+        "./invoice-draft.service": "./src/invoice-draft.service.ts",
+        "./pdf/invoice-pdf": "./src/pdf/invoice-pdf.tsx",
+        "./pdf/invoice-pdf-token": "./src/pdf/invoice-pdf-token.ts",
+        "./pdf/qr": "./src/pdf/qr.ts",
+        "./barcode/encode": "./src/barcode/encode.ts",
+        "./server": "./src/server.ts"
+    }
+}
