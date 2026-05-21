@@ -149,13 +149,13 @@ function OpsVolumeBarChart({ className }: OpsVolumeBarChartProps) {
     <div className={cn("flex flex-col", className)}>
       {/* Row 1: title + range pill toggle (mirrored in OpsGrowthAreaChart) */}
       <div className="flex items-center justify-between">
-        <div className="font-paper-display font-semibold text-ui-13 text-paper-fg-1">
+        <div className="font-sans font-semibold text-ui-13 text-foreground">
           Shipment Volume
         </div>
         <div
           role="tablist"
           aria-label="Time range"
-          className="inline-flex border border-paper-line bg-paper-card"
+          className="inline-flex border border-border bg-card"
         >
           {RANGES.map((r) => {
             const active = r.value === range
@@ -166,11 +166,11 @@ function OpsVolumeBarChart({ className }: OpsVolumeBarChartProps) {
                 aria-selected={active}
                 onClick={() => setRange(r.value)}
                 className={cn(
-                  "px-2 py-1 font-paper-mono font-medium text-ui-10 tracking-badge uppercase transition-colors",
-                  "border-l border-paper-line first:border-l-0",
+                  "px-2 py-1 font-mono font-medium text-ui-10 tracking-badge uppercase transition-colors",
+                  "border-l border-border first:border-l-0",
                   active
-                    ? "bg-paper-violet text-white"
-                    : "text-paper-fg-2 hover:bg-paper-3",
+                    ? "bg-primary text-white"
+                    : "text-foreground hover:bg-muted",
                 )}
               >
                 {r.label}

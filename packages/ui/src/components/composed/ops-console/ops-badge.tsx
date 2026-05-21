@@ -10,25 +10,25 @@ import { cn } from "@workspace/ui/lib/utils"
 const opsBadgeVariants = cva(
   [
     "inline-flex items-center gap-1.5 px-2 py-0.5",
-    "border bg-paper-card",
-    "font-paper-mono font-medium text-ui-10 tracking-badge uppercase",
+    "border bg-card",
+    "font-mono font-medium text-ui-10 tracking-badge uppercase",
     // square dot before the label, sized by --status-dot token (R0 audit H5)
     "before:content-[''] before:w-[length:var(--status-dot)] before:h-[length:var(--status-dot)] before:shrink-0",
   ],
   {
     variants: {
       tone: {
-        neutral: "border-paper-line text-paper-fg-2 before:bg-paper-fg-3",
-        ok: "border-paper-ok/30 bg-paper-ok-bg text-paper-ok before:bg-paper-ok",
-        warn: "border-paper-warn/30 bg-paper-warn-bg text-paper-warn before:bg-paper-warn",
-        err: "border-paper-err/30 bg-paper-err-bg text-paper-err before:bg-paper-err",
-        // Violet variant: bg-paper-card (off-white) instead of bg-paper-violet-50
-        // (tinted lavender) so the `text-paper-violet` foreground clears WCAG
+        neutral: "border-border text-foreground before:bg-muted-foreground",
+        ok: "border-accent-success/30 bg-accent-success/15 text-accent-success before:bg-accent-success",
+        warn: "border-accent-warning/30 bg-accent-warning/15 text-accent-warning before:bg-accent-warning",
+        err: "border-destructive/30 bg-destructive/15 text-destructive before:bg-destructive",
+        // Violet variant: bg-card (off-white) instead of bg-primary/10
+        // (tinted lavender) so the `text-primary` foreground clears WCAG
         // AA 4.5:1 at the 10px badge text size. The dot + border keep the
         // brand-violet signal even though the surface is neutral.
         violet:
-          "border-paper-violet/40 bg-paper-card text-paper-violet before:bg-paper-violet",
-        info: "border-paper-info/30 bg-paper-info-bg text-paper-info before:bg-paper-info",
+          "border-primary/40 bg-card text-primary before:bg-primary",
+        info: "border-accent-info/30 bg-accent-info/15 text-accent-info before:bg-accent-info",
       },
     },
     defaultVariants: {

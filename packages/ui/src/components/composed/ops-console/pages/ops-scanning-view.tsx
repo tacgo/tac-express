@@ -44,12 +44,12 @@ function OpsScanningView() {
       {/* Console header */}
       <div className="flex items-center justify-between mb-3.5">
         <div className="flex items-center gap-3">
-          <span aria-hidden className="size-2 bg-paper-violet animate-pulse motion-reduce:animate-none" />
+          <span aria-hidden className="size-2 bg-primary animate-pulse motion-reduce:animate-none" />
           <div>
             <div className="paper-label">Hub Operations Console</div>
-            <div className="font-paper-display font-bold text-ui-18 mt-0.5">
+            <div className="font-sans font-bold text-ui-18 mt-0.5">
               {current.id}{" "}
-              <span className="font-paper-mono font-normal text-paper-fg-3 text-ui-12 ml-1.5">
+              <span className="font-mono font-normal text-muted-foreground text-ui-12 ml-1.5">
                 · {current.sub}
               </span>
             </div>
@@ -63,7 +63,7 @@ function OpsScanningView() {
           <button
             type="button"
             aria-label="Scanner settings"
-            className="size-8 border border-paper-line bg-paper-card grid place-items-center text-paper-fg-2 hover:bg-paper-3 focus-visible:outline-none focus-visible:tac-focus-premium transition-colors duration-fast ease-linear"
+            className="size-8 border border-border bg-card grid place-items-center text-foreground hover:bg-muted focus-visible:outline-none focus-visible:tac-focus-premium transition-colors duration-fast ease-linear"
           >
             <RiSettingsLine aria-hidden className="size-3.5" />
           </button>
@@ -115,10 +115,10 @@ function OpsScanningView() {
 
         <OpsCard ticks className="min-h-[length:var(--spacing-chart-lg)] flex flex-col">
           <div className="paper-label">Scan Feed · Last 100</div>
-          <div className="flex-1 grid place-items-center text-center text-paper-fg-3">
+          <div className="flex-1 grid place-items-center text-center text-muted-foreground">
             <div>
               <div className="paper-label mb-1.5">Awaiting Scans…</div>
-              <div className="font-paper-display text-ui-13">
+              <div className="font-sans text-ui-13">
                 Use the scanner or type an AWB to begin.
               </div>
             </div>
@@ -126,7 +126,7 @@ function OpsScanningView() {
         </OpsCard>
       </div>
 
-      <div className="flex items-center justify-between mt-3.5 font-paper-mono text-paper-fg-3 text-ui-11 tracking-badge">
+      <div className="flex items-center justify-between mt-3.5 font-mono text-muted-foreground text-ui-11 tracking-badge">
         <span className="flex items-center gap-1.5">
           <RiSignalTowerLine aria-hidden className="size-3" />
           ONLINE · PENDING SYNC: 0 · FAILED: 0

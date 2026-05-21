@@ -5,11 +5,11 @@ import * as React from "react"
 import { cn } from "@workspace/ui/lib/utils"
 
 const fieldInputClass = cn(
-  "w-full border border-paper-line bg-paper-card text-paper-fg-1",
-  "px-3 py-2.5 font-paper-mono",
+  "w-full border border-border bg-card text-foreground",
+  "px-3 py-2.5 font-mono",
   "text-ui-13",
-  "placeholder:text-paper-fg-4 placeholder:uppercase placeholder:tracking-crumb placeholder:text-ui-12",
-  "focus-visible:outline-none focus-visible:tac-focus-premium focus-visible:border-paper-violet",
+  "placeholder:text-muted-foreground placeholder:uppercase placeholder:tracking-crumb placeholder:text-ui-12",
+  "focus-visible:outline-none focus-visible:tac-focus-premium focus-visible:border-primary",
 )
 
 type OpsFieldInputProps = React.InputHTMLAttributes<HTMLInputElement>
@@ -51,9 +51,9 @@ function OpsFieldLabel({ className, ...props }: OpsFieldLabelProps) {
     <label
       data-slot="ops-field-label"
       className={cn(
-        "block mb-1.5 font-paper-mono font-medium uppercase",
+        "block mb-1.5 font-mono font-medium uppercase",
         "text-ui-11 tracking-badge",
-        "text-paper-fg-3",
+        "text-muted-foreground",
         className,
       )}
       {...props}

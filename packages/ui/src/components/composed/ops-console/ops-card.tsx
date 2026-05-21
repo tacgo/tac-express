@@ -3,7 +3,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@workspace/ui/lib/utils"
 
-const opsCardVariants = cva("bg-paper-card border border-paper-line", {
+const opsCardVariants = cva("bg-card border border-border", {
   variants: {
     pad: {
       default: "p-[length:var(--spacing-gutter-md)]",

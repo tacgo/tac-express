@@ -70,9 +70,9 @@ function OpsShell({
       className={cn(
         // The ops-console class scopes the paper-* utilities below.
         "ops-console",
-        "grid grid-cols-[var(--sidebar-w)_1fr] min-h-screen bg-paper-bg text-paper-fg-1",
+        "grid grid-cols-[var(--sidebar-w)_1fr] min-h-screen bg-background text-foreground",
         // Force Paper-Console fonts inside this subtree without touching v6 routes.
-        "font-paper-display",
+        "font-sans",
         className,
       )}
     >

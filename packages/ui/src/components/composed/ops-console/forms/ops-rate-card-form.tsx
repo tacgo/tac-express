@@ -44,7 +44,7 @@ interface FieldErrorProps {
 function FieldError({ id, message }: FieldErrorProps) {
   if (!message) return null
   return (
-    <p id={id} role="alert" className="font-paper-mono text-paper-err text-ui-11 mt-1">
+    <p id={id} role="alert" className="font-mono text-destructive text-ui-11 mt-1">
       {message}
     </p>
   )
@@ -180,7 +180,7 @@ export function OpsRateCardForm({ onSubmit, isLoading, className }: OpsRateCardF
         </div>
       </OpsCard>
 
-      <div className="flex items-center justify-end gap-2 border-t border-paper-line pt-4">
+      <div className="flex items-center justify-end gap-2 border-t border-border pt-4">
         <OpsButton type="reset" variant="ghost">Reset</OpsButton>
         <OpsButton type="submit" variant="primary" disabled={isLoading}>
           {isLoading ? (

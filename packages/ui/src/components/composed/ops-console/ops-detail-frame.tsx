@@ -46,7 +46,7 @@ function OpsDetailFrame({
       {backHref && (
         <Link
           href={backHref}
-          className="inline-flex items-center gap-1.5 paper-eyebrow text-paper-fg-3 hover:text-paper-violet transition-colors duration-fast ease-linear mb-3 focus-visible:outline-none focus-visible:tac-focus-premium"
+          className="inline-flex items-center gap-1.5 paper-eyebrow text-muted-foreground hover:text-primary transition-colors duration-fast ease-linear mb-3 focus-visible:outline-none focus-visible:tac-focus-premium"
         >
           <RiArrowLeftLine aria-hidden className="size-3" />
           Back
@@ -54,14 +54,14 @@ function OpsDetailFrame({
       )}
 
       {/* Header */}
-      <header className="flex items-start justify-between gap-4 mb-6 pb-4 border-b border-paper-line">
+      <header className="flex items-start justify-between gap-4 mb-6 pb-4 border-b border-border">
         <div className="min-w-0">
           <div className="paper-eyebrow">{eyebrow}</div>
-          <h1 className="paper-h1 font-paper-mono tabular-nums tracking-id mt-1 break-all">
+          <h1 className="paper-h1 font-mono tabular-nums tracking-id mt-1 break-all">
             {title}
           </h1>
           {sub && (
-            <div className="font-paper-display text-ui-13 text-paper-fg-3 mt-1.5">
+            <div className="font-sans text-ui-13 text-muted-foreground mt-1.5">
               {sub}
             </div>
           )}

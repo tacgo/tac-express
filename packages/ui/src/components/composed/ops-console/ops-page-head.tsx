@@ -17,7 +17,7 @@ function OpsPageHead({ eyebrow, title, sub, actions }: OpsPageHeadProps) {
         <div className="paper-eyebrow">{eyebrow}</div>
         <h1 className="paper-h1 mt-1">{title}</h1>
         {sub && (
-          <div className="font-paper-display font-normal text-ui-13 text-paper-fg-3 mt-1">
+          <div className="font-sans font-normal text-ui-13 text-muted-foreground mt-1">
             {sub}
           </div>
         )}

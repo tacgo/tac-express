@@ -20,7 +20,7 @@ function OpsFrame({ children, className, ...props }: OpsFrameProps) {
     <div
       data-slot="ops-frame"
       className={cn(
-        "paper-frame-ticks relative bg-paper-bg border border-paper-line overflow-hidden mx-6 mt-2 mb-6",
+        "paper-frame-ticks relative bg-background border border-border overflow-hidden mx-6 mt-2 mb-6",
         className,
       )}
       {...props}

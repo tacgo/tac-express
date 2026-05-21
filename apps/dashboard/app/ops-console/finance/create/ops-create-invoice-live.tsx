@@ -295,7 +295,7 @@ export function OpsCreateInvoiceLive() {
         sub="Generate an invoice for an AWB with automatic rate-card lookup. Draft autosaves every 5 seconds."
         actions={
           autosave.savedAt ? (
-            <div className="flex items-center gap-2 paper-label text-paper-fg-3">
+            <div className="flex items-center gap-2 paper-label text-muted-foreground">
               <span>
                 Draft saved · {format(new Date(autosave.savedAt), "HH:mm:ss")}
               </span>

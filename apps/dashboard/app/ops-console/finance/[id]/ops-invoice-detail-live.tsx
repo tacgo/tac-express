@@ -132,12 +132,12 @@ function ChargeRow({
   accent?: boolean
 }) {
   return (
-    <div className="flex items-center justify-between gap-4 border-b border-paper-line/60 py-2 last:border-b-0">
+    <div className="flex items-center justify-between gap-4 border-b border-border/60 py-2 last:border-b-0">
       <span className="paper-label">{label}</span>
       <span
         className={cn(
-          "font-paper-mono text-ui-13 tabular-nums",
-          accent ? "text-paper-violet font-semibold" : "text-paper-fg-1",
+          "font-mono text-ui-13 tabular-nums",
+          accent ? "text-primary font-semibold" : "text-foreground",
         )}
       >
         {value}
@@ -159,7 +159,7 @@ function MetaField({
   return (
     <div className={cn("space-y-1", className)}>
       <p className="paper-label">{label}</p>
-      <p className="font-paper-mono text-ui-12 text-paper-fg-1 whitespace-pre-line break-words">
+      <p className="font-mono text-ui-12 text-foreground whitespace-pre-line break-words">
         {value}
       </p>
     </div>
@@ -344,14 +344,14 @@ export function OpsInvoiceDetailLive({ id }: OpsInvoiceDetailLiveProps) {
         title={id}
         backHref="/ops-console/finance"
       >
-        <div className="border border-paper-err/40 border-l-[length:var(--indicator-w)] border-l-paper-err bg-paper-err-bg/30 p-6 flex items-start gap-3">
+        <div className="border border-destructive/40 border-l-[length:var(--indicator-w)] border-l-paper-err bg-destructive/15/30 p-6 flex items-start gap-3">
           <RiErrorWarningLine
             aria-hidden
-            className="size-5 text-paper-err shrink-0"
+            className="size-5 text-destructive shrink-0"
           />
           <div>
-            <div className="paper-eyebrow text-paper-err">NOT FOUND</div>
-            <p className="font-paper-display text-ui-13 mt-1">
+            <div className="paper-eyebrow text-destructive">NOT FOUND</div>
+            <p className="font-sans text-ui-13 mt-1">
               Could not load invoice.
             </p>
           </div>
@@ -447,7 +447,7 @@ export function OpsInvoiceDetailLive({ id }: OpsInvoiceDetailLiveProps) {
               <div
                 className={cn(
                   "paper-stat-value mt-1",
-                  invoice.balance > 0 ? "text-paper-warn" : "text-paper-ok",
+                  invoice.balance > 0 ? "text-accent-warning" : "text-accent-success",
                 )}
               >
                 {fmtINR(invoice.balance)}
@@ -460,13 +460,13 @@ export function OpsInvoiceDetailLive({ id }: OpsInvoiceDetailLiveProps) {
             </OpsCard>
             <OpsCard>
               <div className="paper-label mb-1">Created</div>
-              <div className="font-paper-mono text-ui-13 tabular-nums">
+              <div className="font-mono text-ui-13 tabular-nums">
                 {fmtDate(invoice.createdAt)}
               </div>
               {invoice.issuedAt && (
                 <>
                   <div className="paper-label mb-1 mt-3">Issued</div>
-                  <div className="font-paper-mono text-ui-13 tabular-nums">
+                  <div className="font-mono text-ui-13 tabular-nums">
                     {fmtDate(invoice.issuedAt)}
                   </div>
                 </>
@@ -474,7 +474,7 @@ export function OpsInvoiceDetailLive({ id }: OpsInvoiceDetailLiveProps) {
               {invoice.dueDate && (
                 <>
                   <div className="paper-label mb-1 mt-3">Due</div>
-                  <div className="font-paper-mono text-ui-13 tabular-nums">
+                  <div className="font-mono text-ui-13 tabular-nums">
                     {fmtDate(invoice.dueDate)}
                   </div>
                 </>
@@ -484,20 +484,20 @@ export function OpsInvoiceDetailLive({ id }: OpsInvoiceDetailLiveProps) {
         }
       >
         <OpsCard ticks>
-          <div className="flex items-start justify-between gap-4 border-b border-paper-line pb-3 mb-4">
+          <div className="flex items-start justify-between gap-4 border-b border-border pb-3 mb-4">
             <div className="space-y-0.5">
               <p className="paper-label">Invoice</p>
-              <p className="font-paper-display text-ui-16 font-bold uppercase tracking-wide text-paper-violet">
+              <p className="font-sans text-ui-16 font-bold uppercase tracking-wide text-primary">
                 {invoice.invoiceNumber}
               </p>
             </div>
             <div className="space-y-0.5 text-right">
               <p className="paper-label">AWB</p>
-              <p className="font-paper-mono text-ui-13 font-semibold">
+              <p className="font-mono text-ui-13 font-semibold">
                 {invoice.awbNumber || "—"}
               </p>
               {invoice.issuedAt && (
-                <p className="font-paper-mono text-ui-10 text-paper-fg-3">
+                <p className="font-mono text-ui-10 text-muted-foreground">
                   Issued {fmtDate(invoice.issuedAt)}
                 </p>
               )}
@@ -547,16 +547,16 @@ export function OpsInvoiceDetailLive({ id }: OpsInvoiceDetailLiveProps) {
             )}
           </div>
 
-          <div className="flex items-center justify-between border-t-2 border-paper-fg-1/80 pt-3 mt-3">
-            <span className="font-paper-mono text-ui-12 font-bold uppercase tracking-badge text-paper-fg-1">
+          <div className="flex items-center justify-between border-t-2 border-foreground/80 pt-3 mt-3">
+            <span className="font-mono text-ui-12 font-bold uppercase tracking-badge text-foreground">
               Total
             </span>
-            <span className="font-paper-display text-ui-18 font-bold tabular-nums text-paper-violet">
+            <span className="font-sans text-ui-18 font-bold tabular-nums text-primary">
               {fmtINR(invoice.totalAmount)}
             </span>
           </div>
 
-          <div className="space-y-0 border-t border-dashed border-paper-line pt-2 mt-2">
+          <div className="space-y-0 border-t border-dashed border-border pt-2 mt-2">
             {invoice.advancePaid > 0 && (
               <ChargeRow
                 label="Advance Paid"
@@ -601,10 +601,10 @@ export function OpsInvoiceDetailLive({ id }: OpsInvoiceDetailLiveProps) {
               </div>
 
               {(parsedNotes.consignor || parsedNotes.consignee) && (
-                <div className="grid grid-cols-1 gap-4 border-t border-paper-line pt-4 mt-4 sm:grid-cols-2">
+                <div className="grid grid-cols-1 gap-4 border-t border-border pt-4 mt-4 sm:grid-cols-2">
                   {parsedNotes.consignor && (
                     <div className="space-y-1.5">
-                      <p className="paper-label text-paper-violet">Consignor</p>
+                      <p className="paper-label text-primary">Consignor</p>
                       <MetaField label="Name" value={parsedNotes.consignor.name} />
                       <MetaField label="Phone" value={parsedNotes.consignor.phone} />
                       <MetaField label="Address" value={parsedNotes.consignor.address} />
@@ -612,7 +612,7 @@ export function OpsInvoiceDetailLive({ id }: OpsInvoiceDetailLiveProps) {
                   )}
                   {parsedNotes.consignee && (
                     <div className="space-y-1.5">
-                      <p className="paper-label text-paper-violet">Consignee</p>
+                      <p className="paper-label text-primary">Consignee</p>
                       <MetaField label="Name" value={parsedNotes.consignee.name} />
                       <MetaField label="Phone" value={parsedNotes.consignee.phone} />
                       <MetaField label="Address" value={parsedNotes.consignee.address} />
@@ -622,7 +622,7 @@ export function OpsInvoiceDetailLive({ id }: OpsInvoiceDetailLiveProps) {
               )}
 
               {(parsedNotes.freeText || parsedNotes.remarks) && (
-                <div className="grid grid-cols-1 gap-4 border-t border-paper-line pt-4 mt-4 sm:grid-cols-2">
+                <div className="grid grid-cols-1 gap-4 border-t border-border pt-4 mt-4 sm:grid-cols-2">
                   <MetaField label="Notes" value={parsedNotes.freeText} />
                   <MetaField label="Remarks" value={parsedNotes.remarks} />
                 </div>

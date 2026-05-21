@@ -142,16 +142,16 @@ export function OpsManifestDetailLive({ id }: OpsManifestDetailLiveProps) {
         title={id}
         backHref="/ops-console/manifests"
       >
-        <div className="border border-paper-err/40 border-l-[length:var(--indicator-w)] border-l-paper-err bg-paper-err-bg/30 p-6 flex items-start gap-3">
+        <div className="border border-destructive/40 border-l-[length:var(--indicator-w)] border-l-paper-err bg-destructive/15/30 p-6 flex items-start gap-3">
           <RiErrorWarningLine
             aria-hidden
-            className="size-5 text-paper-err shrink-0"
+            className="size-5 text-destructive shrink-0"
           />
           <div>
-            <div className="paper-eyebrow text-paper-err">NOT FOUND</div>
-            <p className="font-paper-display text-ui-13 mt-1">
+            <div className="paper-eyebrow text-destructive">NOT FOUND</div>
+            <p className="font-sans text-ui-13 mt-1">
               Could not load manifest{" "}
-              <span className="font-paper-mono">{id}</span>.
+              <span className="font-mono">{id}</span>.
             </p>
           </div>
         </div>
@@ -189,7 +189,7 @@ export function OpsManifestDetailLive({ id }: OpsManifestDetailLiveProps) {
           </OpsCard>
           <OpsCard>
             <div className="paper-label mb-1">Created</div>
-            <div className="font-paper-mono text-ui-13 tabular-nums">
+            <div className="font-mono text-ui-13 tabular-nums">
               {new Date(m.createdAt).toLocaleString("en-IN", {
                 day: "2-digit",
                 month: "short",
@@ -201,7 +201,7 @@ export function OpsManifestDetailLive({ id }: OpsManifestDetailLiveProps) {
             {m.departureDate && (
               <>
                 <div className="paper-label mb-1 mt-3">Departure</div>
-                <div className="font-paper-mono text-ui-13 tabular-nums">
+                <div className="font-mono text-ui-13 tabular-nums">
                   {new Date(m.departureDate).toLocaleString("en-IN", {
                     day: "2-digit",
                     month: "short",
@@ -219,7 +219,7 @@ export function OpsManifestDetailLive({ id }: OpsManifestDetailLiveProps) {
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-2">
               <span className="paper-label">Next Action</span>
-              <span className="font-paper-mono text-ui-12 text-paper-fg-1">
+              <span className="font-mono text-ui-12 text-foreground">
                 → {nextAction.label}
               </span>
             </div>
@@ -274,7 +274,7 @@ export function OpsManifestDetailLive({ id }: OpsManifestDetailLiveProps) {
             <OpsSkeleton className="h-3 w-2/3" />
           </div>
         ) : shipments.length === 0 ? (
-          <div className="paper-label text-paper-fg-3">
+          <div className="paper-label text-muted-foreground">
             No shipments loaded yet.
           </div>
         ) : (
@@ -288,7 +288,7 @@ export function OpsManifestDetailLive({ id }: OpsManifestDetailLiveProps) {
                   <span className="paper-id">{s.awb_number}</span>
                   <OpsBadge tone="neutral">{s.status}</OpsBadge>
                 </div>
-                <div className="flex items-center gap-4 font-paper-mono text-ui-12 text-paper-fg-3 tabular-nums">
+                <div className="flex items-center gap-4 font-mono text-ui-12 text-muted-foreground tabular-nums">
                   <span>{s.pieces ?? 0} pcs</span>
                   <span>
                     {s.chargeable_weight?.toFixed?.(1) ?? "—"} kg
@@ -303,7 +303,7 @@ export function OpsManifestDetailLive({ id }: OpsManifestDetailLiveProps) {
       {m.notes && (
         <OpsCard ticks>
           <div className="paper-label mb-2">Notes</div>
-          <p className="font-paper-mono text-ui-12 text-paper-fg-1 whitespace-pre-line">
+          <p className="font-mono text-ui-12 text-foreground whitespace-pre-line">
             {m.notes}
           </p>
         </OpsCard>

@@ -55,7 +55,7 @@ function OpsNotificationsView({
         <div>
           <div className="flex items-center justify-between mb-2">
             <div>
-              <div className="font-paper-display font-bold text-ui-16">
+              <div className="font-sans font-bold text-ui-16">
                 Inbox
               </div>
               <div className="paper-label">
@@ -69,12 +69,12 @@ function OpsNotificationsView({
             className="min-h-[length:var(--spacing-chart-lg)] grid place-items-center text-center"
           >
             <div>
-              <RiNotification3Line aria-hidden className="size-7 text-paper-fg-3 mx-auto" />
+              <RiNotification3Line aria-hidden className="size-7 text-muted-foreground mx-auto" />
               <div className="paper-label mt-2">No Data</div>
-              <div className="font-paper-display font-bold text-ui-16 mt-1">
+              <div className="font-sans font-bold text-ui-16 mt-1">
                 No notifications yet
               </div>
-              <div className="font-paper-display text-ui-13 text-paper-fg-3 mt-1 max-w-sm">
+              <div className="font-sans text-ui-13 text-muted-foreground mt-1 max-w-sm">
                 We&rsquo;ll surface alerts and shipment events here as they arrive.
               </div>
             </div>
@@ -89,20 +89,20 @@ function OpsNotificationsView({
               System Status
             </div>
             <div className="flex items-center gap-2 mt-2.5 mb-2">
-              <span aria-hidden className="size-1.5 bg-paper-ok" />
-              <span className="paper-label text-paper-ok tracking-label">
+              <span aria-hidden className="size-1.5 bg-accent-success" />
+              <span className="paper-label text-accent-success tracking-label">
                 All Systems Normal
               </span>
             </div>
             {services.map((s) => (
               <div
                 key={s.name}
-                className="flex items-center justify-between py-1.5 border-t border-paper-line"
+                className="flex items-center justify-between py-1.5 border-t border-border"
               >
-                <span className="font-paper-mono uppercase text-paper-fg-3 text-ui-11 tracking-badge">
+                <span className="font-mono uppercase text-muted-foreground text-ui-11 tracking-badge">
                   {s.name}
                 </span>
-                <span className="font-paper-mono text-paper-ok text-ui-11">
+                <span className="font-mono text-accent-success text-ui-11">
                   ● {s.status}
                 </span>
               </div>
@@ -122,10 +122,10 @@ function OpsNotificationsView({
                     {c.key}
                   </OpsBadge>
                   <div className="min-w-0">
-                    <div className="font-paper-mono font-semibold uppercase text-ui-12 tracking-tag">
+                    <div className="font-mono font-semibold uppercase text-ui-12 tracking-tag">
                       {c.title}
                     </div>
-                    <div className="font-paper-display text-ui-13 text-paper-fg-3 mt-0.5">
+                    <div className="font-sans text-ui-13 text-muted-foreground mt-0.5">
                       {c.description}
                     </div>
                   </div>

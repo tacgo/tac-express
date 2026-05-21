@@ -110,7 +110,7 @@ function SidebarItem({
         // Active nav text was --sidebar-primary (paper-violet L=0.54) on
         // --sidebar-accent (paper-violet-50 L=0.97). Switched to
         // paper-violet-2 (L=0.46) for higher contrast — closes R0 audit C2.
-        active && "bg-sidebar-accent text-paper-violet-2",
+        active && "bg-sidebar-accent text-primary",
       )}
     >
       {active && (

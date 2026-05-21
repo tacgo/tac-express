@@ -64,12 +64,12 @@ function OpsTopbar({ crumbs }: OpsTopbarProps) {
       className="flex items-center px-6 h-14 border-b border-transparent"
     >
       {/* Breadcrumbs */}
-      <div className="font-paper-mono font-medium text-ui-12 tracking-crumb text-paper-fg-3">
+      <div className="font-mono font-medium text-ui-12 tracking-crumb text-muted-foreground">
         {crumbs.map((c, i) => (
           <React.Fragment key={`${c}-${i}`}>
-            {i > 0 && <span className="mx-2 text-paper-fg-4">›</span>}
+            {i > 0 && <span className="mx-2 text-muted-foreground">›</span>}
             {i === crumbs.length - 1 ? (
-              <b className="text-paper-fg-1 font-semibold">{c}</b>
+              <b className="text-foreground font-semibold">{c}</b>
             ) : (
               <span>{c}</span>
             )}
@@ -83,17 +83,17 @@ function OpsTopbar({ crumbs }: OpsTopbarProps) {
         <button
           type="button"
           aria-label="Open command palette"
-          className="flex items-center gap-1.5 h-8 px-2 border border-paper-line bg-paper-card text-paper-fg-3 hover:bg-paper-3 focus-visible:outline-none focus-visible:tac-focus-premium transition-colors duration-fast ease-linear"
+          className="flex items-center gap-1.5 h-8 px-2 border border-border bg-card text-muted-foreground hover:bg-muted focus-visible:outline-none focus-visible:tac-focus-premium transition-colors duration-fast ease-linear"
         >
           <RiSearchLine aria-hidden className="size-3.5" />
-          <span className="font-paper-mono font-medium text-ui-10 px-1.5 py-0.5 border border-paper-line text-paper-fg-2">
+          <span className="font-mono font-medium text-ui-10 px-1.5 py-0.5 border border-border text-foreground">
             ⌘K
           </span>
         </button>
 
         {/* Theme selector — C / M / S, wired to next-themes */}
         <div
-          className="inline-flex h-8 border border-paper-line overflow-hidden"
+          className="inline-flex h-8 border border-border overflow-hidden"
           role="group"
           aria-label="Theme"
         >
@@ -112,11 +112,11 @@ function OpsTopbar({ crumbs }: OpsTopbarProps) {
                 aria-label={`Switch to ${THEME_TO_NEXT[t]} theme`}
                 onClick={() => onPick(t)}
                 className={cn(
-                  "w-7 h-[length:var(--toggle-h)] border-r border-paper-line last:border-r-0 bg-paper-card",
-                  "font-paper-mono font-semibold text-ui-11 text-paper-fg-2",
-                  "hover:bg-paper-3 transition-colors duration-fast ease-linear",
+                  "w-7 h-[length:var(--toggle-h)] border-r border-border last:border-r-0 bg-card",
+                  "font-mono font-semibold text-ui-11 text-foreground",
+                  "hover:bg-muted transition-colors duration-fast ease-linear",
                   "focus-visible:outline-none focus-visible:tac-focus-premium",
-                  isActive && "bg-paper-violet text-white hover:bg-paper-violet-2",
+                  isActive && "bg-primary text-white hover:bg-primary",
                 )}
               >
                 {t}
@@ -129,7 +129,7 @@ function OpsTopbar({ crumbs }: OpsTopbarProps) {
         <button
           type="button"
           aria-label="Notifications"
-          className="size-8 border border-paper-line bg-paper-card grid place-items-center text-paper-fg-2 hover:bg-paper-3 focus-visible:outline-none focus-visible:tac-focus-premium transition-colors duration-fast ease-linear"
+          className="size-8 border border-border bg-card grid place-items-center text-foreground hover:bg-muted focus-visible:outline-none focus-visible:tac-focus-premium transition-colors duration-fast ease-linear"
         >
           <RiNotification3Line aria-hidden className="size-4" />
         </button>
@@ -148,7 +148,7 @@ function OpsTopbar({ crumbs }: OpsTopbarProps) {
               : "Toggle theme"
           }
           onClick={() => setNextTheme(isDark ? "light" : "dark")}
-          className="size-8 border border-paper-line bg-paper-card grid place-items-center text-paper-fg-2 hover:bg-paper-3 focus-visible:outline-none focus-visible:tac-focus-premium transition-colors duration-fast ease-linear"
+          className="size-8 border border-border bg-card grid place-items-center text-foreground hover:bg-muted focus-visible:outline-none focus-visible:tac-focus-premium transition-colors duration-fast ease-linear"
         >
           <RiMoonClearLine aria-hidden className="size-4" />
         </button>
@@ -160,7 +160,7 @@ function OpsTopbar({ crumbs }: OpsTopbarProps) {
           type="button"
           aria-label="Account menu"
           aria-haspopup="menu"
-          className="size-8 bg-paper-violet [color:white] border border-paper-violet-2 grid place-items-center font-paper-mono font-semibold text-ui-12 hover:bg-paper-violet-2 focus-visible:outline-none focus-visible:tac-focus-premium transition-colors duration-fast ease-linear"
+          className="size-8 bg-primary [color:white] border border-primary grid place-items-center font-mono font-semibold text-ui-12 hover:bg-primary focus-visible:outline-none focus-visible:tac-focus-premium transition-colors duration-fast ease-linear"
         >
           A
         </button>

@@ -180,13 +180,13 @@ function OpsManifestsView({
                   </OpsTableCell>
                   <OpsTableCell
                     mono
-                    className="text-right tabular-nums font-medium text-paper-fg-1"
+                    className="text-right tabular-nums font-medium text-foreground"
                   >
                     {m.shipments}
                   </OpsTableCell>
                   <OpsTableCell
                     mono
-                    className="text-right tabular-nums font-medium text-paper-fg-1"
+                    className="text-right tabular-nums font-medium text-foreground"
                   >
                     {m.weight} kg
                   </OpsTableCell>
@@ -204,14 +204,14 @@ function OpsManifestsView({
                       <Link
                         href={m.detailHref}
                         aria-label="Open manifest details"
-                        className="font-paper-mono text-ui-11 tracking-badge uppercase text-paper-violet hover:underline underline-offset-4"
+                        className="font-mono text-ui-11 tracking-badge uppercase text-primary hover:underline underline-offset-4"
                       >
                         View →
                       </Link>
                     ) : (
                       <span
                         aria-hidden
-                        className="font-paper-mono text-ui-11 tracking-badge uppercase text-paper-fg-4"
+                        className="font-mono text-ui-11 tracking-badge uppercase text-muted-foreground"
                       >
                         —
                       </span>

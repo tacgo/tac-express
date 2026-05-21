@@ -25,7 +25,7 @@ function OpsPanelTabsList({
   return (
     <RadixTabsList
       className={cn(
-        "inline-flex h-9 items-stretch border-b border-paper-line w-full bg-transparent rounded-none p-0 gap-0",
+        "inline-flex h-9 items-stretch border-b border-border w-full bg-transparent rounded-none p-0 gap-0",
         className,
       )}
       {...props}
@@ -41,11 +41,11 @@ function OpsPanelTabsTrigger({
     <RadixTabsTrigger
       className={cn(
         "inline-flex items-center justify-center gap-2 px-4 h-9 -mb-px",
-        "font-paper-mono font-medium uppercase tracking-badge text-ui-11",
-        "text-paper-fg-3 hover:text-paper-fg-1 transition-colors duration-fast ease-linear",
+        "font-mono font-medium uppercase tracking-badge text-ui-11",
+        "text-muted-foreground hover:text-foreground transition-colors duration-fast ease-linear",
         "border-b-2 border-transparent rounded-none bg-transparent shadow-none",
         "focus-visible:outline-none focus-visible:tac-focus-premium",
-        "data-[state=active]:text-paper-violet data-[state=active]:border-b-paper-violet data-[state=active]:bg-transparent",
+        "data-[state=active]:text-primary data-[state=active]:border-b-paper-violet data-[state=active]:bg-transparent",
         "[&_svg]:size-3.5",
         className,
       )}

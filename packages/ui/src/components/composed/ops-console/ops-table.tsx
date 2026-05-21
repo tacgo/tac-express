@@ -14,7 +14,7 @@ function OpsTable({
     <table
       data-slot="ops-table"
       className={cn(
-        "w-full border-collapse bg-paper-card border border-paper-line overflow-hidden",
+        "w-full border-collapse bg-card border border-border overflow-hidden",
         className,
       )}
       {...props}
@@ -43,7 +43,7 @@ function OpsTableRow({
   return (
     <tr
       className={cn(
-        "hover:bg-paper-3 transition-colors duration-fast ease-linear",
+        "hover:bg-muted transition-colors duration-fast ease-linear",
         className,
       )}
       {...props}
@@ -59,10 +59,10 @@ function OpsTableHeader({
     <th
       scope="col"
       className={cn(
-        "px-4 py-3 text-left bg-paper-bg border-b border-paper-line",
-        "font-paper-mono font-medium uppercase",
+        "px-4 py-3 text-left bg-background border-b border-border",
+        "font-mono font-medium uppercase",
         "text-ui-10 tracking-label",
-        "text-paper-fg-3",
+        "text-muted-foreground",
         className,
       )}
       {...props}
@@ -82,10 +82,10 @@ function OpsTableCell({
   return (
     <td
       className={cn(
-        "px-4 py-3 border-b border-paper-line last:border-b-0",
+        "px-4 py-3 border-b border-border last:border-b-0",
         "text-ui-13",
-        mono && "font-paper-mono",
-        muted && "text-paper-fg-3",
+        mono && "font-mono",
+        muted && "text-muted-foreground",
         className,
       )}
       {...props}

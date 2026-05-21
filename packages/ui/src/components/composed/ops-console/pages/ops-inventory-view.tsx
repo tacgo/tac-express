@@ -128,22 +128,22 @@ function OpsInventoryView({
       />
 
       {/* Summary strip — total network inventory + hub count */}
-      <div className="mb-4 border border-paper-line bg-paper-card divide-x divide-paper-line grid grid-cols-3">
+      <div className="mb-4 border border-border bg-card divide-x divide-paper-line grid grid-cols-3">
         <div className="px-4 py-3">
           <div className="paper-label">Hubs in view</div>
-          <div className="font-paper-display font-bold text-ui-22 mt-1 tabular-nums">
+          <div className="font-sans font-bold text-ui-22 mt-1 tabular-nums">
             {mergedHubs.length}
           </div>
         </div>
         <div className="px-4 py-3">
           <div className="paper-label">Total in network</div>
-          <div className="font-paper-display font-bold text-ui-22 mt-1 tabular-nums">
+          <div className="font-sans font-bold text-ui-22 mt-1 tabular-nums">
             {totalPieces}
           </div>
         </div>
         <div className="px-4 py-3">
           <div className="paper-label">Renamed</div>
-          <div className="font-paper-display font-bold text-ui-22 mt-1 tabular-nums">
+          <div className="font-sans font-bold text-ui-22 mt-1 tabular-nums">
             {config.hydrated ? renamedCount : 0}
           </div>
         </div>
@@ -171,17 +171,17 @@ function OpsInventoryView({
                         autoFocus
                         aria-label={`Rename hub ${hub.hubCode}`}
                         className={cn(
-                          "min-w-0 flex-1 bg-paper-bg border border-paper-line px-2 py-1",
-                          "font-paper-display font-semibold text-ui-13 text-paper-fg-1",
+                          "min-w-0 flex-1 bg-background border border-border px-2 py-1",
+                          "font-sans font-semibold text-ui-13 text-foreground",
                           "tracking-badge",
-                          "focus:outline-none focus:border-paper-violet",
+                          "focus:outline-none focus:border-primary",
                         )}
                       />
                       <button
                         type="button"
                         onClick={() => commitEdit(hub.hubCode)}
                         aria-label="Save"
-                        className="text-paper-ok hover:bg-paper-ok-bg p-1 transition-colors"
+                        className="text-accent-success hover:bg-accent-success/15 p-1 transition-colors"
                       >
                         <RiCheckLine className="size-3.5" />
                       </button>
@@ -189,7 +189,7 @@ function OpsInventoryView({
                         type="button"
                         onClick={cancelEdit}
                         aria-label="Cancel"
-                        className="text-paper-fg-3 hover:bg-paper-3 p-1 transition-colors"
+                        className="text-muted-foreground hover:bg-muted p-1 transition-colors"
                       >
                         <RiCloseLine className="size-3.5" />
                       </button>
@@ -197,7 +197,7 @@ function OpsInventoryView({
                   ) : (
                     <>
                       <div className="min-w-0">
-                        <div className="font-paper-display font-semibold text-ui-13 text-paper-fg-1 tracking-badge truncate">
+                        <div className="font-sans font-semibold text-ui-13 text-foreground tracking-badge truncate">
                           {display}
                         </div>
                         <div className="paper-label mt-0.5 truncate">
@@ -209,7 +209,7 @@ function OpsInventoryView({
                         type="button"
                         onClick={() => startEdit(hub.hubCode, display)}
                         aria-label={`Rename ${display}`}
-                        className="text-paper-fg-3 hover:text-paper-violet hover:bg-paper-3 p-1 transition-colors"
+                        className="text-muted-foreground hover:text-primary hover:bg-muted p-1 transition-colors"
                       >
                         <RiEditLine className="size-3.5" />
                       </button>
@@ -225,20 +225,20 @@ function OpsInventoryView({
                 return (
                   <div
                     key={r.label}
-                    className="flex items-center justify-between py-2.5 border-t border-paper-line"
+                    className="flex items-center justify-between py-2.5 border-t border-border"
                   >
                     <span
                       className={cn(
-                        "font-paper-mono uppercase text-ui-11 tracking-badge",
-                        isException ? "text-paper-err" : "text-paper-fg-3",
+                        "font-mono uppercase text-ui-11 tracking-badge",
+                        isException ? "text-destructive" : "text-muted-foreground",
                       )}
                     >
                       {r.label}
                     </span>
                     <span
                       className={cn(
-                        "font-paper-display font-bold text-ui-14 tabular-nums",
-                        isException && "text-paper-err",
+                        "font-sans font-bold text-ui-14 tabular-nums",
+                        isException && "text-destructive",
                       )}
                     >
                       {r.value}
