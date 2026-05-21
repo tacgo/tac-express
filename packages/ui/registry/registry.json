@@ -182,6 +182,19 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "accordion",
+      "type": "registry:ui",
+      "title": "TAC Accordion",
+      "description": "Radix Accordion re-themed to Violet Grid — zero-radius, violet hover, tac-focus-premium focus bloom, @remixicon chevrons, and tw-animate-css height animation. Powers the landing FAQ.",
+      "dependencies": ["radix-ui"],
+      "files": [
+        {
+          "path": "src/components/accordion.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }
