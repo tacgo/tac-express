@@ -12,6 +12,7 @@
  *    server-component crashes
  */
 
+import * as Sentry from "@sentry/nextjs"
 import { useEffect } from "react"
 
 interface GlobalErrorProps {
@@ -20,6 +21,8 @@ interface GlobalErrorProps {
 
 export default function GlobalError({ error }: GlobalErrorProps) {
   useEffect(() => {
+    // Report render-phase crashes that escaped every nested error.tsx.
+    Sentry.captureException(error)
     console.error("Global boundary caught exception:", error)
   }, [error])
 

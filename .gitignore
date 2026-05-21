@@ -54,3 +54,6 @@ npm-debug.log*
 # Claude_Preview audit runs. The consolidated docs in docs/ are the
 # artifacts that matter.
 .audit-cache/
+
+# Sentry Config File
+.env.sentry-build-plugin
