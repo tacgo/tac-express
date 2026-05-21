@@ -1,7 +1,7 @@
 import {
-  Plus_Jakarta_Sans,
+  Outfit,
   IBM_Plex_Mono,
-  Lora,
+  Noto_Serif,
   Inter,
   JetBrains_Mono,
   Instrument_Serif,
@@ -16,9 +16,10 @@ import { cn } from "@workspace/ui/lib/utils"
 // by deep link. Loading them lazily eliminates the "preloaded but not used"
 // console warnings on the default Paper Ops Console pages and stops the
 // browser from racing 4-5 unused woff2 files into every initial paint.
-const plusJakartaSans = Plus_Jakarta_Sans({
+// Preset b5Fxrc2eNU: font = Outfit (sans/body).
+const outfit = Outfit({
   subsets: ["latin"],
-  weight: ["200", "300", "400", "500", "600", "700", "800"],
+  weight: ["300", "400", "500", "600", "700", "800"],
   variable: "--font-sans",
   display: "swap",
   preload: false,
@@ -32,9 +33,10 @@ const ibmPlexMono = IBM_Plex_Mono({
   preload: false,
 })
 
-const lora = Lora({
+// Preset b5Fxrc2eNU: fontHeading = Noto Serif.
+const notoSerif = Noto_Serif({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700", "800"],
   style: ["normal", "italic"],
   variable: "--font-serif",
   display: "swap",
@@ -77,9 +79,9 @@ export default function RootLayout({
       suppressHydrationWarning
       className={cn(
         "antialiased",
-        plusJakartaSans.variable,
+        outfit.variable,
         ibmPlexMono.variable,
-        lora.variable,
+        notoSerif.variable,
         inter.variable,
         jetbrainsMono.variable,
         instrumentSerif.variable,
