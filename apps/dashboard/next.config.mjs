@@ -79,6 +79,10 @@ const nextConfig = {
 export default withSentryConfig(nextConfig, {
   org: "tac-an",
   project: "javascript-nextjs",
+  // Source-map upload auth (build-time only). Auto-detected from the
+  // gitignored .env.sentry-build-plugin / CI env; passed explicitly to
+  // match the canonical setup. Upload no-ops when the token is absent.
+  authToken: globalThis.process?.env?.SENTRY_AUTH_TOKEN,
   silent: !globalThis.process?.env?.CI,
   widenClientFileUpload: true,
   tunnelRoute: "/monitoring",

@@ -1,9 +1,14 @@
-// Sentry wiring diagnostic — Sentry-free mock keeping RBAC boundaries for sentinel tests.
+// Sentry wiring diagnostic — manager-gated, rate-limited verification route.
 //
-// GET  /api/diagnostics/sentry        — Reports Sentry configured status (always disabled now)
+// GET  /api/diagnostics/sentry        — Reports live Sentry-configured status (DSN host, env)
 //
-// POST /api/diagnostics/sentry        — Returns disabled status
+// POST /api/diagnostics/sentry        — Emits a tagged synthetic test event and returns its id
+//
+// This is the project's verification mechanism for the dashboard Sentry
+// wiring (see docs/launch SB-2). It stays manager-gated + rate-limited so
+// it is safe to leave reachable in production — no NODE_ENV example page.
 
+import * as Sentry from "@sentry/nextjs"
 import { cookies } from "next/headers"
 import { NextResponse } from "next/server"
 
@@ -91,18 +96,35 @@ async function requireManager(): Promise<GateResult> {
   return { allowed: true, userId: user.id }
 }
 
+function resolveDsn(): string | undefined {
+  return process.env.SENTRY_DSN ?? process.env.NEXT_PUBLIC_SENTRY_DSN
+}
+
+function dsnHostOf(dsn: string): string | null {
+  try {
+    return new URL(dsn).host
+  } catch {
+    return null
+  }
+}
+
 export async function GET() {
   const gate = await requireManager()
   if (!gate.allowed) return gate.response
 
+  const dsn = resolveDsn()
+  const dsnConfigured = Boolean(dsn)
+
   return NextResponse.json({
-    enabled: false,
-    dsnConfigured: false,
-    dsnHost: null,
+    enabled: dsnConfigured,
+    dsnConfigured,
+    dsnHost: dsn ? dsnHostOf(dsn) : null,
     environment: process.env.SENTRY_ENV ?? process.env.NODE_ENV ?? null,
-    release: null,
+    release: process.env.SENTRY_RELEASE ?? null,
     runtime: "nodejs",
-    notes: "Sentry integration has been deactivated and removed.",
+    notes: dsnConfigured
+      ? "Sentry initialized for the dashboard (server runtime)."
+      : "No DSN configured — Sentry is fail-quiet.",
   })
 }
 
@@ -110,11 +132,21 @@ export async function POST() {
   const gate = await requireManager()
   if (!gate.allowed) return gate.response
 
-  return NextResponse.json(
-    {
-      ok: false,
-      reason: "Sentry not initialized — Sentry is deactivated.",
-    },
-    { status: 503 },
+  const dsn = resolveDsn()
+  if (!dsn) {
+    return NextResponse.json(
+      { ok: false, reason: "No DSN configured — Sentry is fail-quiet." },
+      { status: 503 },
+    )
+  }
+
+  // Emit a tagged synthetic exception to verify the end-to-end pipeline.
+  // No PII in tags (deterministic strings only) per the tagger contract.
+  const eventId = Sentry.captureException(
+    new Error("Sentry wiring diagnostic — synthetic verification event"),
+    { tags: { diagnostic: "sentry-wiring", surface: "/api/diagnostics/sentry" } },
   )
+  await Sentry.flush(2000)
+
+  return NextResponse.json({ ok: true, eventId })
 }
