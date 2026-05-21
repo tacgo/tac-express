@@ -181,10 +181,10 @@ function OpsShipmentsView({
                 </span>
               </OpsTableCell>
               <OpsTableCell>
-                <div className="font-paper-display font-semibold text-[length:var(--text-ui-13)]">
+                <div className="font-paper-display font-semibold text-ui-13">
                   {r.customer}
                 </div>
-                <div className="font-paper-mono text-paper-fg-3 text-[length:var(--text-ui-12)]">
+                <div className="font-paper-mono text-paper-fg-3 text-ui-12">
                   → {r.receiver}
                 </div>
               </OpsTableCell>

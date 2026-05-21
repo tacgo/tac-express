@@ -72,7 +72,7 @@ function OpsAnalyticsView({ kpis }: OpsAnalyticsViewProps) {
             <RiPlaneLine aria-hidden className="size-3.5" />
             <span>In Transit</span>
           </div>
-          <div className="font-paper-display font-extrabold text-[length:var(--text-ui-28)] mt-2.5">
+          <div className="font-paper-display font-extrabold text-ui-28 mt-2.5">
             {kpis.inTransit}
           </div>
         </OpsCard>
@@ -81,7 +81,7 @@ function OpsAnalyticsView({ kpis }: OpsAnalyticsViewProps) {
             <RiAlertLine aria-hidden className="size-3.5" />
             <span>Open Exceptions</span>
           </div>
-          <div className="font-paper-display font-extrabold text-[length:var(--text-ui-28)] mt-2.5">
+          <div className="font-paper-display font-extrabold text-ui-28 mt-2.5">
             {kpis.openExceptions}
           </div>
           <div className="paper-label mt-1">All clear</div>
@@ -91,7 +91,7 @@ function OpsAnalyticsView({ kpis }: OpsAnalyticsViewProps) {
             <RiTimeLine aria-hidden className="size-3.5" />
             <span>Avg Delivery Days</span>
           </div>
-          <div className="font-paper-display font-extrabold text-[length:var(--text-ui-28)] mt-2.5">
+          <div className="font-paper-display font-extrabold text-ui-28 mt-2.5">
             {kpis.avgDeliveryDays}
           </div>
         </OpsCard>

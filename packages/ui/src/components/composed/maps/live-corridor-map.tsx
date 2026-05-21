@@ -196,7 +196,7 @@ function HubPin({
 }: Pick<CorridorHub, "code" | "name" | "secondary" | "isActive">) {
   return (
     <div className="group/hub-pin relative flex flex-col items-center">
-      <div className="pointer-events-none flex h-7 items-center gap-1.5 border border-primary/40 bg-background/95 px-2 font-mono text-ui-10 font-semibold uppercase tracking-widest text-foreground shadow-[var(--shadow-brutal-sm)]">
+      <div className="pointer-events-none flex h-7 items-center gap-1.5 border border-primary/40 bg-background/95 px-2 font-mono text-ui-10 font-semibold uppercase tracking-widest text-foreground shadow-sm">
         <span
           className={cn(
             "size-1.5",

@@ -113,7 +113,7 @@ function OpsTopbar({ crumbs }: OpsTopbarProps) {
                 onClick={() => onPick(t)}
                 className={cn(
                   "w-7 h-[length:var(--toggle-h)] border-r border-paper-line last:border-r-0 bg-paper-card",
-                  "font-paper-mono font-semibold text-[length:var(--text-ui-11)] text-paper-fg-2",
+                  "font-paper-mono font-semibold text-ui-11 text-paper-fg-2",
                   "hover:bg-paper-3 transition-colors duration-fast ease-linear",
                   "focus-visible:outline-none focus-visible:tac-focus-premium",
                   isActive && "bg-paper-violet text-white hover:bg-paper-violet-2",

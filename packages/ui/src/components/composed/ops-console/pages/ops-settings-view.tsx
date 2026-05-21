@@ -120,13 +120,13 @@ function OpsSettingsView({
           <div className="flex flex-col gap-3.5">
             <OpsCard ticks>
               <div className="paper-label">Profile Completion</div>
-              <div className="font-paper-display font-extrabold text-[length:var(--text-ui-28)] mt-2">
+              <div className="font-paper-display font-extrabold text-ui-28 mt-2">
                 {completionPct}%
               </div>
               <div className="paper-label mt-1.5">
                 {pendingItems.length} pending
               </div>
-              <div className="mt-2.5 font-paper-mono text-paper-fg-3 text-[length:var(--text-ui-12)] flex flex-col gap-1">
+              <div className="mt-2.5 font-paper-mono text-paper-fg-3 text-ui-12 flex flex-col gap-1">
                 {pendingItems.map((p) => (
                   <div key={p}>■ {p}</div>
                 ))}
@@ -143,10 +143,10 @@ function OpsSettingsView({
                   key={label}
                   className="flex items-center justify-between mt-2"
                 >
-                  <span className="font-paper-mono uppercase text-paper-fg-3 text-[length:var(--text-ui-11)] tracking-[length:var(--tracking-nav)]">
+                  <span className="font-paper-mono uppercase text-paper-fg-3 text-ui-11 tracking-nav">
                     {label}
                   </span>
-                  <span className="font-paper-mono text-[length:var(--text-ui-11)]">
+                  <span className="font-paper-mono text-ui-11">
                     {keys.map((k) => (
                       <OpsKbd key={k}>{k}</OpsKbd>
                     ))}
@@ -159,13 +159,13 @@ function OpsSettingsView({
               <div className="paper-label">System Information</div>
               <div className="flex items-center justify-between mt-2">
                 <span className="paper-label">Version</span>
-                <span className="font-paper-mono text-[length:var(--text-ui-13)]">
+                <span className="font-paper-mono text-ui-13">
                   {version}
                 </span>
               </div>
               <div className="flex items-center justify-between mt-1.5">
                 <span className="paper-label">Environment</span>
-                <span className="font-paper-mono text-[length:var(--text-ui-13)]">
+                <span className="font-paper-mono text-ui-13">
                   {environment}
                 </span>
               </div>
@@ -198,7 +198,7 @@ function OpsSettingsView({
               >
                 <RiKey2Line aria-hidden className="size-4 text-paper-violet" />
                 <div className="flex-1 min-w-0">
-                  <div className="font-paper-display font-semibold text-[length:var(--text-ui-13)]">
+                  <div className="font-paper-display font-semibold text-ui-13">
                     API Keys
                   </div>
                   <div className="paper-label mt-0.5">
@@ -218,7 +218,7 @@ function OpsSettingsView({
               >
                 <RiSendPlaneLine aria-hidden className="size-4 text-paper-violet" />
                 <div className="flex-1 min-w-0">
-                  <div className="font-paper-display font-semibold text-[length:var(--text-ui-13)]">
+                  <div className="font-paper-display font-semibold text-ui-13">
                     Webhooks
                   </div>
                   <div className="paper-label mt-0.5">
@@ -239,7 +239,7 @@ function OpsSettingsView({
       {tab === "Audit" && (
         <OpsCard ticks>
           <div className="paper-label mb-3">Audit Log</div>
-          <p className="font-paper-display text-[length:var(--text-ui-13)] mb-4">
+          <p className="font-paper-display text-ui-13 mb-4">
             Compliance + activity history for this account and the organization.
           </p>
           <Link
@@ -257,7 +257,7 @@ function OpsSettingsView({
       {(tab === "Security" || tab === "Theme") && (
         <OpsCard ticks>
           <div className="paper-label mb-3">{tab}</div>
-          <p className="font-paper-display text-[length:var(--text-ui-13)] text-paper-fg-3">
+          <p className="font-paper-display text-ui-13 text-paper-fg-3">
             {tab === "Security"
               ? "Password rotation, 2FA setup, and session management ship in the next sprint. For account-recovery contact your administrator."
               : "Theme is controlled by the C / M / S toggle in the top bar. A persistent per-user theme preference lands in the next sprint."}
@@ -442,8 +442,8 @@ function OpsHubsSection({
                         aria-label={`Rename hub ${code}`}
                         className={cn(
                           "min-w-0 flex-1 bg-paper-bg border border-paper-line px-2 py-1",
-                          "font-paper-display font-semibold text-[length:var(--text-ui-13)] text-paper-fg-1",
-                          "tracking-[length:var(--tracking-badge)]",
+                          "font-paper-display font-semibold text-ui-13 text-paper-fg-1",
+                          "tracking-badge",
                           "focus:outline-none focus:border-paper-violet",
                         )}
                       />
@@ -466,7 +466,7 @@ function OpsHubsSection({
                     </>
                   ) : (
                     <div className="min-w-0">
-                      <div className="font-paper-display font-semibold text-[length:var(--text-ui-13)] text-paper-fg-1 truncate">
+                      <div className="font-paper-display font-semibold text-ui-13 text-paper-fg-1 truncate">
                         {display}
                       </div>
                       <div className="paper-label mt-0.5 truncate">
@@ -542,7 +542,7 @@ function OpsHubsSection({
                   className="py-2 flex items-center justify-between gap-3"
                 >
                   <div className="min-w-0">
-                    <div className="font-paper-display font-medium text-[length:var(--text-ui-13)] text-paper-fg-2 truncate line-through">
+                    <div className="font-paper-display font-medium text-ui-13 text-paper-fg-2 truncate line-through">
                       {config.labelFor(code)}
                     </div>
                     <div className="paper-label mt-0.5 truncate">{code}</div>
@@ -564,7 +564,7 @@ function OpsHubsSection({
       <div className="flex flex-col gap-3.5">
         <OpsCard ticks>
           <div className="paper-label">About hub config</div>
-          <p className="font-paper-display text-[length:var(--text-ui-13)] mt-2 leading-relaxed text-paper-fg-2">
+          <p className="font-paper-display text-ui-13 mt-2 leading-relaxed text-paper-fg-2">
             Hubs you add here appear as cards on the{" "}
             <span className="font-semibold text-paper-fg-1">Hub Inventory</span>{" "}
             page, even when they currently hold zero pieces. Renames are
@@ -580,7 +580,7 @@ function OpsHubsSection({
 
         <OpsCard>
           <div className="paper-label">Tips</div>
-          <ul className="font-paper-display text-[length:var(--text-ui-13)] mt-2 leading-relaxed text-paper-fg-2 list-disc pl-4 space-y-1">
+          <ul className="font-paper-display text-ui-13 mt-2 leading-relaxed text-paper-fg-2 list-disc pl-4 space-y-1">
             <li>Codes are auto-normalized: spaces → underscores, uppercased.</li>
             <li>Click a hub label to edit; Enter to save, Esc to cancel.</li>
             <li>Delete is a two-click confirm to prevent accidents.</li>

@@ -263,7 +263,7 @@ export function Sidebar({ collapsible = false }: SidebarProps = {}) {
                 className="block focus-visible:outline-none focus-visible:tac-focus-premium"
                 aria-label="TAC Express dashboard home"
               >
-                <div className="font-mono font-extrabold text-base leading-none tracking-[length:var(--tracking-tight)] flex items-baseline">
+                <div className="font-mono font-extrabold text-base leading-none tracking-tight flex items-baseline">
                   <span className="text-sidebar-foreground">TAC</span>
                   <span className="ml-1.5 text-accent-warning">
                     EXPRESS →
