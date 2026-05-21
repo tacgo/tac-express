@@ -122,7 +122,7 @@ function AwbInput({
             size="lg"
             disabled={loading}
             aria-busy={loading}
-            className="h-12 rounded-none font-mono font-bold text-sm tracking-paper-30 uppercase bg-primary text-primary-foreground hover:bg-foreground hover:text-background w-full sm:w-auto px-10 transition-colors border-t sm:border-t-0 sm:border-l border-border focus-visible:outline-none focus-visible:tac-focus-premium"
+            className="h-12 rounded-none font-mono font-bold text-sm tracking-display uppercase bg-primary text-primary-foreground hover:bg-foreground hover:text-background w-full sm:w-auto px-10 transition-colors border-t sm:border-t-0 sm:border-l border-border focus-visible:outline-none focus-visible:tac-focus-premium"
           >
             {loading ? (
               <Icon name="loader" className="mr-3 w-5 h-5 animate-spin motion-reduce:animate-none" />
