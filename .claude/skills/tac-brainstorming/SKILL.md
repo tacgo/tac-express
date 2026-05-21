@@ -77,7 +77,7 @@ All new UI must align with the design identity. Answer each:
 [ ] Dark-first: Does it use bg-card / bg-background / bg-muted? No white panels.
 [ ] Sharp: No rounded-full, no rounded-lg with non-zero radius. var(--radius) = 0.
 [ ] Shadows: Brutalist offset only — shadow-sm/shadow/shadow-md (1–6px sharp offsets) or aliases shadow-[var(--shadow-brutal-sm)] / shadow-[var(--shadow-brutal)].
-[ ] Fonts: font-sans (Plus Jakarta Sans) for labels, font-mono (IBM Plex Mono) for AWBs/IDs/numbers, font-serif (Lora) for blockquotes/prose only.
+[ ] Fonts: font-sans (Outfit) for labels, font-mono (IBM Plex Mono) for AWBs/IDs/numbers, font-serif (Noto Serif) for blockquotes/prose only.
 [ ] Signal palette: violet = primary (CTAs, focus). Green = success. Amber = warning. Red = danger.
 [ ] No glassmorphism: No backdrop-blur, no translucent surfaces, no glass tokens.
 [ ] Icons: @remixicon/react only. aria-hidden on decorative icons.

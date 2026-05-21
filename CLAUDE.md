@@ -169,7 +169,7 @@ uipro ships 67 styles, 96 palettes, 57 font pairings — but **most are FORBIDDE
 - Accessibility checklist lookup (WCAG references)
 - Anti-pattern lookup (then re-state in Violet Grid terms)
 - Animation timing / easing reference (then map to our `--duration-*` / `--ease-*` tokens)
-- Font-pairing **kerning math** reference (we are locked to Plus Jakarta Sans + IBM Plex Mono + Lora)
+- Font-pairing **kerning math** reference (we are locked to Outfit + IBM Plex Mono + Noto Serif)
 
 uipro is **off-limits** for: picking a color, picking a font, picking a chart type, picking a style. Those decisions are owned by `tac-design-tokens` and the Fourteen Laws.
 
@@ -190,7 +190,7 @@ TYPES:          packages/types/
 APPS:           apps/web/ (landing) | apps/dashboard/ (logistics)
 NEXT VERSION:   16.x (Turbopack)
 DESIGN:         TAC Express v5.0 — Violet Grid (dark-first, violet signal, brutalist offset shadows)
-FONTS:          Plus Jakarta Sans (sans/UI) | IBM Plex Mono (data) | Lora (serif/prose)
+FONTS:          Outfit (sans/UI) | IBM Plex Mono (data) | Noto Serif (serif/prose)
 RADIUS:         0rem — zero radius, sharp corners
 SHADOWS:        shadow-2xs..shadow-2xl resolve to brutalist offsets (1px..16px on var(--border))
                 aliases: --shadow-brutal-sm = shadow-sm (3px) | --shadow-brutal = shadow-md (6px)

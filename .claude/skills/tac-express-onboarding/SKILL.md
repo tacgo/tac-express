@@ -49,8 +49,8 @@ A **logistics mission-control platform** for the North-East corridor. Public mar
 | **Status** | Green success / amber warning / red danger / violet info |
 | **Radius** | `0rem` everywhere (LAW 13) |
 | **Shadows** | Brutalist offset only — `shadow-sm`..`shadow-2xl` resolve to `Npx Npx 0 0 var(--border)` |
-| **Fonts** | Plus Jakarta Sans (sans) · IBM Plex Mono (mono) · Lora (serif) |
-| **Forbidden** | Glassmorphism · soft drop shadows · curves · `rounded-full` · indigo / cyan / orange / Inter / Geist / Space Grotesk |
+| **Fonts** | Outfit (sans/body) · IBM Plex Mono (mono) · Noto Serif (serif/headings) |
+| **Forbidden** | Glassmorphism · soft drop shadows · curves · `rounded-full` · cyan / orange / Inter / Geist / Space Grotesk · Plus Jakarta Sans / Lora (former identity) |
 
 > **Authoritative source of truth:** `packages/ui/src/styles/globals.css`. If a doc and the CSS disagree, the CSS wins and the doc is updated.
 
@@ -162,7 +162,7 @@ Match your task to the right specialist. Load it BEFORE writing code.
 ICONS:      import { RiX } from "@workspace/ui/icons"  (@remixicon/react via wrapper)
 COMPONENTS: import { ... } from "@workspace/ui"  (shadcn radix-lyra)
 COLORS:     bg-primary · text-foreground · border-border · bg-accent-{success,warning,danger,info}
-FONTS:      font-sans (Plus Jakarta Sans) · font-mono (IBM Plex Mono) · font-serif (Lora)
+FONTS:      font-sans (Plus Jakarta Sans) · font-mono (IBM Plex Mono) · font-serif (Noto Serif)
 ANIMATION:  motion components OR animate-in fade-in slide-in-from-* duration-* (tw-animate-css)
             + CSS @keyframes in globals.css (shimmer, scanline, blink, marquee-x/y)
 DATA:       via packages/services → packages/database  (NEVER direct Supabase in components)
