@@ -67,7 +67,7 @@ interface V7OpsFinanceProps {
 
 const TONE_BADGE_CLASS: Record<InvoiceTone, string> = {
   ok: "border-accent-success text-accent-success",
-  warn: "border-yellow-500 text-yellow-600 dark:text-yellow-400",
+  warn: "border-accent-warning text-accent-warning",
   violet: "border-primary text-primary",
   err: "border-destructive text-destructive",
   neutral: "border-border text-muted-foreground",
