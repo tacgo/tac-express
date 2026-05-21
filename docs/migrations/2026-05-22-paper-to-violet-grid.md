@@ -1,6 +1,16 @@
 # Migration Spec — Retire `paper-*` → Pure shadcn + Violet Grid
 
-> **Status:** APPROVED DIRECTION, awaiting go-ahead to start Phase 1 (no code yet).
+> **Status:** IN PROGRESS on branch `refactor/paper-to-violet-grid`.
+> - ✅ **Phase 1 complete** (commits `483fed9`, `4aed260`): 2 forms + 3 tables + 8 button
+>   files → shadcn primitives. All gates green (typecheck, vitest 569/569, no new lint).
+> - 🔄 **Phase 2 started** (commit `f3b3b78`): dead `OpsListState` removed.
+> - ⏭️ **Remaining (Phase 2 core + Phase 3 + Phase 4):** the ops-console ivory→dark
+>   visual flip + `paper-*` eradication. Per this spec's DoD these require **per-page
+>   visual verification on a running dashboard** — to be executed as a focused, screenshot-
+>   verified effort, not a blind bulk edit. 8 button files (invoice-wizard,
+>   send-whatsapp-dialog, aging-buckets, smart-address-fields, saved-view-selector,
+>   sidebar, notification-bell, scanning-console) are deferred here so each paper-entangled
+>   file is touched once.
 > **Date:** 2026-05-22
 > **Origin:** [2026-05-22 shadcn purity audit](../audits/2026-05-22-shadcn-purity-audit.md)
 > **Brainstorming decisions:**
