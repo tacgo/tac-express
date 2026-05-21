@@ -25,6 +25,15 @@ Sentry.init({
   replaysOnErrorSampleRate: 1.0,
   sendDefaultPii: false,
 
+  // Distributed tracing is automatic for client/server/edge in the current
+  // SDK (browserTracingIntegration is added by default — no manual entry).
+  // Scope trace-header propagation to our own origins so we never attach
+  // sentry-trace/baggage headers to cross-origin third parties (Supabase,
+  // Upstash), which would trigger CORS preflight failures. localhost covers
+  // dev; the regex matches same-origin paths (our /api routes). Add a
+  // production backend origin here if the API ever moves off-origin.
+  tracePropagationTargets: ["localhost", /^\/(?!\/)/],
+
   // Drop events whose top frames originate from browser extensions or
   // injected third-party scripts — none of this is TAC Express code.
   denyUrls: [
