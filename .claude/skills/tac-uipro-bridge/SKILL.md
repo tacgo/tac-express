@@ -26,7 +26,7 @@ Before reading anything from uipro CSV results, apply this filter:
 | Style: skeuomorphism | ❌ FORBIDDEN | Visual realism contradicts mission-control |
 | Style: flat design | ⚠️ degrades to minimalism | Strip the "no shadow" advice — we use offsets |
 | **Palette: any** | ❌ NEVER pick from uipro | LAW 1 — only globals.css colors |
-| **Font pair: any** | ❌ NEVER pick from uipro | LAW 4 — Plus Jakarta Sans + IBM Plex Mono + Lora only |
+| **Font pair: any** | ❌ NEVER pick from uipro | LAW 4 — Outfit + IBM Plex Mono + Noto Serif only |
 | Charts: any uipro suggestion | ❌ FORBIDDEN | Use TAC Orbital primitives only (`docs/CHARTS-ORBITAL.md`) |
 | **Accessibility rules** | ✅ ALWAYS use | uipro ≥ tac-accessibility on breadth |
 | **Animation timing** | ⚠️ cross-check | uipro suggests 150-300ms; we have `--duration-fast/base/slow` — map, don't replace |
@@ -49,7 +49,7 @@ Output: WCAG-grounded rules. Cross-reference with `tac-accessibility` — if uip
 Use uipro's anti-pattern data to expand the "premium-killers" list in `tac-design-tokens`. Always re-state in Violet Grid terms.
 
 ### 1.3 Font-pairing **reference** (NOT selection)
-We are locked to Plus Jakarta Sans / IBM Plex Mono / Lora. uipro's 57 pairings tell you **which weights and tracking ranges** other premium pairings use — borrow the *kerning math*, not the family choice.
+We are locked to Outfit / IBM Plex Mono / Noto Serif. uipro's 57 pairings tell you **which weights and tracking ranges** other premium pairings use — borrow the *kerning math*, not the family choice.
 
 ### 1.4 Animation timing & easing reference
 Cross-reference uipro's `duration-timing` rule with our `--duration-fast/base/slow` and `--ease-smooth/spring/linear` tokens. If uipro suggests a timing we don't have a token for, **add a token** rather than hardcoding.
@@ -67,7 +67,7 @@ When uipro returns advice, translate it before applying:
 | "Round the corners 8px" | DO NOT — `--radius: 0rem` always (LAW 13) |
 | "Use a primary blue" | `bg-primary` (resolves to Violet Grid violet) |
 | "Use a CTA orange" | `bg-accent-warning` if status; `bg-primary` if action |
-| "Inter / Geist / Space Grotesk" | `font-sans` (Plus Jakarta Sans) |
+| "Inter / Geist / Space Grotesk" | `font-sans` (Outfit) |
 | "Add a hover glow" | `tac-signal-glow` (1px ring + 8px primary bloom) |
 | "Use a 12px radius modal" | `--radius: 0rem` — sharp modal, brutalist offset shadow |
 | "Skeleton with soft pulse" | `animate-skeleton-pulse` (defined in globals.css) |

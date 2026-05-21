@@ -1,8 +1,17 @@
 import * as React from "react"
 import Link from "next/link"
 import { TacWordmark } from "@workspace/ui/components/primitives/tac-wordmark"
+import { Button } from "@workspace/ui/components/button"
+import { Input } from "@workspace/ui/components/primitives/input"
+import { Label } from "@workspace/ui/components/primitives/label"
+import { Icon } from "@workspace/ui/icons"
 
-export function Footer() {
+export function Footer({
+  newsletterAction,
+}: {
+  /** App-supplied submit target (server action / route). Posts, never GETs. */
+  newsletterAction?: string
+} = {}) {
   return (
     <footer className="bg-card pt-24 pb-12 border-t-2 border-primary-medium">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -46,6 +55,35 @@ export function Footer() {
               <li><Link href="#" className="hover:text-primary transition-colors">Data Processing Addendum</Link></li>
             </ul>
           </div>
+        </div>
+
+        <div className="border-t border-border py-10 grid gap-6 md:grid-cols-2 md:items-center mb-2">
+          <div>
+            <Label htmlFor="footer-newsletter" className="t-overline text-foreground">
+              Corridor updates
+            </Label>
+            <p className="t-body-sm text-muted-foreground mt-2 max-w-sm">
+              New lanes, transit times, and service notes across the North-East — a few times a month.
+            </p>
+          </div>
+          <form action={newsletterAction} method="post" className="flex w-full max-w-sm gap-2 md:ml-auto">
+            <Input
+              id="footer-newsletter"
+              type="email"
+              name="email"
+              required
+              placeholder="you@company.com"
+              aria-label="Email address"
+              className="flex-1"
+            />
+            <Button
+              type="submit"
+              className="shrink-0 rounded-none font-mono font-bold text-xs tracking-paper-20 uppercase"
+            >
+              <Icon name="mail" aria-hidden className="mr-2 w-4 h-4" />
+              Subscribe
+            </Button>
+          </form>
         </div>
 
         <div className="border-t-2 border-primary-subtle pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-foreground/70 font-mono font-medium">

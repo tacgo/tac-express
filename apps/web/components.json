@@ -6,7 +6,7 @@
   "tailwind": {
     "config": "",
     "css": "../../packages/ui/src/styles/globals.css",
-    "baseColor": "neutral",
+    "baseColor": "zinc",
     "cssVariables": true
   },
   "iconLibrary": "remixicon",
@@ -17,6 +17,9 @@
     "utils": "@workspace/ui/lib/utils",
     "ui": "@workspace/ui/components"
   },
+  "rtl": false,
+  "menuColor": "default",
+  "menuAccent": "subtle",
   "registries": {
     "@tac": "file:../../packages/ui/registry/{name}.json"
   }

@@ -98,9 +98,10 @@ For focus or active state emphasis, use the **signal glow** utility (1px ring + 
 
 | Role | Font | CSS variable | Usage |
 |------|------|--------------|-------|
-| Sans (UI / headings) | **Plus Jakarta Sans** | `--font-sans` | All UI text |
+| Sans (UI / body) | **Outfit** | `--font-sans` | All UI text & body |
+| Serif (headings) | **Noto Serif** | `--font-serif` | `.t-display` / `.t-h1–h4` headings |
 | Mono (data / numbers) | **IBM Plex Mono** | `--font-mono` | AWBs, weights, timestamps, currency, codes |
-| Serif (prose / quotes) | **Lora** | `--font-serif` | Blockquotes, editorial content |
+| Serif (prose / quotes) | **Noto Serif** | `--font-serif` | Blockquotes, editorial content |
 
 **LAW 4** — fonts are declared exactly twice in the repo: `apps/web/app/layout.tsx` and `apps/dashboard/app/layout.tsx`. Do not declare fonts elsewhere.
 

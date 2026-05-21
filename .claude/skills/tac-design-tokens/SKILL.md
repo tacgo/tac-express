@@ -95,9 +95,9 @@ the `t-display / t-h1..h4 / t-data / t-overline / t-mono` premium type scale.
 
 | Class | Family | Use |
 |---|---|---|
-| `font-sans` | Plus Jakarta Sans | UI text, headings, labels |
+| `font-sans` | Outfit | UI text, headings, labels |
 | `font-mono` | IBM Plex Mono | AWBs, IDs, weights, currency, timestamps |
-| `font-serif` | Lora | Blockquotes, editorial / prose ONLY |
+| `font-serif` | Noto Serif | Blockquotes, editorial / prose ONLY |
 
 ### Premium Type Scale (defined in `globals.css` `@layer utilities`)
 
@@ -330,7 +330,7 @@ Use sparingly — these are the visual "splash" reserved for marketing surfaces 
 ❌ Three+ font weights in one block       → 400 / 600 / 700 / 800 are all you need
 ❌ Inline styles                          → semantic tokens via Tailwind classes only
 ❌ `Inter`, `Geist`, `Space Grotesk`,
-   `JetBrains Mono`, `Fira Mono` strings  → those are dead identities; only Plus Jakarta Sans / IBM Plex Mono / Lora
+   `JetBrains Mono`, `Fira Mono` strings  → those are dead identities; only Outfit / IBM Plex Mono / Noto Serif
 ```
 
 ---

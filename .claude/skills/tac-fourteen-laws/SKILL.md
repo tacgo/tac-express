@@ -63,7 +63,7 @@ import { motion } from "motion/react"
 // ✅ The only legal places fonts are loaded:
 //    apps/web/app/layout.tsx
 //    apps/dashboard/app/layout.tsx
-import { Plus_Jakarta_Sans, IBM_Plex_Mono, Lora } from "next/font/google"
+import { Outfit, IBM_Plex_Mono, Noto_Serif } from "next/font/google"
 
 // ❌ Forbidden — fonts loaded anywhere else:
 //    packages/ui/fonts.ts                   ← legacy, removed

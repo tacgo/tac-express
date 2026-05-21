@@ -1,6 +1,6 @@
 ---
 name: tac-code-review
-description: "Use when completing a feature, before merging a PR, or after fixing a bug. Reviews for law compliance, TAC Express v5.0 Violet Grid adherence (Plus Jakarta Sans / IBM Plex Mono / Lora, 0rem radius, brutalist offset shadows, violet signal palette), architecture correctness, and code quality."
+description: "Use when completing a feature, before merging a PR, or after fixing a bug. Reviews for law compliance, TAC Express v5.0 Violet Grid adherence (Outfit / IBM Plex Mono / Noto Serif, 0rem radius, brutalist offset shadows, violet signal palette), architecture correctness, and code quality."
 ---
 
 # TAC Express — Code Review
@@ -78,7 +78,7 @@ Invoke this skill before any merge to main, after completing a feature, or when 
 [ ] Status colors via accent tokens: bg-accent-success, bg-accent-warning, bg-accent-danger
 [ ] Animation uses tw-animate-css or motion/react (not inline keyframes in components)
 [ ] Radius uses var(--radius-*) tokens (resolves to 0 — no rounded-lg, no rounded-full)
-[ ] Typography uses font-sans (Plus Jakarta Sans) / font-serif (Lora) / font-mono (IBM Plex Mono)
+[ ] Typography uses font-sans (Outfit) / font-serif (Noto Serif) / font-mono (IBM Plex Mono)
 [ ] Icons: @remixicon/react via @workspace/ui/icons, size-* class, aria-hidden
 [ ] No legacy "TAC Orbital", "TAC Precision", "Indigo Mission-Control", "VELOX", "Wasteland", "cyan/orange" references in code or comments
 [ ] No "Space Grotesk", "JetBrains Mono", "Fira Mono", "Inter", "Geist" font names in any file outside git history
@@ -149,7 +149,7 @@ Date: YYYY-MM-DD
 ### Violet Grid Design
 [ ] Semantic tokens used correctly
 [ ] No glassmorphism, no curves, sharp edges only
-[ ] Primary is violet, fonts are Plus Jakarta Sans / IBM Plex Mono / Lora
+[ ] Primary is violet, fonts are Outfit / IBM Plex Mono / Noto Serif
 
 ### Tests
 [ ] All new code has tests
@@ -180,6 +180,6 @@ Date: YYYY-MM-DD
 | `const db = await getUser()` in component body | LAW 6/7 | Move to service, pass as prop/hook |
 | `rounded-2xl` or `rounded-full` in component | LAW 9/13 | `rounded-[var(--radius-lg)]` or sharp |
 | `var(--glass-bg)` or `backdrop-blur` | Design violation | Remove — no glassmorphism (Violet Grid) |
-| `Space Grotesk`, `JetBrains Mono`, `Fira Mono`, `Inter`, `Geist` in import/CSS | Design drift | Use Plus Jakarta Sans / IBM Plex Mono / Lora |
+| `Space Grotesk`, `JetBrains Mono`, `Fira Mono`, `Inter`, `Geist` in import/CSS | Design drift | Use Outfit / IBM Plex Mono / Noto Serif |
 | `TAC Orbital`, `Indigo Mission-Control`, `VELOX`, `Wasteland`, `Precision` in comments | Design drift | Remove — dead system references |
 | Primary hue at `260°` (indigo) | Color drift | Use violet `oklch(0.5393 0.2713 286.7462)` light / `oklch(0.6132 0.2294 291.7437)` dark |

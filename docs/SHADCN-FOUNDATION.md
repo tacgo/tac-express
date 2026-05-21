@@ -27,18 +27,19 @@ Decoded (`shadcn preset decode b5Fxrc2eNU`):
 |---|---|---|---|
 | `radius` | `none` | `--radius: 0rem` | ✅ matches — LAW 13 |
 | `style` | `maia` | `radix-lyra` | 🔒 **locked** after init |
-| `baseColor` | `zinc` | `neutral` | 🔒 **locked** after init |
-| `cssVariables` | `true` | `true` | 🔒 **locked** after init |
-| `iconLibrary` | `tabler` | `remixicon` | Violet Grid identity |
-| `font` / `fontHeading` | `outfit` / `noto-serif` | Plus Jakarta Sans / IBM Plex Mono / Lora | LAW 4 |
-| `theme` / `chartColor` | `indigo` / `yellow` | violet signal / Orbital | LAW 10 |
+| `baseColor` | `zinc` | `zinc` | ✅ aligned (Phase 1) |
+| `cssVariables` | `true` | `true` | ✅ matches |
+| `iconLibrary` | `tabler` | `remixicon` | ⚠️ kept (Violet Grid identity — Phase 2 not adopted) |
+| `font` / `fontHeading` | `outfit` / `noto-serif` | Outfit / IBM Plex Mono / Noto Serif | ✅ aligned (Phase 1) |
+| `theme` / `chartColor` | `indigo` / `yellow` | indigo (preset) / Orbital charts | ✅ theme aligned; charts kept |
 
-> **Why we diverge from the raw preset:** shadcn's open-code model exists so a
-> project keeps its **own theme**. The font/icon/theme choices are deliberate
-> Violet Grid identity, owned by the Fourteen Laws. `radius: none` already
-> agrees. `style`, `baseColor`, and `cssVariables` are frozen by shadcn after
-> init — changing them means deleting and re-installing every component, so they
-> are not touched outside a `tac-brainstorming` design-approval event.
+> **Alignment status (Phase 1 done):** the theme (zinc/indigo via `shadcn apply
+> --only theme`) and fonts (Outfit + Noto Serif) now match the preset. The
+> `style` (`maia`) and `iconLibrary` (`tabler`) are intentionally **not** adopted
+> — keeping `radix-lyra`'s re-themed components and `@remixicon` preserves the
+> custom Violet Grid component code (brutalist shadows, premium focus,
+> zero-radius). Switching style/icons is a `tac-brainstorming` design-approval
+> event (it would reinstall ~40 components / migrate icons repo-wide).
 
 > **Do NOT re-run `init` on this repo.** `init --template next --monorepo`
 > re-scaffolds a fresh web+ui monorepo and would overwrite `globals.css`,

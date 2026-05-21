@@ -24,16 +24,16 @@ Decoded from preset `b5Fxrc2eNU`:
 |---|---|---|---|
 | `radius` | `none` | `--radius: 0rem` | ✅ matches (LAW 13) |
 | `style` | `maia` | `radix-lyra` | 🔒 locked post-init |
-| `baseColor` | `zinc` | `neutral` | 🔒 locked post-init |
-| `iconLibrary` | `tabler` | `remixicon` | Violet Grid identity (LAW: `@remixicon/react`) |
-| `font` / `fontHeading` | `outfit` / `noto-serif` | Plus Jakarta Sans / IBM Plex Mono / Lora | Violet Grid identity (LAW 4) |
-| `theme` / `chartColor` | `indigo` / `yellow` | violet signal / Orbital | Violet Grid identity (LAW 10) |
+| `baseColor` | `zinc` | `zinc` | ✅ aligned (Phase 1) |
+| `iconLibrary` | `tabler` | `remixicon` | ⚠️ kept — Phase 2 not adopted (LAW: `@remixicon/react`) |
+| `font` / `fontHeading` | `outfit` / `noto-serif` | Outfit / IBM Plex Mono / Noto Serif | ✅ aligned (Phase 1) |
+| `theme` / `chartColor` | `indigo` / `yellow` | indigo (preset) / Orbital | ✅ theme aligned; charts kept |
 
-`style`, `baseColor`, and `cssVariables` **cannot be changed after init** without
-deleting and re-installing every component. They are frozen. The font / icon /
-theme divergences are **deliberate** — the Fourteen Laws own those decisions, and
-shadcn's open-code model exists precisely so a project keeps its own theme. Do not
-"fix" them toward the raw preset.
+Theme + fonts are **preset-aligned** (Phase 1: `shadcn apply --only theme` +
+Outfit/Noto Serif). `style` (`maia`) and `iconLibrary` (`tabler`) are
+intentionally **not** adopted — keeping `radix-lyra` + `@remixicon` preserves the
+custom Violet Grid component code. Switching style/icons reinstalls ~40
+components / migrates icons repo-wide, so it's a `tac-brainstorming` event.
 
 > Switching preset, baseColor, style, or icon library is a `tac-brainstorming`
 > design-approval event, never an inline change.

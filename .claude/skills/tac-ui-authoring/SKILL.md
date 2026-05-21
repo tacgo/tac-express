@@ -1,6 +1,6 @@
 ---
 name: tac-ui-authoring
-description: "MANDATORY when writing or modifying any UI component in TAC Express. Enforces TAC Express v5.0 Violet Grid design system (Plus Jakarta Sans + IBM Plex Mono + Lora, 0rem radius, brutalist offset shadows, violet signal palette, no soft drop shadows, no glassmorphism), CVA pattern, packages/ui location, and Radix/shadcn primitives."
+description: "MANDATORY when writing or modifying any UI component in TAC Express. Enforces TAC Express v5.0 Violet Grid design system (Outfit + IBM Plex Mono + Noto Serif, 0rem radius, brutalist offset shadows, violet signal palette, no soft drop shadows, no glassmorphism), CVA pattern, packages/ui location, and Radix/shadcn primitives."
 ---
 
 # TAC Express — UI Component Authoring
@@ -162,9 +162,9 @@ Radius (ZERO — sharp corners always):
   rounded-none         use this when expressiveness is needed
 
 Fonts:
-  font-sans    Plus Jakarta Sans — UI text, headings, labels
+  font-sans    Outfit — UI text, headings, labels
   font-mono    IBM Plex Mono     — AWBs, IDs, weights, currency, timestamps
-  font-serif   Lora              — blockquotes, editorial / prose only
+  font-serif   Noto Serif              — blockquotes, editorial / prose only
 
 Type scale utilities (premium rendering — defined in globals.css):
   .t-display    3rem,    weight 800, tight tracking, balanced

@@ -251,9 +251,9 @@ tac-express/
 The design identity for TAC Express:
 - **Zero radius** — `--radius: 0rem`. Sharp corners everywhere. LAW 13.
 - **Straight lines only** — no curves, no wavy paths, no organic shapes.
-- **Violet-anchored signal palette** — primary violet (`oklch(0.5393 0.2713 286.7462)` light / `oklch(0.6132 0.2294 291.7437)` dark), green (success), amber (warning), red (danger).
+- **Violet-anchored signal palette** — primary (`oklch(0.457 0.24 277.023)` light / `oklch(0.398 0.195 277.366)` dark — preset `b5Fxrc2eNU` indigo), green (success), amber (warning), red (danger). Neutrals: zinc.
 - **Brutalist offset shadows** — `2px 2px 0 0 var(--border)` and `4px 4px 0 0 var(--border)`. No soft drop shadows. Tailwind `shadow-*` utilities resolve to `none`.
-- **Fonts:** Plus Jakarta Sans (sans/UI), IBM Plex Mono (data), Lora (serif/prose).
+- **Fonts:** Outfit (sans/body/UI), IBM Plex Mono (data), Noto Serif (serif/headings) — preset `b5Fxrc2eNU`.
 - **No glassmorphism** — solid surfaces, 1px borders, no `backdrop-filter`.
 - **FUI utilities** — `.tac-fui-panel`, `.tac-mono-label`, `.tac-hazard-stripes`, `.tac-scanline`, `.tac-blink`, `.tac-signal-glow`.
 
@@ -482,9 +482,9 @@ Every phase requires ALL of the following before proceeding:
 | Next.js version | 15.x | **16.x (Turbopack)** |
 | Design system | TAC Precision / Velox / Wasteland / Orbital | **TAC Express v5.0 Violet Grid** |
 | shadcn style | default / radix-maia | **radix-lyra** |
-| Font sans | Outfit / Geist / Space Grotesk | **Plus Jakarta Sans** |
+| Font sans | Geist / Space Grotesk / Inter | **Outfit** |
 | Font mono | Geist Mono / Fira Mono / JetBrains Mono | **IBM Plex Mono** |
-| Font serif | Noto Serif / Inter | **Lora** |
+| Font serif | Lora / Instrument Serif | **Noto Serif** |
 | Radius | 12px / 0.125rem | **0rem — zero radius** |
 | Shadow | soft drop shadows | **2px / 4px brutalist offset shadows only** |
 | Primary color | cyan/orange (Wasteland), indigo (Orbital) | **violet** `oklch(0.5393 0.2713 286.7462)` |
