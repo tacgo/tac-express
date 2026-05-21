@@ -215,50 +215,47 @@
      Source: .design-bundle (Anthropic Design export, May 2026).
      ══════════════════════════════════════════════════════════════════════════ */
 
-  /* Brand — May 2026 Modern Ivory refresh, harmonized with v6 */
-  --paper-ink:       oklch(0.1700 0.0180 270);          /* deep violet-ink — replaces near-black for premium feel */
-  --paper-orange:    oklch(0.5200 0.1600  55);          /* "EXPRESS →" accent — darkened so the wordmark clears WCAG AA on the paper-2 sidebar background. Chroma kept low to avoid over-saturation on the brighter ivory base. */
-  --paper-violet:    oklch(0.5393 0.2713 286.7462);     /* primary action — unchanged brand */
-  --paper-violet-2:  oklch(0.4595 0.2713 286.7462);     /* pressed */
-  --paper-violet-50: oklch(0.9740 0.0210 286.7462);     /* tinted surface — sits on ivory.
-                                                            Lighter than the brand mid-tone so
-                                                            paper-violet text on this surface
-                                                            clears WCAG AA 4.5:1 at 10px. */
+  /* ── paper-* → Violet Grid convergence (paper-to-violet-grid Phase 2/3) ──
+     The former bespoke "Modern Ivory / Midnight" paper palette + Inter/JetBrains/
+     Instrument-Serif fonts are RETIRED. These tokens now alias the semantic
+     Violet Grid tokens so every legacy `paper-*` utility / `.paper-*` class
+     renders in the canonical design system. var() resolves at use-time, so a
+     single :root definition is theme-aware (light + .dark) — no dark overrides
+     needed. Call-site class names are migrated off `paper-*` separately. */
+  --paper-ink:       var(--foreground);
+  --paper-orange:    var(--accent-warning);
+  --paper-violet:    var(--primary);
+  --paper-violet-2:  var(--primary);
+  --paper-violet-50: color-mix(in oklch, var(--primary) 10%, var(--background));
 
-  /* Modern Ivory neutrals — May 2026 evolution */
-  --paper-bg:        oklch(0.9920 0.0070 88);           /* #FFFDF7 — page bg, matches v6 --background */
-  --paper-2:         oklch(0.9780 0.0090 86);           /* sidebar bg — subtle step from page */
-  --paper-3:         oklch(0.9540 0.0120 84);           /* hover row */
-  --paper-line:      oklch(0.8650 0.0160 82);           /* #DED6C8 — muted taupe hairline */
-  --paper-line-2:    oklch(0.7800 0.0190 80);           /* stronger divider */
-  --paper-line-3:    oklch(0.5900 0.0180 78);           /* heavy / corner ticks */
+  --paper-bg:        var(--background);
+  --paper-2:         var(--sidebar);
+  --paper-3:         var(--muted);
+  --paper-line:      var(--border);
+  --paper-line-2:    var(--border);
+  --paper-line-3:    var(--border);
 
-  --paper-fg-1:      oklch(0.1700 0.0180 270);          /* primary text — violet-ink */
-  --paper-fg-2:      oklch(0.3200 0.0100 280);          /* secondary text */
-  /* fg-3: muted / labels. Bumped from L=0.52 → L=0.44 on 2026-05-13 to
-     push WCAG AA contrast on table muted cells (text-paper-fg-3 on
-     --paper-card 0.9965 → contrast > 4.5:1) — closes R0 audit C2. */
-  --paper-fg-3:      oklch(0.4400 0.0140 78);
-  --paper-fg-4:      oklch(0.6700 0.0150 80);           /* placeholders */
+  --paper-fg-1:      var(--foreground);
+  --paper-fg-2:      var(--foreground);
+  --paper-fg-3:      var(--muted-foreground);
+  --paper-fg-4:      var(--muted-foreground);
 
-  /* Card surface — near-white-on-ivory for layered warmth (still not pure white) */
-  --paper-card:      oklch(0.9965 0.0035 88);           /* #FFFEFA — matches v6 --card */
-  --paper-card-2:    oklch(0.9870 0.0070 86);           /* deeper card for hovers */
+  --paper-card:      var(--card);
+  --paper-card-2:    var(--muted);
 
-  /* Semantic — keep status hues distinct on the warmer base */
-  --paper-ok:        oklch(0.4700 0.1180 156);          /* darkened from oklch(0.535) for WCAG AA on paper-ok-bg (4.16:1 → 5.47:1) — affects ok-tone badges (Paid, Delivered) */
-  --paper-ok-bg:     oklch(0.9420 0.0320 156);
-  --paper-warn:      oklch(0.5000 0.1350  62);          /* darkened from oklch(0.595) so the warn-badge text (10px, normal weight on warn-bg #fbecce) clears WCAG AA 4.5:1 — was 3.58:1, now 5.32:1 */
-  --paper-warn-bg:   oklch(0.9470 0.0420  85);
-  --paper-err:       oklch(0.4900 0.1880  31);          /* darkened from oklch(0.52) for WCAG AA on paper-err-bg (4.45:1 → 5.06:1) — affects err-tone badges (Overdue, Failed, Exception) */
-  --paper-err-bg:    oklch(0.9020 0.0490  30);
-  --paper-info:      oklch(0.5200 0.1750 256);          /* darkened from oklch(0.56) for WCAG AA on paper-info-bg (3.82:1 → 4.53:1) — affects info-tone badges (Issued, In Transit) */
-  --paper-info-bg:   oklch(0.9270 0.0290 254);
+  --paper-ok:        var(--accent-success);
+  --paper-ok-bg:     color-mix(in oklch, var(--accent-success) 15%, var(--background));
+  --paper-warn:      var(--accent-warning);
+  --paper-warn-bg:   color-mix(in oklch, var(--accent-warning) 15%, var(--background));
+  --paper-err:       var(--destructive);
+  --paper-err-bg:    color-mix(in oklch, var(--destructive) 15%, var(--background));
+  --paper-info:      var(--accent-info);
+  --paper-info-bg:   color-mix(in oklch, var(--accent-info) 15%, var(--background));
 
-  /* Fonts — declared in apps/dashboard/app/layout.tsx (LAW 4) */
-  --paper-font-display: 'Inter', system-ui, sans-serif;
-  --paper-font-mono:    'JetBrains Mono', ui-monospace, Menlo, monospace;
-  --paper-font-serif:   'Instrument Serif', Georgia, serif;
+  /* Fonts → Violet Grid trio (LAW 4): Outfit / IBM Plex Mono / Noto Serif */
+  --paper-font-display: var(--font-sans);
+  --paper-font-mono:    var(--font-mono);
+  --paper-font-serif:   var(--font-serif);
   --background: oklch(1 0 0);
   --foreground: oklch(0.141 0.005 285.823);
 }
@@ -428,42 +425,9 @@
      `.ops-console` components don't need any dark: variants.
      ══════════════════════════════════════════════════════════════════════════ */
 
-  /* Brand — same violet hues; ink swaps to off-white */
-  --paper-ink:       oklch(0.9460 0.0048 264);          /* near-white headline */
-  --paper-orange:    oklch(0.7674 0.1700 68);           /* keep EXPRESS → warm orange */
-  --paper-violet:    oklch(0.6132 0.2294 291.7437);     /* matches v6 dark --primary */
-  --paper-violet-2:  oklch(0.7100 0.1900 291.7437);
-  --paper-violet-50: oklch(0.3280 0.0700 286);          /* tinted dark surface */
-
-  /* Midnight neutrals — ink stack instead of cream */
-  --paper-bg:        oklch(0.1900 0.0140 268);          /* page bg — deep ink */
-  --paper-2:        oklch(0.2300 0.0160 269);           /* sidebar */
-  --paper-3:        oklch(0.2800 0.0200 271);           /* hover row */
-  --paper-line:      oklch(0.3500 0.0210 272);          /* primary hairline */
-  --paper-line-2:    oklch(0.4400 0.0220 273);          /* stronger divider */
-  --paper-line-3:    oklch(0.6500 0.0230 274);          /* heavy / corner ticks */
-
-  --paper-fg-1:      oklch(0.9556 0.0074 264.5319);     /* primary text */
-  --paper-fg-2:      oklch(0.8200 0.0070 264);          /* secondary */
-  /* fg-3: muted / labels. Bumped from L=0.65 → L=0.74 on 2026-05-13 to
-     match the light-mode contrast bump (R0 audit C2). Dark theme has
-     inverse contrast logic — higher L on dark bg = more contrast. */
-  --paper-fg-3:      oklch(0.7400 0.0080 264);
-  --paper-fg-4:      oklch(0.5000 0.0090 264);          /* placeholders */
-
-  /* Card surface — dark mode flips to a slightly lighter ink for elevation */
-  --paper-card:      oklch(0.2568 0.0076 274.6528);
-  --paper-card-2:    oklch(0.2950 0.0100 273);
-
-  /* Semantic — brighter in dark mode */
-  --paper-ok:        oklch(0.7400 0.1500 152);
-  --paper-ok-bg:     oklch(0.2500 0.0500 152);
-  --paper-warn:      oklch(0.7800 0.1500 75);
-  --paper-warn-bg:   oklch(0.2700 0.0700 75);
-  --paper-err:       oklch(0.7000 0.2000 25);
-  --paper-err-bg:    oklch(0.2600 0.0700 25);
-  --paper-info:      oklch(0.7000 0.1700 256);
-  --paper-info-bg:   oklch(0.2400 0.0600 256);
+  /* paper-* dark overrides removed — the :root aliases reference semantic
+     tokens (var(--background) etc.) which the .dark block above already
+     redefines, so paper-* is theme-aware without duplicate definitions. */
 }
 
 /* ══════════════════════════════════════════════════════════════════════════════
