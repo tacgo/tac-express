@@ -1,6 +1,6 @@
 # TAC Express
 
-
+![CodeRabbit Pull Request Reviews](https://img.shields.io/coderabbit/prs/github/tacgo/tac-express?utm_source=oss&utm_medium=github&utm_campaign=tacgo%2Ftac-express&labelColor=171717&color=FF570A&link=https%3A%2F%2Fcoderabbit.ai&label=CodeRabbit+Reviews)
 
 > Mission-control logistics for the North-East corridor. Public marketing site at **`apps/web`**, operations dashboard at **`apps/dashboard`**, shared platform in **`packages/`**, schema in **`supabase/`**.
 
