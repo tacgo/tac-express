@@ -14,6 +14,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table"
 import { cn } from "@workspace/ui/lib/utils"
+import { Button } from "@workspace/ui/components/button"
 import {
   RiArrowUpLine,
   RiArrowDownLine,
@@ -180,16 +181,17 @@ function DataTable<TData, TValue>({
                       className="h-9 flex items-stretch text-left t-mono-sm uppercase tracking-wider text-muted-foreground"
                     >
                       {canSort ? (
-                        // v6 a11y: sortable headers use a real <button> so keyboard
-                        // users can trigger sort via Enter/Space. focus-visible
-                        // lifts the project's standard premium focus utility.
-                        <button
+                        // v6 a11y: sortable headers use the Button primitive (ghost)
+                        // so keyboard users can trigger sort via Enter/Space and get
+                        // the project's standard premium focus ring for free.
+                        <Button
                           type="button"
+                          variant="ghost"
                           onClick={header.column.getToggleSortingHandler()}
-                          className="flex h-full w-full items-center px-3 cursor-pointer select-none hover:text-foreground focus-visible:outline-none focus-visible:tac-focus-premium"
+                          className="flex h-full w-full items-center justify-start rounded-none px-3 t-mono-sm font-normal uppercase tracking-wider text-muted-foreground select-none hover:bg-transparent hover:text-foreground"
                         >
                           {headerContent}
-                        </button>
+                        </Button>
                       ) : (
                         <span className="flex h-full w-full items-center px-3">
                           {headerContent}
@@ -262,22 +264,26 @@ function DataTable<TData, TValue>({
           Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
         </span>
         <div className="flex items-center gap-1">
-          <button
+          <Button
+            variant="outline"
+            size="icon"
             aria-label="Previous page"
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
-            className="flex h-7 w-7 items-center justify-center border border-border bg-card text-muted-foreground hover:text-foreground hover:border-primary disabled:opacity-40 disabled:cursor-not-allowed transition-colors focus-visible:outline-none focus-visible:tac-focus-premium"
+            className="size-7 text-muted-foreground hover:text-foreground"
           >
             <RiArrowLeftSLine className="h-4 w-4" aria-hidden="true" />
-          </button>
-          <button
+          </Button>
+          <Button
+            variant="outline"
+            size="icon"
             aria-label="Next page"
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
-            className="flex h-7 w-7 items-center justify-center border border-border bg-card text-muted-foreground hover:text-foreground hover:border-primary disabled:opacity-40 disabled:cursor-not-allowed transition-colors focus-visible:outline-none focus-visible:tac-focus-premium"
+            className="size-7 text-muted-foreground hover:text-foreground"
           >
             <RiArrowRightSLine className="h-4 w-4" aria-hidden="true" />
-          </button>
+          </Button>
         </div>
       </div>
     </div>

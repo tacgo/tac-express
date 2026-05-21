@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import { cn } from "@workspace/ui/lib/utils"
+import { Button } from "@workspace/ui/components/button"
 import { RiWifiOffLine, RiRefreshLine } from "@workspace/ui/icons"
 
 interface OfflineIndicatorProps {
@@ -48,14 +49,16 @@ function OfflineIndicator({ queueCount, isSyncing, onSync, className }: OfflineI
         )}
       </span>
       {isOnline && queueCount > 0 && onSync && (
-        <button
+        <Button
+          type="button"
+          variant="ghost"
           onClick={onSync}
           disabled={isSyncing}
-          className="ml-auto flex items-center gap-1 font-mono text-2xs uppercase tracking-wider hover:text-foreground transition-colors disabled:opacity-50"
+          className="ml-auto h-auto gap-1 px-1 py-0.5 font-mono text-2xs uppercase tracking-wider hover:bg-transparent hover:text-foreground"
         >
           <RiRefreshLine className={cn("h-3 w-3", isSyncing && "animate-spin")} />
           {isSyncing ? "Syncing" : "Sync now"}
-        </button>
+        </Button>
       )}
     </div>
   )

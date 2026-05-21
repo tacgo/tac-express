@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import { cn } from "@workspace/ui/lib/utils"
+import { Button } from "@workspace/ui/components/button"
 import { RiCalendarLine } from "@workspace/ui/icons"
 
 export type DateRangePreset = "today" | "7d" | "30d" | "90d" | "ytd"
@@ -49,21 +50,22 @@ function DateRangeSelector({
       {PRESETS.map((preset) => {
         const isActive = preset.value === active
         return (
-          <button
+          <Button
             key={preset.value}
             type="button"
+            variant="ghost"
             onClick={() => handleSelect(preset.value)}
             className={cn(
-              "px-3 py-1.5 font-mono text-2xs uppercase tracking-widest transition-colors",
+              "h-auto rounded-none px-3 py-1.5 font-mono text-2xs uppercase tracking-widest",
               "border-r border-border last:border-r-0",
               isActive
-                ? "bg-primary text-primary-foreground"
-                : "text-muted-foreground hover:text-foreground hover:bg-accent"
+                ? "bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground"
+                : "text-muted-foreground hover:bg-accent hover:text-foreground"
             )}
             aria-pressed={isActive}
           >
             {preset.label}
-          </button>
+          </Button>
         )
       })}
     </div>

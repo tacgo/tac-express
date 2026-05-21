@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { cn } from "@workspace/ui/lib/utils"
+import { Button } from "@workspace/ui/components/button"
 import { ManifestStatus } from "@workspace/types"
 
 interface ManifestActionBarProps {
@@ -40,16 +40,13 @@ export function ManifestActionBar({ status, onClose, onDepart, onArrive, onRecon
         <span className="font-mono text-2xs uppercase tracking-wider text-muted-foreground">Next Action</span>
         <span className="font-mono text-xs text-foreground">→ {action.label}</span>
       </div>
-      <button
+      <Button
         onClick={handler}
         disabled={isLoading || !handler}
-        className={cn(
-          "h-8 px-5 font-mono text-xs uppercase tracking-wider transition-colors",
-          "bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50"
-        )}
+        className="h-8 px-5 font-mono text-xs uppercase tracking-wider"
       >
         {isLoading ? "Processing..." : action.label}
-      </button>
+      </Button>
     </div>
   )
 }

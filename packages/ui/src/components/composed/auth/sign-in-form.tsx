@@ -5,6 +5,9 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { cn } from "@workspace/ui/lib/utils"
+import { Button } from "@workspace/ui/components/button"
+import { Input } from "@workspace/ui/components/primitives/input"
+import { Label } from "@workspace/ui/components/primitives/label"
 
 const signInSchema = z.object({
   email: z.string().email("Valid email required"),
@@ -20,9 +23,6 @@ interface SignInFormProps {
   className?: string
 }
 
-const inputClass =
-  "w-full h-9 border border-border bg-background px-3 text-sm font-sans placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-ring"
-
 function SignInForm({ onSubmit, error, isLoading, className }: SignInFormProps) {
   const {
     register,
@@ -37,58 +37,60 @@ function SignInForm({ onSubmit, error, isLoading, className }: SignInFormProps) 
       onSubmit={handleSubmit(({ email, password }) => onSubmit(email, password))}
     >
       <div className="space-y-1">
-        <label
+        <Label
           htmlFor="sign-in-email"
           className="font-mono text-2xs uppercase tracking-wider text-muted-foreground"
         >
           Email
-        </label>
-        <input
+        </Label>
+        <Input
           {...register("email")}
           id="sign-in-email"
           type="email"
           autoComplete="email"
-          className={inputClass}
+          className="h-9 font-sans text-sm"
           placeholder="you@example.com"
+          aria-invalid={Boolean(errors.email) || undefined}
         />
         {errors.email && (
-          <p className="font-mono text-2xs text-destructive">{errors.email.message}</p>
+          <p role="alert" className="font-mono text-2xs text-destructive">{errors.email.message}</p>
         )}
       </div>
 
       <div className="space-y-1">
-        <label
+        <Label
           htmlFor="sign-in-password"
           className="font-mono text-2xs uppercase tracking-wider text-muted-foreground"
         >
           Password
-        </label>
-        <input
+        </Label>
+        <Input
           {...register("password")}
           id="sign-in-password"
           type="password"
           autoComplete="current-password"
-          className={inputClass}
+          className="h-9 font-sans text-sm"
           placeholder="••••••••"
+          aria-invalid={Boolean(errors.password) || undefined}
         />
         {errors.password && (
-          <p className="font-mono text-2xs text-destructive">{errors.password.message}</p>
+          <p role="alert" className="font-mono text-2xs text-destructive">{errors.password.message}</p>
         )}
       </div>
 
       {error && (
-        <p className="font-mono text-2xs text-destructive border border-destructive/30 bg-destructive/10 px-3 py-2">
+        <p role="alert" className="font-mono text-2xs text-destructive border border-destructive/30 bg-destructive/10 px-3 py-2">
           {error}
         </p>
       )}
 
-      <button
+      <Button
         type="submit"
         disabled={isLoading}
-        className="w-full h-9 bg-primary text-primary-foreground font-mono text-xs uppercase tracking-wider hover:bg-primary/90 transition-colors disabled:opacity-60"
+        className="h-9 w-full font-mono text-xs uppercase tracking-wider"
       >
         {isLoading ? "Signing in..." : "Sign In"}
-      </button>
+      </Button>
     </form>
   )
 }
