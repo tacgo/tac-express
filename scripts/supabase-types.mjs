@@ -19,19 +19,16 @@ import { execSync } from "node:child_process"
 import { writeFileSync, existsSync, statSync } from "node:fs"
 import { join } from "node:path"
 
-const PROJECT_ID = process.env.SUPABASE_PROJECT_ID ?? ""
-if (mode === "remote" && !PROJECT_ID) {
-  console.error("✗ SUPABASE_PROJECT_ID environment variable is not set.")
-  console.error("  Export it before running: export SUPABASE_PROJECT_ID=<your-project-ref>")
-  process.exit(1)
-}
-const TARGET = join("packages", "database", "src", "database.types.ts")
-
 const mode = process.argv.includes("--remote") ? "remote" : "local"
+
+// Remote mode targets an explicit project ref if SUPABASE_PROJECT_ID is set
+// (CI), otherwise falls back to the locally-linked project (`supabase link`).
+const PROJECT_ID = process.env.SUPABASE_PROJECT_ID ?? ""
+const TARGET = join("packages", "database", "src", "database.types.ts")
 
 const cmd =
   mode === "remote"
-    ? `pnpm exec supabase gen types typescript --project-id ${PROJECT_ID}`
+    ? `pnpm exec supabase gen types typescript ${PROJECT_ID ? `--project-id ${PROJECT_ID}` : "--linked"}`
     : `pnpm exec supabase gen types typescript --local`
 
 console.log(`▸ regenerating ${TARGET} via ${mode} mode`)
