@@ -6,7 +6,7 @@ node_modules
 .pnp.js
 
 # Local audit artifacts (screenshots, traces — chrome-devtools-mcp output)
-.artifacts
+.artifacts/
 
 # Local env files
 .env
