@@ -1,3 +1,5 @@
+import { withSentryConfig } from "@sentry/nextjs"
+
 /**
  * Legacy v6 path → canonical Paper Ops Console redirects.
  *
@@ -64,4 +66,25 @@ const nextConfig = {
   },
 }
 
-export default nextConfig;
+/**
+ * Sentry build wrapper — source-map upload + ad-blocker tunnel.
+ *
+ * org/project identify the Sentry project; source-map upload only runs when
+ * SENTRY_AUTH_TOKEN is present (env / CI), and is silent outside CI. The
+ * tunnelRoute "/monitoring" routes browser SDK requests through the Next
+ * server to dodge ad-blockers — it does not collide with any proxy.ts
+ * redirect slug above. Webpack-only options (automaticVercelMonitors) are
+ * omitted: the dashboard builds with Turbopack and runs no Vercel crons.
+ */
+export default withSentryConfig(nextConfig, {
+  org: "tac-an",
+  project: "javascript-nextjs",
+  // Source-map upload auth (build-time only). Auto-detected from the
+  // gitignored .env.sentry-build-plugin / CI env; passed explicitly to
+  // match the canonical setup. Upload no-ops when the token is absent.
+  authToken: globalThis.process?.env?.SENTRY_AUTH_TOKEN,
+  silent: !globalThis.process?.env?.CI,
+  widenClientFileUpload: true,
+  tunnelRoute: "/monitoring",
+})
+

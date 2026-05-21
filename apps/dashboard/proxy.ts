@@ -29,6 +29,11 @@ const PUBLIC_PATHS = [
   "/api/health",
   "/api/webhooks",
   "/print",
+  // Sentry browser-SDK tunnel (withSentryConfig `tunnelRoute`). Must bypass
+  // auth — telemetry is emitted from public pages (e.g. /sign-in) and before
+  // login; without this the envelope POST is redirected to /sign-in and no
+  // event ever reaches Sentry.
+  "/monitoring",
 ]
 
 const RATE_LIMITED_PUBLIC = ["/api/public", "/track"]
