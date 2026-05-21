@@ -18,7 +18,15 @@ const isProd = process.env.NODE_ENV === "production"
 
 Sentry.init({
   dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
-  integrations: [Sentry.replayIntegration()],
+  integrations: [
+    // browserTracingIntegration is auto-enabled by @sentry/nextjs; we list
+    // it explicitly only to drop spans for health/uptime pings — those are
+    // not user work and would just inflate transaction volume.
+    Sentry.browserTracingIntegration({
+      shouldCreateSpanForRequest: (url) => !/\/api\/health\b/.test(url),
+    }),
+    Sentry.replayIntegration(),
+  ],
   tracesSampleRate: isProd ? 0.1 : 1,
   enableLogs: true,
   replaysSessionSampleRate: isProd ? 0.1 : 1,
@@ -26,8 +34,7 @@ Sentry.init({
   sendDefaultPii: false,
 
   // Distributed tracing is automatic for client/server/edge in the current
-  // SDK (browserTracingIntegration is added by default — no manual entry).
-  // Scope trace-header propagation to our own origins so we never attach
+  // SDK. Scope trace-header propagation to our own origins so we never attach
   // sentry-trace/baggage headers to cross-origin third parties (Supabase,
   // Upstash), which would trigger CORS preflight failures. localhost covers
   // dev; the regex matches same-origin paths (our /api routes). Add a
