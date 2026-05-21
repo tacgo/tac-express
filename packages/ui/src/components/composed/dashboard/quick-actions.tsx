@@ -11,13 +11,14 @@ import {
   RiAlertFill,
   RiBarChart2Fill,
   RiArrowRightLine,
+  type RemixiconComponentType,
 } from "@workspace/ui/icons"
 
 interface QuickActionDef {
   label: string
   description: string
   href: string
-  icon: React.ElementType
+  icon: RemixiconComponentType
   module: string
   gatedRoles?: string[]
 }

@@ -16,8 +16,8 @@ import {
   RiHistoryLine,
   RiClipboardLine,
   RiInboxLine,
+  type RemixiconComponentType,
 } from "@workspace/ui/icons"
-import type * as React from "react"
 
 /**
  * Sidebar navigation configuration — single source of truth for the
@@ -46,7 +46,7 @@ export interface NavItem {
   label: string
   /** Canonical href — always under `/ops-console/*` for authenticated routes. */
   href: string
-  icon: React.ElementType
+  icon: RemixiconComponentType
   /**
    * RBAC module gate. `undefined` or `"*"` = always visible regardless of
    * role; any other string is passed to `useRBAC().canAccessModule()`.

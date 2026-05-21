@@ -5,7 +5,11 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { cn } from "@workspace/ui/lib/utils"
-import { RiUserLine, RiMapPinLine } from "@workspace/ui/icons"
+import {
+  RiUserLine,
+  RiMapPinLine,
+  type RemixiconComponentType,
+} from "@workspace/ui/icons"
 import {
   Wizard,
   WizardActions,
@@ -40,7 +44,7 @@ type StepDef = {
   id: StepKey
   label: string
   caption: string
-  icon: React.ElementType
+  icon: RemixiconComponentType
   fields: (keyof CustomerFormValues)[]
 }
 

@@ -2,7 +2,12 @@
 
 import * as React from "react"
 import { cn } from "@workspace/ui/lib/utils"
-import { RiCheckLine, RiCloseLine, RiAlertLine } from "@workspace/ui/icons"
+import {
+  RiCheckLine,
+  RiCloseLine,
+  RiAlertLine,
+  type RemixiconComponentType,
+} from "@workspace/ui/icons"
 
 type ScanResult = "success" | "error" | "duplicate" | "idle"
 
@@ -15,7 +20,7 @@ interface ScanFeedbackProps {
 
 const RESULT_CONFIG: Record<
   Exclude<ScanResult, "idle">,
-  { icon: React.ElementType; label: string; classes: string }
+  { icon: RemixiconComponentType; label: string; classes: string }
 > = {
   success:   { icon: RiCheckLine,  label: "Scanned",    classes: "bg-primary/10 border-primary/30 text-primary" },
   duplicate: { icon: RiAlertLine,  label: "Duplicate",  classes: "bg-muted border-border text-muted-foreground" },
