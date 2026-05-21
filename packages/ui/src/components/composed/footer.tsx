@@ -78,7 +78,7 @@ export function Footer({
             />
             <Button
               type="submit"
-              className="shrink-0 rounded-none font-mono font-bold text-xs tracking-paper-20 uppercase"
+              className="shrink-0 rounded-none font-mono font-bold text-xs tracking-wordmark uppercase"
             >
               <Icon name="mail" aria-hidden className="mr-2 w-4 h-4" />
               Subscribe

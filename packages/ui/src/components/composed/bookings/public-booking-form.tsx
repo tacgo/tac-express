@@ -143,7 +143,7 @@ export function PublicBookingForm({
   if (submittedRefId) {
     return (
       <div className="border border-border bg-card p-6 text-center">
-        <p className="font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+        <p className="font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
           Booking submitted
         </p>
         <h2 className="mt-2 font-heading text-lg font-semibold">
@@ -180,7 +180,7 @@ export function PublicBookingForm({
       className={cn("space-y-6", className)}
     >
       <section className="grid gap-3 border border-border bg-card p-4">
-        <p className="font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+        <p className="font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
           Contact
         </p>
         <div className="grid gap-1.5">
@@ -213,7 +213,7 @@ export function PublicBookingForm({
 
       <section className="grid gap-3 border border-border bg-card p-4">
         <header className="flex items-center justify-between">
-          <p className="font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+          <p className="font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
             Volume matrix · {rows.length} item{rows.length === 1 ? "" : "s"}
           </p>
           <Button
@@ -221,7 +221,7 @@ export function PublicBookingForm({
             variant="outline"
             size="sm"
             onClick={addRow}
-            className="font-mono text-paper-10 uppercase tracking-widest"
+            className="font-mono text-ui-10 uppercase tracking-widest"
           >
             <RiAddLine className="size-3.5" />
             Add row
@@ -245,7 +245,7 @@ export function PublicBookingForm({
               ).map(([k, label]) => (
                 <div key={k} className="grid gap-1">
                   {idx === 0 && (
-                    <Label className="text-paper-10">{label}</Label>
+                    <Label className="text-ui-10">{label}</Label>
                   )}
                   <Input
                     type="number"
@@ -326,7 +326,7 @@ function PartyCard({
 
   return (
     <section className="grid gap-3 border border-border bg-card p-4">
-      <p className="font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+      <p className="font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
         {title}
       </p>
       <div className="grid gap-3 sm:grid-cols-2">
@@ -405,7 +405,7 @@ function Field({
 }) {
   return (
     <div className="grid gap-1.5">
-      <Label className="text-paper-10">{label}</Label>
+      <Label className="text-ui-10">{label}</Label>
       {children}
     </div>
   )

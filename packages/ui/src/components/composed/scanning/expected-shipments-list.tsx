@@ -64,7 +64,7 @@ export function ExpectedShipmentsList({
       className={cn("flex flex-col gap-3", className)}
     >
       <header className="flex items-center justify-between gap-3">
-        <p className="font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+        <p className="font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
           Expected shipments
         </p>
         <ToggleGroup
@@ -75,22 +75,22 @@ export function ExpectedShipmentsList({
           size="sm"
         >
           <ToggleGroupItem value="all" aria-label="All">
-            <span className="font-mono text-paper-10 uppercase tracking-widest">
+            <span className="font-mono text-ui-10 uppercase tracking-widest">
               All · {counts.all}
             </span>
           </ToggleGroupItem>
           <ToggleGroupItem value="pending" aria-label="Pending">
-            <span className="font-mono text-paper-10 uppercase tracking-widest">
+            <span className="font-mono text-ui-10 uppercase tracking-widest">
               Pending · {counts.pending}
             </span>
           </ToggleGroupItem>
           <ToggleGroupItem value="scanned" aria-label="Scanned">
-            <span className="font-mono text-paper-10 uppercase tracking-widest">
+            <span className="font-mono text-ui-10 uppercase tracking-widest">
               Scanned · {counts.scanned}
             </span>
           </ToggleGroupItem>
           <ToggleGroupItem value="exception" aria-label="Exception">
-            <span className="font-mono text-paper-10 uppercase tracking-widest">
+            <span className="font-mono text-ui-10 uppercase tracking-widest">
               Exception · {counts.exception}
             </span>
           </ToggleGroupItem>
@@ -100,7 +100,7 @@ export function ExpectedShipmentsList({
       <div className="border border-border bg-background">
         <ScrollArea className="h-96">
           {filtered.length === 0 ? (
-            <div className="flex h-96 items-center justify-center font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+            <div className="flex h-96 items-center justify-center font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
               {items.length === 0 ? "No manifest loaded" : "No matches"}
             </div>
           ) : (
@@ -128,7 +128,7 @@ export function ExpectedShipmentsList({
                   <div className="min-w-0 flex-1">
                     <a
                       href={`/tracking?cn=${encodeURIComponent(it.awbNumber)}`}
-                      className="block truncate font-mono text-paper-11 font-semibold tracking-widest hover:underline"
+                      className="block truncate font-mono text-ui-11 font-semibold tracking-widest hover:underline"
                     >
                       {it.awbNumber}
                     </a>
@@ -138,7 +138,7 @@ export function ExpectedShipmentsList({
                     </p>
                   </div>
 
-                  <span className="hidden font-mono text-paper-10 uppercase tracking-widest text-muted-foreground sm:inline">
+                  <span className="hidden font-mono text-ui-10 uppercase tracking-widest text-muted-foreground sm:inline">
                     {it.pieces} pcs · {it.weightKg.toFixed(1)}kg
                   </span>
 
@@ -148,7 +148,7 @@ export function ExpectedShipmentsList({
                       variant="outline"
                       size="sm"
                       onClick={() => onMarkException(it.awbNumber)}
-                      className="font-mono text-paper-10 uppercase tracking-widest"
+                      className="font-mono text-ui-10 uppercase tracking-widest"
                     >
                       Mark exception
                     </Button>

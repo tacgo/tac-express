@@ -131,19 +131,19 @@ function OpsInventoryView({
       <div className="mb-4 border border-paper-line bg-paper-card divide-x divide-paper-line grid grid-cols-3">
         <div className="px-4 py-3">
           <div className="paper-label">Hubs in view</div>
-          <div className="font-paper-display font-bold text-[length:var(--text-paper-22)] mt-1 tabular-nums">
+          <div className="font-paper-display font-bold text-ui-22 mt-1 tabular-nums">
             {mergedHubs.length}
           </div>
         </div>
         <div className="px-4 py-3">
           <div className="paper-label">Total in network</div>
-          <div className="font-paper-display font-bold text-[length:var(--text-paper-22)] mt-1 tabular-nums">
+          <div className="font-paper-display font-bold text-ui-22 mt-1 tabular-nums">
             {totalPieces}
           </div>
         </div>
         <div className="px-4 py-3">
           <div className="paper-label">Renamed</div>
-          <div className="font-paper-display font-bold text-[length:var(--text-paper-22)] mt-1 tabular-nums">
+          <div className="font-paper-display font-bold text-ui-22 mt-1 tabular-nums">
             {config.hydrated ? renamedCount : 0}
           </div>
         </div>
@@ -172,8 +172,8 @@ function OpsInventoryView({
                         aria-label={`Rename hub ${hub.hubCode}`}
                         className={cn(
                           "min-w-0 flex-1 bg-paper-bg border border-paper-line px-2 py-1",
-                          "font-paper-display font-semibold text-[length:var(--text-paper-13)] text-paper-fg-1",
-                          "tracking-[length:var(--tracking-paper-10)]",
+                          "font-paper-display font-semibold text-ui-13 text-paper-fg-1",
+                          "tracking-badge",
                           "focus:outline-none focus:border-paper-violet",
                         )}
                       />
@@ -197,7 +197,7 @@ function OpsInventoryView({
                   ) : (
                     <>
                       <div className="min-w-0">
-                        <div className="font-paper-display font-semibold text-[length:var(--text-paper-13)] text-paper-fg-1 tracking-[length:var(--tracking-paper-10)] truncate">
+                        <div className="font-paper-display font-semibold text-ui-13 text-paper-fg-1 tracking-badge truncate">
                           {display}
                         </div>
                         <div className="paper-label mt-0.5 truncate">
@@ -229,7 +229,7 @@ function OpsInventoryView({
                   >
                     <span
                       className={cn(
-                        "font-paper-mono uppercase text-[length:var(--text-paper-11)] tracking-[length:var(--tracking-paper-10)]",
+                        "font-paper-mono uppercase text-ui-11 tracking-badge",
                         isException ? "text-paper-err" : "text-paper-fg-3",
                       )}
                     >
@@ -237,7 +237,7 @@ function OpsInventoryView({
                     </span>
                     <span
                       className={cn(
-                        "font-paper-display font-bold text-[length:var(--text-paper-14)] tabular-nums",
+                        "font-paper-display font-bold text-ui-14 tabular-nums",
                         isException && "text-paper-err",
                       )}
                     >

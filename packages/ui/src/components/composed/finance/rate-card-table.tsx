@@ -3,6 +3,7 @@
 import * as React from "react"
 import type { RateCard } from "@workspace/types"
 import { cn } from "@workspace/ui/lib/utils"
+import { Button } from "@workspace/ui/components/button"
 
 interface RateCardTableProps {
   rateCards: RateCard[]
@@ -66,12 +67,14 @@ export function RateCardTable({ rateCards, isLoading, onDeactivate }: RateCardTa
             <span className="font-mono text-xs text-foreground">₹{rc.handlingFee}</span>
             <div className="flex justify-end">
               {rc.isActive && onDeactivate && (
-                <button
+                <Button
+                  type="button"
+                  variant="outline"
                   onClick={() => onDeactivate(rc.id)}
-                  className="font-mono text-2xs uppercase tracking-wider text-muted-foreground border border-border px-2 py-0.5 hover:text-destructive hover:border-destructive/30 transition-colors"
+                  className="h-auto px-2 py-0.5 font-mono text-2xs uppercase tracking-wider text-muted-foreground hover:border-destructive/30 hover:text-destructive"
                 >
                   Deactivate
-                </button>
+                </Button>
               )}
               {!rc.isActive && (
                 <span className="font-mono text-2xs text-muted-foreground/50">Inactive</span>

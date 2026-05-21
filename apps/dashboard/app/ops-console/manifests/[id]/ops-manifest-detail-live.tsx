@@ -149,7 +149,7 @@ export function OpsManifestDetailLive({ id }: OpsManifestDetailLiveProps) {
           />
           <div>
             <div className="paper-eyebrow text-paper-err">NOT FOUND</div>
-            <p className="font-paper-display text-[length:var(--text-paper-13)] mt-1">
+            <p className="font-paper-display text-ui-13 mt-1">
               Could not load manifest{" "}
               <span className="font-paper-mono">{id}</span>.
             </p>
@@ -189,7 +189,7 @@ export function OpsManifestDetailLive({ id }: OpsManifestDetailLiveProps) {
           </OpsCard>
           <OpsCard>
             <div className="paper-label mb-1">Created</div>
-            <div className="font-paper-mono text-[length:var(--text-paper-13)] tabular-nums">
+            <div className="font-paper-mono text-ui-13 tabular-nums">
               {new Date(m.createdAt).toLocaleString("en-IN", {
                 day: "2-digit",
                 month: "short",
@@ -201,7 +201,7 @@ export function OpsManifestDetailLive({ id }: OpsManifestDetailLiveProps) {
             {m.departureDate && (
               <>
                 <div className="paper-label mb-1 mt-3">Departure</div>
-                <div className="font-paper-mono text-[length:var(--text-paper-13)] tabular-nums">
+                <div className="font-paper-mono text-ui-13 tabular-nums">
                   {new Date(m.departureDate).toLocaleString("en-IN", {
                     day: "2-digit",
                     month: "short",
@@ -219,7 +219,7 @@ export function OpsManifestDetailLive({ id }: OpsManifestDetailLiveProps) {
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-2">
               <span className="paper-label">Next Action</span>
-              <span className="font-paper-mono text-[length:var(--text-paper-12)] text-paper-fg-1">
+              <span className="font-paper-mono text-ui-12 text-paper-fg-1">
                 → {nextAction.label}
               </span>
             </div>
@@ -288,7 +288,7 @@ export function OpsManifestDetailLive({ id }: OpsManifestDetailLiveProps) {
                   <span className="paper-id">{s.awb_number}</span>
                   <OpsBadge tone="neutral">{s.status}</OpsBadge>
                 </div>
-                <div className="flex items-center gap-4 font-paper-mono text-[length:var(--text-paper-12)] text-paper-fg-3 tabular-nums">
+                <div className="flex items-center gap-4 font-paper-mono text-ui-12 text-paper-fg-3 tabular-nums">
                   <span>{s.pieces ?? 0} pcs</span>
                   <span>
                     {s.chargeable_weight?.toFixed?.(1) ?? "—"} kg
@@ -303,7 +303,7 @@ export function OpsManifestDetailLive({ id }: OpsManifestDetailLiveProps) {
       {m.notes && (
         <OpsCard ticks>
           <div className="paper-label mb-2">Notes</div>
-          <p className="font-paper-mono text-[length:var(--text-paper-12)] text-paper-fg-1 whitespace-pre-line">
+          <p className="font-paper-mono text-ui-12 text-paper-fg-1 whitespace-pre-line">
             {m.notes}
           </p>
         </OpsCard>

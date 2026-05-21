@@ -102,7 +102,7 @@ function RichTextEditor({
           "prose-p:text-xs prose-p:leading-relaxed",
           "prose-a:text-primary prose-a:underline prose-a:underline-offset-4",
           "prose-strong:text-foreground",
-          "prose-code:font-mono prose-code:text-paper-11 prose-code:bg-muted prose-code:px-1 prose-code:py-0.5",
+          "prose-code:font-mono prose-code:text-ui-11 prose-code:bg-muted prose-code:px-1 prose-code:py-0.5",
           "dark:prose-invert"
         ),
         style: `min-height: ${minHeight};`,
@@ -123,7 +123,7 @@ function RichTextEditor({
       )}
       <EditorContent editor={editor} className="flex-1 overflow-y-auto" />
       {characterLimit && editor && (
-        <div className="flex items-center justify-end border-t border-border px-3 py-1 font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+        <div className="flex items-center justify-end border-t border-border px-3 py-1 font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
           {editor.storage.characterCount.characters()}/{characterLimit}
         </div>
       )}

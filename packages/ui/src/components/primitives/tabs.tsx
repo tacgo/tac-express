@@ -43,7 +43,7 @@ function TabsTrigger({
       data-slot="tabs-trigger"
       className={cn(
         // Tailwind v4 attribute-variant syntax: data-[state=active]:.
-        "inline-flex h-full flex-1 items-center justify-center gap-1.5 whitespace-nowrap border border-transparent px-2.5 py-1 font-mono text-paper-11 font-medium uppercase tracking-widest text-muted-foreground outline-none transition-all focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:border-border data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-[var(--shadow-brutal-sm)] [&_svg:not([class*='size-'])]:size-3.5 [&_svg]:pointer-events-none [&_svg]:shrink-0",
+        "inline-flex h-full flex-1 items-center justify-center gap-1.5 whitespace-nowrap border border-transparent px-2.5 py-1 font-mono text-ui-11 font-medium uppercase tracking-widest text-muted-foreground outline-none transition-all focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:border-border data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-[var(--shadow-brutal-sm)] [&_svg:not([class*='size-'])]:size-3.5 [&_svg]:pointer-events-none [&_svg]:shrink-0",
         className
       )}
       {...props}

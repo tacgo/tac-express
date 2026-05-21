@@ -189,10 +189,10 @@ function ContactLeadsView({
                       {new Date(lead.created_at).toLocaleString()}
                     </OpsTableCell>
                     <OpsTableCell>
-                      <div className="font-paper-mono font-semibold uppercase text-[length:var(--text-paper-12)]">
+                      <div className="font-paper-mono font-semibold uppercase text-ui-12">
                         {lead.name}
                       </div>
-                      <div className="font-paper-mono text-paper-fg-3 text-[length:var(--text-paper-11)]">
+                      <div className="font-paper-mono text-paper-fg-3 text-ui-11">
                         {lead.email}
                       </div>
                     </OpsTableCell>
@@ -214,11 +214,11 @@ function ContactLeadsView({
                         <div className="grid gap-4 py-2 md:grid-cols-[2fr_1fr]">
                           <div className="space-y-2">
                             <p className="paper-label">Message</p>
-                            <p className="font-paper-mono text-[length:var(--text-paper-12)] whitespace-pre-wrap text-paper-fg-2">
+                            <p className="font-paper-mono text-ui-12 whitespace-pre-wrap text-paper-fg-2">
                               {lead.message}
                             </p>
                             {lead.company && (
-                              <p className="font-paper-mono text-paper-fg-3 text-[length:var(--text-paper-11)]">
+                              <p className="font-paper-mono text-paper-fg-3 text-ui-11">
                                 Company: {lead.company}
                               </p>
                             )}

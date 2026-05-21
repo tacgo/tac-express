@@ -99,7 +99,7 @@ export function CustomerDetailClient({ customerId }: CustomerDetailClientProps) 
     <div className="space-y-4">
       {editing ? (
         <div className="space-y-3 border border-border bg-card p-4">
-          <p className="border-b border-border pb-2 font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+          <p className="border-b border-border pb-2 font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
             Edit Customer
           </p>
           <CustomerForm
@@ -126,7 +126,7 @@ export function CustomerDetailClient({ customerId }: CustomerDetailClientProps) 
 
   const shipmentsTab = (
     <div className="space-y-2">
-      <h2 className="font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+      <h2 className="font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
         Customer shipments
       </h2>
       <CustomerShipmentHistory

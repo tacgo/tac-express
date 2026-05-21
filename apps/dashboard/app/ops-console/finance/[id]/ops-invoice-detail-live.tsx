@@ -136,7 +136,7 @@ function ChargeRow({
       <span className="paper-label">{label}</span>
       <span
         className={cn(
-          "font-paper-mono text-[length:var(--text-paper-13)] tabular-nums",
+          "font-paper-mono text-ui-13 tabular-nums",
           accent ? "text-paper-violet font-semibold" : "text-paper-fg-1",
         )}
       >
@@ -159,7 +159,7 @@ function MetaField({
   return (
     <div className={cn("space-y-1", className)}>
       <p className="paper-label">{label}</p>
-      <p className="font-paper-mono text-[length:var(--text-paper-12)] text-paper-fg-1 whitespace-pre-line break-words">
+      <p className="font-paper-mono text-ui-12 text-paper-fg-1 whitespace-pre-line break-words">
         {value}
       </p>
     </div>
@@ -351,7 +351,7 @@ export function OpsInvoiceDetailLive({ id }: OpsInvoiceDetailLiveProps) {
           />
           <div>
             <div className="paper-eyebrow text-paper-err">NOT FOUND</div>
-            <p className="font-paper-display text-[length:var(--text-paper-13)] mt-1">
+            <p className="font-paper-display text-ui-13 mt-1">
               Could not load invoice.
             </p>
           </div>
@@ -460,13 +460,13 @@ export function OpsInvoiceDetailLive({ id }: OpsInvoiceDetailLiveProps) {
             </OpsCard>
             <OpsCard>
               <div className="paper-label mb-1">Created</div>
-              <div className="font-paper-mono text-[length:var(--text-paper-13)] tabular-nums">
+              <div className="font-paper-mono text-ui-13 tabular-nums">
                 {fmtDate(invoice.createdAt)}
               </div>
               {invoice.issuedAt && (
                 <>
                   <div className="paper-label mb-1 mt-3">Issued</div>
-                  <div className="font-paper-mono text-[length:var(--text-paper-13)] tabular-nums">
+                  <div className="font-paper-mono text-ui-13 tabular-nums">
                     {fmtDate(invoice.issuedAt)}
                   </div>
                 </>
@@ -474,7 +474,7 @@ export function OpsInvoiceDetailLive({ id }: OpsInvoiceDetailLiveProps) {
               {invoice.dueDate && (
                 <>
                   <div className="paper-label mb-1 mt-3">Due</div>
-                  <div className="font-paper-mono text-[length:var(--text-paper-13)] tabular-nums">
+                  <div className="font-paper-mono text-ui-13 tabular-nums">
                     {fmtDate(invoice.dueDate)}
                   </div>
                 </>
@@ -487,17 +487,17 @@ export function OpsInvoiceDetailLive({ id }: OpsInvoiceDetailLiveProps) {
           <div className="flex items-start justify-between gap-4 border-b border-paper-line pb-3 mb-4">
             <div className="space-y-0.5">
               <p className="paper-label">Invoice</p>
-              <p className="font-paper-display text-[length:var(--text-paper-16)] font-bold uppercase tracking-wide text-paper-violet">
+              <p className="font-paper-display text-ui-16 font-bold uppercase tracking-wide text-paper-violet">
                 {invoice.invoiceNumber}
               </p>
             </div>
             <div className="space-y-0.5 text-right">
               <p className="paper-label">AWB</p>
-              <p className="font-paper-mono text-[length:var(--text-paper-13)] font-semibold">
+              <p className="font-paper-mono text-ui-13 font-semibold">
                 {invoice.awbNumber || "—"}
               </p>
               {invoice.issuedAt && (
-                <p className="font-paper-mono text-[length:var(--text-paper-10)] text-paper-fg-3">
+                <p className="font-paper-mono text-ui-10 text-paper-fg-3">
                   Issued {fmtDate(invoice.issuedAt)}
                 </p>
               )}
@@ -548,10 +548,10 @@ export function OpsInvoiceDetailLive({ id }: OpsInvoiceDetailLiveProps) {
           </div>
 
           <div className="flex items-center justify-between border-t-2 border-paper-fg-1/80 pt-3 mt-3">
-            <span className="font-paper-mono text-[length:var(--text-paper-12)] font-bold uppercase tracking-[length:var(--tracking-paper-10)] text-paper-fg-1">
+            <span className="font-paper-mono text-ui-12 font-bold uppercase tracking-badge text-paper-fg-1">
               Total
             </span>
-            <span className="font-paper-display text-[length:var(--text-paper-18)] font-bold tabular-nums text-paper-violet">
+            <span className="font-paper-display text-ui-18 font-bold tabular-nums text-paper-violet">
               {fmtINR(invoice.totalAmount)}
             </span>
           </div>

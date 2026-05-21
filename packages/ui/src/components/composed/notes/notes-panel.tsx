@@ -115,7 +115,7 @@ export function NotesPanel({
             }}
           />
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <label className="flex items-center gap-2 font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+            <label className="flex items-center gap-2 font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
               <Switch
                 checked={isInternal}
                 onCheckedChange={setIsInternal}
@@ -144,14 +144,14 @@ export function NotesPanel({
 
       <div className="border border-border bg-background">
         <header className="flex items-center justify-between border-b border-border px-4 py-2.5">
-          <p className="font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+          <p className="font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
             Thread · {notes.length} note{notes.length === 1 ? "" : "s"}
           </p>
         </header>
         {/* eslint-disable-next-line no-restricted-syntax -- design-locked: see docs/design-exceptions.md */}
         <ScrollArea className="max-h-[28rem]">
           {loading ? (
-            <div className="flex items-center justify-center py-12 font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+            <div className="flex items-center justify-center py-12 font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
               Loading…
             </div>
           ) : notes.length === 0 ? (
@@ -211,7 +211,7 @@ function NoteRow({
           )}
         </div>
         <div className="flex items-center gap-2">
-          <span className="font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+          <span className="font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
             {when}
           </span>
           {onDelete && (

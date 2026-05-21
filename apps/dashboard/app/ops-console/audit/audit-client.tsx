@@ -126,7 +126,7 @@ export function AuditClient() {
 
       {!query.isLoading && filtered.length > 0 && (
         <div className="border border-border bg-background">
-          <div className="grid grid-cols-[150px_110px_140px_1fr_140px_140px_32px] border-b border-border bg-muted/40 px-3 py-2 font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+          <div className="grid grid-cols-[150px_110px_140px_1fr_140px_140px_32px] border-b border-border bg-muted/40 px-3 py-2 font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
             <span>Time</span>
             <span>Action</span>
             <span>Entity</span>
@@ -147,17 +147,17 @@ export function AuditClient() {
                   aria-expanded={isOpen}
                   className="grid w-full grid-cols-[150px_140px_140px_1fr_140px_32px] items-center border-b border-border px-3 py-2 text-left text-sm transition-colors last:border-0 hover:bg-muted/30"
                 >
-                  <span className="font-mono text-paper-11 text-muted-foreground">
+                  <span className="font-mono text-ui-11 text-muted-foreground">
                     {new Date(log.createdAt).toLocaleString()}
                   </span>
                   <span>
                     <ActionBadge action={log.action} />
                   </span>
-                  <span className="truncate font-mono text-paper-11 uppercase tracking-widest">
+                  <span className="truncate font-mono text-ui-11 uppercase tracking-widest">
                     {log.entityType}
                   </span>
                   <span className="truncate">{log.description}</span>
-                  <span className="truncate font-mono text-paper-11 text-muted-foreground">
+                  <span className="truncate font-mono text-ui-11 text-muted-foreground">
                     {log.userId ? log.userId.slice(0, 8) + "…" : "system"}
                   </span>
                   <span
@@ -171,7 +171,7 @@ export function AuditClient() {
                 </button>
                 {isOpen && (
                   <div className="grid gap-3 border-b border-border bg-muted/10 px-4 py-4 last:border-0 md:grid-cols-[1fr_2fr]">
-                    <div className="space-y-2 font-mono text-paper-11">
+                    <div className="space-y-2 font-mono text-ui-11">
                       <Detail label="Audit ID" value={log.id} />
                       <Detail
                         label="Entity ID"
@@ -254,10 +254,10 @@ function ActionBadge({ action }: { action: AuditLog["action"] }) {
 function Detail({ label, value }: { label: string; value: string }) {
   return (
     <div>
-      <p className="font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+      <p className="font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
         {label}
       </p>
-      <p className="break-all font-mono text-paper-11">{value}</p>
+      <p className="break-all font-mono text-ui-11">{value}</p>
     </div>
   )
 }

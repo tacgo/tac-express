@@ -74,7 +74,7 @@ function MultiSelect({
             aria-expanded={open}
             disabled={disabled}
             className={cn(
-              "h-auto min-h-9 w-full justify-between gap-2 px-2 py-1.5 font-mono text-paper-11 uppercase tracking-wide",
+              "h-auto min-h-9 w-full justify-between gap-2 px-2 py-1.5 font-mono text-ui-11 uppercase tracking-wide",
               selected.length === 0 && "text-muted-foreground"
             )}
             data-slot="multi-select-trigger"
@@ -132,7 +132,7 @@ function MultiSelect({
                       />
                       <span className="truncate">{option.label}</span>
                       {option.meta && (
-                        <span className="ml-auto font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+                        <span className="ml-auto font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
                           {option.meta}
                         </span>
                       )}

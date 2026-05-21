@@ -37,7 +37,7 @@ function Calendar({
         months: cn("relative", defaults.months),
         month: cn("relative space-y-3", defaults.month),
         month_caption: cn(
-          "flex h-7 items-center justify-center px-7 font-mono text-paper-11 uppercase tracking-widest text-foreground",
+          "flex h-7 items-center justify-center px-7 font-mono text-ui-11 uppercase tracking-widest text-foreground",
           defaults.month_caption
         ),
         // `z-10` is required because the nav is rendered *before* `month` in
@@ -65,7 +65,7 @@ function Calendar({
         month_grid: cn("w-full border-collapse space-y-1", defaults.month_grid),
         weekdays: cn("flex", defaults.weekdays),
         weekday: cn(
-          "w-8 font-mono text-paper-10 uppercase tracking-widest text-muted-foreground",
+          "w-8 font-mono text-ui-10 uppercase tracking-widest text-muted-foreground",
           defaults.weekday
         ),
         week: cn("mt-1 flex w-full", defaults.week),

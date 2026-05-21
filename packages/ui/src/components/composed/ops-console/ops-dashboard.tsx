@@ -64,7 +64,7 @@ function OpsDashboard({
         />
 
         {/* DISPATCH · LIVE capsule — the only operational overlay */}
-        <div className="absolute top-3 right-3 sm:top-4 sm:right-4 bg-paper-card border border-paper-line px-2.5 py-1.5 font-paper-mono font-medium text-paper-10 tracking-paper-10 text-paper-fg-1">
+        <div className="absolute top-3 right-3 sm:top-4 sm:right-4 bg-paper-card border border-paper-line px-2.5 py-1.5 font-paper-mono font-medium text-ui-10 tracking-badge text-paper-fg-1">
           <span
             aria-hidden
             className="inline-block size-1.5 bg-paper-ok mr-2 align-middle animate-pulse"

@@ -64,7 +64,7 @@ function OpsTopbar({ crumbs }: OpsTopbarProps) {
       className="flex items-center px-6 h-14 border-b border-transparent"
     >
       {/* Breadcrumbs */}
-      <div className="font-paper-mono font-medium text-paper-12 tracking-paper-04 text-paper-fg-3">
+      <div className="font-paper-mono font-medium text-ui-12 tracking-crumb text-paper-fg-3">
         {crumbs.map((c, i) => (
           <React.Fragment key={`${c}-${i}`}>
             {i > 0 && <span className="mx-2 text-paper-fg-4">›</span>}
@@ -86,7 +86,7 @@ function OpsTopbar({ crumbs }: OpsTopbarProps) {
           className="flex items-center gap-1.5 h-8 px-2 border border-paper-line bg-paper-card text-paper-fg-3 hover:bg-paper-3 focus-visible:outline-none focus-visible:tac-focus-premium transition-colors duration-fast ease-linear"
         >
           <RiSearchLine aria-hidden className="size-3.5" />
-          <span className="font-paper-mono font-medium text-paper-10 px-1.5 py-0.5 border border-paper-line text-paper-fg-2">
+          <span className="font-paper-mono font-medium text-ui-10 px-1.5 py-0.5 border border-paper-line text-paper-fg-2">
             ⌘K
           </span>
         </button>
@@ -113,7 +113,7 @@ function OpsTopbar({ crumbs }: OpsTopbarProps) {
                 onClick={() => onPick(t)}
                 className={cn(
                   "w-7 h-[length:var(--toggle-h)] border-r border-paper-line last:border-r-0 bg-paper-card",
-                  "font-paper-mono font-semibold text-[length:var(--text-paper-11)] text-paper-fg-2",
+                  "font-paper-mono font-semibold text-ui-11 text-paper-fg-2",
                   "hover:bg-paper-3 transition-colors duration-fast ease-linear",
                   "focus-visible:outline-none focus-visible:tac-focus-premium",
                   isActive && "bg-paper-violet text-white hover:bg-paper-violet-2",
@@ -160,7 +160,7 @@ function OpsTopbar({ crumbs }: OpsTopbarProps) {
           type="button"
           aria-label="Account menu"
           aria-haspopup="menu"
-          className="size-8 bg-paper-violet [color:white] border border-paper-violet-2 grid place-items-center font-paper-mono font-semibold text-paper-12 hover:bg-paper-violet-2 focus-visible:outline-none focus-visible:tac-focus-premium transition-colors duration-fast ease-linear"
+          className="size-8 bg-paper-violet [color:white] border border-paper-violet-2 grid place-items-center font-paper-mono font-semibold text-ui-12 hover:bg-paper-violet-2 focus-visible:outline-none focus-visible:tac-focus-premium transition-colors duration-fast ease-linear"
         >
           A
         </button>

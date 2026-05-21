@@ -48,7 +48,7 @@ function OpsErrorState({
         <span className="paper-eyebrow text-paper-err">{code}</span>
         <h3 className="paper-h3">{headline}</h3>
         {message && (
-          <p className="font-paper-mono text-[length:var(--text-paper-12)] text-paper-fg-3">
+          <p className="font-paper-mono text-ui-12 text-paper-fg-3">
             {message}
           </p>
         )}

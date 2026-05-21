@@ -155,7 +155,7 @@ function OpsGrowthAreaChart({ className }: OpsGrowthAreaChartProps) {
     <div className={cn("flex flex-col", className)}>
       {/* Row 1: title + range pill toggle (mirrored in OpsVolumeBarChart) */}
       <div className="flex items-center justify-between">
-        <div className="font-paper-display font-semibold text-paper-13 text-paper-fg-1">
+        <div className="font-paper-display font-semibold text-ui-13 text-paper-fg-1">
           Growth
         </div>
         <div
@@ -172,7 +172,7 @@ function OpsGrowthAreaChart({ className }: OpsGrowthAreaChartProps) {
                 aria-selected={active}
                 onClick={() => setRange(r.value)}
                 className={cn(
-                  "px-2 py-1 font-paper-mono font-medium text-paper-10 tracking-paper-10 uppercase transition-colors",
+                  "px-2 py-1 font-paper-mono font-medium text-ui-10 tracking-badge uppercase transition-colors",
                   "border-l border-paper-line first:border-l-0",
                   active
                     ? "bg-paper-violet text-white"

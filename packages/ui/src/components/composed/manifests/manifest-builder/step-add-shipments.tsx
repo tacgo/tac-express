@@ -3,6 +3,7 @@
 import * as React from "react"
 
 import { cn } from "@workspace/ui/lib/utils"
+import { Button } from "@workspace/ui/components/button"
 import { Input } from "@workspace/ui/components/primitives/input"
 import { Label } from "@workspace/ui/components/primitives/label"
 import {
@@ -11,6 +12,14 @@ import {
   TabsList,
   TabsTrigger,
 } from "@workspace/ui/components/primitives/tabs"
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@workspace/ui/components/primitives/table"
 import { ScrollArea } from "@workspace/ui/components/primitives/scroll-area"
 import { Badge } from "@workspace/ui/components/primitives/badge"
 import { BarcodeScanner } from "@workspace/ui/components/primitives/barcode-scanner"
@@ -193,22 +202,23 @@ export function StepAddShipments({
         {/* Scan log */}
         <div className="border border-border bg-background">
           <div className="flex items-center justify-between border-b border-border px-3 py-2">
-            <span className="font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+            <span className="font-mono text-2xs uppercase tracking-widest text-muted-foreground">
               Scan Log · last 50
             </span>
             {scanLog.length > 0 && (
-              <button
+              <Button
                 type="button"
+                variant="ghost"
                 onClick={() => setScanLog([])}
-                className="font-mono text-paper-10 uppercase tracking-widest text-muted-foreground hover:text-foreground"
+                className="h-auto px-1 py-0.5 font-mono text-2xs uppercase tracking-widest text-muted-foreground hover:bg-transparent hover:text-foreground"
               >
                 Clear
-              </button>
+              </Button>
             )}
           </div>
           <ScrollArea className="h-56">
             {scanLog.length === 0 ? (
-              <div className="flex h-56 items-center justify-center font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+              <div className="flex h-56 items-center justify-center font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
                 Awaiting scans…
               </div>
             ) : (
@@ -233,11 +243,11 @@ export function StepAddShipments({
                     ) : (
                       <RiCloseLine className="size-3.5 text-destructive" />
                     )}
-                    <span className="font-mono text-paper-11 font-semibold">
+                    <span className="font-mono text-ui-11 font-semibold">
                       {entry.awb}
                     </span>
                     {entry.reason && (
-                      <span className="ml-auto truncate text-paper-10 text-muted-foreground">
+                      <span className="ml-auto truncate text-ui-10 text-muted-foreground">
                         {entry.reason}
                       </span>
                     )}
@@ -252,7 +262,7 @@ export function StepAddShipments({
       {/* RIGHT: shipments table */}
       <section className="grid gap-3">
         <div className="flex items-center justify-between gap-3">
-          <p className="font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+          <p className="font-mono text-2xs uppercase tracking-widest text-muted-foreground">
             Route · {routeBanner}
           </p>
           <Input
@@ -264,81 +274,80 @@ export function StepAddShipments({
         </div>
 
         <div className="border border-border bg-background">
-          <table className="w-full text-xs">
-            <thead>
-              <tr className="border-b border-border bg-muted/30 text-left font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
-                <th className="px-3 py-2">CN Number</th>
-                <th className="px-3 py-2">Consignee</th>
-                <th className="px-3 py-2">Consignor</th>
-                <th className="px-3 py-2 text-right">Load</th>
-                <th className="px-3 py-2">Status</th>
-                <th className="w-10" />
-              </tr>
-            </thead>
-            <tbody>
+          <Table className="text-xs">
+            <TableHeader>
+              <TableRow className="bg-muted/30 text-left font-mono text-2xs uppercase tracking-widest text-muted-foreground hover:bg-muted/30">
+                <TableHead className="h-auto px-3 py-2 text-muted-foreground">CN Number</TableHead>
+                <TableHead className="h-auto px-3 py-2 text-muted-foreground">Consignee</TableHead>
+                <TableHead className="h-auto px-3 py-2 text-muted-foreground">Consignor</TableHead>
+                <TableHead className="h-auto px-3 py-2 text-right text-muted-foreground">Load</TableHead>
+                <TableHead className="h-auto px-3 py-2 text-muted-foreground">Status</TableHead>
+                <TableHead className="h-auto w-10" />
+              </TableRow>
+            </TableHeader>
+            <TableBody>
               {filteredRows.length === 0 ? (
-                <tr>
-                  <td
+                <TableRow className="hover:bg-transparent">
+                  <TableCell
                     colSpan={6}
-                    className="px-3 py-10 text-center font-mono text-paper-10 uppercase tracking-widest text-muted-foreground"
+                    className="px-3 py-10 text-center font-mono text-2xs uppercase tracking-widest text-muted-foreground"
                   >
                     {rows.length === 0
                       ? "Scan AWBs to populate this manifest"
                       : "No matches for this search"}
-                  </td>
-                </tr>
+                  </TableCell>
+                </TableRow>
               ) : (
                 filteredRows.map((r) => (
-                  <tr
-                    key={r.awbNumber}
-                    className="border-b border-border/50 last:border-b-0 hover:bg-muted/20"
-                  >
-                    <td className="px-3 py-2 font-mono text-paper-11 font-semibold">
+                  <TableRow key={r.awbNumber}>
+                    <TableCell className="px-3 py-2 font-mono text-xs font-semibold">
                       {r.awbNumber}
-                    </td>
-                    <td className="px-3 py-2">
+                    </TableCell>
+                    <TableCell className="px-3 py-2">
                       <div className="font-medium">{r.consigneeName ?? "—"}</div>
                       {r.consigneeCity && (
-                        <div className="font-mono text-paper-10 uppercase text-muted-foreground">
+                        <div className="font-mono text-2xs uppercase text-muted-foreground">
                           {r.consigneeCity}
                         </div>
                       )}
-                    </td>
-                    <td className="px-3 py-2">
+                    </TableCell>
+                    <TableCell className="px-3 py-2">
                       <div className="font-medium">{r.consignorName ?? "—"}</div>
                       {r.consignorCity && (
-                        <div className="font-mono text-paper-10 uppercase text-muted-foreground">
+                        <div className="font-mono text-2xs uppercase text-muted-foreground">
                           {r.consignorCity}
                         </div>
                       )}
-                    </td>
-                    <td className="px-3 py-2 text-right font-mono text-paper-11">
+                    </TableCell>
+                    <TableCell className="px-3 py-2 text-right font-mono text-xs">
                       {r.pieces ?? 0} · {(r.weightKg ?? 0).toFixed(1)}kg
-                    </td>
-                    <td className="px-3 py-2">
+                    </TableCell>
+                    <TableCell className="px-3 py-2">
                       {r.status && (
                         <Badge variant="secondary" className="font-mono">
                           {r.status}
                         </Badge>
                       )}
-                    </td>
-                    <td className="px-3 py-2">
+                    </TableCell>
+                    <TableCell className="px-3 py-2">
                       {onRemove && (
-                        <button
+                        <Button
                           type="button"
+                          variant="ghost"
+                          size="icon"
                           onClick={() => onRemove(r.awbNumber)}
                           aria-label={`Remove ${r.awbNumber}`}
-                          className="text-muted-foreground hover:text-destructive"
+                          className="size-7 text-muted-foreground hover:text-destructive"
                         >
                           <RiDeleteBinLine className="size-3.5" />
-                        </button>
+                        </Button>
                       )}
-                    </td>
-                  </tr>
+                    </TableCell>
+                  </TableRow>
                 ))
               )}
-            </tbody>
-          </table>
+            </TableBody>
+          </Table>
         </div>
       </section>
     </div>
@@ -390,7 +399,7 @@ function StatTile({
 }) {
   return (
     <div className="bg-background p-3">
-      <p className="font-mono text-paper-9 uppercase tracking-paper-20 text-muted-foreground">
+      <p className="font-mono text-ui-9 uppercase tracking-wordmark text-muted-foreground">
         {label}
       </p>
       <p

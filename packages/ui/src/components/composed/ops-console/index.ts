@@ -60,7 +60,6 @@ export {
   type OpsTimelineProps,
   type TimelineEvent,
 } from "./ops-timeline"
-export { OpsListState, type OpsListStateProps } from "./ops-list-state"
 export { OpsShipmentStepper } from "./ops-shipment-stepper"
 export {
   OpsPanelTabs,

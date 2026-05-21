@@ -62,7 +62,7 @@ export function TrackTabsClient() {
       <TabsContent value="book" className="mt-4">
         {submitted ? (
           <div className="border border-border bg-card p-6 text-center">
-            <p className="font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+            <p className="font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
               Booking submitted
             </p>
             <h2 className="mt-2 font-heading text-lg font-semibold">

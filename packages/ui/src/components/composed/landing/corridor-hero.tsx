@@ -32,7 +32,7 @@ function SectorMarquee({ sectors }: { sectors: readonly PartnerSector[] }) {
         {track.map((sector, i) => (
           <li key={`${sector.name}-${i}`} className="flex items-center gap-2.5 shrink-0">
             <Icon name={sector.icon} aria-hidden className="size-5 text-primary" />
-            <span className="font-mono text-sm uppercase tracking-paper-20 text-muted-foreground whitespace-nowrap">
+            <span className="font-mono text-sm uppercase tracking-wordmark text-muted-foreground whitespace-nowrap">
               {sector.name}
             </span>
           </li>
@@ -100,7 +100,7 @@ export function CorridorHero() {
                 <Button
                   asChild
                   size="lg"
-                  className="rounded-none font-mono font-bold text-xs tracking-paper-20 uppercase px-8 shadow-sm transition-transform hover:-translate-y-0.5 focus-visible:outline-none focus-visible:tac-focus-premium"
+                  className="rounded-none font-mono font-bold text-xs tracking-wordmark uppercase px-8 shadow-sm transition-transform hover:-translate-y-0.5 focus-visible:outline-none focus-visible:tac-focus-premium"
                 >
                   <Link href={heroContent.primaryCta.href}>
                     <Icon name="calculator" aria-hidden className="mr-2 w-4 h-4" />
@@ -111,7 +111,7 @@ export function CorridorHero() {
                   asChild
                   size="lg"
                   variant="ghost"
-                  className="rounded-none font-mono font-bold text-xs tracking-paper-20 uppercase px-8 focus-visible:outline-none focus-visible:tac-focus-premium"
+                  className="rounded-none font-mono font-bold text-xs tracking-wordmark uppercase px-8 focus-visible:outline-none focus-visible:tac-focus-premium"
                 >
                   <Link href={heroContent.secondaryCta.href}>
                     <Icon name="scan" aria-hidden className="mr-2 w-4 h-4" />

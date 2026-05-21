@@ -57,7 +57,7 @@ function OpsUpcomingCalendar({
     <div className={cn("flex flex-col", className)}>
       {/* Row 1: title + "View all" affordance — matches other ops panels */}
       <div className="flex items-center justify-between">
-        <div className="font-paper-display font-semibold text-paper-13 text-paper-fg-1">
+        <div className="font-paper-display font-semibold text-ui-13 text-paper-fg-1">
           Upcoming Operations
         </div>
         <OpsButton variant="dark" size="sm" onClick={onViewAll}>
@@ -104,11 +104,11 @@ function OpsUpcomingCalendar({
             >
               <div>
                 <div className="paper-label">{op.eta}</div>
-                <div className="font-paper-display font-semibold text-paper-12 mt-0.5 text-paper-fg-1">
+                <div className="font-paper-display font-semibold text-ui-12 mt-0.5 text-paper-fg-1">
                   {op.label}
                 </div>
               </div>
-              <span className="paper-id text-paper-11">{op.id.slice(0, 6)}</span>
+              <span className="paper-id text-ui-11">{op.id.slice(0, 6)}</span>
             </li>
           ))}
         </ul>

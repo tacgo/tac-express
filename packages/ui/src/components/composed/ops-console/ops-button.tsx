@@ -10,7 +10,7 @@ const opsButtonVariants = cva(
   // Base — mono uppercase, sharp corners, hairline border, paper hover.
   [
     "inline-flex items-center justify-center gap-1.5",
-    "font-paper-mono font-medium uppercase tracking-paper-12",
+    "font-paper-mono font-medium uppercase tracking-label",
     "border cursor-pointer",
     "transition-colors duration-fast ease-linear",
     "focus-visible:outline-none focus-visible:tac-focus-premium",
@@ -34,9 +34,9 @@ const opsButtonVariants = cva(
         dark: "border-paper-ink bg-paper-ink [color:white] hover:opacity-90",
       },
       size: {
-        default: "px-3.5 py-2 text-paper-11",
-        sm: "px-2.5 py-1.5 text-paper-10",
-        lg: "px-4 py-3 text-paper-12",
+        default: "px-3.5 py-2 text-ui-11",
+        sm: "px-2.5 py-1.5 text-ui-10",
+        lg: "px-4 py-3 text-ui-12",
       },
     },
     defaultVariants: {

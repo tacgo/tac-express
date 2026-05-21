@@ -47,7 +47,7 @@ export function PrintInvoiceClient({ data, autoPrint }: PrintInvoiceClientProps)
           <span className="ml-1.5">Back</span>
         </Button>
         <div className="flex flex-col items-center">
-          <p className="font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+          <p className="font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
             Tax Invoice · A4
           </p>
           <p className="font-mono text-sm font-semibold text-foreground">

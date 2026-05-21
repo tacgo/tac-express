@@ -138,7 +138,7 @@ function IndianStateCombobox({
                       )}
                     />
                     <span className="truncate">{s.name}</span>
-                    <span className="ml-auto font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+                    <span className="ml-auto font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
                       {s.code}
                     </span>
                   </CommandItem>
@@ -162,7 +162,7 @@ function IndianStateCombobox({
                       )}
                     />
                     <span className="truncate">{s.name}</span>
-                    <span className="ml-auto font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+                    <span className="ml-auto font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
                       {s.code}
                       {s.isUT ? " · UT" : ""}
                     </span>
@@ -289,7 +289,7 @@ function IndianCityCombobox({
                     <span className="truncate">
                       Use “{trimmedQuery}”
                     </span>
-                    <span className="ml-auto font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+                    <span className="ml-auto font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
                       CUSTOM
                     </span>
                   </button>
@@ -319,7 +319,7 @@ function IndianCityCombobox({
                           )}
                         />
                         <span className="truncate">{c.name}</span>
-                        <span className="ml-auto font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+                        <span className="ml-auto font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
                           {c.stateCode}
                         </span>
                       </CommandItem>
@@ -350,7 +350,7 @@ function IndianCityCombobox({
                       )}
                     />
                     <span className="truncate">{c.name}</span>
-                    <span className="ml-auto font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+                    <span className="ml-auto font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
                       {c.stateCode}
                     </span>
                   </CommandItem>
@@ -366,7 +366,7 @@ function IndianCityCombobox({
                   >
                     <RiMapPinLine className="size-4 shrink-0 text-primary" />
                     <span className="truncate">Use “{trimmedQuery}”</span>
-                    <span className="ml-auto font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+                    <span className="ml-auto font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
                       CUSTOM
                     </span>
                   </CommandItem>
@@ -512,7 +512,7 @@ function PincodeInput({
       <span
         aria-live="polite"
         className={cn(
-          "pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 font-mono text-paper-10 uppercase tracking-widest",
+          "pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 font-mono text-ui-10 uppercase tracking-widest",
           status === "looking-up" && "text-muted-foreground tac-blink motion-reduce:animate-none",
           status === "resolved" && "text-accent-success",
           status === "no-match" && "text-accent-warning",

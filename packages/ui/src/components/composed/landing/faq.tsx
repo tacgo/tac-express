@@ -9,7 +9,7 @@ import { revealUp, staggerParent, staggerItem } from "./motion"
  * §9 — FAQ. Ports the template's centered heading + divided 6-cell grid into
  * Violet Grid. The Q&A content is preserved (question = heading, answer =
  * body) so nothing is lost moving off the accordion; surfaces use the
- * paper-line divider rhythm and semantic tokens.
+ * border divider rhythm and semantic tokens.
  */
 export function Faq() {
   return (

@@ -46,7 +46,7 @@ function OpsShipmentBarChart({ className }: OpsShipmentBarChartProps) {
     <div className={cn("flex flex-col", className)}>
       {/* Header row — title + period (matches the dashboard panel pattern) */}
       <div className="flex items-center justify-between">
-        <div className="font-paper-display font-semibold text-paper-13 text-paper-fg-1">
+        <div className="font-paper-display font-semibold text-ui-13 text-paper-fg-1">
           Shipment Trend
         </div>
         <span className="paper-label">Jan — Jun</span>
@@ -82,7 +82,7 @@ function OpsShipmentBarChart({ className }: OpsShipmentBarChartProps) {
       </ChartContainer>
 
       <div className="mt-3 border-t border-paper-line pt-2.5 flex flex-col gap-1">
-        <div className="flex items-center gap-1.5 font-paper-display font-semibold text-paper-12 text-paper-fg-1">
+        <div className="flex items-center gap-1.5 font-paper-display font-semibold text-ui-12 text-paper-fg-1">
           Trending up 5.2% this month
           <RiArrowUpLine aria-hidden className="size-3.5 text-paper-ok" />
         </div>

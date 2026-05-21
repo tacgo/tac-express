@@ -118,7 +118,7 @@ export function OpsShipmentDetailLive({ id }: Props) {
           <RiErrorWarningLine aria-hidden className="size-5 text-paper-err shrink-0" />
           <div>
             <div className="paper-eyebrow text-paper-err">NOT FOUND</div>
-            <p className="font-paper-display text-[length:var(--text-paper-13)] mt-1">
+            <p className="font-paper-display text-ui-13 mt-1">
               Could not load shipment <span className="font-paper-mono">{id}</span>.
             </p>
           </div>
@@ -173,11 +173,11 @@ export function OpsShipmentDetailLive({ id }: Props) {
           </OpsCard>
           <OpsCard>
             <div className="paper-label mb-1">Service</div>
-            <div className="font-paper-mono text-[length:var(--text-paper-13)] tabular-nums">
+            <div className="font-paper-mono text-ui-13 tabular-nums">
               {shipment.serviceLevel} · {shipment.paymentMode}
             </div>
             <div className="paper-label mb-1 mt-3">Estimated Delivery</div>
-            <div className="font-paper-mono text-[length:var(--text-paper-13)] tabular-nums">
+            <div className="font-paper-mono text-ui-13 tabular-nums">
               {computeEta({
                 status: shipment.status,
                 createdAt: shipment.createdAt,
@@ -185,7 +185,7 @@ export function OpsShipmentDetailLive({ id }: Props) {
               })}
             </div>
             <div className="paper-label mb-1 mt-3">Created</div>
-            <div className="font-paper-mono text-[length:var(--text-paper-13)] tabular-nums">
+            <div className="font-paper-mono text-ui-13 tabular-nums">
               {fmtTime(shipment.createdAt)}
             </div>
             {shipment.manifestNumber && (
@@ -245,19 +245,19 @@ export function OpsShipmentDetailLive({ id }: Props) {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <OpsCard ticks>
               <div className="paper-label mb-2">Sender</div>
-              <div className="font-paper-display font-semibold text-[length:var(--text-paper-14)]">
+              <div className="font-paper-display font-semibold text-ui-14">
                 {shipment.sender?.name}
               </div>
-              <div className="font-paper-mono text-[length:var(--text-paper-12)] text-paper-fg-3 mt-1">
+              <div className="font-paper-mono text-ui-12 text-paper-fg-3 mt-1">
                 {shipment.sender?.phone}
               </div>
               {shipment.sender?.email && (
-                <div className="font-paper-mono text-[length:var(--text-paper-12)] text-paper-fg-3">
+                <div className="font-paper-mono text-ui-12 text-paper-fg-3">
                   {shipment.sender.email}
                 </div>
               )}
               {shipment.sender?.address && (
-                <div className="font-paper-display text-[length:var(--text-paper-13)] text-paper-fg-2 mt-2">
+                <div className="font-paper-display text-ui-13 text-paper-fg-2 mt-2">
                   {shipment.sender.address.line1}
                   {shipment.sender.address.line2
                     ? `, ${shipment.sender.address.line2}`
@@ -269,19 +269,19 @@ export function OpsShipmentDetailLive({ id }: Props) {
             </OpsCard>
             <OpsCard ticks>
               <div className="paper-label mb-2">Receiver</div>
-              <div className="font-paper-display font-semibold text-[length:var(--text-paper-14)]">
+              <div className="font-paper-display font-semibold text-ui-14">
                 {shipment.receiver?.name}
               </div>
-              <div className="font-paper-mono text-[length:var(--text-paper-12)] text-paper-fg-3 mt-1">
+              <div className="font-paper-mono text-ui-12 text-paper-fg-3 mt-1">
                 {shipment.receiver?.phone}
               </div>
               {shipment.receiver?.email && (
-                <div className="font-paper-mono text-[length:var(--text-paper-12)] text-paper-fg-3">
+                <div className="font-paper-mono text-ui-12 text-paper-fg-3">
                   {shipment.receiver.email}
                 </div>
               )}
               {shipment.receiver?.address && (
-                <div className="font-paper-display text-[length:var(--text-paper-13)] text-paper-fg-2 mt-2">
+                <div className="font-paper-display text-ui-13 text-paper-fg-2 mt-2">
                   {shipment.receiver.address.line1}
                   {shipment.receiver.address.line2
                     ? `, ${shipment.receiver.address.line2}`
@@ -298,25 +298,25 @@ export function OpsShipmentDetailLive({ id }: Props) {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4">
             <OpsCard>
               <div className="paper-label">Dead Wt</div>
-              <div className="font-paper-display font-bold text-[length:var(--text-paper-18)] mt-1 tabular-nums">
+              <div className="font-paper-display font-bold text-ui-18 mt-1 tabular-nums">
                 {shipment.weight?.dead?.toFixed(1) ?? "—"} kg
               </div>
             </OpsCard>
             <OpsCard>
               <div className="paper-label">Volumetric</div>
-              <div className="font-paper-display font-bold text-[length:var(--text-paper-18)] mt-1 tabular-nums">
+              <div className="font-paper-display font-bold text-ui-18 mt-1 tabular-nums">
                 {shipment.weight?.volumetric?.toFixed(1) ?? "—"} kg
               </div>
             </OpsCard>
             <OpsCard accent="violet-under">
               <div className="paper-label">Chargeable</div>
-              <div className="font-paper-display font-bold text-[length:var(--text-paper-18)] mt-1 tabular-nums">
+              <div className="font-paper-display font-bold text-ui-18 mt-1 tabular-nums">
                 {chargeable.toFixed(1)} kg
               </div>
             </OpsCard>
             <OpsCard accent="violet-under">
               <div className="paper-label">Total</div>
-              <div className="font-paper-display font-bold text-[length:var(--text-paper-18)] mt-1 tabular-nums">
+              <div className="font-paper-display font-bold text-ui-18 mt-1 tabular-nums">
                 ₹{totalAmount.toLocaleString("en-IN")}
               </div>
             </OpsCard>
@@ -326,7 +326,7 @@ export function OpsShipmentDetailLive({ id }: Props) {
           {shipment.description && (
             <OpsCard ticks className="mt-4">
               <div className="paper-label mb-2">Contents</div>
-              <p className="font-paper-display text-[length:var(--text-paper-13)]">
+              <p className="font-paper-display text-ui-13">
                 {shipment.description}
               </p>
             </OpsCard>

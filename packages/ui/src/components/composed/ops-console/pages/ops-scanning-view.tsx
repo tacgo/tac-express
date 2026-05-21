@@ -47,9 +47,9 @@ function OpsScanningView() {
           <span aria-hidden className="size-2 bg-paper-violet animate-pulse motion-reduce:animate-none" />
           <div>
             <div className="paper-label">Hub Operations Console</div>
-            <div className="font-paper-display font-bold text-[length:var(--text-paper-18)] mt-0.5">
+            <div className="font-paper-display font-bold text-ui-18 mt-0.5">
               {current.id}{" "}
-              <span className="font-paper-mono font-normal text-paper-fg-3 text-[length:var(--text-paper-12)] ml-1.5">
+              <span className="font-paper-mono font-normal text-paper-fg-3 text-ui-12 ml-1.5">
                 · {current.sub}
               </span>
             </div>
@@ -118,7 +118,7 @@ function OpsScanningView() {
           <div className="flex-1 grid place-items-center text-center text-paper-fg-3">
             <div>
               <div className="paper-label mb-1.5">Awaiting Scans…</div>
-              <div className="font-paper-display text-[length:var(--text-paper-13)]">
+              <div className="font-paper-display text-ui-13">
                 Use the scanner or type an AWB to begin.
               </div>
             </div>
@@ -126,7 +126,7 @@ function OpsScanningView() {
         </OpsCard>
       </div>
 
-      <div className="flex items-center justify-between mt-3.5 font-paper-mono text-paper-fg-3 text-[length:var(--text-paper-11)] tracking-[length:var(--tracking-paper-10)]">
+      <div className="flex items-center justify-between mt-3.5 font-paper-mono text-paper-fg-3 text-ui-11 tracking-badge">
         <span className="flex items-center gap-1.5">
           <RiSignalTowerLine aria-hidden className="size-3" />
           ONLINE · PENDING SYNC: 0 · FAILED: 0

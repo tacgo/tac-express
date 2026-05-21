@@ -35,7 +35,7 @@ export function PlatformCta() {
             <Button
               asChild
               variant="default"
-              className="h-12 rounded-none font-mono font-bold text-sm tracking-paper-20 uppercase px-8 shadow-sm transition-transform hover:-translate-y-0.5 focus-visible:outline-none focus-visible:tac-focus-premium"
+              className="h-12 rounded-none font-mono font-bold text-sm tracking-wordmark uppercase px-8 shadow-sm transition-transform hover:-translate-y-0.5 focus-visible:outline-none focus-visible:tac-focus-premium"
             >
               <Link href={platformContent.ctaHref}>
                 {platformContent.ctaLabel}

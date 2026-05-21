@@ -107,10 +107,10 @@ export default function WorldMap({ dots = [], className }: WorldMapProps) {
       <div aria-hidden className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-primary z-20 m-2 pointer-events-none" />
 
       {/* Sector labelling overlays */}
-      <div aria-hidden className="absolute top-3 left-4 tac-mono-label text-paper-9 text-primary/75 z-30">
+      <div aria-hidden className="absolute top-3 left-4 tac-mono-label text-ui-9 text-primary/75 z-30">
         SYS_SECTOR: EAST_NORTH_EAST // TACTICAL_GRID
       </div>
-      <div aria-hidden className="absolute bottom-3 left-4 tac-mono-label text-paper-9 text-muted-foreground/60 z-30">
+      <div aria-hidden className="absolute bottom-3 left-4 tac-mono-label text-ui-9 text-muted-foreground/60 z-30">
         SCALE: 1:3,500,000 // PROJ: MERCATOR
       </div>
       <div aria-hidden className="absolute bottom-3 right-4 bg-background border border-primary-strong px-2 py-0.5 z-30 tac-mono-label text-primary text-glow-primary">

@@ -29,7 +29,7 @@ export default function TrackError({ reset }: { error: Error; reset: () => void 
           <div className="mt-6 flex flex-wrap items-center gap-3">
             <Button
               onClick={reset}
-              className="rounded-none font-mono font-bold text-xs tracking-paper-20 uppercase px-6 focus-visible:outline-none focus-visible:tac-focus-premium"
+              className="rounded-none font-mono font-bold text-xs tracking-wordmark uppercase px-6 focus-visible:outline-none focus-visible:tac-focus-premium"
             >
               <Icon name="refresh" aria-hidden className="mr-2 w-4 h-4" />
               Try again
@@ -37,7 +37,7 @@ export default function TrackError({ reset }: { error: Error; reset: () => void 
             <Button
               asChild
               variant="outline"
-              className="rounded-none font-mono font-bold text-xs tracking-paper-20 uppercase px-6 focus-visible:outline-none focus-visible:tac-focus-premium"
+              className="rounded-none font-mono font-bold text-xs tracking-wordmark uppercase px-6 focus-visible:outline-none focus-visible:tac-focus-premium"
             >
               <Link href="/track">
                 <Icon name="scan" aria-hidden className="mr-2 w-4 h-4" />

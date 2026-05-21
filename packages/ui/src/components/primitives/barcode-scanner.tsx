@@ -269,7 +269,7 @@ function BarcodeScanner({
             >
               <RiZoomOutLine className="size-3" />
             </Button>
-            <span className="font-mono text-paper-10 uppercase tracking-widest">
+            <span className="font-mono text-ui-10 uppercase tracking-widest">
               {zoom.value.toFixed(1)}×
             </span>
             <Button
@@ -288,7 +288,7 @@ function BarcodeScanner({
         )}
       </div>
       {error && (
-        <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-background/90 px-4 text-center font-mono text-paper-11 uppercase tracking-widest text-destructive">
+        <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-background/90 px-4 text-center font-mono text-ui-11 uppercase tracking-widest text-destructive">
           <RiCloseLine className="size-6" />
           {error}
         </div>

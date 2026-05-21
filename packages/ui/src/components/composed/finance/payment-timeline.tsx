@@ -72,7 +72,7 @@ export function PaymentTimeline({
     >
       <header className="flex items-center justify-between border-b border-border px-4 py-3">
         <div>
-          <p className="font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+          <p className="font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
             Payment timeline
           </p>
           <p className="mt-0.5 font-heading text-sm font-semibold">
@@ -87,7 +87,7 @@ export function PaymentTimeline({
       <ScrollArea className="max-h-72">
         {payments.length === 0 ? (
           <div className="flex h-32 items-center justify-center px-4 text-center">
-            <p className="font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+            <p className="font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
               No payments recorded
             </p>
           </div>
@@ -117,7 +117,7 @@ export function PaymentTimeline({
                     )}
                   </p>
                   {p.reference && (
-                    <p className="mt-0.5 font-mono text-paper-11 uppercase tracking-widest text-muted-foreground">
+                    <p className="mt-0.5 font-mono text-ui-11 uppercase tracking-widest text-muted-foreground">
                       Ref · {p.reference}
                     </p>
                   )}
@@ -126,7 +126,7 @@ export function PaymentTimeline({
                       {p.notes}
                     </p>
                   )}
-                  <p className="mt-1 font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+                  <p className="mt-1 font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
                     {format(parseISO(p.receivedAt), "dd MMM yyyy · HH:mm")}
                   </p>
                 </div>

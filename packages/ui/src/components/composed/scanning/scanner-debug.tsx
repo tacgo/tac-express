@@ -75,7 +75,7 @@ export function ScannerDebug({ onClose, className }: ScannerDebugProps) {
       )}
     >
       <header className="flex items-center justify-between border-b border-border px-3 py-2">
-        <span className="flex items-center gap-2 font-mono text-paper-10 uppercase tracking-widest">
+        <span className="flex items-center gap-2 font-mono text-ui-10 uppercase tracking-widest">
           <RiBugLine className="size-3.5" />
           Scanner Debug
         </span>
@@ -95,7 +95,7 @@ export function ScannerDebug({ onClose, className }: ScannerDebugProps) {
 
       <div className="grid grid-cols-2 gap-px bg-border/40">
         <div className="bg-popover px-3 py-2">
-          <p className="font-mono text-paper-9 uppercase tracking-widest text-muted-foreground">
+          <p className="font-mono text-ui-9 uppercase tracking-widest text-muted-foreground">
             Avg Δ
           </p>
           <p
@@ -109,10 +109,10 @@ export function ScannerDebug({ onClose, className }: ScannerDebugProps) {
           </p>
         </div>
         <div className="bg-popover px-3 py-2">
-          <p className="font-mono text-paper-9 uppercase tracking-widest text-muted-foreground">
+          <p className="font-mono text-ui-9 uppercase tracking-widest text-muted-foreground">
             Source
           </p>
-          <p className="mt-0.5 flex items-center gap-1 font-mono text-paper-11 font-semibold">
+          <p className="mt-0.5 flex items-center gap-1 font-mono text-ui-11 font-semibold">
             {scannerDetected ? (
               <>
                 <RiBarcodeBoxLine className="size-3" />
@@ -129,10 +129,10 @@ export function ScannerDebug({ onClose, className }: ScannerDebugProps) {
       </div>
 
       <div className="border-t border-border px-3 py-2">
-        <p className="font-mono text-paper-9 uppercase tracking-widest text-muted-foreground">
+        <p className="font-mono text-ui-9 uppercase tracking-widest text-muted-foreground">
           Last code
         </p>
-        <p className="truncate font-mono text-paper-11 font-semibold">
+        <p className="truncate font-mono text-ui-11 font-semibold">
           {lastCode ?? "—"}
         </p>
       </div>

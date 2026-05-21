@@ -35,7 +35,7 @@ export function StepReview({
       {/* Three summary cards */}
       <section className="grid gap-px bg-border/40 sm:grid-cols-3">
         <Card className="rounded-none border-0 bg-background p-4">
-          <p className="font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+          <p className="font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
             Route
           </p>
           <p className="mt-1 font-heading text-base font-semibold">
@@ -52,7 +52,7 @@ export function StepReview({
         </Card>
 
         <Card className="rounded-none border-0 bg-background p-4">
-          <p className="font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+          <p className="font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
             Schedule
           </p>
           {setup.type === "AIR" ? (
@@ -62,7 +62,7 @@ export function StepReview({
                   ? format(setup.flightDate, "dd MMM yyyy")
                   : "—"}
               </p>
-              <p className="mt-1 font-mono text-paper-11 uppercase tracking-widest text-muted-foreground">
+              <p className="mt-1 font-mono text-ui-11 uppercase tracking-widest text-muted-foreground">
                 ETD {setup.etd ?? "—"} · ETA {setup.eta ?? "—"}
               </p>
             </>
@@ -73,7 +73,7 @@ export function StepReview({
                   ? format(setup.dispatchDate, "dd MMM yyyy")
                   : "—"}
               </p>
-              <p className="mt-1 font-mono text-paper-11 uppercase tracking-widest text-muted-foreground">
+              <p className="mt-1 font-mono text-ui-11 uppercase tracking-widest text-muted-foreground">
                 Dispatch {setup.dispatchTime ?? "—"}
               </p>
             </>
@@ -81,13 +81,13 @@ export function StepReview({
         </Card>
 
         <Card className="rounded-none border-0 bg-background p-4">
-          <p className="font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+          <p className="font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
             Manifest Totals
           </p>
           <p className="mt-1 font-heading text-base font-semibold">
             {rows.length} shipments
           </p>
-          <p className="mt-1 font-mono text-paper-11 uppercase tracking-widest text-muted-foreground">
+          <p className="mt-1 font-mono text-ui-11 uppercase tracking-widest text-muted-foreground">
             {totalPieces} pcs · {totalWeight.toFixed(1)} kg
           </p>
         </Card>
@@ -95,7 +95,7 @@ export function StepReview({
 
       {/* Transport details */}
       <Card className="rounded-none p-4">
-        <p className="font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+        <p className="font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
           Transport Details
         </p>
         {setup.type === "AIR" ? (
@@ -117,7 +117,7 @@ export function StepReview({
       {/* Notes */}
       {setup.notes && (
         <Card className="rounded-none p-4">
-          <p className="font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+          <p className="font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
             Notes
           </p>
           <p className="mt-2 whitespace-pre-wrap text-sm text-foreground">
@@ -127,7 +127,7 @@ export function StepReview({
       )}
 
       {/* Ready notice */}
-      <p className="font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+      <p className="font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
         Review the details above. Save as Open to keep editing, or Close
         Manifest to finalize and lock the loadlist.
       </p>
@@ -144,10 +144,10 @@ function Detail({
 }) {
   return (
     <div>
-      <dt className="font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+      <dt className="font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
         {label}
       </dt>
-      <dd className="font-mono text-paper-11 font-semibold">{children}</dd>
+      <dd className="font-mono text-ui-11 font-semibold">{children}</dd>
     </div>
   )
 }

@@ -52,15 +52,15 @@ function OpsTimeline({ events, emptyMessage = "No events", className }: OpsTimel
             )}
           />
           <div className="flex items-baseline justify-between gap-3">
-            <span className="font-paper-display font-semibold text-[length:var(--text-paper-13)]">
+            <span className="font-paper-display font-semibold text-ui-13">
               {e.label}
             </span>
-            <span className="font-paper-mono text-[length:var(--text-paper-11)] tabular-nums text-paper-fg-3 shrink-0">
+            <span className="font-paper-mono text-ui-11 tabular-nums text-paper-fg-3 shrink-0">
               {e.timestamp}
             </span>
           </div>
           {e.detail && (
-            <p className="font-paper-display text-[length:var(--text-paper-13)] text-paper-fg-3 mt-0.5">
+            <p className="font-paper-display text-ui-13 text-paper-fg-3 mt-0.5">
               {e.detail}
             </p>
           )}

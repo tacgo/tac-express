@@ -130,7 +130,7 @@ function SignaturePad({
           )}
         />
         {empty && (
-          <div className="pointer-events-none absolute inset-0 flex items-center justify-center font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+          <div className="pointer-events-none absolute inset-0 flex items-center justify-center font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
             <RiBrushLine className="mr-2 size-3.5" />
             Sign here
           </div>
@@ -143,7 +143,7 @@ function SignaturePad({
           size="sm"
           onClick={clear}
           disabled={disabled || empty}
-          className="font-mono text-paper-10 uppercase tracking-widest"
+          className="font-mono text-ui-10 uppercase tracking-widest"
         >
           <RiCloseLine className="size-3" />
           Clear
