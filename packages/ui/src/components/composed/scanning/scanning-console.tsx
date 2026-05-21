@@ -29,6 +29,7 @@ import {
   RiWifiOffLine,
   RiBugLine,
   RiTimeLine,
+  type RemixiconComponentType,
 } from "@workspace/ui/icons"
 
 export type ScanMode =
@@ -84,7 +85,7 @@ const MODES: {
   id: ScanMode
   label: string
   hint: string
-  icon: React.ElementType
+  icon: RemixiconComponentType
   tone: "default" | "info" | "warning" | "success"
 }[] = [
   {

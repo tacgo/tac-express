@@ -14,6 +14,7 @@ import {
   RiSparkling2Line,
   RiArrowRightLine,
   RiBubbleChartLine,
+  type RemixiconComponentType,
 } from "@workspace/ui/icons"
 
 export type AnomalyType =
@@ -125,7 +126,7 @@ const TYPE_LABEL: Record<AnomalyType, string> = {
   MISSED_SLA: "SLA breach",
 }
 
-const TYPE_ICON: Record<AnomalyType, React.ElementType> = {
+const TYPE_ICON: Record<AnomalyType, RemixiconComponentType> = {
   STALLED: RiTimeLine,
   DELAY: RiAlertLine,
   ROUTE_MISMATCH: RiBubbleChartLine,

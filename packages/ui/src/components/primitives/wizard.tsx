@@ -8,6 +8,7 @@ import {
   RiArrowLeftLine,
   RiArrowRightLine,
   RiCheckLine,
+  type RemixiconComponentType,
 } from "@workspace/ui/icons"
 
 /**
@@ -29,7 +30,7 @@ interface WizardStep {
   label: string
   description?: string
   /** Optional icon rendered next to the label (e.g. RiUserLine for an "Identity" step). */
-  icon?: React.ElementType
+  icon?: RemixiconComponentType
 }
 
 interface WizardProps extends Omit<React.HTMLAttributes<HTMLOListElement>, "children"> {

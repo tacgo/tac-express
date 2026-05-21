@@ -12,6 +12,7 @@ import {
   RiMoneyDollarCircleLine,
   RiAlertLine,
   RiBarChart2Line,
+  type RemixiconComponentType,
 } from "@workspace/ui/icons"
 
 interface CustomerDetailCardProps {
@@ -28,7 +29,7 @@ function StatTile({
   label: string
   value: string
   hint?: string
-  icon: React.ElementType
+  icon: RemixiconComponentType
   tone?: "default" | "warning" | "success"
 }) {
   return (
@@ -80,7 +81,7 @@ function InfoRow({
   value,
   multiline,
 }: {
-  icon: React.ElementType
+  icon: RemixiconComponentType
   label: string
   value: React.ReactNode
   multiline?: boolean

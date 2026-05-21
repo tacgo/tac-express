@@ -11,6 +11,7 @@ import {
   RiScanFill,
   RiExchangeFundsFill,
   RiArrowRightSLine,
+  type RemixiconComponentType,
 } from "@workspace/ui/icons"
 
 export type ActivityTypeView =
@@ -36,7 +37,7 @@ interface LiveActivityFeedProps {
   className?: string
 }
 
-const ICON_MAP: Record<ActivityTypeView, React.ElementType> = {
+const ICON_MAP: Record<ActivityTypeView, RemixiconComponentType> = {
   shipment: RiBox3Fill,
   manifest: RiFileList3Fill,
   exception: RiAlertFill,

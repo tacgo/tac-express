@@ -20,6 +20,7 @@ import {
   RiCalculatorLine,
   RiShieldCheckLine,
   RiAddLine,
+  type RemixiconComponentType,
 } from "@workspace/ui/icons"
 
 interface CommandItem {
@@ -27,7 +28,7 @@ interface CommandItem {
   label: string
   description?: string
   href: string
-  icon: React.ElementType
+  icon: RemixiconComponentType
   keywords?: string[]
   group: "Navigate" | "Create" | "Actions"
 }
