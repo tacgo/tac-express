@@ -261,7 +261,7 @@ export function ScanningConsole({
               )}
             >
               <Icon className="size-4" />
-              <span className="font-mono text-paper-11 font-semibold uppercase tracking-widest">
+              <span className="font-mono text-ui-11 font-semibold uppercase tracking-widest">
                 {m.label}
               </span>
             </button>
@@ -418,7 +418,7 @@ export function ScanningConsole({
                       ) : (
                         <RiCloseLine className="size-3.5 text-destructive" />
                       )}
-                      <span className="font-mono text-paper-11 font-semibold">
+                      <span className="font-mono text-ui-11 font-semibold">
                         {item.awb}
                       </span>
                       {i === 0 && (
@@ -427,7 +427,7 @@ export function ScanningConsole({
                         </Badge>
                       )}
                       {item.reason && (
-                        <span className="ml-auto truncate text-paper-10 text-muted-foreground">
+                        <span className="ml-auto truncate text-ui-10 text-muted-foreground">
                           {item.reason}
                         </span>
                       )}
@@ -441,7 +441,7 @@ export function ScanningConsole({
       </div>
 
       {/* Footer status bar */}
-      <footer className="flex flex-wrap items-center justify-between gap-3 border-t border-border pt-3 font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+      <footer className="flex flex-wrap items-center justify-between gap-3 border-t border-border pt-3 font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
         <div className="flex items-center gap-3">
           {isOnline ? (
             <span className="flex items-center gap-1 text-status-success">
@@ -485,7 +485,7 @@ function KpiChip({
         tone === "error" && "border-destructive/30"
       )}
     >
-      <span className="font-mono text-paper-9 uppercase tracking-widest text-muted-foreground">
+      <span className="font-mono text-ui-9 uppercase tracking-widest text-muted-foreground">
         {label}
       </span>
       <span

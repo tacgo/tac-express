@@ -145,7 +145,7 @@ export function HubsManager({
           <h2 className="font-heading text-base font-semibold tracking-tight">
             Hub Network
           </h2>
-          <p className="font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+          <p className="font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
             {hubs.length} hub{hubs.length === 1 ? "" : "s"} · {hubs.filter((h) => h.isActive).length} active
           </p>
         </div>
@@ -333,7 +333,7 @@ export function HubsManager({
 
             <div className="grid gap-2 sm:grid-cols-3">
               <label className="flex items-center justify-between border border-border bg-background px-3 py-2">
-                <span className="font-mono text-paper-10 uppercase tracking-widest">
+                <span className="font-mono text-ui-10 uppercase tracking-widest">
                   Allows origin
                 </span>
                 <Switch
@@ -342,7 +342,7 @@ export function HubsManager({
                 />
               </label>
               <label className="flex items-center justify-between border border-border bg-background px-3 py-2">
-                <span className="font-mono text-paper-10 uppercase tracking-widest">
+                <span className="font-mono text-ui-10 uppercase tracking-widest">
                   Allows destination
                 </span>
                 <Switch
@@ -351,7 +351,7 @@ export function HubsManager({
                 />
               </label>
               <label className="flex items-center justify-between border border-border bg-background px-3 py-2">
-                <span className="font-mono text-paper-10 uppercase tracking-widest">
+                <span className="font-mono text-ui-10 uppercase tracking-widest">
                   Active
                 </span>
                 <Switch

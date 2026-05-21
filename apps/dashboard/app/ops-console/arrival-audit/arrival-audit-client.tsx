@@ -228,7 +228,7 @@ export function ArrivalAuditClient() {
           </div>
 
           {hydrating && (
-            <p className="font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+            <p className="font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
               Loading manifest contents…
             </p>
           )}

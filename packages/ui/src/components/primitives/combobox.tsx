@@ -116,7 +116,7 @@ function Combobox({
                     />
                     <span className="truncate">{option.label}</span>
                     {option.meta && (
-                      <span className="ml-auto font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+                      <span className="ml-auto font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
                         {option.meta}
                       </span>
                     )}

@@ -61,7 +61,7 @@ function OpsDetailFrame({
             {title}
           </h1>
           {sub && (
-            <div className="font-paper-display text-[length:var(--text-paper-13)] text-paper-fg-3 mt-1.5">
+            <div className="font-paper-display text-[length:var(--text-ui-13)] text-paper-fg-3 mt-1.5">
               {sub}
             </div>
           )}

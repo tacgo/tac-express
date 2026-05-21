@@ -41,7 +41,7 @@ function OpsPanelTabsTrigger({
     <RadixTabsTrigger
       className={cn(
         "inline-flex items-center justify-center gap-2 px-4 h-9 -mb-px",
-        "font-paper-mono font-medium uppercase tracking-[length:var(--tracking-badge)] text-[length:var(--text-paper-11)]",
+        "font-paper-mono font-medium uppercase tracking-[length:var(--tracking-badge)] text-[length:var(--text-ui-11)]",
         "text-paper-fg-3 hover:text-paper-fg-1 transition-colors duration-fast ease-linear",
         "border-b-2 border-transparent rounded-none bg-transparent shadow-none",
         "focus-visible:outline-none focus-visible:tac-focus-premium",

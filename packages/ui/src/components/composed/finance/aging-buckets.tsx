@@ -99,15 +99,15 @@ export function AgingBuckets({
             aria-hidden="true"
             className="inline-block h-3 w-1 bg-primary"
           />
-          <h2 className="font-mono text-paper-10 font-semibold uppercase tracking-subtitle text-foreground">
+          <h2 className="font-mono text-ui-10 font-semibold uppercase tracking-subtitle text-foreground">
             Receivables aging
           </h2>
-          <span className="font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+          <span className="font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
             · {invoices.length} invoice{invoices.length === 1 ? "" : "s"}
           </span>
         </div>
         <div className="flex items-baseline gap-2">
-          <span className="font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+          <span className="font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
             Outstanding
           </span>
           <span
@@ -182,7 +182,7 @@ function BucketTile({
       <span aria-hidden="true" className={railClass} />
 
       <div className="flex items-baseline justify-between gap-2 pl-2">
-        <p className="font-mono text-paper-9 font-semibold uppercase tracking-wordmark text-muted-foreground">
+        <p className="font-mono text-ui-9 font-semibold uppercase tracking-wordmark text-muted-foreground">
           {bucket.label}
           {bucket.label !== "Current" && (
             <span className="ml-1 font-normal opacity-70">days</span>
@@ -191,7 +191,7 @@ function BucketTile({
         {bucket.count > 0 && (
           <span
             className={cn(
-              "font-mono text-paper-9 font-semibold uppercase tracking-widest tabular-nums",
+              "font-mono text-ui-9 font-semibold uppercase tracking-widest tabular-nums",
               accentClass
             )}
             aria-label={`${sharePct} percent of total`}
@@ -215,11 +215,11 @@ function BucketTile({
       </p>
 
       <div className="flex items-center justify-between gap-2 pl-2">
-        <p className="font-mono text-paper-9 uppercase tracking-subtitle text-muted-foreground">
+        <p className="font-mono text-ui-9 uppercase tracking-subtitle text-muted-foreground">
           {bucket.count} invoice{bucket.count === 1 ? "" : "s"}
         </p>
         {isActive && (
-          <span className="font-mono text-paper-9 font-semibold uppercase tracking-widest text-primary">
+          <span className="font-mono text-ui-9 font-semibold uppercase tracking-widest text-primary">
             ● filter
           </span>
         )}

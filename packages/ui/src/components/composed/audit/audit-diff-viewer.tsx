@@ -64,7 +64,7 @@ export function AuditDiffViewer({
       <p
         data-slot="audit-diff-empty"
         className={cn(
-          "border border-dashed border-border px-3 py-2 font-mono text-paper-10 uppercase tracking-widest text-muted-foreground",
+          "border border-dashed border-border px-3 py-2 font-mono text-ui-10 uppercase tracking-widest text-muted-foreground",
           className
         )}
       >
@@ -79,13 +79,13 @@ export function AuditDiffViewer({
       className={cn("border border-border bg-background", className)}
     >
       <header className="grid grid-cols-[180px_1fr_1fr] gap-px border-b border-border bg-muted/30 px-3 py-2">
-        <span className="font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+        <span className="font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
           Field
         </span>
-        <span className="font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+        <span className="font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
           Before
         </span>
-        <span className="font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+        <span className="font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
           After
         </span>
       </header>
@@ -96,7 +96,7 @@ export function AuditDiffViewer({
             data-status={row.status}
             className="grid grid-cols-[180px_1fr_1fr] gap-px px-3 py-2 align-top"
           >
-            <span className="truncate font-mono text-paper-11 font-semibold tracking-widest">
+            <span className="truncate font-mono text-ui-11 font-semibold tracking-widest">
               {row.key}
             </span>
             <DiffCell value={row.before} status={row.status} side="before" />
@@ -125,7 +125,7 @@ function DiffCell({
   return (
     <pre
       className={cn(
-        "max-h-32 overflow-auto whitespace-pre-wrap break-all border border-transparent px-2 py-1 font-mono text-paper-11 leading-snug",
+        "max-h-32 overflow-auto whitespace-pre-wrap break-all border border-transparent px-2 py-1 font-mono text-ui-11 leading-snug",
         isHighlighted &&
           side === "before" &&
           "border-destructive/40 bg-destructive/10 text-destructive",

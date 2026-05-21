@@ -47,7 +47,7 @@ export function HubContextSwitcher({ className }: { className?: string }) {
         <RiArrowDownSLine className="h-3.5 w-3.5 text-muted-foreground" aria-hidden="true" />
       </div>
       {activeHub && (
-        <span className="ml-2 hidden xl:flex items-center gap-1 font-mono text-paper-10 text-muted-foreground tracking-widest uppercase">
+        <span className="ml-2 hidden xl:flex items-center gap-1 font-mono text-ui-10 text-muted-foreground tracking-widest uppercase">
           <span className="w-1 h-1 bg-accent-success animate-pulse" />
           {activeHub.name}
         </span>

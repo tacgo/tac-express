@@ -17,7 +17,7 @@ function OpsKbd({
         "inline-block px-1.5 py-0.5 ml-0.5",
         "border border-paper-line bg-paper-card text-paper-fg-2",
         "font-paper-mono font-medium",
-        "text-[length:var(--text-paper-11)]",
+        "text-[length:var(--text-ui-11)]",
         className,
       )}
       {...props}

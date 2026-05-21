@@ -34,9 +34,9 @@ const opsButtonVariants = cva(
         dark: "border-paper-ink bg-paper-ink [color:white] hover:opacity-90",
       },
       size: {
-        default: "px-3.5 py-2 text-paper-11",
-        sm: "px-2.5 py-1.5 text-paper-10",
-        lg: "px-4 py-3 text-paper-12",
+        default: "px-3.5 py-2 text-ui-11",
+        sm: "px-2.5 py-1.5 text-ui-10",
+        lg: "px-4 py-3 text-ui-12",
       },
     },
     defaultVariants: {

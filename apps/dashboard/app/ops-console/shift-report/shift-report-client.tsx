@@ -140,7 +140,7 @@ export function ShiftReportClient() {
                 value={String(d)}
                 aria-label={`${d} hours`}
               >
-                <span className="font-mono text-paper-11 uppercase tracking-widest">
+                <span className="font-mono text-ui-11 uppercase tracking-widest">
                   {d} HRS
                 </span>
               </ToggleGroupItem>
@@ -163,7 +163,7 @@ export function ShiftReportClient() {
         <ShiftReportView data={report.data} loading={report.isFetching} />
       )}
       {!report.data && report.isLoading && (
-        <p className="font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+        <p className="font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
           Loading shift report…
         </p>
       )}

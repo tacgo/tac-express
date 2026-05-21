@@ -33,7 +33,7 @@ export function ArrivalAuditStats({
       </dl>
 
       <div className="space-y-1">
-        <div className="flex items-center justify-between font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+        <div className="flex items-center justify-between font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
           <span>Reconciliation progress</span>
           <span>{progress}%</span>
         </div>
@@ -70,7 +70,7 @@ function Tile({
 }) {
   return (
     <div className="bg-background p-3">
-      <p className="font-mono text-paper-9 uppercase tracking-wordmark text-muted-foreground">
+      <p className="font-mono text-ui-9 uppercase tracking-wordmark text-muted-foreground">
         {label}
       </p>
       <p

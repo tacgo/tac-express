@@ -167,13 +167,13 @@ export function StepSetup({
         >
           <ToggleGroupItem value="AIR" className="flex-1 gap-2" aria-label="Air freight">
             <RiPlaneLine />
-            <span className="font-mono text-paper-11 uppercase tracking-widest">
+            <span className="font-mono text-ui-11 uppercase tracking-widest">
               Air
             </span>
           </ToggleGroupItem>
           <ToggleGroupItem value="TRUCK" className="flex-1 gap-2" aria-label="Truck freight">
             <RiTruckLine />
-            <span className="font-mono text-paper-11 uppercase tracking-widest">
+            <span className="font-mono text-ui-11 uppercase tracking-widest">
               Truck
             </span>
           </ToggleGroupItem>
@@ -288,12 +288,12 @@ export function StepSetup({
 
       {/* Rules */}
       <section className="grid gap-2">
-        <p className="font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+        <p className="font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
           Auto-validate scans against
         </p>
         <div className="grid gap-2 sm:grid-cols-3">
           <label className="flex items-center justify-between border border-border bg-background px-3 py-2">
-            <span className="font-mono text-paper-11 uppercase tracking-widest">
+            <span className="font-mono text-ui-11 uppercase tracking-widest">
               Only Ready Status
             </span>
             <Switch
@@ -302,7 +302,7 @@ export function StepSetup({
             />
           </label>
           <label className="flex items-center justify-between border border-border bg-background px-3 py-2">
-            <span className="font-mono text-paper-11 uppercase tracking-widest">
+            <span className="font-mono text-ui-11 uppercase tracking-widest">
               Match Destination
             </span>
             <Switch
@@ -311,7 +311,7 @@ export function StepSetup({
             />
           </label>
           <label className="flex items-center justify-between border border-border bg-background px-3 py-2">
-            <span className="font-mono text-paper-11 uppercase tracking-widest">
+            <span className="font-mono text-ui-11 uppercase tracking-widest">
               Exclude COD
             </span>
             <Switch

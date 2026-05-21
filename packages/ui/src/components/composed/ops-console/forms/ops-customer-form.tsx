@@ -48,7 +48,7 @@ function FieldError({ id, message }: FieldErrorProps) {
     <p
       id={id}
       role="alert"
-      className="font-paper-mono text-paper-err text-[length:var(--text-paper-11)] mt-1"
+      className="font-paper-mono text-paper-err text-[length:var(--text-ui-11)] mt-1"
     >
       {message}
     </p>

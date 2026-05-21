@@ -218,7 +218,7 @@ export function StepAddShipments({
           </div>
           <ScrollArea className="h-56">
             {scanLog.length === 0 ? (
-              <div className="flex h-56 items-center justify-center font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+              <div className="flex h-56 items-center justify-center font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
                 Awaiting scans…
               </div>
             ) : (
@@ -243,11 +243,11 @@ export function StepAddShipments({
                     ) : (
                       <RiCloseLine className="size-3.5 text-destructive" />
                     )}
-                    <span className="font-mono text-paper-11 font-semibold">
+                    <span className="font-mono text-ui-11 font-semibold">
                       {entry.awb}
                     </span>
                     {entry.reason && (
-                      <span className="ml-auto truncate text-paper-10 text-muted-foreground">
+                      <span className="ml-auto truncate text-ui-10 text-muted-foreground">
                         {entry.reason}
                       </span>
                     )}
@@ -399,7 +399,7 @@ function StatTile({
 }) {
   return (
     <div className="bg-background p-3">
-      <p className="font-mono text-paper-9 uppercase tracking-wordmark text-muted-foreground">
+      <p className="font-mono text-ui-9 uppercase tracking-wordmark text-muted-foreground">
         {label}
       </p>
       <p

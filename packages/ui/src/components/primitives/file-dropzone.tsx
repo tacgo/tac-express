@@ -129,14 +129,14 @@ function FileDropzone({
         )}
       >
         <RiUploadLine className="size-6 text-muted-foreground" />
-        <span className="font-mono text-paper-11 uppercase tracking-widest text-foreground">
+        <span className="font-mono text-ui-11 uppercase tracking-widest text-foreground">
           {label}
         </span>
-        <span className="font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+        <span className="font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
           {`Up to ${maxFiles} files · max ${formatBytes(maxSizeBytes)} each`}
         </span>
         {helperText && (
-          <span className="text-paper-11 text-muted-foreground">
+          <span className="text-ui-11 text-muted-foreground">
             {helperText}
           </span>
         )}
@@ -155,7 +155,7 @@ function FileDropzone({
       </div>
 
       {error && (
-        <span className="font-mono text-paper-10 uppercase tracking-widest text-destructive">
+        <span className="font-mono text-ui-10 uppercase tracking-widest text-destructive">
           {error}
         </span>
       )}
@@ -185,10 +185,10 @@ function FileDropzone({
                   <RiFileTextLine className="size-6 text-muted-foreground" />
                 </div>
               )}
-              <span className="truncate font-mono text-paper-10 uppercase tracking-wide text-foreground">
+              <span className="truncate font-mono text-ui-10 uppercase tracking-wide text-foreground">
                 {f.file.name}
               </span>
-              <span className="font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+              <span className="font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
                 {formatBytes(f.file.size)}
               </span>
               <button

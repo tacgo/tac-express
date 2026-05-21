@@ -107,7 +107,7 @@ function OpsFinanceView({
           </div>
           <div className="flex items-center gap-2">
             <span className="paper-label">Outstanding</span>
-            <b className="text-paper-err font-paper-display font-bold text-[length:var(--text-paper-16)]">
+            <b className="text-paper-err font-paper-display font-bold text-[length:var(--text-ui-16)]">
               {outstanding}
             </b>
           </div>
@@ -119,10 +119,10 @@ function OpsFinanceView({
               className={`px-3.5 py-2.5 bg-paper-2 border-l-[length:var(--indicator-w)] ${b.toneClass}`}
             >
               <div className="paper-label">{b.label}</div>
-              <div className="font-paper-display font-bold text-[length:var(--text-paper-22)] mt-1">
+              <div className="font-paper-display font-bold text-[length:var(--text-ui-22)] mt-1">
                 {b.amount}
               </div>
-              <div className="font-paper-mono text-paper-fg-3 text-[length:var(--text-paper-11)] mt-0.5">
+              <div className="font-paper-mono text-paper-fg-3 text-[length:var(--text-ui-11)] mt-0.5">
                 {b.sub}
               </div>
             </div>

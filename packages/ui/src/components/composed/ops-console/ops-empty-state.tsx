@@ -44,7 +44,7 @@ function OpsEmptyState({
       )}
       <span className="paper-eyebrow">{eyebrow}</span>
       <h3 className="paper-h3">{headline}</h3>
-      <p className="font-paper-display text-[length:var(--text-paper-13)] text-paper-fg-3 max-w-prose">
+      <p className="font-paper-display text-[length:var(--text-ui-13)] text-paper-fg-3 max-w-prose">
         {description}
       </p>
       {cta && <div className="mt-2">{cta}</div>}

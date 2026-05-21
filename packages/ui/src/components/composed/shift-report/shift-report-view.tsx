@@ -72,7 +72,7 @@ export function ShiftReportView({
       {/* Period banner */}
       <header className="flex flex-wrap items-center justify-between gap-3 border-b border-border pb-3">
         <div>
-          <p className="font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+          <p className="font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
             Reporting period
           </p>
           <p className="mt-1 font-mono text-sm font-semibold tracking-widest">
@@ -221,7 +221,7 @@ export function ShiftReportView({
                     key={type}
                     className="flex items-center justify-between border border-border bg-background px-3 py-2"
                   >
-                    <span className="font-mono text-paper-11 uppercase tracking-widest">
+                    <span className="font-mono text-ui-11 uppercase tracking-widest">
                       {type.replace(/_/g, " ")}
                     </span>
                     <span className="font-mono text-sm font-semibold tracking-widest">
@@ -245,7 +245,7 @@ export function ShiftReportView({
                   key={src}
                   className="flex items-center gap-2 border border-border bg-background px-3 py-1.5"
                 >
-                  <span className="font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+                  <span className="font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
                     {src}
                   </span>
                   <span className="font-mono text-sm font-semibold tracking-widest">
@@ -268,12 +268,12 @@ export function ShiftReportView({
                       key={`${row.at}-${i}`}
                       className="grid grid-cols-[80px_1fr_120px] gap-3 px-3 py-2"
                     >
-                      <span className="font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+                      <span className="font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
                         <RiTimeLine className="mr-1 inline size-3" />
                         {fmtHHmm(row.at)}
                       </span>
                       <span className="text-xs">{row.description}</span>
-                      <span className="truncate font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+                      <span className="truncate font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
                         {row.actor ?? "system"}
                       </span>
                     </li>
@@ -286,7 +286,7 @@ export function ShiftReportView({
       </div>
 
       {loading && (
-        <p className="font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+        <p className="font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
           Refreshing…
         </p>
       )}
@@ -309,7 +309,7 @@ function KpiTile({
 }) {
   return (
     <div className="bg-background p-4">
-      <div className="flex items-center gap-2 font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+      <div className="flex items-center gap-2 font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
         <span className="flex size-5 items-center justify-center border border-border bg-muted text-muted-foreground">
           {icon}
         </span>
@@ -324,7 +324,7 @@ function KpiTile({
         {value.toLocaleString()}
       </p>
       {stats && stats.length > 0 && (
-        <ul className="mt-2 flex flex-wrap items-center gap-2 font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+        <ul className="mt-2 flex flex-wrap items-center gap-2 font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
           {stats.map((s) => (
             <li key={s.label}>
               {s.label}{" "}
@@ -348,7 +348,7 @@ function Section({
 }) {
   return (
     <section className={cn("space-y-2", className)}>
-      <p className="font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+      <p className="font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
         {title}
       </p>
       {children}
@@ -358,7 +358,7 @@ function Section({
 
 function Empty({ children }: { children: React.ReactNode }) {
   return (
-    <p className="border border-dashed border-border bg-muted/20 px-3 py-3 font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+    <p className="border border-dashed border-border bg-muted/20 px-3 py-3 font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
       {children}
     </p>
   )
@@ -375,7 +375,7 @@ function PendingActionRow({
 }) {
   return (
     <li className="flex items-center justify-between border border-border bg-background px-3 py-2">
-      <span className="font-mono text-paper-11 uppercase tracking-widest">
+      <span className="font-mono text-ui-11 uppercase tracking-widest">
         {label}
       </span>
       <Badge

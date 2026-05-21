@@ -104,17 +104,17 @@ function OpsCustomersView({ rows }: OpsCustomersViewProps) {
           {filtered.map((r) => (
             <OpsTableRow key={r.id}>
               <OpsTableCell>
-                <div className="font-paper-mono font-semibold uppercase text-[length:var(--text-paper-12)]">
+                <div className="font-paper-mono font-semibold uppercase text-[length:var(--text-ui-12)]">
                   {r.name}
                 </div>
-                <div className="font-paper-mono text-paper-fg-3 text-[length:var(--text-paper-11)]">
+                <div className="font-paper-mono text-paper-fg-3 text-[length:var(--text-ui-11)]">
                   {r.email}
                 </div>
               </OpsTableCell>
               <OpsTableCell mono>{r.phone}</OpsTableCell>
               <OpsTableCell>
                 <div>{r.location}</div>
-                <div className="font-paper-mono text-paper-fg-3 text-[length:var(--text-paper-11)]">
+                <div className="font-paper-mono text-paper-fg-3 text-[length:var(--text-ui-11)]">
                   {r.state}
                 </div>
               </OpsTableCell>

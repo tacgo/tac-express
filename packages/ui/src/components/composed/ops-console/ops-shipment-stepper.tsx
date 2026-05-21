@@ -57,7 +57,7 @@ export function OpsShipmentStepper({
         className={cn("flex items-center gap-2 py-3", className)}
       >
         <span aria-hidden className="h-4 w-4 bg-paper-err flex-shrink-0" />
-        <span className="font-paper-mono text-paper-err uppercase tracking-[length:var(--tracking-badge)] text-[length:var(--text-paper-12)]">
+        <span className="font-paper-mono text-paper-err uppercase tracking-[length:var(--tracking-badge)] text-[length:var(--text-ui-12)]">
           {STATUS_LABELS[currentStatus]}
         </span>
       </div>
@@ -93,7 +93,7 @@ export function OpsShipmentStepper({
               <span
                 className={cn(
                   "font-paper-mono uppercase tracking-[length:var(--tracking-badge)] whitespace-nowrap max-w-14 text-center leading-tight",
-                  "text-[length:var(--text-paper-10)]",
+                  "text-[length:var(--text-ui-10)]",
                   isDone && "text-paper-violet",
                   isCurrent && "text-paper-violet font-bold",
                   isFuture && "text-paper-fg-3",

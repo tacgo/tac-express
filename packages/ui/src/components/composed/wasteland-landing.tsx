@@ -244,7 +244,7 @@ function ResultsChart() {
                <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch">
                   {/* Radar grid (SVG) */}
                   <div className="md:col-span-7 flex items-center justify-center bg-background border border-border p-4 relative overflow-hidden rounded-none h-60">
-                    <div className="absolute top-2 left-2 tac-mono-label text-paper-9 text-primary/75">
+                    <div className="absolute top-2 left-2 tac-mono-label text-ui-9 text-primary/75">
                       RADAR_SCAN_UPLINK
                     </div>
 
@@ -336,8 +336,8 @@ function ResultsChart() {
                   </div>
 
                   {/* Telemetry log readings */}
-                  <div className="md:col-span-5 flex flex-col justify-between bg-background border border-border p-4 font-mono text-paper-10 text-muted-foreground h-60 rounded-none overflow-hidden">
-                    <div className="border-b border-border pb-1.5 flex justify-between items-center text-paper-10">
+                  <div className="md:col-span-5 flex flex-col justify-between bg-background border border-border p-4 font-mono text-ui-10 text-muted-foreground h-60 rounded-none overflow-hidden">
+                    <div className="border-b border-border pb-1.5 flex justify-between items-center text-ui-10">
                       <span className="text-primary font-bold">SYS_TELEMETRY</span>
                       <span className="animate-pulse text-accent-success">SYNCED</span>
                     </div>
@@ -365,7 +365,7 @@ function ResultsChart() {
                       </div>
                     </div>
 
-                    <div className="border-t border-border/50 pt-2 text-paper-9 text-muted-foreground/60 leading-none">
+                    <div className="border-t border-border/50 pt-2 text-ui-9 text-muted-foreground/60 leading-none">
                       FRAME_SYS // LINK: ONLINE // DATA_DRIVE_OK
                     </div>
                   </div>

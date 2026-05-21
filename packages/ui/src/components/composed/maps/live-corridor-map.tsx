@@ -116,10 +116,10 @@ export function LiveCorridorMap({
       className={cn("space-y-2", className)}
     >
       <header className="flex items-center justify-between">
-        <p className="font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+        <p className="font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
           Live Corridor Map
         </p>
-        <p className="flex items-center gap-2 font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+        <p className="flex items-center gap-2 font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
           <span className="relative flex size-2">
             <span className="absolute inline-flex h-full w-full animate-ping bg-primary/60 opacity-75" />
             <span className="relative inline-flex size-2 bg-primary" />
@@ -196,7 +196,7 @@ function HubPin({
 }: Pick<CorridorHub, "code" | "name" | "secondary" | "isActive">) {
   return (
     <div className="group/hub-pin relative flex flex-col items-center">
-      <div className="pointer-events-none flex h-7 items-center gap-1.5 border border-primary/40 bg-background/95 px-2 font-mono text-paper-10 font-semibold uppercase tracking-widest text-foreground shadow-[var(--shadow-brutal-sm)]">
+      <div className="pointer-events-none flex h-7 items-center gap-1.5 border border-primary/40 bg-background/95 px-2 font-mono text-ui-10 font-semibold uppercase tracking-widest text-foreground shadow-[var(--shadow-brutal-sm)]">
         <span
           className={cn(
             "size-1.5",
@@ -207,7 +207,7 @@ function HubPin({
       </div>
       <div className="h-2 w-px bg-primary/50" />
       <div className="size-2 -translate-y-px rotate-45 border border-primary/70 bg-background" />
-      <div className="pointer-events-none absolute -bottom-7 z-10 hidden whitespace-nowrap border border-border bg-popover px-2 py-0.5 font-mono text-paper-10 uppercase tracking-widest text-popover-foreground group-hover/hub-pin:block">
+      <div className="pointer-events-none absolute -bottom-7 z-10 hidden whitespace-nowrap border border-border bg-popover px-2 py-0.5 font-mono text-ui-10 uppercase tracking-widest text-popover-foreground group-hover/hub-pin:block">
         {name}
         {secondary ? ` · ${secondary}` : ""}
       </div>
@@ -217,7 +217,7 @@ function HubPin({
 
 function Legend() {
   return (
-    <div className="flex flex-wrap items-center gap-3 font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+    <div className="flex flex-wrap items-center gap-3 font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
       <span className="flex items-center gap-1.5">
         <RiPlaneLine className="size-3" />
         Air
