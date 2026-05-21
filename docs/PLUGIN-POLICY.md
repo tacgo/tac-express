@@ -35,7 +35,7 @@ Each plugin is sorted into one of four tiers: **ADOPT** (use freely within its l
 | 9 | **code-review** (generic) | COEXIST/FALLBACK | Superseded by `tac-code-review` + `pr-review-toolkit` for this repo. Fallback only for non-tac contexts. |
 | 10 | **frontend-design** | DEFER/GUARD | Generic design opinions conflict with the Violet Grid (0rem radius, brutalist offsets, locked fonts/tokens, LAW 13). **Do not let it pick colors, fonts, radii, or styles.** `tac-design-tokens` + `tac-premium-patterns` own those decisions. Activate only with explicit user sign-off. |
 | 11 | **claude-md-management** | DEFER/GUARD | Edits `CLAUDE.md` / agent-governance files. The authority chain is hand-curated and load-bearing. **Never let it rewrite `CLAUDE.md`, `AGENTS.md`, or `RESOLVER.md` automatically.** Confirm with user first. |
-| 12 | **sentry** | DEFER/GUARD | Sentry was previously removed from this project (a #102 deferral exists). Re-adding error-reporting is a product decision with privacy implications. Confirm with user before any Sentry wiring. |
+| 12 | **sentry** | ADOPTED (approved 2026-05-21) | Was DEFER/GUARD (a #102 deferral). **User approved re-adding on 2026-05-21 and it was implemented in PR #7** (`feat/sentry-dashboard-init`): dashboard-only via the DI-tagger architecture, `sendDefaultPii: false`, env DSN, `tracePropagationTargets` scoped to own origins, third-party/extension noise filtered, RBAC-gated `api/diagnostics/sentry` verification route. Privacy posture preserved. Alert-rule infra (SB-2 scripts/runbook) remains out of scope until separately requested. |
 | 13 | **claude-code-setup** | N/A | Meta/onboarding tool for configuring Claude Code itself. Not relevant to product tasks. |
 
 ---
@@ -73,5 +73,9 @@ Each plugin is sorted into one of four tiers: **ADOPT** (use freely within its l
 ## Review trigger
 
 Re-evaluate this policy when: a new plugin is installed, a plugin moves tiers in practice, or a DEFER/GUARD plugin is approved by the user for a specific task (record the approval here).
+
+### Recorded approvals
+
+- **2026-05-21 — `sentry`** moved DEFER/GUARD → ADOPTED. User approved re-adding Sentry; implemented in PR #7 (`feat/sentry-dashboard-init`), dashboard-only, privacy-preserving (`sendDefaultPii: false`, env DSN, own-origin trace propagation, third-party noise filtered). Alert-rule provisioning (SB-2) remains out of scope until separately requested.
 
 **Last reviewed: 2026-05-21.**
