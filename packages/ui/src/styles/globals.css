@@ -622,6 +622,13 @@
   --tracking-paper-30:     0.30em;   /* display wordmark + LOCATE button — landing hero only */
   --tracking-tight:        -0.01em;  /* micro-kern for compact mono wordmarks (TAC EXPRESS sidebar logo) */
 
+  /* Violet Grid — semantic uppercase letter-spacing scale.
+     Value-preserving replacements for the tracking-paper-* scale; callers
+     migrate off paper-* onto these (paper-to-violet-grid migration, Phase 3). */
+  --tracking-label:    0.12em;   /* buttons / form labels (was tracking-paper-12) */
+  --tracking-eyebrow:  0.14em;   /* eyebrows / section labels (was tracking-paper-14) */
+  --tracking-wordmark: 0.20em;   /* display wordmark / hero CTAs (was tracking-paper-20) */
+
   /* Phase 5 — composed-component spacing tokens added during the design-
      exceptions tokenisation pass. Each token replaces an arbitrary value
      used 3+ times across composed/. */
