@@ -6,6 +6,14 @@ import { cn } from "@workspace/ui/lib/utils"
 import { Button } from "@workspace/ui/components/button"
 import { Input } from "@workspace/ui/components/primitives/input"
 import { Label } from "@workspace/ui/components/primitives/label"
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@workspace/ui/components/primitives/table"
 import { Switch } from "@workspace/ui/components/primitives/switch"
 import { Badge } from "@workspace/ui/components/primitives/badge"
 import {
@@ -170,37 +178,34 @@ export function HubsManager({
         />
       ) : (
         <div className="border border-border bg-background">
-          <table className="w-full text-xs">
-            <thead>
-              <tr className="border-b border-border bg-muted/30 text-left font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
-                <th className="px-3 py-2">Code</th>
-                <th className="px-3 py-2">Name</th>
-                <th className="px-3 py-2">City</th>
-                <th className="px-3 py-2">State</th>
-                <th className="px-3 py-2">Pincode</th>
-                <th className="px-3 py-2">Flow</th>
-                <th className="px-3 py-2">Status</th>
-                <th className="w-10" />
-              </tr>
-            </thead>
-            <tbody>
+          <Table className="text-xs">
+            <TableHeader>
+              <TableRow className="bg-muted/30 text-left font-mono text-2xs uppercase tracking-widest text-muted-foreground hover:bg-muted/30">
+                <TableHead className="h-auto px-3 py-2 text-muted-foreground">Code</TableHead>
+                <TableHead className="h-auto px-3 py-2 text-muted-foreground">Name</TableHead>
+                <TableHead className="h-auto px-3 py-2 text-muted-foreground">City</TableHead>
+                <TableHead className="h-auto px-3 py-2 text-muted-foreground">State</TableHead>
+                <TableHead className="h-auto px-3 py-2 text-muted-foreground">Pincode</TableHead>
+                <TableHead className="h-auto px-3 py-2 text-muted-foreground">Flow</TableHead>
+                <TableHead className="h-auto px-3 py-2 text-muted-foreground">Status</TableHead>
+                <TableHead className="h-auto w-10" />
+              </TableRow>
+            </TableHeader>
+            <TableBody>
               {hubs.map((h) => (
-                <tr
-                  key={h.id}
-                  className="border-b border-border/50 last:border-b-0 hover:bg-muted/20"
-                >
-                  <td className="px-3 py-2 font-mono text-paper-11 font-semibold tracking-widest">
+                <TableRow key={h.id}>
+                  <TableCell className="px-3 py-2 font-mono text-xs font-semibold tracking-widest">
                     {h.code}
-                  </td>
-                  <td className="px-3 py-2">{h.name}</td>
-                  <td className="px-3 py-2 font-mono text-paper-11 uppercase tracking-wide">
+                  </TableCell>
+                  <TableCell className="px-3 py-2">{h.name}</TableCell>
+                  <TableCell className="px-3 py-2 font-mono text-xs uppercase tracking-wide">
                     {h.city}
-                  </td>
-                  <td className="px-3 py-2 font-mono text-paper-11 uppercase tracking-wide">
+                  </TableCell>
+                  <TableCell className="px-3 py-2 font-mono text-xs uppercase tracking-wide">
                     {h.state}
-                  </td>
-                  <td className="px-3 py-2 font-mono text-paper-11">{h.pincode}</td>
-                  <td className="px-3 py-2">
+                  </TableCell>
+                  <TableCell className="px-3 py-2 font-mono text-xs">{h.pincode}</TableCell>
+                  <TableCell className="px-3 py-2">
                     <div className="flex flex-wrap gap-1">
                       {h.isOrigin && (
                         <Badge variant="secondary" className="font-mono">
@@ -213,20 +218,17 @@ export function HubsManager({
                         </Badge>
                       )}
                     </div>
-                  </td>
-                  <td className="px-3 py-2">
-                    <button
+                  </TableCell>
+                  <TableCell className="px-3 py-2">
+                    <Button
                       type="button"
+                      variant="ghost"
                       onClick={() => onToggleActive?.(h.id, !h.isActive)}
                       className={cn(
-                        "inline-flex items-center gap-1 font-mono text-paper-10 uppercase tracking-widest transition-colors",
-                        h.isActive
-                          ? "text-status-success hover:opacity-70"
-                          : "text-muted-foreground hover:opacity-70"
+                        "h-auto gap-1 px-1 py-0.5 font-mono text-2xs uppercase tracking-widest hover:bg-transparent hover:opacity-70",
+                        h.isActive ? "text-status-success" : "text-muted-foreground"
                       )}
-                      aria-label={
-                        h.isActive ? "Deactivate hub" : "Activate hub"
-                      }
+                      aria-label={h.isActive ? "Deactivate hub" : "Activate hub"}
                     >
                       {h.isActive ? (
                         <RiCheckboxCircleLine className="size-3" />
@@ -234,9 +236,9 @@ export function HubsManager({
                         <RiCloseCircleLine className="size-3" />
                       )}
                       {h.isActive ? "Active" : "Inactive"}
-                    </button>
-                  </td>
-                  <td className="px-3 py-2 text-right">
+                    </Button>
+                  </TableCell>
+                  <TableCell className="px-3 py-2 text-right">
                     <Button
                       type="button"
                       variant="ghost"
@@ -247,11 +249,11 @@ export function HubsManager({
                     >
                       <RiEditLine className="size-3.5" />
                     </Button>
-                  </td>
-                </tr>
+                  </TableCell>
+                </TableRow>
               ))}
-            </tbody>
-          </table>
+            </TableBody>
+          </Table>
         </div>
       )}
 

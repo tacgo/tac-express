@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { useForm } from "react-hook-form"
+import { Controller, useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { cn } from "@workspace/ui/lib/utils"
 import {
@@ -9,6 +9,15 @@ import {
   WizardActions,
   type WizardStep,
 } from "@workspace/ui/components/primitives/wizard"
+import { Input } from "@workspace/ui/components/primitives/input"
+import { Label } from "@workspace/ui/components/primitives/label"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@workspace/ui/components/select"
 import {
   SmartAddressFields,
   type SmartAddressValue,
@@ -39,36 +48,51 @@ function FieldError({ message }: { message?: string }) {
 
 function FormField({
   label,
+  htmlFor,
   error,
   children,
 }: {
   label: string
+  htmlFor?: string
   error?: string
   children: React.ReactNode
 }) {
   return (
     <div className="space-y-1">
-      <label className="font-mono text-2xs uppercase tracking-wider text-muted-foreground">
+      <Label
+        htmlFor={htmlFor}
+        className="font-mono text-2xs uppercase tracking-wider text-muted-foreground"
+      >
         {label}
-      </label>
+      </Label>
       {children}
       <FieldError message={error} />
     </div>
   )
 }
 
-const inputClass = cn(
-  "w-full h-8 border border-border bg-background px-3 text-sm font-sans",
-  "placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-ring"
-)
+const INPUT_CLS = "h-8 font-sans text-sm"
+const SELECT_TRIGGER_CLS = "h-8 w-full font-sans text-sm"
+const SELECT_ITEM_CLS = "font-sans text-sm"
 
-const selectClass = cn(inputClass, "cursor-pointer")
+const PAYMENT_MODES = [
+  { value: "TO_PAY", label: "To Pay" },
+  { value: "PAID", label: "Paid" },
+  { value: "TBB", label: "To Be Billed" },
+] as const
+
+const SERVICE_TYPES = [
+  { value: "STANDARD", label: "Standard" },
+  { value: "EXPRESS", label: "Express" },
+  { value: "PRIORITY", label: "Priority" },
+] as const
 
 function CreateShipmentForm({ onSubmit, isLoading, className }: CreateShipmentFormProps) {
   const [step, setStep] = React.useState(0)
 
   const {
     register,
+    control,
     handleSubmit,
     formState: { errors },
     trigger,
@@ -78,6 +102,10 @@ function CreateShipmentForm({ onSubmit, isLoading, className }: CreateShipmentFo
   } = useForm<CreateShipmentInput>({
     resolver: zodResolver(createShipmentSchema),
     mode: "onBlur",
+    defaultValues: {
+      paymentMode: "TO_PAY",
+      serviceType: "STANDARD",
+    } as Partial<CreateShipmentInput>,
   })
 
   // Bridge SmartAddressFields (controlled) into the flat schema fields.
@@ -166,11 +194,11 @@ function CreateShipmentForm({ onSubmit, isLoading, className }: CreateShipmentFo
         {step === 0 && (
           <div className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
-              <FormField label="Full Name" error={errors.senderName?.message}>
-                <input {...register("senderName")} className={inputClass} placeholder="John Doe" />
+              <FormField label="Full Name" htmlFor="sender-name" error={errors.senderName?.message}>
+                <Input id="sender-name" {...register("senderName")} className={INPUT_CLS} placeholder="John Doe" />
               </FormField>
-              <FormField label="Phone" error={errors.senderPhone?.message}>
-                <input {...register("senderPhone")} className={inputClass} placeholder="9876543210" />
+              <FormField label="Phone" htmlFor="sender-phone" error={errors.senderPhone?.message}>
+                <Input id="sender-phone" {...register("senderPhone")} className={INPUT_CLS} placeholder="9876543210" />
               </FormField>
             </div>
             <SmartAddressFields
@@ -193,11 +221,11 @@ function CreateShipmentForm({ onSubmit, isLoading, className }: CreateShipmentFo
         {step === 1 && (
           <div className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
-              <FormField label="Full Name" error={errors.receiverName?.message}>
-                <input {...register("receiverName")} className={inputClass} placeholder="Jane Doe" />
+              <FormField label="Full Name" htmlFor="receiver-name" error={errors.receiverName?.message}>
+                <Input id="receiver-name" {...register("receiverName")} className={INPUT_CLS} placeholder="Jane Doe" />
               </FormField>
-              <FormField label="Phone" error={errors.receiverPhone?.message}>
-                <input {...register("receiverPhone")} className={inputClass} placeholder="9876543210" />
+              <FormField label="Phone" htmlFor="receiver-phone" error={errors.receiverPhone?.message}>
+                <Input id="receiver-phone" {...register("receiverPhone")} className={INPUT_CLS} placeholder="9876543210" />
               </FormField>
             </div>
             <SmartAddressFields
@@ -219,37 +247,63 @@ function CreateShipmentForm({ onSubmit, isLoading, className }: CreateShipmentFo
         {/* Step 2 — Package */}
         {step === 2 && (
           <div className="grid grid-cols-2 gap-4">
-            <FormField label="Weight (kg)" error={errors.weight?.message}>
-              <input {...register("weight")} type="number" step="0.01" className={inputClass} placeholder="1.50" />
+            <FormField label="Weight (kg)" htmlFor="pkg-weight" error={errors.weight?.message}>
+              <Input id="pkg-weight" {...register("weight")} type="number" step="0.01" className={INPUT_CLS} placeholder="1.50" />
             </FormField>
-            <FormField label="Declared Value (₹)" error={errors.declaredValue?.message}>
-              <input {...register("declaredValue")} type="number" className={inputClass} placeholder="500" />
+            <FormField label="Declared Value (₹)" htmlFor="pkg-declared-value" error={errors.declaredValue?.message}>
+              <Input id="pkg-declared-value" {...register("declaredValue")} type="number" className={INPUT_CLS} placeholder="500" />
             </FormField>
-            <FormField label="Length (cm)" error={errors.length?.message}>
-              <input {...register("length")} type="number" className={inputClass} placeholder="30" />
+            <FormField label="Length (cm)" htmlFor="pkg-length" error={errors.length?.message}>
+              <Input id="pkg-length" {...register("length")} type="number" className={INPUT_CLS} placeholder="30" />
             </FormField>
-            <FormField label="Breadth (cm)" error={errors.breadth?.message}>
-              <input {...register("breadth")} type="number" className={inputClass} placeholder="20" />
+            <FormField label="Breadth (cm)" htmlFor="pkg-breadth" error={errors.breadth?.message}>
+              <Input id="pkg-breadth" {...register("breadth")} type="number" className={INPUT_CLS} placeholder="20" />
             </FormField>
-            <FormField label="Height (cm)" error={errors.height?.message}>
-              <input {...register("height")} type="number" className={inputClass} placeholder="15" />
+            <FormField label="Height (cm)" htmlFor="pkg-height" error={errors.height?.message}>
+              <Input id="pkg-height" {...register("height")} type="number" className={INPUT_CLS} placeholder="15" />
             </FormField>
-            <FormField label="Description" error={errors.description?.message}>
-              <input {...register("description")} className={inputClass} placeholder="Electronic items" />
+            <FormField label="Description" htmlFor="pkg-description" error={errors.description?.message}>
+              <Input id="pkg-description" {...register("description")} className={INPUT_CLS} placeholder="Electronic items" />
             </FormField>
-            <FormField label="Payment Mode" error={errors.paymentMode?.message}>
-              <select {...register("paymentMode")} className={selectClass}>
-                <option value="TO_PAY">To Pay</option>
-                <option value="PAID">Paid</option>
-                <option value="TBB">To Be Billed</option>
-              </select>
+            <FormField label="Payment Mode" htmlFor="pkg-payment-mode" error={errors.paymentMode?.message}>
+              <Controller
+                control={control}
+                name="paymentMode"
+                render={({ field }) => (
+                  <Select value={field.value} onValueChange={field.onChange}>
+                    <SelectTrigger id="pkg-payment-mode" className={SELECT_TRIGGER_CLS}>
+                      <SelectValue placeholder="Select payment mode" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {PAYMENT_MODES.map((p) => (
+                        <SelectItem key={p.value} value={p.value} className={SELECT_ITEM_CLS}>
+                          {p.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                )}
+              />
             </FormField>
-            <FormField label="Service Type" error={errors.serviceType?.message}>
-              <select {...register("serviceType")} className={selectClass}>
-                <option value="STANDARD">Standard</option>
-                <option value="EXPRESS">Express</option>
-                <option value="PRIORITY">Priority</option>
-              </select>
+            <FormField label="Service Type" htmlFor="pkg-service-type" error={errors.serviceType?.message}>
+              <Controller
+                control={control}
+                name="serviceType"
+                render={({ field }) => (
+                  <Select value={field.value} onValueChange={field.onChange}>
+                    <SelectTrigger id="pkg-service-type" className={SELECT_TRIGGER_CLS}>
+                      <SelectValue placeholder="Select service type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {SERVICE_TYPES.map((s) => (
+                        <SelectItem key={s.value} value={s.value} className={SELECT_ITEM_CLS}>
+                          {s.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                )}
+              />
             </FormField>
           </div>
         )}

@@ -5,6 +5,14 @@ import * as React from "react"
 import { cn } from "@workspace/ui/lib/utils"
 import { Badge } from "@workspace/ui/components/primitives/badge"
 import { ScrollArea } from "@workspace/ui/components/primitives/scroll-area"
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@workspace/ui/components/primitives/table"
 import { ROLE_PERMISSIONS, UserRole } from "@workspace/types"
 import {
   RiCheckLine,
@@ -60,7 +68,7 @@ export function RolesMatrix({
           <h2 className="font-heading text-base font-semibold tracking-tight">
             Roles & Permissions
           </h2>
-          <p className="font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+          <p className="font-mono text-2xs uppercase tracking-widest text-muted-foreground">
             {roles.length} roles · canonical access matrix
           </p>
         </div>
@@ -74,20 +82,26 @@ export function RolesMatrix({
       </header>
 
       <ScrollArea className="border border-border bg-background">
-        <table className="w-full text-xs">
-          <thead>
-            <tr className="border-b border-border bg-muted/30 text-left font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
-              <th className="sticky left-0 z-10 bg-muted/30 px-3 py-2">Role</th>
-              <th className="px-3 py-2">Modules</th>
+        <Table className="text-xs">
+          <TableHeader>
+            <TableRow className="bg-muted/30 text-left font-mono text-2xs uppercase tracking-widest text-muted-foreground hover:bg-muted/30">
+              <TableHead className="sticky left-0 z-10 h-auto bg-muted/30 px-3 py-2 tracking-widest text-muted-foreground">
+                Role
+              </TableHead>
+              <TableHead className="h-auto px-3 py-2 tracking-widest text-muted-foreground">
+                Modules
+              </TableHead>
               {PERMISSIONS.map((p) => (
-                <th key={p.key} className="px-3 py-2">
+                <TableHead key={p.key} className="h-auto px-3 py-2 tracking-widest text-muted-foreground">
                   {p.label}
-                </th>
+                </TableHead>
               ))}
-              <th className="px-3 py-2">Hub Restriction</th>
-            </tr>
-          </thead>
-          <tbody>
+              <TableHead className="h-auto px-3 py-2 tracking-widest text-muted-foreground">
+                Hub Restriction
+              </TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
             {roles.map((role) => {
               const perms = ROLE_PERMISSIONS[role] as unknown as PermsRow
               if (!perms) return null
@@ -95,25 +109,22 @@ export function RolesMatrix({
                 ? "All modules"
                 : perms.modules.join(", ")
               return (
-                <tr
-                  key={role}
-                  className="border-b border-border/50 last:border-b-0 align-top hover:bg-muted/20"
-                >
-                  <th
+                <TableRow key={role} className="align-top">
+                  <TableHead
                     scope="row"
-                    className="sticky left-0 z-10 bg-background px-3 py-2 text-left font-mono text-paper-11 font-semibold tracking-widest"
+                    className="sticky left-0 z-10 h-auto bg-background px-3 py-2 text-left font-mono text-xs font-semibold tracking-widest text-foreground"
                   >
                     {role}
-                  </th>
-                  <td className="px-3 py-2 font-mono text-paper-10 uppercase tracking-wide">
+                  </TableHead>
+                  <TableCell className="px-3 py-2 font-mono text-2xs uppercase tracking-wide">
                     {modulesLabel}
-                  </td>
+                  </TableCell>
                   {PERMISSIONS.map((p) => (
-                    <td key={p.key} className="px-3 py-2">
+                    <TableCell key={p.key} className="px-3 py-2">
                       <PermPill on={Boolean(perms[p.key])} />
-                    </td>
+                    </TableCell>
                   ))}
-                  <td className="px-3 py-2 font-mono text-paper-10 uppercase tracking-wide">
+                  <TableCell className="px-3 py-2 font-mono text-2xs uppercase tracking-wide">
                     {perms.hubRestriction ? (
                       <Badge variant="outline" className="font-mono">
                         {perms.hubRestriction}
@@ -121,16 +132,16 @@ export function RolesMatrix({
                     ) : (
                       <span className="text-muted-foreground">—</span>
                     )}
-                  </td>
-                </tr>
+                  </TableCell>
+                </TableRow>
               )
             })}
-          </tbody>
-        </table>
+          </TableBody>
+        </Table>
       </ScrollArea>
 
       {readOnly && (
-        <p className="font-mono text-paper-10 uppercase tracking-widest text-muted-foreground">
+        <p className="font-mono text-2xs uppercase tracking-widest text-muted-foreground">
           Editing is reserved for Phase 7 — when the role-permissions table
           is promoted from code to the database, with audit logging on every
           change.
