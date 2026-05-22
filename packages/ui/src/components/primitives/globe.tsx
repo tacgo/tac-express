@@ -1,5 +1,9 @@
 "use client"
 
+/* eslint-disable react/no-unknown-property -- react-three-fiber maps Three.js
+   props (object, intensity, position, …) onto JSX; they are valid r3f props,
+   not DOM attributes, so react/no-unknown-property is a false positive here. */
+
 import * as React from "react"
 import * as THREE from "three"
 import ThreeGlobe from "three-globe"

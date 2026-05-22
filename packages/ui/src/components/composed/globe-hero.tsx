@@ -191,6 +191,7 @@ export function GlobeHero() {
       </div>
 
       {/* Globe — full-width, bleeds below hero text */}
+      {/* eslint-disable-next-line no-restricted-syntax -- explicit hero-globe canvas min-heights (480/600px); intentional layout dimensions, not spacing-scale values */}
       <div className="relative w-full flex-1 min-h-[480px] md:min-h-[600px]">
         {/* Radial gradient fades the globe edge into the page background */}
         <div

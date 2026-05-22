@@ -1,10 +1,8 @@
 "use client"
 
 import * as React from "react"
-import Link from "next/link"
 import { motion } from "motion/react"
 import { Icon } from "@workspace/ui/icons"
-import { Button } from "@workspace/ui/components/button"
 import { cn } from "@workspace/ui/lib/utils"
 import { GlobeHero } from "@workspace/ui/components/composed/globe-hero"
 
