@@ -119,8 +119,8 @@ const chartData = [
 
 const chartConfig = {
   volume: { label: "Volume" },
-  outbound: { label: "Outbound", color: "var(--paper-violet)" },
-  inbound: { label: "Inbound", color: "var(--paper-info)" },
+  outbound: { label: "Outbound", color: "var(--primary)" },
+  inbound: { label: "Inbound", color: "var(--accent-info)" },
 } satisfies ChartConfig
 
 type Range = "7d" | "30d" | "90d"
@@ -149,13 +149,13 @@ function OpsVolumeBarChart({ className }: OpsVolumeBarChartProps) {
     <div className={cn("flex flex-col", className)}>
       {/* Row 1: title + range pill toggle (mirrored in OpsGrowthAreaChart) */}
       <div className="flex items-center justify-between">
-        <div className="font-paper-display font-semibold text-ui-13 text-paper-fg-1">
+        <div className="font-sans font-semibold text-ui-13 text-foreground">
           Shipment Volume
         </div>
         <div
           role="tablist"
           aria-label="Time range"
-          className="inline-flex border border-paper-line bg-paper-card"
+          className="inline-flex border border-border bg-card"
         >
           {RANGES.map((r) => {
             const active = r.value === range
@@ -166,11 +166,11 @@ function OpsVolumeBarChart({ className }: OpsVolumeBarChartProps) {
                 aria-selected={active}
                 onClick={() => setRange(r.value)}
                 className={cn(
-                  "px-2 py-1 font-paper-mono font-medium text-ui-10 tracking-badge uppercase transition-colors",
-                  "border-l border-paper-line first:border-l-0",
+                  "px-2 py-1 font-mono font-medium text-ui-10 tracking-badge uppercase transition-colors",
+                  "border-l border-border first:border-l-0",
                   active
-                    ? "bg-paper-violet text-white"
-                    : "text-paper-fg-2 hover:bg-paper-3",
+                    ? "bg-primary text-primary-foreground"
+                    : "text-foreground hover:bg-muted",
                 )}
               >
                 {r.label}
@@ -191,14 +191,14 @@ function OpsVolumeBarChart({ className }: OpsVolumeBarChartProps) {
         className="aspect-auto h-[length:var(--spacing-chart-md)] w-full mt-3"
       >
         <BarChart accessibilityLayer data={filteredData} margin={{ left: 0, right: 0, top: 4 }}>
-          <CartesianGrid vertical={false} stroke="var(--paper-line)" strokeDasharray="2 3" />
+          <CartesianGrid vertical={false} stroke="var(--border)" strokeDasharray="2 3" />
           <XAxis
             dataKey="date"
             tickLine={false}
             axisLine={false}
             tickMargin={8}
             minTickGap={32}
-            stroke="var(--paper-fg-3)"
+            stroke="var(--muted-foreground)"
             fontSize={10}
             tickFormatter={(value) => {
               const date = new Date(value)

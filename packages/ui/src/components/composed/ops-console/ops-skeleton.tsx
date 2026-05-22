@@ -12,7 +12,7 @@ function OpsSkeleton({
     <div
       data-slot="ops-skeleton"
       className={cn(
-        "animate-skeleton-pulse motion-reduce:animate-none bg-paper-2 h-4 w-full",
+        "animate-skeleton-pulse motion-reduce:animate-none bg-sidebar h-4 w-full",
         className,
       )}
       {...props}
@@ -27,7 +27,7 @@ function OpsSkeletonRow({ cols = 6 }: { cols?: number }) {
   return (
     <tr>
       {Array.from({ length: cols }).map((_, i) => (
-        <td key={i} className="px-4 py-3 border-b border-paper-line">
+        <td key={i} className="px-4 py-3 border-b border-border">
           <OpsSkeleton className={cn("h-3", widths[i % widths.length])} />
         </td>
       ))}

@@ -35,20 +35,20 @@ function OpsErrorState({
       aria-live="assertive"
       data-slot="ops-error-state"
       className={cn(
-        "border border-paper-err/40 border-l-[length:var(--indicator-w)] border-l-paper-err",
-        "bg-paper-err-bg/30 p-6",
+        "border border-destructive/40 border-l-[length:var(--indicator-w)] border-l-destructive",
+        "bg-destructive/15 p-6",
         "grid grid-cols-12 gap-4",
         className,
       )}
     >
       <div className="col-span-1 pt-0.5">
-        <RiErrorWarningLine aria-hidden className="size-6 text-paper-err" />
+        <RiErrorWarningLine aria-hidden className="size-6 text-destructive" />
       </div>
       <div className="col-span-11 space-y-2">
-        <span className="paper-eyebrow text-paper-err">{code}</span>
+        <span className="paper-eyebrow text-destructive">{code}</span>
         <h3 className="paper-h3">{headline}</h3>
         {message && (
-          <p className="font-paper-mono text-ui-12 text-paper-fg-3">
+          <p className="font-mono text-ui-12 text-muted-foreground">
             {message}
           </p>
         )}

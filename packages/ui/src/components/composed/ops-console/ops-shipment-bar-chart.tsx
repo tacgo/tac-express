@@ -33,8 +33,8 @@ const chartData = [
 ]
 
 const chartConfig = {
-  delivered: { label: "Delivered", color: "var(--paper-violet)" },
-  exceptions: { label: "Exceptions", color: "var(--paper-info)" },
+  delivered: { label: "Delivered", color: "var(--primary)" },
+  exceptions: { label: "Exceptions", color: "var(--accent-info)" },
 } satisfies ChartConfig
 
 interface OpsShipmentBarChartProps {
@@ -46,7 +46,7 @@ function OpsShipmentBarChart({ className }: OpsShipmentBarChartProps) {
     <div className={cn("flex flex-col", className)}>
       {/* Header row — title + period (matches the dashboard panel pattern) */}
       <div className="flex items-center justify-between">
-        <div className="font-paper-display font-semibold text-ui-13 text-paper-fg-1">
+        <div className="font-sans font-semibold text-ui-13 text-foreground">
           Shipment Trend
         </div>
         <span className="paper-label">Jan — Jun</span>
@@ -61,13 +61,13 @@ function OpsShipmentBarChart({ className }: OpsShipmentBarChartProps) {
         className="aspect-auto h-[length:var(--spacing-chart-lg)] w-full mt-3"
       >
         <BarChart accessibilityLayer data={chartData} margin={{ left: 0, right: 0, top: 4 }}>
-          <CartesianGrid vertical={false} stroke="var(--paper-line)" strokeDasharray="2 3" />
+          <CartesianGrid vertical={false} stroke="var(--border)" strokeDasharray="2 3" />
           <XAxis
             dataKey="month"
             tickLine={false}
             axisLine={false}
             tickMargin={10}
-            stroke="var(--paper-fg-3)"
+            stroke="var(--muted-foreground)"
             fontSize={10}
             tickFormatter={(value: string) => value.slice(0, 3).toUpperCase()}
           />
@@ -81,10 +81,10 @@ function OpsShipmentBarChart({ className }: OpsShipmentBarChartProps) {
         </BarChart>
       </ChartContainer>
 
-      <div className="mt-3 border-t border-paper-line pt-2.5 flex flex-col gap-1">
-        <div className="flex items-center gap-1.5 font-paper-display font-semibold text-ui-12 text-paper-fg-1">
+      <div className="mt-3 border-t border-border pt-2.5 flex flex-col gap-1">
+        <div className="flex items-center gap-1.5 font-sans font-semibold text-ui-12 text-foreground">
           Trending up 5.2% this month
-          <RiArrowUpLine aria-hidden className="size-3.5 text-paper-ok" />
+          <RiArrowUpLine aria-hidden className="size-3.5 text-accent-success" />
         </div>
         <div className="paper-label">Total shipments — last 6 months</div>
       </div>

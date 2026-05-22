@@ -120,13 +120,13 @@ function OpsSettingsView({
           <div className="flex flex-col gap-3.5">
             <OpsCard ticks>
               <div className="paper-label">Profile Completion</div>
-              <div className="font-paper-display font-extrabold text-ui-28 mt-2">
+              <div className="font-sans font-extrabold text-ui-28 mt-2">
                 {completionPct}%
               </div>
               <div className="paper-label mt-1.5">
                 {pendingItems.length} pending
               </div>
-              <div className="mt-2.5 font-paper-mono text-paper-fg-3 text-ui-12 flex flex-col gap-1">
+              <div className="mt-2.5 font-mono text-muted-foreground text-ui-12 flex flex-col gap-1">
                 {pendingItems.map((p) => (
                   <div key={p}>■ {p}</div>
                 ))}
@@ -143,10 +143,10 @@ function OpsSettingsView({
                   key={label}
                   className="flex items-center justify-between mt-2"
                 >
-                  <span className="font-paper-mono uppercase text-paper-fg-3 text-ui-11 tracking-nav">
+                  <span className="font-mono uppercase text-muted-foreground text-ui-11 tracking-nav">
                     {label}
                   </span>
-                  <span className="font-paper-mono text-ui-11">
+                  <span className="font-mono text-ui-11">
                     {keys.map((k) => (
                       <OpsKbd key={k}>{k}</OpsKbd>
                     ))}
@@ -159,13 +159,13 @@ function OpsSettingsView({
               <div className="paper-label">System Information</div>
               <div className="flex items-center justify-between mt-2">
                 <span className="paper-label">Version</span>
-                <span className="font-paper-mono text-ui-13">
+                <span className="font-mono text-ui-13">
                   {version}
                 </span>
               </div>
               <div className="flex items-center justify-between mt-1.5">
                 <span className="paper-label">Environment</span>
-                <span className="font-paper-mono text-ui-13">
+                <span className="font-mono text-ui-13">
                   {environment}
                 </span>
               </div>
@@ -190,15 +190,15 @@ function OpsSettingsView({
           <div className="paper-label mb-3">Integrations</div>
           {/* Sub-pages live in the v6 surface until paper variants ship —
               linking here makes them discoverable from the Ops Console. */}
-          <ul className="flex flex-col divide-y divide-paper-line border-y border-paper-line">
+          <ul className="flex flex-col divide-y divide-border border-y border-border">
             <li>
               <Link
                 href="/ops-console/settings/api-keys"
-                className="flex items-center gap-3 py-2.5 px-1 hover:bg-paper-3 transition-colors duration-fast ease-linear focus-visible:outline-none focus-visible:tac-focus-premium"
+                className="flex items-center gap-3 py-2.5 px-1 hover:bg-muted transition-colors duration-fast ease-linear focus-visible:outline-none focus-visible:tac-focus-premium"
               >
-                <RiKey2Line aria-hidden className="size-4 text-paper-violet" />
+                <RiKey2Line aria-hidden className="size-4 text-primary" />
                 <div className="flex-1 min-w-0">
-                  <div className="font-paper-display font-semibold text-ui-13">
+                  <div className="font-sans font-semibold text-ui-13">
                     API Keys
                   </div>
                   <div className="paper-label mt-0.5">
@@ -207,18 +207,18 @@ function OpsSettingsView({
                 </div>
                 <RiArrowRightLine
                   aria-hidden
-                  className="size-3.5 text-paper-fg-3"
+                  className="size-3.5 text-muted-foreground"
                 />
               </Link>
             </li>
             <li>
               <Link
                 href="/ops-console/settings/webhooks"
-                className="flex items-center gap-3 py-2.5 px-1 hover:bg-paper-3 transition-colors duration-fast ease-linear focus-visible:outline-none focus-visible:tac-focus-premium"
+                className="flex items-center gap-3 py-2.5 px-1 hover:bg-muted transition-colors duration-fast ease-linear focus-visible:outline-none focus-visible:tac-focus-premium"
               >
-                <RiSendPlaneLine aria-hidden className="size-4 text-paper-violet" />
+                <RiSendPlaneLine aria-hidden className="size-4 text-primary" />
                 <div className="flex-1 min-w-0">
-                  <div className="font-paper-display font-semibold text-ui-13">
+                  <div className="font-sans font-semibold text-ui-13">
                     Webhooks
                   </div>
                   <div className="paper-label mt-0.5">
@@ -227,7 +227,7 @@ function OpsSettingsView({
                 </div>
                 <RiArrowRightLine
                   aria-hidden
-                  className="size-3.5 text-paper-fg-3"
+                  className="size-3.5 text-muted-foreground"
                 />
               </Link>
             </li>
@@ -239,12 +239,12 @@ function OpsSettingsView({
       {tab === "Audit" && (
         <OpsCard ticks>
           <div className="paper-label mb-3">Audit Log</div>
-          <p className="font-paper-display text-ui-13 mb-4">
+          <p className="font-sans text-ui-13 mb-4">
             Compliance + activity history for this account and the organization.
           </p>
           <Link
             href="/ops-console/audit"
-            className="inline-flex items-center gap-1.5 paper-label text-paper-violet hover:underline focus-visible:outline-none focus-visible:tac-focus-premium"
+            className="inline-flex items-center gap-1.5 paper-label text-primary hover:underline focus-visible:outline-none focus-visible:tac-focus-premium"
           >
             Open Audit Log
             <RiArrowRightLine aria-hidden className="size-3.5" />
@@ -257,7 +257,7 @@ function OpsSettingsView({
       {(tab === "Security" || tab === "Theme") && (
         <OpsCard ticks>
           <div className="paper-label mb-3">{tab}</div>
-          <p className="font-paper-display text-ui-13 text-paper-fg-3">
+          <p className="font-sans text-ui-13 text-muted-foreground">
             {tab === "Security"
               ? "Password rotation, 2FA setup, and session management ship in the next sprint. For account-recovery contact your administrator."
               : "Theme is controlled by the C / M / S toggle in the top bar. A persistent per-user theme preference lands in the next sprint."}
@@ -370,7 +370,7 @@ function OpsHubsSection({
         <div className="paper-label mb-3.5">Hubs in your network</div>
 
         {/* Add new hub */}
-        <div className="flex items-end gap-2 pb-3.5 border-b border-paper-line">
+        <div className="flex items-end gap-2 pb-3.5 border-b border-border">
           <div className="flex-1">
             <OpsFieldLabel htmlFor="paper-hub-add">Add a hub</OpsFieldLabel>
             <OpsFieldInput
@@ -400,19 +400,19 @@ function OpsHubsSection({
           <div
             id="paper-hub-add-error"
             role="alert"
-            className="paper-label text-paper-err mt-2"
+            className="paper-label text-destructive mt-2"
           >
             {addError}
           </div>
         ) : null}
 
         {/* Current hub list — configured + external (visible), minus hidden */}
-        <ul className="mt-1 divide-y divide-paper-line">
+        <ul className="mt-1 divide-y divide-border">
           {!config.hydrated && (
-            <li className="py-3 paper-label text-paper-fg-3">Loading…</li>
+            <li className="py-3 paper-label text-muted-foreground">Loading…</li>
           )}
           {config.hydrated && visibleHubs.length === 0 && (
-            <li className="py-3 paper-label text-paper-fg-3">
+            <li className="py-3 paper-label text-muted-foreground">
               No hubs visible. Add one above, or unhide one below.
             </li>
           )}
@@ -441,17 +441,17 @@ function OpsHubsSection({
                         autoFocus
                         aria-label={`Rename hub ${code}`}
                         className={cn(
-                          "min-w-0 flex-1 bg-paper-bg border border-paper-line px-2 py-1",
-                          "font-paper-display font-semibold text-ui-13 text-paper-fg-1",
+                          "min-w-0 flex-1 bg-background border border-border px-2 py-1",
+                          "font-sans font-semibold text-ui-13 text-foreground",
                           "tracking-badge",
-                          "focus:outline-none focus:border-paper-violet",
+                          "focus:outline-none focus:border-primary",
                         )}
                       />
                       <button
                         type="button"
                         onClick={() => commitEdit(code)}
                         aria-label="Save"
-                        className="text-paper-ok hover:bg-paper-ok-bg p-1 transition-colors"
+                        className="text-accent-success hover:bg-accent-success/15 p-1 transition-colors"
                       >
                         <RiCheckLine className="size-3.5" />
                       </button>
@@ -459,14 +459,14 @@ function OpsHubsSection({
                         type="button"
                         onClick={cancelEdit}
                         aria-label="Cancel"
-                        className="text-paper-fg-3 hover:bg-paper-3 p-1 transition-colors"
+                        className="text-muted-foreground hover:bg-muted p-1 transition-colors"
                       >
                         <RiCloseLine className="size-3.5" />
                       </button>
                     </>
                   ) : (
                     <div className="min-w-0">
-                      <div className="font-paper-display font-semibold text-ui-13 text-paper-fg-1 truncate">
+                      <div className="font-sans font-semibold text-ui-13 text-foreground truncate">
                         {display}
                       </div>
                       <div className="paper-label mt-0.5 truncate">
@@ -483,7 +483,7 @@ function OpsHubsSection({
                       type="button"
                       onClick={() => startEdit(code)}
                       aria-label={`Rename ${display}`}
-                      className="text-paper-fg-3 hover:text-paper-violet hover:bg-paper-3 p-1.5 transition-colors"
+                      className="text-muted-foreground hover:text-primary hover:bg-muted p-1.5 transition-colors"
                     >
                       <RiEditLine className="size-3.5" />
                     </button>
@@ -498,14 +498,14 @@ function OpsHubsSection({
                       className={cn(
                         "p-1.5 transition-colors",
                         isPendingDelete
-                          ? "text-paper-err bg-paper-err-bg"
-                          : "text-paper-fg-3 hover:text-paper-err hover:bg-paper-3",
+                          ? "text-destructive bg-destructive/15"
+                          : "text-muted-foreground hover:text-destructive hover:bg-muted",
                       )}
                     >
                       <RiDeleteBinLine className="size-3.5" />
                     </button>
                     {isPendingDelete && (
-                      <span className="paper-label text-paper-err ml-1 whitespace-nowrap">
+                      <span className="paper-label text-destructive ml-1 whitespace-nowrap">
                         Click again
                       </span>
                     )}
@@ -517,7 +517,7 @@ function OpsHubsSection({
         </ul>
 
         {/* Footer actions — reset to factory defaults */}
-        <div className="flex items-center justify-between mt-4 pt-3.5 border-t border-paper-line">
+        <div className="flex items-center justify-between mt-4 pt-3.5 border-t border-border">
           <div className="paper-label">
             {config.hydrated ? `${visibleHubs.length} visible` : "—"}
             {config.hydrated && renamedCount > 0 ? ` · ${renamedCount} renamed` : ""}
@@ -533,16 +533,16 @@ function OpsHubsSection({
 
         {/* Hidden hubs — operator can unhide any hub they previously deleted. */}
         {config.hydrated && config.hidden.length > 0 && (
-          <div className="mt-4 pt-3.5 border-t border-paper-line">
+          <div className="mt-4 pt-3.5 border-t border-border">
             <div className="paper-label mb-2">Hidden hubs</div>
-            <ul className="divide-y divide-paper-line">
+            <ul className="divide-y divide-border">
               {config.hidden.map((code) => (
                 <li
                   key={code}
                   className="py-2 flex items-center justify-between gap-3"
                 >
                   <div className="min-w-0">
-                    <div className="font-paper-display font-medium text-ui-13 text-paper-fg-2 truncate line-through">
+                    <div className="font-sans font-medium text-ui-13 text-foreground truncate line-through">
                       {config.labelFor(code)}
                     </div>
                     <div className="paper-label mt-0.5 truncate">{code}</div>
@@ -564,9 +564,9 @@ function OpsHubsSection({
       <div className="flex flex-col gap-3.5">
         <OpsCard ticks>
           <div className="paper-label">About hub config</div>
-          <p className="font-paper-display text-ui-13 mt-2 leading-relaxed text-paper-fg-2">
+          <p className="font-sans text-ui-13 mt-2 leading-relaxed text-foreground">
             Hubs you add here appear as cards on the{" "}
-            <span className="font-semibold text-paper-fg-1">Hub Inventory</span>{" "}
+            <span className="font-semibold text-foreground">Hub Inventory</span>{" "}
             page, even when they currently hold zero pieces. Renames are
             display-only — the underlying hub code (used in shipment routing,
             manifests, and exports) is never changed.
@@ -580,7 +580,7 @@ function OpsHubsSection({
 
         <OpsCard>
           <div className="paper-label">Tips</div>
-          <ul className="font-paper-display text-ui-13 mt-2 leading-relaxed text-paper-fg-2 list-disc pl-4 space-y-1">
+          <ul className="font-sans text-ui-13 mt-2 leading-relaxed text-foreground list-disc pl-4 space-y-1">
             <li>Codes are auto-normalized: spaces → underscores, uppercased.</li>
             <li>Click a hub label to edit; Enter to save, Esc to cancel.</li>
             <li>Delete is a two-click confirm to prevent accidents.</li>

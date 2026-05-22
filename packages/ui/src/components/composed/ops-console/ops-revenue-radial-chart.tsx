@@ -32,11 +32,11 @@ const chartData = [
 
 const chartConfig = {
   revenue: { label: "Revenue" },
-  standard: { label: "Standard", color: "var(--paper-violet)" },
-  express: { label: "Express", color: "var(--paper-info)" },
-  priority: { label: "Priority", color: "var(--paper-ok)" },
-  returns: { label: "Returns", color: "var(--paper-warn)" },
-  other: { label: "Other", color: "var(--paper-fg-3)" },
+  standard: { label: "Standard", color: "var(--primary)" },
+  express: { label: "Express", color: "var(--accent-info)" },
+  priority: { label: "Priority", color: "var(--accent-success)" },
+  returns: { label: "Returns", color: "var(--accent-warning)" },
+  other: { label: "Other", color: "var(--muted-foreground)" },
 } satisfies ChartConfig
 
 interface OpsRevenueRadialChartProps {
@@ -47,7 +47,7 @@ function OpsRevenueRadialChart({ className }: OpsRevenueRadialChartProps) {
   return (
     <div className={cn("flex flex-col", className)}>
       <div className="flex items-center justify-between">
-        <div className="font-paper-display font-semibold text-ui-13 text-paper-fg-1">
+        <div className="font-sans font-semibold text-ui-13 text-foreground">
           Revenue Trend
         </div>
         <span className="paper-label">Jan — Jun</span>
@@ -68,10 +68,10 @@ function OpsRevenueRadialChart({ className }: OpsRevenueRadialChartProps) {
         </RadialBarChart>
       </ChartContainer>
 
-      <div className="mt-3 border-t border-paper-line pt-2.5 flex flex-col gap-1">
-        <div className="flex items-center gap-1.5 font-paper-display font-semibold text-ui-12 text-paper-fg-1">
+      <div className="mt-3 border-t border-border pt-2.5 flex flex-col gap-1">
+        <div className="flex items-center gap-1.5 font-sans font-semibold text-ui-12 text-foreground">
           Trending up 5.2% this month
-          <RiArrowUpLine aria-hidden className="size-3.5 text-paper-ok" />
+          <RiArrowUpLine aria-hidden className="size-3.5 text-accent-success" />
         </div>
         <div className="paper-label">Showing service-class revenue mix — last 6 months</div>
       </div>

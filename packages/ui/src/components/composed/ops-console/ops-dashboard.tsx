@@ -50,7 +50,7 @@ function OpsDashboard({
           allows it because the bracket contains calc(), not a magic number. */}
       <div
         className={cn(
-          "relative overflow-hidden border-y border-paper-line mb-5",
+          "relative overflow-hidden border-y border-border mb-5",
           "-ml-8 w-[calc(100%+4rem)] aspect-[15/2] max-h-[length:var(--spacing-chart-xl)]",
         )}
       >
@@ -64,10 +64,10 @@ function OpsDashboard({
         />
 
         {/* DISPATCH · LIVE capsule — the only operational overlay */}
-        <div className="absolute top-3 right-3 sm:top-4 sm:right-4 bg-paper-card border border-paper-line px-2.5 py-1.5 font-paper-mono font-medium text-ui-10 tracking-badge text-paper-fg-1">
+        <div className="absolute top-3 right-3 sm:top-4 sm:right-4 bg-card border border-border px-2.5 py-1.5 font-mono font-medium text-ui-10 tracking-badge text-foreground">
           <span
             aria-hidden
-            className="inline-block size-1.5 bg-paper-ok mr-2 align-middle animate-pulse"
+            className="inline-block size-1.5 bg-accent-success mr-2 align-middle animate-pulse"
           />
           DISPATCH · LIVE
         </div>

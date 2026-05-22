@@ -101,7 +101,7 @@ function ContactLeadsView({
       <div className="relative mb-3.5 max-w-xl">
         <RiSearchLine
           aria-hidden
-          className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-paper-fg-4"
+          className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground"
         />
         <OpsFieldInput
           aria-label="Search leads"
@@ -174,7 +174,7 @@ function ContactLeadsView({
                             prev === lead.id ? null : lead.id,
                           )
                         }
-                        className="flex items-center justify-center text-paper-fg-3 hover:text-paper-fg-1 focus-visible:outline-none focus-visible:tac-focus-premium"
+                        className="flex items-center justify-center text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:tac-focus-premium"
                       >
                         <RiArrowDownSLine
                           aria-hidden
@@ -189,10 +189,10 @@ function ContactLeadsView({
                       {new Date(lead.created_at).toLocaleString()}
                     </OpsTableCell>
                     <OpsTableCell>
-                      <div className="font-paper-mono font-semibold uppercase text-ui-12">
+                      <div className="font-mono font-semibold uppercase text-ui-12">
                         {lead.name}
                       </div>
-                      <div className="font-paper-mono text-paper-fg-3 text-ui-11">
+                      <div className="font-mono text-muted-foreground text-ui-11">
                         {lead.email}
                       </div>
                     </OpsTableCell>
@@ -214,11 +214,11 @@ function ContactLeadsView({
                         <div className="grid gap-4 py-2 md:grid-cols-[2fr_1fr]">
                           <div className="space-y-2">
                             <p className="paper-label">Message</p>
-                            <p className="font-paper-mono text-ui-12 whitespace-pre-wrap text-paper-fg-2">
+                            <p className="font-mono text-ui-12 whitespace-pre-wrap text-foreground">
                               {lead.message}
                             </p>
                             {lead.company && (
-                              <p className="font-paper-mono text-paper-fg-3 text-ui-11">
+                              <p className="font-mono text-muted-foreground text-ui-11">
                                 Company: {lead.company}
                               </p>
                             )}

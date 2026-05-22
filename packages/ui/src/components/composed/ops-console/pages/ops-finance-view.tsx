@@ -100,14 +100,14 @@ function OpsFinanceView({
       <OpsCard ticks className="mb-5">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span aria-hidden className="w-1.5 h-3.5 bg-paper-err" />
-            <div className="paper-label text-paper-fg-1 tracking-nav">
+            <span aria-hidden className="w-1.5 h-3.5 bg-destructive" />
+            <div className="paper-label text-foreground tracking-nav">
               Receivables Aging · {totalInvoices} invoices
             </div>
           </div>
           <div className="flex items-center gap-2">
             <span className="paper-label">Outstanding</span>
-            <b className="text-paper-err font-paper-display font-bold text-ui-16">
+            <b className="text-destructive font-sans font-bold text-ui-16">
               {outstanding}
             </b>
           </div>
@@ -116,13 +116,13 @@ function OpsFinanceView({
           {buckets.map((b) => (
             <div
               key={b.label}
-              className={`px-3.5 py-2.5 bg-paper-2 border-l-[length:var(--indicator-w)] ${b.toneClass}`}
+              className={`px-3.5 py-2.5 bg-sidebar border-l-[length:var(--indicator-w)] ${b.toneClass}`}
             >
               <div className="paper-label">{b.label}</div>
-              <div className="font-paper-display font-bold text-ui-22 mt-1">
+              <div className="font-sans font-bold text-ui-22 mt-1">
                 {b.amount}
               </div>
-              <div className="font-paper-mono text-paper-fg-3 text-ui-11 mt-0.5">
+              <div className="font-mono text-muted-foreground text-ui-11 mt-0.5">
                 {b.sub}
               </div>
             </div>

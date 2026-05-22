@@ -37,12 +37,12 @@ function OpsStatCard({
           <Link
             href={href}
             aria-label={`Open ${label}`}
-            className="size-6 border border-paper-line bg-paper-card grid place-items-center text-paper-fg-2 hover:bg-paper-3 transition-colors duration-fast ease-linear focus-visible:outline-none focus-visible:tac-focus-premium"
+            className="size-6 border border-border bg-card grid place-items-center text-foreground hover:bg-muted transition-colors duration-fast ease-linear focus-visible:outline-none focus-visible:tac-focus-premium"
           >
             <RiArrowRightUpLine aria-hidden className="size-3" />
           </Link>
         ) : (
-          <span aria-hidden className="size-6 border border-paper-line bg-paper-card grid place-items-center text-paper-fg-3">
+          <span aria-hidden className="size-6 border border-border bg-card grid place-items-center text-muted-foreground">
             <RiArrowRightUpLine className="size-3" />
           </span>
         )}

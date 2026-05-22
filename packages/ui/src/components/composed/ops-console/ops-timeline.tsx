@@ -19,11 +19,11 @@ interface OpsTimelineProps {
 }
 
 const TONE_BG: Record<NonNullable<TimelineEvent["tone"]>, string> = {
-  neutral: "bg-paper-line-2",
-  ok: "bg-paper-ok",
-  warn: "bg-paper-warn",
-  err: "bg-paper-err",
-  violet: "bg-paper-violet",
+  neutral: "bg-border",
+  ok: "bg-accent-success",
+  warn: "bg-accent-warning",
+  err: "bg-destructive",
+  violet: "bg-primary",
 }
 
 /**
@@ -40,7 +40,7 @@ function OpsTimeline({ events, emptyMessage = "No events", className }: OpsTimel
     <ol className={cn("relative pl-7", className)}>
       <div
         aria-hidden
-        className="absolute left-2 top-2 bottom-2 w-px bg-paper-line"
+        className="absolute left-2 top-2 bottom-2 w-px bg-border"
       />
       {events.map((e) => (
         <li key={e.id} className="relative pb-5 last:pb-0">
@@ -52,15 +52,15 @@ function OpsTimeline({ events, emptyMessage = "No events", className }: OpsTimel
             )}
           />
           <div className="flex items-baseline justify-between gap-3">
-            <span className="font-paper-display font-semibold text-ui-13">
+            <span className="font-sans font-semibold text-ui-13">
               {e.label}
             </span>
-            <span className="font-paper-mono text-ui-11 tabular-nums text-paper-fg-3 shrink-0">
+            <span className="font-mono text-ui-11 tabular-nums text-muted-foreground shrink-0">
               {e.timestamp}
             </span>
           </div>
           {e.detail && (
-            <p className="font-paper-display text-ui-13 text-paper-fg-3 mt-0.5">
+            <p className="font-sans text-ui-13 text-muted-foreground mt-0.5">
               {e.detail}
             </p>
           )}

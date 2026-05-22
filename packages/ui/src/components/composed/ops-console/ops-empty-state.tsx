@@ -33,18 +33,18 @@ function OpsEmptyState({
     <div
       data-slot="ops-empty-state"
       className={cn(
-        "border border-dashed border-paper-line bg-paper-2/40",
+        "border border-dashed border-border bg-sidebar/40",
         "py-12 px-6",
         "flex flex-col items-center text-center gap-2",
         className,
       )}
     >
       {Icon && (
-        <Icon aria-hidden className="size-10 text-paper-fg-3" />
+        <Icon aria-hidden className="size-10 text-muted-foreground" />
       )}
       <span className="paper-eyebrow">{eyebrow}</span>
       <h3 className="paper-h3">{headline}</h3>
-      <p className="font-paper-display text-ui-13 text-paper-fg-3 max-w-prose">
+      <p className="font-sans text-ui-13 text-muted-foreground max-w-prose">
         {description}
       </p>
       {cta && <div className="mt-2">{cta}</div>}

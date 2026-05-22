@@ -56,8 +56,8 @@ export function OpsShipmentStepper({
         data-slot="ops-shipment-stepper-terminal"
         className={cn("flex items-center gap-2 py-3", className)}
       >
-        <span aria-hidden className="h-4 w-4 bg-paper-err flex-shrink-0" />
-        <span className="font-paper-mono text-paper-err uppercase tracking-badge text-ui-12">
+        <span aria-hidden className="h-4 w-4 bg-destructive flex-shrink-0" />
+        <span className="font-mono text-destructive uppercase tracking-badge text-ui-12">
           {STATUS_LABELS[currentStatus]}
         </span>
       </div>
@@ -85,18 +85,18 @@ export function OpsShipmentStepper({
               <div
                 className={cn(
                   "h-3 w-3 border flex-shrink-0",
-                  isDone && "bg-paper-violet border-paper-violet",
-                  isCurrent && "bg-paper-violet-50 border-paper-violet",
-                  isFuture && "bg-paper-card border-paper-line",
+                  isDone && "bg-primary border-primary",
+                  isCurrent && "bg-primary/10 border-primary",
+                  isFuture && "bg-card border-border",
                 )}
               />
               <span
                 className={cn(
-                  "font-paper-mono uppercase tracking-badge whitespace-nowrap max-w-14 text-center leading-tight",
+                  "font-mono uppercase tracking-badge whitespace-nowrap max-w-14 text-center leading-tight",
                   "text-ui-10",
-                  isDone && "text-paper-violet",
-                  isCurrent && "text-paper-violet font-bold",
-                  isFuture && "text-paper-fg-3",
+                  isDone && "text-primary",
+                  isCurrent && "text-primary font-bold",
+                  isFuture && "text-muted-foreground",
                 )}
               >
                 {STATUS_LABELS[status]}
@@ -106,7 +106,7 @@ export function OpsShipmentStepper({
               <div
                 className={cn(
                   "h-px w-8 mb-4 flex-shrink-0",
-                  idx < currentIndex ? "bg-paper-violet" : "bg-paper-line",
+                  idx < currentIndex ? "bg-primary" : "bg-border",
                 )}
               />
             )}

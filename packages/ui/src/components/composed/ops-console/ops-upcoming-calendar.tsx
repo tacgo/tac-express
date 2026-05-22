@@ -57,7 +57,7 @@ function OpsUpcomingCalendar({
     <div className={cn("flex flex-col", className)}>
       {/* Row 1: title + "View all" affordance — matches other ops panels */}
       <div className="flex items-center justify-between">
-        <div className="font-paper-display font-semibold text-ui-13 text-paper-fg-1">
+        <div className="font-sans font-semibold text-ui-13 text-foreground">
           Upcoming Operations
         </div>
         <OpsButton variant="dark" size="sm" onClick={onViewAll}>
@@ -71,7 +71,7 @@ function OpsUpcomingCalendar({
       </div>
 
       {/* Row 3: calendar with departure highlights */}
-      <div className="mt-3 border border-paper-line bg-paper-card flex justify-center">
+      <div className="mt-3 border border-border bg-card flex justify-center">
         <Calendar
           mode="multiple"
           selected={scheduledDates}
@@ -79,7 +79,7 @@ function OpsUpcomingCalendar({
           modifiers={{ scheduled: scheduledDates }}
           modifiersClassNames={{
             scheduled:
-              "bg-paper-violet-50 text-paper-violet font-semibold ring-1 ring-paper-violet/30",
+              "bg-primary/10 text-primary font-semibold ring-1 ring-primary/30",
           }}
           // The dashboard renders this widget as a read-only signal; we
           // don't want clicking a day to mutate selection state. Suppress
@@ -96,7 +96,7 @@ function OpsUpcomingCalendar({
       {upcoming.length === 0 ? (
         <div className="paper-label mt-3">No scheduled departures</div>
       ) : (
-        <ul className="mt-3 divide-y divide-paper-line border-t border-paper-line">
+        <ul className="mt-3 divide-y divide-border border-t border-border">
           {upcoming.slice(0, 3).map((op) => (
             <li
               key={op.id}
@@ -104,7 +104,7 @@ function OpsUpcomingCalendar({
             >
               <div>
                 <div className="paper-label">{op.eta}</div>
-                <div className="font-paper-display font-semibold text-ui-12 mt-0.5 text-paper-fg-1">
+                <div className="font-sans font-semibold text-ui-12 mt-0.5 text-foreground">
                   {op.label}
                 </div>
               </div>

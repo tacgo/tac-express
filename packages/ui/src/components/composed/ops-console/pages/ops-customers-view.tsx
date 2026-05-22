@@ -74,7 +74,7 @@ function OpsCustomersView({ rows }: OpsCustomersViewProps) {
       <div className="relative mb-3.5 max-w-xl">
         <RiSearchLine
           aria-hidden
-          className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-paper-fg-4"
+          className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground"
         />
         <OpsFieldInput
           aria-label="Search customers"
@@ -104,17 +104,17 @@ function OpsCustomersView({ rows }: OpsCustomersViewProps) {
           {filtered.map((r) => (
             <OpsTableRow key={r.id}>
               <OpsTableCell>
-                <div className="font-paper-mono font-semibold uppercase text-ui-12">
+                <div className="font-mono font-semibold uppercase text-ui-12">
                   {r.name}
                 </div>
-                <div className="font-paper-mono text-paper-fg-3 text-ui-11">
+                <div className="font-mono text-muted-foreground text-ui-11">
                   {r.email}
                 </div>
               </OpsTableCell>
               <OpsTableCell mono>{r.phone}</OpsTableCell>
               <OpsTableCell>
                 <div>{r.location}</div>
-                <div className="font-paper-mono text-paper-fg-3 text-ui-11">
+                <div className="font-mono text-muted-foreground text-ui-11">
                   {r.state}
                 </div>
               </OpsTableCell>
