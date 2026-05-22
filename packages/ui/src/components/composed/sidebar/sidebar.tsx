@@ -107,9 +107,8 @@ function SidebarItem({
         "text-sidebar-foreground/75 hover:bg-sidebar-accent hover:text-sidebar-foreground",
         "focus-visible:outline-none focus-visible:tac-focus-premium",
         "transition-colors duration-fast ease-linear",
-        // Active nav text was --sidebar-primary (paper-violet L=0.54) on
-        // --sidebar-accent (paper-violet-50 L=0.97). Switched to
-        // paper-violet-2 (L=0.46) for higher contrast — closes R0 audit C2.
+        // Active nav: text-primary on bg-sidebar-accent — semantic Violet Grid
+        // tokens (post paper-* migration), tuned for AA contrast (R0 audit C2).
         active && "bg-sidebar-accent text-primary",
       )}
     >

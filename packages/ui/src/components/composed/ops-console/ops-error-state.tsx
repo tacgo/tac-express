@@ -35,8 +35,8 @@ function OpsErrorState({
       aria-live="assertive"
       data-slot="ops-error-state"
       className={cn(
-        "border border-destructive/40 border-l-[length:var(--indicator-w)] border-l-paper-err",
-        "bg-destructive/15/30 p-6",
+        "border border-destructive/40 border-l-[length:var(--indicator-w)] border-l-destructive",
+        "bg-destructive/15 p-6",
         "grid grid-cols-12 gap-4",
         className,
       )}

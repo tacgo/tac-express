@@ -116,7 +116,7 @@ function OpsTopbar({ crumbs }: OpsTopbarProps) {
                   "font-mono font-semibold text-ui-11 text-foreground",
                   "hover:bg-muted transition-colors duration-fast ease-linear",
                   "focus-visible:outline-none focus-visible:tac-focus-premium",
-                  isActive && "bg-primary text-white hover:bg-primary",
+                  isActive && "bg-primary text-primary-foreground hover:bg-primary",
                 )}
               >
                 {t}
@@ -160,7 +160,7 @@ function OpsTopbar({ crumbs }: OpsTopbarProps) {
           type="button"
           aria-label="Account menu"
           aria-haspopup="menu"
-          className="size-8 bg-primary [color:white] border border-primary grid place-items-center font-mono font-semibold text-ui-12 hover:bg-primary focus-visible:outline-none focus-visible:tac-focus-premium transition-colors duration-fast ease-linear"
+          className="size-8 bg-primary [color:var(--primary-foreground)] border border-primary grid place-items-center font-mono font-semibold text-ui-12 hover:bg-primary focus-visible:outline-none focus-visible:tac-focus-premium transition-colors duration-fast ease-linear"
         >
           A
         </button>

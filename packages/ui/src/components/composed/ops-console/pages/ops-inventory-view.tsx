@@ -128,7 +128,7 @@ function OpsInventoryView({
       />
 
       {/* Summary strip — total network inventory + hub count */}
-      <div className="mb-4 border border-border bg-card divide-x divide-paper-line grid grid-cols-3">
+      <div className="mb-4 border border-border bg-card divide-x divide-border grid grid-cols-3">
         <div className="px-4 py-3">
           <div className="paper-label">Hubs in view</div>
           <div className="font-sans font-bold text-ui-22 mt-1 tabular-nums">

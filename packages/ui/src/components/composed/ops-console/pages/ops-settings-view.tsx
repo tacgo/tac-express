@@ -190,7 +190,7 @@ function OpsSettingsView({
           <div className="paper-label mb-3">Integrations</div>
           {/* Sub-pages live in the v6 surface until paper variants ship —
               linking here makes them discoverable from the Ops Console. */}
-          <ul className="flex flex-col divide-y divide-paper-line border-y border-border">
+          <ul className="flex flex-col divide-y divide-border border-y border-border">
             <li>
               <Link
                 href="/ops-console/settings/api-keys"
@@ -407,7 +407,7 @@ function OpsHubsSection({
         ) : null}
 
         {/* Current hub list — configured + external (visible), minus hidden */}
-        <ul className="mt-1 divide-y divide-paper-line">
+        <ul className="mt-1 divide-y divide-border">
           {!config.hydrated && (
             <li className="py-3 paper-label text-muted-foreground">Loading…</li>
           )}
@@ -535,7 +535,7 @@ function OpsHubsSection({
         {config.hydrated && config.hidden.length > 0 && (
           <div className="mt-4 pt-3.5 border-t border-border">
             <div className="paper-label mb-2">Hidden hubs</div>
-            <ul className="divide-y divide-paper-line">
+            <ul className="divide-y divide-border">
               {config.hidden.map((code) => (
                 <li
                   key={code}

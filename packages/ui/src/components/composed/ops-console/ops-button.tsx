@@ -24,14 +24,14 @@ const opsButtonVariants = cva(
         // strips the color set here. Using `[color:...]` keeps the color
         // outside tw-merge's `text-` group → it survives. Closes the
         // remaining R0 audit color-contrast nodes on OpsButton variants.
-        default: "border-border bg-card [color:var(--paper-fg-1)] hover:bg-muted",
+        default: "border-border bg-card [color:var(--foreground)] hover:bg-muted",
         primary:
-          "border-primary bg-primary [color:white] hover:bg-primary shadow-[var(--shadow-paper-sticky)]",
-        ghost: "border-transparent bg-transparent [color:var(--paper-fg-1)] hover:bg-muted",
-        tab: "border-border bg-transparent [color:var(--paper-fg-1)] hover:bg-muted data-[state=on]:border-primary data-[state=on]:bg-primary data-[state=on]:[color:white]",
+          "border-primary bg-primary [color:var(--primary-foreground)] hover:bg-primary shadow-sm",
+        ghost: "border-transparent bg-transparent [color:var(--foreground)] hover:bg-muted",
+        tab: "border-border bg-transparent [color:var(--foreground)] hover:bg-muted data-[state=on]:border-primary data-[state=on]:bg-primary data-[state=on]:[color:var(--primary-foreground)]",
         danger:
-          "border-destructive/40 bg-destructive/15 [color:var(--paper-err)] hover:bg-destructive/15",
-        dark: "border-foreground bg-foreground [color:white] hover:opacity-90",
+          "border-destructive/40 bg-destructive/15 [color:var(--destructive)] hover:bg-destructive/15",
+        dark: "border-foreground bg-foreground [color:var(--background)] hover:opacity-90",
       },
       size: {
         default: "px-3.5 py-2 text-ui-11",

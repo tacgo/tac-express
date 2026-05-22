@@ -79,7 +79,7 @@ function OpsUpcomingCalendar({
           modifiers={{ scheduled: scheduledDates }}
           modifiersClassNames={{
             scheduled:
-              "bg-primary/10 text-primary font-semibold ring-1 ring-paper-violet/30",
+              "bg-primary/10 text-primary font-semibold ring-1 ring-primary/30",
           }}
           // The dashboard renders this widget as a read-only signal; we
           // don't want clicking a day to mutate selection state. Suppress
@@ -96,7 +96,7 @@ function OpsUpcomingCalendar({
       {upcoming.length === 0 ? (
         <div className="paper-label mt-3">No scheduled departures</div>
       ) : (
-        <ul className="mt-3 divide-y divide-paper-line border-t border-border">
+        <ul className="mt-3 divide-y divide-border border-t border-border">
           {upcoming.slice(0, 3).map((op) => (
             <li
               key={op.id}

@@ -114,7 +114,7 @@ export function OpsShipmentDetailLive({ id }: Props) {
         title={id}
         backHref="/ops-console/shipments"
       >
-        <div className="border border-destructive/40 border-l-[length:var(--indicator-w)] border-l-paper-err bg-destructive/15/30 p-6 flex items-start gap-3">
+        <div className="border border-destructive/40 border-l-[length:var(--indicator-w)] border-l-destructive bg-destructive/15 p-6 flex items-start gap-3">
           <RiErrorWarningLine aria-hidden className="size-5 text-destructive shrink-0" />
           <div>
             <div className="paper-eyebrow text-destructive">NOT FOUND</div>

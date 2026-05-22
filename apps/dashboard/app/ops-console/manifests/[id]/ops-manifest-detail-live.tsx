@@ -142,7 +142,7 @@ export function OpsManifestDetailLive({ id }: OpsManifestDetailLiveProps) {
         title={id}
         backHref="/ops-console/manifests"
       >
-        <div className="border border-destructive/40 border-l-[length:var(--indicator-w)] border-l-paper-err bg-destructive/15/30 p-6 flex items-start gap-3">
+        <div className="border border-destructive/40 border-l-[length:var(--indicator-w)] border-l-destructive bg-destructive/15 p-6 flex items-start gap-3">
           <RiErrorWarningLine
             aria-hidden
             className="size-5 text-destructive shrink-0"
@@ -278,7 +278,7 @@ export function OpsManifestDetailLive({ id }: OpsManifestDetailLiveProps) {
             No shipments loaded yet.
           </div>
         ) : (
-          <ul className="divide-y divide-paper-line">
+          <ul className="divide-y divide-border">
             {shipments.map((s) => (
               <li
                 key={s.id}

@@ -119,8 +119,8 @@ const chartData = [
 
 const chartConfig = {
   volume: { label: "Volume" },
-  outbound: { label: "Outbound", color: "var(--paper-violet)" },
-  inbound: { label: "Inbound", color: "var(--paper-info)" },
+  outbound: { label: "Outbound", color: "var(--primary)" },
+  inbound: { label: "Inbound", color: "var(--accent-info)" },
 } satisfies ChartConfig
 
 type Range = "7d" | "30d" | "90d"
@@ -169,7 +169,7 @@ function OpsVolumeBarChart({ className }: OpsVolumeBarChartProps) {
                   "px-2 py-1 font-mono font-medium text-ui-10 tracking-badge uppercase transition-colors",
                   "border-l border-border first:border-l-0",
                   active
-                    ? "bg-primary text-white"
+                    ? "bg-primary text-primary-foreground"
                     : "text-foreground hover:bg-muted",
                 )}
               >
@@ -191,14 +191,14 @@ function OpsVolumeBarChart({ className }: OpsVolumeBarChartProps) {
         className="aspect-auto h-[length:var(--spacing-chart-md)] w-full mt-3"
       >
         <BarChart accessibilityLayer data={filteredData} margin={{ left: 0, right: 0, top: 4 }}>
-          <CartesianGrid vertical={false} stroke="var(--paper-line)" strokeDasharray="2 3" />
+          <CartesianGrid vertical={false} stroke="var(--border)" strokeDasharray="2 3" />
           <XAxis
             dataKey="date"
             tickLine={false}
             axisLine={false}
             tickMargin={8}
             minTickGap={32}
-            stroke="var(--paper-fg-3)"
+            stroke="var(--muted-foreground)"
             fontSize={10}
             tickFormatter={(value) => {
               const date = new Date(value)

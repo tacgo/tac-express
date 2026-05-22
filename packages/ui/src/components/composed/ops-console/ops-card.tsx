@@ -12,7 +12,7 @@ const opsCardVariants = cva("bg-card border border-border", {
     },
     accent: {
       none: "",
-      "violet-under": "border-b-2 border-b-paper-violet",
+      "violet-under": "border-b-2 border-b-primary",
     },
     ticks: {
       false: "",

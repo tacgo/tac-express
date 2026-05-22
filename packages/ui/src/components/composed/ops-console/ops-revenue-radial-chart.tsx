@@ -32,11 +32,11 @@ const chartData = [
 
 const chartConfig = {
   revenue: { label: "Revenue" },
-  standard: { label: "Standard", color: "var(--paper-violet)" },
-  express: { label: "Express", color: "var(--paper-info)" },
-  priority: { label: "Priority", color: "var(--paper-ok)" },
-  returns: { label: "Returns", color: "var(--paper-warn)" },
-  other: { label: "Other", color: "var(--paper-fg-3)" },
+  standard: { label: "Standard", color: "var(--primary)" },
+  express: { label: "Express", color: "var(--accent-info)" },
+  priority: { label: "Priority", color: "var(--accent-success)" },
+  returns: { label: "Returns", color: "var(--accent-warning)" },
+  other: { label: "Other", color: "var(--muted-foreground)" },
 } satisfies ChartConfig
 
 interface OpsRevenueRadialChartProps {

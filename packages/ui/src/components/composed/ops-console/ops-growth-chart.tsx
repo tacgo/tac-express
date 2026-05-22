@@ -118,8 +118,8 @@ const chartData = [
 
 const chartConfig = {
   shipments: { label: "Shipments" },
-  delivered: { label: "Delivered", color: "var(--paper-violet)" },
-  exceptions: { label: "Exceptions", color: "var(--paper-info)" },
+  delivered: { label: "Delivered", color: "var(--primary)" },
+  exceptions: { label: "Exceptions", color: "var(--accent-info)" },
 } satisfies ChartConfig
 
 type Range = "7d" | "30d" | "90d"
@@ -175,7 +175,7 @@ function OpsGrowthAreaChart({ className }: OpsGrowthAreaChartProps) {
                   "px-2 py-1 font-mono font-medium text-ui-10 tracking-badge uppercase transition-colors",
                   "border-l border-border first:border-l-0",
                   active
-                    ? "bg-primary text-white"
+                    ? "bg-primary text-primary-foreground"
                     : "text-foreground hover:bg-muted",
                 )}
               >
@@ -212,14 +212,14 @@ function OpsGrowthAreaChart({ className }: OpsGrowthAreaChartProps) {
               <stop offset="95%" stopColor="var(--color-exceptions)" stopOpacity={0.1} />
             </linearGradient>
           </defs>
-          <CartesianGrid vertical={false} stroke="var(--paper-line)" strokeDasharray="2 3" />
+          <CartesianGrid vertical={false} stroke="var(--border)" strokeDasharray="2 3" />
           <XAxis
             dataKey="date"
             tickLine={false}
             axisLine={false}
             tickMargin={8}
             minTickGap={32}
-            stroke="var(--paper-fg-3)"
+            stroke="var(--muted-foreground)"
             fontSize={10}
             tickFormatter={(value) => {
               const date = new Date(value)

@@ -45,7 +45,7 @@ function OpsPanelTabsTrigger({
         "text-muted-foreground hover:text-foreground transition-colors duration-fast ease-linear",
         "border-b-2 border-transparent rounded-none bg-transparent shadow-none",
         "focus-visible:outline-none focus-visible:tac-focus-premium",
-        "data-[state=active]:text-primary data-[state=active]:border-b-paper-violet data-[state=active]:bg-transparent",
+        "data-[state=active]:text-primary data-[state=active]:border-b-primary data-[state=active]:bg-transparent",
         "[&_svg]:size-3.5",
         className,
       )}

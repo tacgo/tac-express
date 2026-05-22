@@ -33,8 +33,8 @@ const chartData = [
 ]
 
 const chartConfig = {
-  delivered: { label: "Delivered", color: "var(--paper-violet)" },
-  exceptions: { label: "Exceptions", color: "var(--paper-info)" },
+  delivered: { label: "Delivered", color: "var(--primary)" },
+  exceptions: { label: "Exceptions", color: "var(--accent-info)" },
 } satisfies ChartConfig
 
 interface OpsShipmentBarChartProps {
@@ -61,13 +61,13 @@ function OpsShipmentBarChart({ className }: OpsShipmentBarChartProps) {
         className="aspect-auto h-[length:var(--spacing-chart-lg)] w-full mt-3"
       >
         <BarChart accessibilityLayer data={chartData} margin={{ left: 0, right: 0, top: 4 }}>
-          <CartesianGrid vertical={false} stroke="var(--paper-line)" strokeDasharray="2 3" />
+          <CartesianGrid vertical={false} stroke="var(--border)" strokeDasharray="2 3" />
           <XAxis
             dataKey="month"
             tickLine={false}
             axisLine={false}
             tickMargin={10}
-            stroke="var(--paper-fg-3)"
+            stroke="var(--muted-foreground)"
             fontSize={10}
             tickFormatter={(value: string) => value.slice(0, 3).toUpperCase()}
           />
