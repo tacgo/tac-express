@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation"
 import { cn } from "@workspace/ui/lib/utils"
 import { Sidebar } from "@workspace/ui/components/composed/sidebar"
 import { OpsTopbar } from "./ops-topbar"
+import { opsContentVariants } from "./ops-content"
 
 interface OpsShellProps {
   /** Override crumbs explicitly. Omit to auto-derive from pathname. */
@@ -79,7 +80,15 @@ function OpsShell({
       <Sidebar />
       <div className="flex flex-col min-w-0">
         <OpsTopbar crumbs={resolvedCrumbs} />
-        <main className="flex-1 min-w-0">{children}</main>
+        {/*
+          Shell-tier width contract: every route's content is centered and
+          capped at the hardware-frame ceiling so nothing sprawls on an
+          ultrawide monitor. PageShell (page tier) narrows further per route.
+          See ops-content.ts.
+        */}
+        <main className="flex-1 min-w-0">
+          <div className={opsContentVariants()}>{children}</div>
+        </main>
       </div>
     </div>
   )
