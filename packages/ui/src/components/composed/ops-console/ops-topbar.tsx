@@ -160,7 +160,7 @@ function OpsTopbar({ crumbs }: OpsTopbarProps) {
           type="button"
           aria-label="Account menu"
           aria-haspopup="menu"
-          className="size-8 bg-primary [color:var(--primary-foreground)] border border-primary grid place-items-center font-mono font-semibold text-ui-12 hover:bg-primary focus-visible:outline-none focus-visible:tac-focus-premium transition-colors duration-fast ease-linear"
+          className="size-8 bg-primary text-primary-foreground border border-primary grid place-items-center font-mono font-semibold text-ui-12 hover:bg-primary focus-visible:outline-none focus-visible:tac-focus-premium transition-colors duration-fast ease-linear"
         >
           A
         </button>
