@@ -8,10 +8,13 @@ interface OpsFrameProps extends React.HTMLAttributes<HTMLDivElement> {
 
 /**
  * OpsFrame — the bordered content frame that wraps every Paper Ops Console
- * page body. Carries the project's signature **diagonal hatch stripe** along
- * the top and bottom edges and corner L-tick marks at the top-left and
- * bottom-right (LAW 13: straight lines only — the hatch is a 135° diagonal,
- * still straight).
+ * page body. Carries corner L-tick marks at the top-left and bottom-right
+ * (LAW 13: straight lines only).
+ *
+ * The diagonal "hazard" hatch band (`paper-hatch-band`, formerly top + bottom)
+ * was removed 2026-05-23 — it read as a recurring hazard stripe on every route
+ * (and flashed on dual routes during the client-side v7 swap). v7 (PageShell)
+ * never had it; this aligns the v6 frame ahead of full convergence.
  *
  * Source pattern: .design-bundle/ui_kits/web_app/app.css `.frame`.
  */
@@ -25,11 +28,9 @@ function OpsFrame({ children, className, ...props }: OpsFrameProps) {
       )}
       {...props}
     >
-      <div aria-hidden className="paper-hatch-band" />
       <span aria-hidden className="paper-tick-tl" />
       <span aria-hidden className="paper-tick-br" />
       <div className="px-8 pt-7 pb-9">{children}</div>
-      <div aria-hidden className="paper-hatch-band" />
     </div>
   )
 }
