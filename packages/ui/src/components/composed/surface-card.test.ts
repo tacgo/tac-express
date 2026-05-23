@@ -35,6 +35,6 @@ describe("surfaceCardVariants — emphasis tiers", () => {
 
   it("keeps zero-radius identity (no rounded utilities)", () => {
     const cls = surfaceCardVariants({ emphasis: "command" })
-    expect(cls).not.toMatch(/rounded-(sm|md|lg|xl|2xl|full)/)
+    expect(cls).not.toMatch(/\brounded(?:-(?:sm|md|lg|xl|2xl|full))?\b/)
   })
 })
