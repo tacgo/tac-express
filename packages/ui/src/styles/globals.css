@@ -634,6 +634,11 @@
                                       sticky header + toolbar + pagination in
                                       view while the row body scrolls. Used as
                                       `max-h-table-viewport`. */
+  /* Semantic form-field widths (ch-based) — a field's width communicates its
+     expected input length. Used as `max-w-field-code` / `-sm` / `-md`. */
+  --spacing-field-code: 8ch;       /* 3–4 char codes (airline, hub, PIN) */
+  --spacing-field-sm: 16ch;        /* short: flight no., phone, postal */
+  --spacing-field-md: 24ch;        /* medium: vehicle reg, short names */
 
   /* ── Page-gutter + card-rhythm tokens (NextAdmin parity, Violet-Grid translated) ──
      Responsive page padding scales by breakpoint; card padding + gap are
