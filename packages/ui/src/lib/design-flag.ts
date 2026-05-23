@@ -9,17 +9,23 @@
  * Resolution order (highest precedence first):
  *  1. `window.localStorage['tac-design']` — per-user override
  *  2. `process.env.NEXT_PUBLIC_DESIGN` — per-deploy default
- *  3. `'v6'` — current production
+ *  3. `'v7'` — canonical default (Violet Grid v7 / NextAdmin refactor)
  *
  * Used by the rollback playbook (`docs/ROLLBACK-PLAYBOOK.md § NextAdmin
- * Refactor`) — flipping the localStorage key reverts a single user's
- * session to v6 without a redeploy.
+ * Refactor`) — setting the localStorage key (or `NEXT_PUBLIC_DESIGN`) to
+ * `v6` reverts to the legacy Paper Ops Console without a redeploy.
+ *
+ * v7 became the canonical default 2026-05-24 after runtime verification of
+ * the dashboard, shipments, manifests, and finance surfaces. Routes without
+ * a v7 variant (analytics, exceptions, notifications, scanning, settings)
+ * fall through to their v6 view unchanged — flipping the default cannot
+ * break them.
  */
 
 export type DesignVersion = "v6" | "v7"
 
 const STORAGE_KEY = "tac-design"
-const DEFAULT_VERSION: DesignVersion = "v6"
+const DEFAULT_VERSION: DesignVersion = "v7"
 
 function normalize(value: string | null | undefined): DesignVersion | null {
   if (value === "v6" || value === "v7") return value
