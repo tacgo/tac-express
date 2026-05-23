@@ -136,7 +136,7 @@ function DataTable<TData, TValue>({
         </div>
       )}
 
-      <div className="bg-surface-elevated tac-fui-border overflow-hidden shadow-sm">
+      <div className="bg-surface-elevated tac-fui-border max-h-table-viewport overflow-auto shadow-sm">
         <table
           role="table"
           aria-label="Data table"
@@ -145,7 +145,7 @@ function DataTable<TData, TValue>({
         >
           <thead
             role="rowgroup"
-            className="col-span-full grid grid-cols-subgrid border-b border-border bg-muted/30"
+            className="col-span-full grid grid-cols-subgrid border-b border-border bg-muted sticky top-0 z-20"
           >
             {table.getHeaderGroups().map((headerGroup) => (
               <tr

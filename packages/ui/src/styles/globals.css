@@ -630,6 +630,10 @@
                                       Inventory). Sits between page-content
                                       and the 1600px hardware frame. Added
                                       Phase 1 of the NextAdmin refactor. */
+  --spacing-table-viewport: 65vh;  /* DataTable body scroll height — keeps the
+                                      sticky header + toolbar + pagination in
+                                      view while the row body scrolls. Used as
+                                      `max-h-table-viewport`. */
 
   /* ── Page-gutter + card-rhythm tokens (NextAdmin parity, Violet-Grid translated) ──
      Responsive page padding scales by breakpoint; card padding + gap are
