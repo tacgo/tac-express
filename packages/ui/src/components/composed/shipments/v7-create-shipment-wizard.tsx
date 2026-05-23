@@ -212,7 +212,7 @@ function V7CreateShipmentWizard({
         onStepClick={handleStepClick}
       />
 
-      <FormCard maxWidth="lg" onSubmit={onFormSubmit} noValidate>
+      <FormCard maxWidth="md" onSubmit={onFormSubmit} noValidate>
         {step === 0 && (
           <FormSection
             title="Sender"
@@ -221,6 +221,7 @@ function V7CreateShipmentWizard({
             <FormGrid cols={2}>
               <FormField
                 fieldId="v7-ship-sender-name"
+                controlWidth="lg"
                 label="Sender name"
                 required
                 error={errors.senderName?.message}
@@ -234,6 +235,7 @@ function V7CreateShipmentWizard({
               </FormField>
               <FormField
                 fieldId="v7-ship-sender-phone"
+                controlWidth="sm"
                 label="Sender phone"
                 required
                 error={errors.senderPhone?.message}
@@ -250,6 +252,7 @@ function V7CreateShipmentWizard({
             <FormGrid cols={1}>
               <FormField
                 fieldId="v7-ship-sender-addr"
+                controlWidth="lg"
                 label="Sender address"
                 required
                 error={errors.senderAddress?.message}
@@ -265,6 +268,7 @@ function V7CreateShipmentWizard({
             <FormGrid cols={2}>
               <FormField
                 fieldId="v7-ship-sender-city"
+                controlWidth="md"
                 label="City"
                 required
                 error={errors.senderCity?.message}
@@ -277,6 +281,7 @@ function V7CreateShipmentWizard({
               </FormField>
               <FormField
                 fieldId="v7-ship-sender-state"
+                controlWidth="md"
                 label="State"
                 required
                 error={errors.senderState?.message}
@@ -289,6 +294,7 @@ function V7CreateShipmentWizard({
               </FormField>
               <FormField
                 fieldId="v7-ship-sender-pin"
+                controlWidth="code"
                 label="PIN"
                 required
                 error={errors.senderPincode?.message}
@@ -314,6 +320,7 @@ function V7CreateShipmentWizard({
             <FormGrid cols={2}>
               <FormField
                 fieldId="v7-ship-receiver-name"
+                controlWidth="lg"
                 label="Receiver name"
                 required
                 error={errors.receiverName?.message}
@@ -327,6 +334,7 @@ function V7CreateShipmentWizard({
               </FormField>
               <FormField
                 fieldId="v7-ship-receiver-phone"
+                controlWidth="sm"
                 label="Receiver phone"
                 required
                 error={errors.receiverPhone?.message}
@@ -343,6 +351,7 @@ function V7CreateShipmentWizard({
             <FormGrid cols={1}>
               <FormField
                 fieldId="v7-ship-receiver-addr"
+                controlWidth="lg"
                 label="Receiver address"
                 required
                 error={errors.receiverAddress?.message}
@@ -358,6 +367,7 @@ function V7CreateShipmentWizard({
             <FormGrid cols={2}>
               <FormField
                 fieldId="v7-ship-receiver-city"
+                controlWidth="md"
                 label="City"
                 required
                 error={errors.receiverCity?.message}
@@ -370,6 +380,7 @@ function V7CreateShipmentWizard({
               </FormField>
               <FormField
                 fieldId="v7-ship-receiver-state"
+                controlWidth="md"
                 label="State"
                 required
                 error={errors.receiverState?.message}
@@ -382,6 +393,7 @@ function V7CreateShipmentWizard({
               </FormField>
               <FormField
                 fieldId="v7-ship-receiver-pin"
+                controlWidth="code"
                 label="PIN"
                 required
                 error={errors.receiverPincode?.message}
@@ -407,6 +419,7 @@ function V7CreateShipmentWizard({
             <FormGrid cols={2}>
               <FormField
                 fieldId="v7-ship-weight"
+                controlWidth="sm"
                 label="Weight (kg)"
                 required
                 error={errors.weight?.message}
@@ -424,6 +437,7 @@ function V7CreateShipmentWizard({
               </FormField>
               <FormField
                 fieldId="v7-ship-value"
+                controlWidth="sm"
                 label="Declared value (₹)"
                 required
                 error={errors.declaredValue?.message}
@@ -440,6 +454,7 @@ function V7CreateShipmentWizard({
               </FormField>
               <FormField
                 fieldId="v7-ship-len"
+                controlWidth="sm"
                 label="Length (cm)"
                 required
                 error={errors.length?.message}
@@ -456,6 +471,7 @@ function V7CreateShipmentWizard({
               </FormField>
               <FormField
                 fieldId="v7-ship-bre"
+                controlWidth="sm"
                 label="Breadth (cm)"
                 required
                 error={errors.breadth?.message}
@@ -472,6 +488,7 @@ function V7CreateShipmentWizard({
               </FormField>
               <FormField
                 fieldId="v7-ship-hei"
+                controlWidth="sm"
                 label="Height (cm)"
                 required
                 error={errors.height?.message}
@@ -488,6 +505,7 @@ function V7CreateShipmentWizard({
               </FormField>
               <FormField
                 fieldId="v7-ship-desc"
+                controlWidth="lg"
                 label="Description"
                 required
                 error={errors.description?.message}

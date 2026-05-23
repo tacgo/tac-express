@@ -122,6 +122,20 @@ function FormGrid({ cols = 2, className, children, ...props }: FormGridProps) {
   )
 }
 
+/**
+ * Caps the field control to a reading measure so a field's width signals its
+ * expected input length — a PIN never looks like a 68-char name. Maps to the
+ * `--spacing-field-*` tokens. `full` (default) keeps the control at cell width.
+ */
+const CONTROL_WIDTH: Record<NonNullable<FormFieldProps["controlWidth"]>, string> =
+  {
+    code: "max-w-field-code",
+    sm: "max-w-field-sm",
+    md: "max-w-field-md",
+    lg: "max-w-field-lg",
+    full: "",
+  }
+
 interface FormFieldProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "id"> {
   /** Field id — shared by the input and the label's `htmlFor`. */
   fieldId: string
@@ -129,6 +143,12 @@ interface FormFieldProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "id"
   hint?: React.ReactNode
   error?: React.ReactNode
   required?: boolean
+  /**
+   * Semantic control width — caps the input so its width communicates the
+   * expected input length. `code` 8ch · `sm` 16ch · `md` 24ch · `lg` 40ch ·
+   * `full` (default) = cell width.
+   */
+  controlWidth?: "code" | "sm" | "md" | "lg" | "full"
 }
 
 function FormField({
@@ -137,12 +157,14 @@ function FormField({
   hint,
   error,
   required,
+  controlWidth = "full",
   className,
   children,
   ...props
 }: FormFieldProps) {
   const errorId = `${fieldId}-error`
   const hintId = `${fieldId}-hint`
+  const widthClass = CONTROL_WIDTH[controlWidth]
   return (
     <div
       data-slot="form-field"
@@ -161,7 +183,7 @@ function FormField({
           </span>
         ) : null}
       </label>
-      {children}
+      {widthClass ? <div className={widthClass}>{children}</div> : children}
       {error ? (
         <p id={errorId} role="alert" className="t-caption text-destructive">
           {error}

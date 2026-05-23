@@ -639,6 +639,7 @@
   --spacing-field-code: 8ch;       /* 3–4 char codes (airline, hub, PIN) */
   --spacing-field-sm: 16ch;        /* short: flight no., phone, postal */
   --spacing-field-md: 24ch;        /* medium: vehicle reg, short names */
+  --spacing-field-lg: 40ch;        /* long: names, addresses, descriptions */
 
   /* ── Page-gutter + card-rhythm tokens (NextAdmin parity, Violet-Grid translated) ──
      Responsive page padding scales by breakpoint; card padding + gap are
