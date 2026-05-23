@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import Link from "next/link"
 import { useTheme } from "next-themes"
 
 import { cn } from "@workspace/ui/lib/utils"
@@ -8,7 +9,17 @@ import {
   RiSearchLine,
   RiNotification3Line,
   RiMoonClearLine,
+  RiArrowDownSLine,
+  RiSettingsLine,
 } from "@workspace/ui/icons"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@workspace/ui/components/primitives/dropdown-menu"
 
 interface OpsTopbarProps {
   crumbs: string[]
@@ -61,7 +72,7 @@ function OpsTopbar({ crumbs }: OpsTopbarProps) {
       data-slot="ops-topbar"
       role="banner"
       aria-label="Session controls"
-      className="flex items-center px-6 h-14 border-b border-transparent"
+      className="flex items-center px-6 h-14 border-b border-border bg-card"
     >
       {/* Breadcrumbs */}
       <div className="font-mono font-medium text-ui-12 tracking-crumb text-muted-foreground">
@@ -78,7 +89,7 @@ function OpsTopbar({ crumbs }: OpsTopbarProps) {
       </div>
 
       {/* Right cluster */}
-      <div className="ml-auto flex items-center gap-1">
+      <div className="ml-auto flex items-center gap-2">
         {/* Search */}
         <button
           type="button"
@@ -153,17 +164,41 @@ function OpsTopbar({ crumbs }: OpsTopbarProps) {
           <RiMoonClearLine aria-hidden className="size-4" />
         </button>
 
-        {/* Avatar — interactive (account menu placeholder). A plain <div>
-           with aria-label is ignored by most assistive tech; a <button>
-           with aria-haspopup="menu" is the WCAG 4.1.2-compliant equivalent. */}
-        <button
-          type="button"
-          aria-label="Account menu"
-          aria-haspopup="menu"
-          className="size-8 bg-primary text-primary-foreground border border-primary grid place-items-center font-mono font-semibold text-ui-12 hover:bg-primary focus-visible:outline-none focus-visible:tac-focus-premium transition-colors duration-fast ease-linear"
-        >
-          A
-        </button>
+        {/* Divider grouping the session controls from the account chip. */}
+        <span aria-hidden className="mx-1 h-5 w-px bg-border" />
+
+        {/* Account chip — solid avatar + chevron, opens an account menu.
+           Replaces the bare avatar square for a more finished, clearly-
+           interactive control (the reviewer-flagged "outdated" header look). */}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <button
+              type="button"
+              aria-label="Account menu"
+              className="flex items-center gap-1.5 h-8 pl-1 pr-1.5 border border-border bg-card hover:bg-muted focus-visible:outline-none focus-visible:tac-focus-premium transition-colors duration-fast ease-linear"
+            >
+              <span
+                aria-hidden
+                className="size-6 bg-primary text-primary-foreground grid place-items-center font-mono font-semibold text-ui-11"
+              >
+                A
+              </span>
+              <RiArrowDownSLine aria-hidden className="size-3.5 text-muted-foreground" />
+            </button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-44">
+            <DropdownMenuLabel className="font-mono text-2xs uppercase tracking-wider text-muted-foreground">
+              Account
+            </DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem asChild className="text-xs">
+              <Link href="/ops-console/settings">
+                <RiSettingsLine className="size-3.5" aria-hidden="true" />
+                Settings
+              </Link>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </header>
   )
