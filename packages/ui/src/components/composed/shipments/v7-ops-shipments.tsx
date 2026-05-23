@@ -112,6 +112,8 @@ function V7OpsShipments({
       {
         accessorKey: "service",
         header: "Service",
+        filterFn: (row, id, value: string[]) =>
+          value.includes(row.getValue<string>(id)),
         cell: ({ getValue }) => {
           const isPriority = getValue<string>() === "PRIORITY"
           return (
@@ -141,6 +143,8 @@ function V7OpsShipments({
       {
         accessorKey: "status",
         header: "Status",
+        filterFn: (row, id, value: string[]) =>
+          value.includes(row.getValue<string>(id)),
         cell: ({ getValue }) => (
           <ShipmentStatusBadge status={toShipmentStatus(getValue<string>())} />
         ),
@@ -205,6 +209,10 @@ function V7OpsShipments({
           data={rows}
           searchKey="id"
           searchPlaceholder="Search by AWB…"
+          facets={[
+            { columnId: "status", title: "Status" },
+            { columnId: "service", title: "Service" },
+          ]}
           onRowClick={handleRowClick}
           pageSize={25}
         />

@@ -2,12 +2,15 @@
 
 import * as React from "react"
 import {
+  type Column,
   type ColumnDef,
   type ColumnFiltersState,
   type SortingState,
   type VisibilityState,
   flexRender,
   getCoreRowModel,
+  getFacetedRowModel,
+  getFacetedUniqueValues,
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
@@ -16,12 +19,92 @@ import {
 import { cn } from "@workspace/ui/lib/utils"
 import { Button } from "@workspace/ui/components/button"
 import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@workspace/ui/components/primitives/dropdown-menu"
+import {
   RiArrowUpLine,
   RiArrowDownLine,
   RiArrowLeftSLine,
   RiArrowRightSLine,
+  RiCloseLine,
+  RiFilterLine,
   RiInboxLine,
 } from "@workspace/ui/icons"
+
+/**
+ * DataTableFacetedFilter — multi-select column filter sourced from the
+ * column's faceted unique values. Selecting values sets an array filter
+ * value; the column must declare a matching `filterFn` (e.g.
+ * `(row, id, value: string[]) => value.includes(row.getValue(id))`).
+ */
+function DataTableFacetedFilter<TData>({
+  column,
+  title,
+}: {
+  column: Column<TData, unknown>
+  title: string
+}) {
+  const facets = column.getFacetedUniqueValues()
+  const selected = new Set((column.getFilterValue() as string[]) ?? [])
+  const options = Array.from(facets.keys())
+    .filter((v): v is string => typeof v === "string")
+    .sort()
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button
+          variant="outline"
+          size="sm"
+          className="h-8 gap-1.5 border-dashed font-mono text-xs uppercase tracking-wider"
+        >
+          <RiFilterLine className="size-3.5" aria-hidden="true" />
+          {title}
+          {selected.size > 0 && (
+            <span className="ml-1 inline-flex h-4 min-w-4 items-center justify-center bg-primary px-1 text-2xs tabular-nums text-primary-foreground">
+              {selected.size}
+            </span>
+          )}
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="start" className="w-56">
+        <DropdownMenuLabel className="font-mono text-2xs uppercase tracking-wider text-muted-foreground">
+          {title}
+        </DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        {options.length === 0 ? (
+          <DropdownMenuItem disabled>No values</DropdownMenuItem>
+        ) : (
+          options.map((opt) => (
+            <DropdownMenuCheckboxItem
+              key={opt}
+              checked={selected.has(opt)}
+              onSelect={(e) => e.preventDefault()}
+              onCheckedChange={(checked) => {
+                const next = new Set(selected)
+                if (checked) next.add(opt)
+                else next.delete(opt)
+                column.setFilterValue(next.size ? Array.from(next) : undefined)
+              }}
+              className="text-xs"
+            >
+              <span className="flex-1 truncate">{opt}</span>
+              <span className="ml-2 font-mono text-2xs tabular-nums text-muted-foreground">
+                {facets.get(opt)}
+              </span>
+            </DropdownMenuCheckboxItem>
+          ))
+        )}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
+}
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -43,6 +126,12 @@ interface DataTableProps<TData, TValue> {
    * generic Violet Grid empty pattern (icon + eyebrow + headline) when omitted.
    */
   emptyState?: React.ReactNode
+  /**
+   * Optional faceted filters. Each entry renders a multi-select dropdown in
+   * the toolbar, sourced from the column's faceted unique values. The named
+   * column must declare a `filterFn` that accepts an array filter value.
+   */
+  facets?: { columnId: string; title: string }[]
 }
 
 /**
@@ -72,6 +161,7 @@ function DataTable<TData, TValue>({
   pageSize = 20,
   onRowClick,
   emptyState,
+  facets,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
@@ -84,6 +174,8 @@ function DataTable<TData, TValue>({
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
+    getFacetedRowModel: getFacetedRowModel(),
+    getFacetedUniqueValues: getFacetedUniqueValues(),
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     onColumnVisibilityChange: setColumnVisibility,
@@ -113,22 +205,47 @@ function DataTable<TData, TValue>({
 
   return (
     <div data-slot="data-table" className="space-y-3">
-      {searchKey && (
-        <div className="flex items-center gap-2">
-          <label htmlFor="data-table-search" className="sr-only">
-            {searchPlaceholder}
-          </label>
-          <input
-            id="data-table-search"
-            aria-label={searchPlaceholder}
-            placeholder={searchPlaceholder}
-            value={(table.getColumn(searchKey)?.getFilterValue() as string) ?? ""}
-            onChange={(e) => table.getColumn(searchKey)?.setFilterValue(e.target.value)}
-            className={cn(
-              "h-8 w-64 border border-border bg-background px-3 text-xs font-mono uppercase tracking-wider",
-              "placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary"
-            )}
-          />
+      {(searchKey || (facets && facets.length > 0)) && (
+        <div className="flex flex-wrap items-center gap-2">
+          {searchKey && (
+            <>
+              <label htmlFor="data-table-search" className="sr-only">
+                {searchPlaceholder}
+              </label>
+              <input
+                id="data-table-search"
+                aria-label={searchPlaceholder}
+                placeholder={searchPlaceholder}
+                value={(table.getColumn(searchKey)?.getFilterValue() as string) ?? ""}
+                onChange={(e) => table.getColumn(searchKey)?.setFilterValue(e.target.value)}
+                className={cn(
+                  "h-8 w-64 border border-border bg-background px-3 text-xs font-mono uppercase tracking-wider",
+                  "placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary"
+                )}
+              />
+            </>
+          )}
+          {facets?.map((f) => {
+            const column = table.getColumn(f.columnId)
+            return column ? (
+              <DataTableFacetedFilter
+                key={f.columnId}
+                column={column}
+                title={f.title}
+              />
+            ) : null
+          })}
+          {table.getState().columnFilters.length > 0 && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => table.resetColumnFilters()}
+              className="h-8 gap-1 px-2 font-mono text-xs uppercase tracking-wider text-muted-foreground"
+            >
+              Reset
+              <RiCloseLine className="size-3.5" aria-hidden="true" />
+            </Button>
+          )}
           <span className="ml-auto font-mono text-xs text-muted-foreground">
             {table.getFilteredRowModel().rows.length} result
             {table.getFilteredRowModel().rows.length !== 1 ? "s" : ""}
