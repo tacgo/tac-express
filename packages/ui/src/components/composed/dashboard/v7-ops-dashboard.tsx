@@ -80,17 +80,13 @@ function V7OpsDashboard({
           reads as a command center rather than a metrics grid. */}
       <SurfaceCard
         emphasis="command"
-        className="relative overflow-hidden"
-        style={{
-          // Editorial banner as an atmospheric backdrop, with a left-to-right
-          // card-colored scrim so the operational text + launchers stay
-          // readable. Token-driven (var(--card)) so it adapts to dark mode.
-          backgroundImage:
-            'linear-gradient(90deg, var(--card) 0%, var(--card) 38%, color-mix(in oklch, var(--card) 55%, transparent) 100%), url("/dashboard-banner-v3.png")',
-          backgroundSize: "cover",
-          backgroundPosition: "center right",
-          backgroundRepeat: "no-repeat",
-        }}
+        className="relative overflow-hidden tac-banner-scrim"
+        style={
+          // Only the image URL (content, not a color) is set inline; the
+          // scrim's color composition lives in .tac-banner-scrim (globals.css,
+          // LAW 1 — no color values in the component).
+          { "--banner-image": 'url("/dashboard-banner-v3.png")' } as React.CSSProperties
+        }
         eyebrow={
           <span className="inline-flex items-center gap-1.5">
             <span

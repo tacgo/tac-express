@@ -1015,6 +1015,24 @@
     }
   }
 
+  /* Banner scrim — editorial image backdrop with a card-colored left→right
+     scrim so overlaid operational text stays readable. The consumer supplies
+     the image URL via the `--banner-image` custom property (content, not a
+     color); all color composition lives here per LAW 1. */
+  .tac-banner-scrim {
+    background-image:
+      linear-gradient(
+        90deg,
+        var(--card) 0%,
+        var(--card) 38%,
+        color-mix(in oklch, var(--card) 55%, transparent) 100%
+      ),
+      var(--banner-image);
+    background-size: cover;
+    background-position: center right;
+    background-repeat: no-repeat;
+  }
+
   /* ── TYPE SCALE — Violet Grid (premium rendering) ── */
 
   .t-display {
