@@ -96,14 +96,53 @@ The preset has **zero** loose content — every block is a grouped surface:
 ## 4. Verification loop (mandatory, every surface)
 
 ```
-audit → build → runtime-verify (authenticated :3001) → tac-ui-rubric (≥ 90/100) → refine → repeat
+audit → critique → build → runtime-verify (authenticated :3001) → tac-ui-rubric (≥ 90/100)
+      → refine → compare against preset composition → repeat
 ```
 - Runtime-verify visually in the preview; capture metrics (grid tracks, font sizes, sticky behavior) not just impressions.
 - Gate: `pnpm lint --max-warnings 0`, `pnpm test`, rubric ≥ 90.
 
+### 4.1 tac-ui-rubric — operational composition penalties (apply on every score)
+On top of the standard 10 criteria, deduct for composition failures that make
+the UI read as "premium admin template" instead of "operational command software":
+
+| Penalty | −pts | Trigger |
+|---|---|---|
+| Excessive whitespace / empty void | −10 | floating content on a giant canvas; ungrouped bare elements |
+| Uniform card grid | −8 | 4-equal / 3-equal / 6-6 layouts; no dominant surface |
+| Equal-weight layout | −6 | every surface the same visual weight; no `command`/`tactical` tiers |
+| Isolated sections | −5 | sections not grouped into SurfaceCards; no layering |
+| Template-like symmetry | −5 | mirror-balanced SaaS composition; no asymmetric operational grouping |
+| Decorative-not-operational | −6 | a surface that doesn't carry live state / workflow / intelligence |
+
+A surface that trips two or more of these is **not shippable** regardless of its
+base rubric score — rebuild the composition.
+
 ---
 
-## 5. Skills to spawn (per task)
+## 5. Operational Experience Directive (permanent)
+
+> The platform must always feel connected to a **live logistics network**. Every
+> page must communicate movement, activity, flow, alerts, system state, and
+> command readiness. The product must feel **alive** — never a static admin panel.
+
+Concrete obligations per surface:
+- **Live signal** — a `tac-blink` status dot + "LIVE / synced HH:MM" somewhere
+  in the orchestration layer (honor `prefers-reduced-motion`).
+- **Orchestration layer** — every major page opens with a `command` SurfaceCard:
+  operational overview + live network state + the primary **workflow launchers**
+  (New Shipment / New Manifest / Scan). It is the page's command center, not a
+  decorative banner.
+- **System state** — surface alerts (exceptions), in-flight counts, next
+  departure, sync status — context that implies an operating network behind it.
+- **Charts are embedded intelligence** — framed inside a SurfaceCard with a
+  title + supporting state line; never a bare floating widget.
+- **Identity stays tactical** — mono metadata, sharp radius, violet Orbital
+  signal, brutalist structure. Premium ≠ soft generic SaaS.
+
+---
+
+## 6. Skills to spawn (per task)
 
 | Task | Skill |
 |---|---|
@@ -116,7 +155,7 @@ audit → build → runtime-verify (authenticated :3001) → tac-ui-rubric (≥ 
 
 ---
 
-## 6. Hard stops (will refuse)
+## 7. Hard stops (will refuse)
 
 - `shadcn init` / `apply` / `migrate icons` on this repo.
 - `rounded-2xl` or any non-zero radius.

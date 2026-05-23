@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import Link from "next/link"
 
 import { cn } from "@workspace/ui/lib/utils"
 import {
@@ -8,9 +9,13 @@ import {
   RiTruckLine,
   RiAlertLine,
   RiFlightTakeoffLine,
+  RiAddLine,
+  RiFileList3Line,
 } from "@workspace/ui/icons"
 import { PageShell } from "@workspace/ui/components/composed/page-shell"
 import { PageHeader } from "@workspace/ui/components/composed/page-header"
+import { SurfaceCard } from "@workspace/ui/components/composed/surface-card"
+import { Button } from "@workspace/ui/components/button"
 import { StatCard } from "@workspace/ui/components/composed/stat-card"
 import { OpsGrowthAreaChart } from "@workspace/ui/components/composed/ops-console/ops-growth-chart"
 import { OpsVolumeBarChart } from "@workspace/ui/components/composed/ops-console/ops-volume-chart"
@@ -67,6 +72,41 @@ function V7OpsDashboard({
         overline="Platform"
         title="Dashboard"
         description="Real-time operations overview across the network."
+      />
+
+      {/* Operational overview — the orchestration layer of the page. A
+          `command` SurfaceCard (elevated, violet top accent) carrying live
+          network state + the primary workflow launchers, so the dashboard
+          reads as a command center rather than a metrics grid. */}
+      <SurfaceCard
+        emphasis="command"
+        eyebrow={
+          <span className="inline-flex items-center gap-1.5">
+            <span
+              aria-hidden
+              className="size-1.5 bg-accent-success tac-blink motion-reduce:animate-none"
+            />
+            Network · Live
+          </span>
+        }
+        title="Operations Overview"
+        subtitle="Imphal hub · real-time sync active across the corridor."
+        actions={
+          <>
+            <Button asChild variant="outline" size="sm">
+              <Link href="/ops-console/manifests/create">
+                <RiFileList3Line className="size-4" aria-hidden="true" />
+                New Manifest
+              </Link>
+            </Button>
+            <Button asChild size="sm">
+              <Link href="/ops-console/shipments/create">
+                <RiAddLine className="size-4" aria-hidden="true" />
+                New Shipment
+              </Link>
+            </Button>
+          </>
+        }
       />
 
       {/* Asymmetric KPI constellation (12-col, 5/3/2/2) — a dominant primary
