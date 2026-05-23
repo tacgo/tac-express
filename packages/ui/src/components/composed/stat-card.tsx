@@ -119,8 +119,17 @@ function StatCard({
           <p
             data-slot="stat-card-value"
             className={cn(
-              "t-h2 text-foreground",
-              monoValue && "font-mono tabular-nums tracking-tight"
+              // Hero KPIs carry real visual gravity — the value steps up to
+              // the .t-data display scale (40px mono) so a dominant primary
+              // metric reads first. Non-hero cards stay at .t-h2.
+              variant === "hero"
+                ? monoValue
+                  ? "t-data text-foreground"
+                  : "t-h1 text-foreground"
+                : cn(
+                    "t-h2 text-foreground",
+                    monoValue && "font-mono tabular-nums tracking-tight"
+                  )
             )}
           >
             {value}

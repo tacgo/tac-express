@@ -69,21 +69,32 @@ function V7OpsDashboard({
         description="Real-time operations overview across the network."
       />
 
+      {/* Asymmetric KPI constellation (12-col, 5/3/2/2) — a dominant primary
+          metric carries operational gravity instead of four equal tiles.
+          Open Exceptions gets a destructive left-edge when non-zero so the
+          alert reads pre-attentively regardless of its compact width. */}
       <div
         data-slot="v7-ops-dashboard-kpis"
-        className="grid grid-cols-1 gap-card-gap sm:grid-cols-2 lg:grid-cols-4"
+        className="grid grid-cols-1 gap-card-gap sm:grid-cols-2 lg:grid-cols-12"
       >
         <StatCard
+          className="lg:col-span-5"
+          variant="hero"
           label="Active Shipments"
           value={activeShipments}
-          visual={<RiBox3Line className="size-6 text-primary" aria-hidden="true" />}
+          visual={<RiBox3Line className="size-7 text-primary" aria-hidden="true" />}
         />
         <StatCard
+          className="lg:col-span-3"
           label="In Transit"
           value={inTransit}
           visual={<RiTruckLine className="size-6 text-primary" aria-hidden="true" />}
         />
         <StatCard
+          className={cn(
+            "lg:col-span-2",
+            openExceptions > 0 && "border-l-2 border-l-destructive"
+          )}
           label="Open Exceptions"
           value={openExceptions}
           visual={
@@ -97,6 +108,7 @@ function V7OpsDashboard({
           }
         />
         <StatCard
+          className="lg:col-span-2"
           label="Next Flight ETA"
           value={nextFlightEta ?? "—"}
           monoValue={Boolean(nextFlightEta)}
@@ -114,17 +126,19 @@ function V7OpsDashboard({
           are universal; the outer "Card" surface is the v7 vocabulary
           (sharp corners, brutalist offset shadow, --spacing-card-pad).
           Chart-component v7 redesign is Phase 2d/e. */}
+      {/* Asymmetric panel row (12-col, 5/4/3) — the primary trend leads,
+          the departure calendar compresses to the right rail. */}
       <div
         data-slot="v7-ops-dashboard-panels"
-        className="grid grid-cols-1 gap-card-gap lg:grid-cols-3"
+        className="grid grid-cols-1 gap-card-gap lg:grid-cols-12"
       >
-        <V7Panel data-testid="v7-panel-growth">
+        <V7Panel className="lg:col-span-5" data-testid="v7-panel-growth">
           <OpsGrowthAreaChart />
         </V7Panel>
-        <V7Panel data-testid="v7-panel-volume">
+        <V7Panel className="lg:col-span-4" data-testid="v7-panel-volume">
           <OpsVolumeBarChart />
         </V7Panel>
-        <V7Panel data-testid="v7-panel-upcoming">
+        <V7Panel className="lg:col-span-3" data-testid="v7-panel-upcoming">
           <OpsUpcomingCalendar upcoming={upcoming} />
         </V7Panel>
       </div>
