@@ -19,7 +19,7 @@ import { cva, type VariantProps } from "class-variance-authority"
  * full hardware frame edge-to-edge (none today — reserved for print-in-console
  * style routes). The default is `bounded`.
  */
-export const opsContentVariants = cva("mx-auto w-full", {
+export const opsContentVariants = cva("mx-auto w-full px-6 py-6 lg:px-8 lg:py-8", {
   variants: {
     frame: {
       bounded: "max-w-control",
