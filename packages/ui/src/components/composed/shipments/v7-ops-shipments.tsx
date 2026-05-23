@@ -6,12 +6,33 @@ import { useRouter } from "next/navigation"
 import { type ColumnDef } from "@tanstack/react-table"
 
 import { cn } from "@workspace/ui/lib/utils"
-import { RiAddLine } from "@workspace/ui/icons"
+import { RiAddLine, RiFlashlightLine, RiTruckLine } from "@workspace/ui/icons"
+import type { ShipmentStatus } from "@workspace/types"
 import { PageShell } from "@workspace/ui/components/composed/page-shell"
 import { PageHeader } from "@workspace/ui/components/composed/page-header"
 import { DataTableCard } from "@workspace/ui/components/composed/data-table-card"
 import { DataTable } from "@workspace/ui/components/composed/data-table"
+import { Badge } from "@workspace/ui/components/primitives/badge"
 import { Button } from "@workspace/ui/components/button"
+import {
+  ShipmentStatusBadge,
+  SHIPMENT_STATUS_LABELS,
+} from "./shipment-status-badge"
+
+// The live wrapper title-cases the raw enum for the shared ShipmentRow shape
+// (`IN_TRANSIT` -> "In Transit"); titleCase is reversible, so we map it back to
+// the enum here to drive the signal-colored ShipmentStatusBadge. Unknown
+// strings fall back to CREATED rather than throwing.
+const SHIPMENT_STATUS_ENUMS = Object.keys(
+  SHIPMENT_STATUS_LABELS,
+) as ShipmentStatus[]
+
+function toShipmentStatus(label: string): ShipmentStatus {
+  const candidate = label.trim().toUpperCase().replace(/\s+/g, "_")
+  return SHIPMENT_STATUS_ENUMS.includes(candidate as ShipmentStatus)
+    ? (candidate as ShipmentStatus)
+    : "CREATED"
+}
 
 interface ShipmentRow {
   id: string
@@ -69,9 +90,11 @@ function V7OpsShipments({
         accessorKey: "customer",
         header: "Customer",
         cell: ({ row }) => (
-          <div className="flex flex-col">
-            <span className="t-data text-foreground">{row.original.customer}</span>
-            <span className="font-mono tabular-nums text-xs text-muted-foreground">
+          <div className="flex flex-col min-w-0">
+            <span className="text-sm font-medium text-foreground truncate">
+              {row.original.customer}
+            </span>
+            <span className="font-mono tabular-nums text-xs text-muted-foreground truncate">
               → {row.original.receiver}
             </span>
           </div>
@@ -89,11 +112,22 @@ function V7OpsShipments({
       {
         accessorKey: "service",
         header: "Service",
-        cell: ({ getValue }) => (
-          <span className="font-mono tabular-nums text-xs text-muted-foreground uppercase tracking-wider">
-            {getValue<string>()}
-          </span>
-        ),
+        cell: ({ getValue }) => {
+          const isPriority = getValue<string>() === "PRIORITY"
+          return (
+            <Badge
+              variant={isPriority ? "default" : "secondary"}
+              className="gap-1 font-mono"
+            >
+              {isPriority ? (
+                <RiFlashlightLine className="size-2.5" aria-hidden="true" />
+              ) : (
+                <RiTruckLine className="size-2.5" aria-hidden="true" />
+              )}
+              {getValue<string>()}
+            </Badge>
+          )
+        },
       },
       {
         accessorKey: "weight",
@@ -108,9 +142,7 @@ function V7OpsShipments({
         accessorKey: "status",
         header: "Status",
         cell: ({ getValue }) => (
-          <span className="t-caption uppercase tracking-wider text-foreground">
-            {getValue<string>()}
-          </span>
+          <ShipmentStatusBadge status={toShipmentStatus(getValue<string>())} />
         ),
       },
       {
