@@ -80,6 +80,17 @@ function V7OpsDashboard({
           reads as a command center rather than a metrics grid. */}
       <SurfaceCard
         emphasis="command"
+        className="relative overflow-hidden"
+        style={{
+          // Editorial banner as an atmospheric backdrop, with a left-to-right
+          // card-colored scrim so the operational text + launchers stay
+          // readable. Token-driven (var(--card)) so it adapts to dark mode.
+          backgroundImage:
+            'linear-gradient(90deg, var(--card) 0%, var(--card) 38%, color-mix(in oklch, var(--card) 55%, transparent) 100%), url("/dashboard-banner-v3.png")',
+          backgroundSize: "cover",
+          backgroundPosition: "center right",
+          backgroundRepeat: "no-repeat",
+        }}
         eyebrow={
           <span className="inline-flex items-center gap-1.5">
             <span
