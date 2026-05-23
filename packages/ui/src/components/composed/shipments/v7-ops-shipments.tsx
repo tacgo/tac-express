@@ -6,7 +6,14 @@ import { useRouter } from "next/navigation"
 import { type ColumnDef } from "@tanstack/react-table"
 
 import { cn } from "@workspace/ui/lib/utils"
-import { RiAddLine, RiFlashlightLine, RiTruckLine } from "@workspace/ui/icons"
+import {
+  RiAddLine,
+  RiEyeLine,
+  RiFileCopyLine,
+  RiFlashlightLine,
+  RiMore2Line,
+  RiTruckLine,
+} from "@workspace/ui/icons"
 import type { ShipmentStatus } from "@workspace/types"
 import { PageShell } from "@workspace/ui/components/composed/page-shell"
 import { PageHeader } from "@workspace/ui/components/composed/page-header"
@@ -14,6 +21,14 @@ import { DataTableCard } from "@workspace/ui/components/composed/data-table-card
 import { DataTable } from "@workspace/ui/components/composed/data-table"
 import { Badge } from "@workspace/ui/components/primitives/badge"
 import { Button } from "@workspace/ui/components/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@workspace/ui/components/primitives/dropdown-menu"
 import {
   ShipmentStatusBadge,
   SHIPMENT_STATUS_LABELS,
@@ -158,8 +173,60 @@ function V7OpsShipments({
           </span>
         ),
       },
+      {
+        id: "actions",
+        header: "",
+        enableSorting: false,
+        size: 48,
+        cell: ({ row }) => (
+          // stopPropagation so opening the menu doesn't trigger the row's
+          // navigate-on-click handler.
+          <div className="flex justify-end" onClick={(e) => e.stopPropagation()}>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  className="size-7 text-muted-foreground hover:text-foreground"
+                  aria-label={`Actions for ${row.original.id}`}
+                >
+                  <RiMore2Line className="size-4" aria-hidden="true" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-44">
+                <DropdownMenuLabel className="font-mono text-2xs uppercase tracking-wider text-muted-foreground">
+                  {row.original.id}
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  className="text-xs"
+                  onSelect={() =>
+                    router.push(
+                      row.original.detailHref ??
+                        `/ops-console/shipments/${row.original.id}`,
+                    )
+                  }
+                >
+                  <RiEyeLine className="size-3.5" aria-hidden="true" />
+                  View details
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  className="text-xs"
+                  onSelect={() => {
+                    void navigator.clipboard?.writeText(row.original.id)
+                  }}
+                >
+                  <RiFileCopyLine className="size-3.5" aria-hidden="true" />
+                  Copy AWB
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        ),
+      },
     ],
-    []
+    [router]
   )
 
   const handleRowClick = React.useCallback(
