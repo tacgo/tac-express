@@ -210,8 +210,9 @@ export function ManifestBuilderWizard({
         </div>
       </div>
 
-      {/* Footer actions */}
-      <footer className="flex flex-wrap items-center justify-between gap-2 border-t border-border pt-3">
+      {/* Sticky action rail — stays in view as the form scrolls, so the
+          primary action is always reachable in a long multi-step flow. */}
+      <footer className="sticky bottom-0 z-10 flex flex-wrap items-center justify-between gap-2 border-t border-border bg-background py-3">
         <Button variant="ghost" onClick={tryCancel}>
           Cancel
         </Button>

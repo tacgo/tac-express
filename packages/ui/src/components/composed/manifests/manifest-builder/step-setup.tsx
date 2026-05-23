@@ -132,6 +132,7 @@ export function StepSetup({
 
       {/* Route */}
       <section className="grid gap-3 sm:grid-cols-2">
+        <SectionEyebrow className="sm:col-span-2">Route</SectionEyebrow>
         <div className="grid gap-1.5">
           <Label htmlFor="from-hub">From Hub</Label>
           <Combobox
@@ -183,6 +184,7 @@ export function StepSetup({
       {/* Mode-specific block */}
       {value.type === "AIR" ? (
         <section className="grid gap-3 sm:grid-cols-2">
+          <SectionEyebrow className="sm:col-span-2">Flight details</SectionEyebrow>
           <div className="grid gap-1.5">
             <Label htmlFor="airline">Airline Code (3-char)</Label>
             {/* Semantic width — a 3-char code field should look like one. */}
@@ -239,6 +241,7 @@ export function StepSetup({
         </section>
       ) : (
         <section className="grid gap-3 sm:grid-cols-2">
+          <SectionEyebrow className="sm:col-span-2">Vehicle &amp; driver</SectionEyebrow>
           <div className="grid gap-1.5">
             <Label htmlFor="vehicle">Vehicle Number</Label>
             <Input
@@ -340,5 +343,26 @@ export function StepSetup({
         />
       </section>
     </div>
+  )
+}
+
+/** Section group heading — mono eyebrow that chunks the form into scannable
+ *  operational blocks (Route / Flight details / Vehicle & driver / …). */
+function SectionEyebrow({
+  children,
+  className,
+}: {
+  children: React.ReactNode
+  className?: string
+}) {
+  return (
+    <p
+      className={cn(
+        "font-mono text-ui-10 uppercase tracking-widest text-muted-foreground",
+        className
+      )}
+    >
+      {children}
+    </p>
   )
 }
