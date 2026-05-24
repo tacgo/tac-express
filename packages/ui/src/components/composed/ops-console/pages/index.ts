@@ -3,33 +3,20 @@ export {
   type OpsAnalyticsViewProps,
   type AnalyticsKpis,
 } from "./ops-analytics-view"
-export {
-  OpsShipmentsView,
-  type OpsShipmentsViewProps,
-  type ShipmentRow,
-} from "./ops-shipments-view"
-export {
-  OpsManifestsView,
-  type OpsManifestsViewProps,
-  type ManifestRow,
-} from "./ops-manifests-view"
+// OpsShipmentsView (v6 paper) retired in Phase 5 — shipments route renders
+// V7OpsShipments; ShipmentRow lives in `shipments/v7-ops-shipments`.
+// OpsManifestsView (v6 paper) retired in Phase 5 — manifests route renders
+// V7OpsManifests; ManifestRow lives in `manifests/v7-ops-manifests`.
 export { OpsScanningView } from "./ops-scanning-view"
-export {
-  OpsInventoryView,
-  type OpsInventoryViewProps,
-  type HubInventory,
-} from "./ops-inventory-view"
+// OpsInventoryView (v6 paper) retired in Phase 5 — inventory route renders
+// V7OpsInventory; HubInventory lives in `inventory/v7-ops-inventory`.
 export {
   OpsExceptionsView,
   type OpsExceptionsViewProps,
   type ExceptionRow,
 } from "./ops-exceptions-view"
-export {
-  OpsFinanceView,
-  type OpsFinanceViewProps,
-  type InvoiceRow,
-  type AgingBucket,
-} from "./ops-finance-view"
+// OpsFinanceView (v6 paper) retired in Phase 5 — finance route renders
+// V7OpsFinance; InvoiceRow + AgingBucket live in `finance/v7-ops-finance`.
 // OpsRateCardsView (v6 paper) retired in Phase 4 composition unification —
 // the rates route renders the canonical V7OpsRateCards. RateCardRow now lives
 // in `rates/v7-ops-rate-cards`.

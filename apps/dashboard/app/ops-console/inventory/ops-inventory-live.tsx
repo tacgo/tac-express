@@ -5,12 +5,10 @@ import { useQueryClient } from "@tanstack/react-query"
 
 import { useInventoryByHub } from "@workspace/services/hooks/use-analytics"
 import type { HubInventoryItem } from "@workspace/types"
-import { useDesignVersion } from "@workspace/ui/hooks/use-design-version"
 import {
-  OpsInventoryView,
+  V7OpsInventory,
   type HubInventory,
-} from "@workspace/ui/components/composed/ops-console/pages"
-import { V7OpsInventory } from "@workspace/ui/components/composed/inventory/v7-ops-inventory"
+} from "@workspace/ui/components/composed/inventory/v7-ops-inventory"
 
 function toHub(h: HubInventoryItem): HubInventory {
   return {
@@ -29,17 +27,13 @@ function toHub(h: HubInventoryItem): HubInventory {
 }
 
 /**
- * Client wrapper. Branches on the design-version flag:
- *   - v6 (default) → Paper Ops Console `<OpsInventoryView />`
- *   - v7           → Violet-Grid v7 `<V7OpsInventory />` (Phase 2d)
- *
- * Both views consume the same `useInventoryByHub()` hook.
- * Rollback: `localStorage.setItem('tac-design','v6'); location.reload()`.
+ * Client wrapper — renders the canonical v7 `<V7OpsInventory />`. The v6 paper
+ * view was retired in the Phase 5 composition unification (one component per
+ * route). Consumes `useInventoryByHub()`.
  */
 export function OpsInventoryLive() {
   const queryClient = useQueryClient()
   const { data = [], isFetching } = useInventoryByHub()
-  const { version } = useDesignVersion()
 
   const handleRefresh = React.useCallback(() => {
     void queryClient.invalidateQueries({
@@ -49,21 +43,7 @@ export function OpsInventoryLive() {
 
   const hubs = data.map(toHub)
 
-  if (version === "v7") {
-    return (
-      <V7OpsInventory
-        hubs={hubs}
-        isLoading={isFetching}
-        onRefresh={handleRefresh}
-      />
-    )
-  }
-
   return (
-    <OpsInventoryView
-      hubs={hubs}
-      isLoading={isFetching}
-      onRefresh={handleRefresh}
-    />
+    <V7OpsInventory hubs={hubs} isLoading={isFetching} onRefresh={handleRefresh} />
   )
 }
