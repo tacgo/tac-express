@@ -10,15 +10,20 @@ function OpsTable({
   className,
   ...props
 }: React.TableHTMLAttributes<HTMLTableElement>) {
+  // Horizontal-scroll wrapper so wide operational tables stay usable on narrow
+  // screens instead of clipping (the old `overflow-hidden` on the table cut
+  // columns off on mobile). The table keeps its border; the wrapper scrolls.
   return (
-    <table
-      data-slot="ops-table"
-      className={cn(
-        "w-full border-collapse bg-card border border-border overflow-hidden",
-        className,
-      )}
-      {...props}
-    />
+    <div className="w-full overflow-x-auto">
+      <table
+        data-slot="ops-table"
+        className={cn(
+          "w-full border-collapse bg-card border border-border",
+          className,
+        )}
+        {...props}
+      />
+    </div>
   )
 }
 
