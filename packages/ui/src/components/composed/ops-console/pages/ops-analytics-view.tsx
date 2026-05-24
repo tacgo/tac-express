@@ -43,7 +43,7 @@ function OpsAnalyticsView({ kpis }: OpsAnalyticsViewProps) {
           scale; secondary operational metrics recede to the compact tier. Same
           StatCard system as the overview — sharp surfaces, violet, mono
           numerals, no added borders (grouping via spacing + scale, not boxes). */}
-      <div className="grid grid-cols-3 gap-4 mb-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
         <StatCard
           label="Total Shipments"
           value={kpis.totalShipments}
@@ -61,7 +61,7 @@ function OpsAnalyticsView({ kpis }: OpsAnalyticsViewProps) {
           visual={<RiCheckboxCircleLine aria-hidden className="size-5 text-muted-foreground" />}
         />
       </div>
-      <div className="grid grid-cols-3 gap-4 mb-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
         <StatCard
           variant="compact"
           label="In Transit"
@@ -85,7 +85,7 @@ function OpsAnalyticsView({ kpis }: OpsAnalyticsViewProps) {
       </div>
 
       {/* Charts */}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <OpsCard ticks>
           <OpsShipmentBarChart />
         </OpsCard>

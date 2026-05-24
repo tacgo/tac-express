@@ -103,7 +103,7 @@ function OpsManagementView({
       />
       <OpsTabs items={[...TABS]} value={tab} onChange={setTab} />
 
-      <div className="grid grid-cols-4 gap-4 mb-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
         {stats.map(([label, value]) => (
           <OpsCard key={label}>
             <div className="paper-label">{label}</div>

@@ -71,7 +71,7 @@ function OpsScanningView() {
       </div>
 
       {/* Mode pills */}
-      <div className="grid grid-cols-4 gap-3 mb-3.5">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-3.5">
         {MODES.map((m) => {
           const Icon = m.icon
           return (
