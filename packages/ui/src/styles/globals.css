@@ -749,7 +749,10 @@
      via the bracket-token form `rounded-[var(--radius-control)]`, which the
      LAW-13 lint rule + design-spec audit permit (they only ban the named
      rounded-{md,lg,…} scale). Do NOT apply to cards/surfaces. */
-  --radius-control: 0.875rem; /* 14px — control corner softening */
+  --radius-control: 0.375rem; /* 6px — restrained premium control softening.
+                                 Dialed back from 14px (read as playful/pill on
+                                 small buttons); 6px is the Linear/Vercel-class
+                                 enterprise touch — soft, not consumer. */
 
   --shadow-2xs: var(--shadow-2xs);
   --shadow-xs: var(--shadow-xs);
