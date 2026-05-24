@@ -167,9 +167,25 @@ interface FieldProps {
   hint?: string
   error?: string
   className?: string
+  /**
+   * Ergonomic control width — a field's width signals its expected input
+   * length (a date never looks like a 40-char address). Defaults to `lg`
+   * (40ch) so fields never stretch the full column. Use `full` only for
+   * textareas / address blocks that genuinely need the cell width. Maps to the
+   * shared `--spacing-field-*` tokens — same vocabulary as the shipment wizard.
+   */
+  width?: "sm" | "md" | "lg" | "full"
 }
 
-function Field({ label, required, children, hint, error, className }: FieldProps) {
+const FIELD_WIDTH: Record<NonNullable<FieldProps["width"]>, string> = {
+  sm: "max-w-field-sm",
+  md: "max-w-field-md",
+  lg: "max-w-field-lg",
+  full: "",
+}
+
+function Field({ label, required, children, hint, error, className, width = "lg" }: FieldProps) {
+  const widthClass = FIELD_WIDTH[width]
   // a11y: implicit label-input association — the <label> element wraps the
   // children so any interactive descendant (<input>, <select>, <textarea>)
   // is associated with the label without needing a generated `htmlFor`+`id`
@@ -185,7 +201,7 @@ function Field({ label, required, children, hint, error, className }: FieldProps
           {label}
           {required && <span className="text-destructive">*</span>}
         </span>
-        {children}
+        {widthClass ? <div className={widthClass}>{children}</div> : children}
       </label>
       {hint && !error && (
         <p className="font-sans text-xs text-muted-foreground/70">{hint}</p>
@@ -249,7 +265,7 @@ function BasicsStep({
                 aria-label="Regenerate AWB number"
                 onClick={onRegenerateAwb}
                 disabled={isGeneratingAwb}
-                className="flex h-9 w-9 shrink-0 items-center justify-center border border-border text-muted-foreground hover:border-primary/60 hover:text-primary disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="flex h-12 w-12 shrink-0 items-center justify-center border border-border text-muted-foreground hover:border-primary/60 hover:text-primary disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 <RiRefreshLine
                   className={cn("h-3.5 w-3.5", isGeneratingAwb && "animate-spin")}
@@ -259,7 +275,7 @@ function BasicsStep({
             )}
           </div>
         </Field>
-        <Field label="Date of Booking" required>
+        <Field label="Date of Booking" required width="sm">
           <input
             type="date"
             value={state.bookingDate}
@@ -270,7 +286,7 @@ function BasicsStep({
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Field label="Payment Mode" required>
+        <Field label="Payment Mode" required width="md">
           <select
             value={state.paymentMode}
             onChange={(e) => onChange({ paymentMode: e.target.value as PaymentModeLiteral })}
@@ -281,7 +297,7 @@ function BasicsStep({
             <option value="TBB">TBB — To be billed</option>
           </select>
         </Field>
-        <Field label="Nature of Quantity">
+        <Field label="Nature of Quantity" width="md">
           <input
             value={state.natureOfQuantity}
             onChange={(e) => onChange({ natureOfQuantity: e.target.value })}
@@ -289,7 +305,7 @@ function BasicsStep({
             className={inputClass}
           />
         </Field>
-        <Field label="Declared Value">
+        <Field label="Declared Value" width="md">
           <input
             value={state.declaredValue}
             onChange={(e) => onChange({ declaredValue: e.target.value })}
@@ -300,7 +316,7 @@ function BasicsStep({
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <Field label="Remarks" hint="Optional — printed on invoice">
+        <Field label="Remarks" hint="Optional — printed on invoice" width="full">
           <textarea
             value={state.remarks}
             onChange={(e) => onChange({ remarks: e.target.value })}
@@ -309,7 +325,7 @@ function BasicsStep({
             placeholder="DUE, etc."
           />
         </Field>
-        <Field label="Internal Notes" hint="Optional — not printed on invoice">
+        <Field label="Internal Notes" hint="Optional — not printed on invoice" width="full">
           <textarea
             value={state.notes}
             onChange={(e) => onChange({ notes: e.target.value })}
@@ -381,14 +397,14 @@ function PartiesStep({
                   placeholder="Select customer…"
                   searchPlaceholder="Search by name…"
                   emptyMessage="No matching customer."
-                  triggerClassName="h-9 border-border font-sans text-sm normal-case tracking-normal"
+                  triggerClassName="h-12 border-border font-sans text-sm normal-case tracking-normal"
                 />
                 {state.customerId && (
                   <button
                     type="button"
                     aria-label="Clear customer"
                     onClick={handleClearCustomer}
-                    className="flex h-9 w-8 shrink-0 items-center justify-center border border-border text-muted-foreground hover:border-destructive/60 hover:text-destructive transition-colors"
+                    className="flex h-12 w-12 shrink-0 items-center justify-center border border-border text-muted-foreground hover:border-destructive/60 hover:text-destructive transition-colors"
                   >
                     <RiCloseLine className="h-3.5 w-3.5" />
                   </button>
@@ -406,7 +422,7 @@ function PartiesStep({
             </Field>
           )}
 
-          <Field label="Customer GSTIN" hint="Optional — 15 character identifier">
+          <Field label="Customer GSTIN" hint="Optional — 15 character identifier" width="md">
             <input
               value={state.customerGstin}
               onChange={(e) => onChange({ customerGstin: e.target.value.toUpperCase() })}
@@ -482,7 +498,7 @@ function PartiesStep({
               className={inputClass}
             />
           </Field>
-          <Field label="Phone">
+          <Field label="Phone" width="md">
             <input
               value={state.consignorPhone}
               onChange={(e) => onChange({ consignorPhone: e.target.value })}
@@ -490,7 +506,7 @@ function PartiesStep({
               className={monoInputClass}
             />
           </Field>
-          <Field label="Address">
+          <Field label="Address" width="full">
             <textarea
               value={state.consignorAddress}
               onChange={(e) => onChange({ consignorAddress: e.target.value })}
@@ -512,7 +528,7 @@ function PartiesStep({
               className={inputClass}
             />
           </Field>
-          <Field label="Phone">
+          <Field label="Phone" width="md">
             <input
               value={state.consigneePhone}
               onChange={(e) => onChange({ consigneePhone: e.target.value })}
@@ -520,7 +536,7 @@ function PartiesStep({
               className={monoInputClass}
             />
           </Field>
-          <Field label="Address">
+          <Field label="Address" width="full">
             <textarea
               value={state.consigneeAddress}
               onChange={(e) => onChange({ consigneeAddress: e.target.value })}
@@ -607,7 +623,7 @@ function CargoStep({
       </Field>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Field label="Origin Hub" required>
+        <Field label="Origin Hub" required width="md">
           <select
             value={state.origin}
             onChange={(e) => onChange({ origin: e.target.value as HubCodeLiteral })}
@@ -618,7 +634,7 @@ function CargoStep({
             <option value="GUWAHATI">GUWAHATI</option>
           </select>
         </Field>
-        <Field label="Destination Hub" required>
+        <Field label="Destination Hub" required width="md">
           <select
             value={state.destination}
             onChange={(e) => onChange({ destination: e.target.value as HubCodeLiteral })}
@@ -629,7 +645,7 @@ function CargoStep({
             <option value="GUWAHATI">GUWAHATI</option>
           </select>
         </Field>
-        <Field label="Service Level" required>
+        <Field label="Service Level" required width="md">
           <select
             value={state.serviceLevel}
             onChange={(e) => onChange({ serviceLevel: e.target.value as ServiceLevelLiteral })}
@@ -643,7 +659,7 @@ function CargoStep({
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Field label="Actual Weight (kg)">
+        <Field label="Actual Weight (kg)" width="sm">
           <input
             type="number"
             step="0.001"
@@ -654,7 +670,7 @@ function CargoStep({
             className={monoInputClass}
           />
         </Field>
-        <Field label="Chargeable Weight (kg)" required error={errors.weightKg}>
+        <Field label="Chargeable Weight (kg)" required error={errors.weightKg} width="sm">
           <input
             type="number"
             step="0.001"
@@ -665,7 +681,7 @@ function CargoStep({
             className={monoInputClass}
           />
         </Field>
-        <Field label="Pieces">
+        <Field label="Pieces" width="sm">
           <input
             type="number"
             min={1}
@@ -682,6 +698,7 @@ function CargoStep({
         <Field
           label="Rate per kg (₹)"
           hint="Base Freight = chargeable weight × rate. Override in Step 4 if needed."
+          width="md"
         >
           <div className="relative">
             <span className="absolute left-3 top-1/2 -translate-y-1/2 font-mono text-xs text-muted-foreground pointer-events-none">
@@ -702,7 +719,7 @@ function CargoStep({
         {/* Live computed preview */}
         {computedFreight !== null ? (
           <Field label="Computed Base Freight">
-            <div className="flex h-9 items-center border border-primary/20 bg-primary/5 px-3 gap-2">
+            <div className="flex h-12 items-center border border-primary/20 bg-primary/5 px-3 gap-2">
               <span className="font-mono text-xs text-muted-foreground tabular-nums">
                 {weight} kg × ₹{rate}
               </span>
@@ -717,7 +734,7 @@ function CargoStep({
           </Field>
         ) : (
           <Field label="Computed Base Freight">
-            <div className="flex h-9 items-center border border-border/40 bg-muted/20 px-3">
+            <div className="flex h-12 items-center border border-border/40 bg-muted/20 px-3">
               <span className="font-mono text-xs text-muted-foreground/50">
                 Enter weight and rate above
               </span>
