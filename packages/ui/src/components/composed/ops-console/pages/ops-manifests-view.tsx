@@ -83,7 +83,7 @@ function OpsManifestsView({
   const filtered = items.filter((m) => (tab === "All" ? true : m.status === tab))
 
   return (
-    <OpsFrame>
+    <OpsFrame size="table">
       <OpsPageHead
         eyebrow="Operations"
         title="Manifests"

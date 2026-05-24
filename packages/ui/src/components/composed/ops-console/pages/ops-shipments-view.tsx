@@ -92,7 +92,7 @@ function OpsShipmentsView({
   const paginated = filtered.slice(pageStart, pageStart + PAGE_SIZE)
 
   return (
-    <OpsFrame>
+    <OpsFrame size="table">
       <OpsPageHead
         eyebrow="Operations"
         title="Shipments"

@@ -44,7 +44,7 @@ function OpsRateCardsView({ rows }: OpsRateCardsViewProps) {
   })
 
   return (
-    <OpsFrame>
+    <OpsFrame size="table">
       <OpsPageHead
         eyebrow="Business"
         title="Rate Cards"
