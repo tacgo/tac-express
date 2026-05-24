@@ -11,6 +11,7 @@ import {
   RiMoonClearLine,
   RiArrowDownSLine,
   RiSettingsLine,
+  RiMenuLine,
 } from "@workspace/ui/icons"
 import {
   DropdownMenu,
@@ -23,6 +24,8 @@ import {
 
 interface OpsTopbarProps {
   crumbs: string[]
+  /** Opens the mobile navigation drawer. Renders a hamburger (< lg only). */
+  onMenuClick?: () => void
 }
 
 type ThemeKey = "C" | "M" | "S"
@@ -37,7 +40,7 @@ const NEXT_TO_THEME: Record<string, ThemeKey> = {
   system: "S",
 }
 
-function OpsTopbar({ crumbs }: OpsTopbarProps) {
+function OpsTopbar({ crumbs, onMenuClick }: OpsTopbarProps) {
   const { theme: nextTheme, setTheme: setNextTheme, resolvedTheme } = useTheme()
 
   // `next-themes` returns `undefined` on the server (it can't read
@@ -74,6 +77,19 @@ function OpsTopbar({ crumbs }: OpsTopbarProps) {
       aria-label="Session controls"
       className="flex items-center px-6 h-14 border-b border-border bg-card"
     >
+      {/* Mobile nav toggle — opens the sidebar drawer. Hidden on lg+ where the
+          sidebar is always visible in the shell grid. */}
+      {onMenuClick ? (
+        <button
+          type="button"
+          aria-label="Open navigation menu"
+          onClick={onMenuClick}
+          className="lg:hidden -ml-1 mr-2 flex size-8 items-center justify-center border border-border bg-card text-muted-foreground hover:bg-muted focus-visible:outline-none focus-visible:tac-focus-premium transition-colors duration-fast ease-linear"
+        >
+          <RiMenuLine aria-hidden className="size-4" />
+        </button>
+      ) : null}
+
       {/* Breadcrumbs */}
       <div className="font-mono font-medium text-ui-12 tracking-crumb text-muted-foreground">
         {crumbs.map((c, i) => (

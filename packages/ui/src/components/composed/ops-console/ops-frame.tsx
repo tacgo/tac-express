@@ -39,7 +39,9 @@ function OpsFrame({ children, className, size = "content", ...props }: OpsFrameP
       >
         <span aria-hidden className="paper-tick-tl" />
         <span aria-hidden className="paper-tick-br" />
-        <div className="px-8 pt-7 pb-9">{children}</div>
+        {/* Tighter gutters on mobile so the bordered frame doesn't eat a phone's
+            narrow width; full editorial padding from sm up. */}
+        <div className="px-4 pt-5 pb-6 sm:px-8 sm:pt-7 sm:pb-9">{children}</div>
       </div>
     </ContentFrame>
   )

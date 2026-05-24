@@ -5,6 +5,11 @@ import { usePathname } from "next/navigation"
 
 import { cn } from "@workspace/ui/lib/utils"
 import { Sidebar } from "@workspace/ui/components/composed/sidebar"
+import {
+  Sheet,
+  SheetContent,
+  SheetTitle,
+} from "@workspace/ui/components/primitives/sheet"
 import { OpsTopbar } from "./ops-topbar"
 import { opsContentVariants } from "./ops-content"
 
@@ -57,6 +62,7 @@ function OpsShell({
   className,
 }: OpsShellProps) {
   const pathname = usePathname() ?? "/ops-console"
+  const [mobileNavOpen, setMobileNavOpen] = React.useState(false)
 
   const resolvedCrumbs = React.useMemo(() => {
     if (crumbs && crumbs.length > 0) return crumbs
@@ -65,21 +71,34 @@ function OpsShell({
     return [envCrumb, ...rest.split("/").filter(Boolean).map(titleCase)]
   }, [crumbs, pathname, envCrumb])
 
+  // Close the mobile drawer whenever the route changes.
+  React.useEffect(() => {
+    setMobileNavOpen(false)
+  }, [pathname])
+
   return (
     <div
       data-slot="ops-shell"
       className={cn(
         // The ops-console class scopes the paper-* utilities below.
         "ops-console",
-        "grid grid-cols-[var(--sidebar-w)_1fr] min-h-screen bg-background text-foreground",
+        // Responsive shell: single column on mobile/tablet (content full-width,
+        // sidebar lives in the drawer), two-column sidebar + content from lg up.
+        "grid grid-cols-1 lg:grid-cols-[var(--sidebar-w)_1fr] min-h-screen bg-background text-foreground",
         // Force Paper-Console fonts inside this subtree without touching v6 routes.
         "font-sans",
         className,
       )}
     >
-      <Sidebar />
+      {/* Desktop sidebar — in-grid; hidden below lg, where the drawer takes over. */}
+      <div className="hidden lg:block">
+        <Sidebar />
+      </div>
       <div className="flex flex-col min-w-0">
-        <OpsTopbar crumbs={resolvedCrumbs} />
+        <OpsTopbar
+          crumbs={resolvedCrumbs}
+          onMenuClick={() => setMobileNavOpen(true)}
+        />
         {/*
           Shell-tier width contract: every route's content is centered and
           capped at the hardware-frame ceiling so nothing sprawls on an
@@ -90,6 +109,14 @@ function OpsShell({
           <div className={opsContentVariants()}>{children}</div>
         </main>
       </div>
+
+      {/* Mobile navigation drawer (< lg) — the same Sidebar, off-canvas. */}
+      <Sheet open={mobileNavOpen} onOpenChange={setMobileNavOpen}>
+        <SheetContent side="left" className="w-60 p-0 lg:hidden">
+          <SheetTitle className="sr-only">Navigation</SheetTitle>
+          <Sidebar />
+        </SheetContent>
+      </Sheet>
     </div>
   )
 }
