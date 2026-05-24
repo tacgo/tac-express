@@ -6,7 +6,7 @@ import { cn } from "@workspace/ui/lib/utils"
  * template's grid decorator into Violet Grid: the `tac-fui-grid` utility
  * supplies the token-driven grid (no arbitrary gradient), `overflow-hidden`
  * clips to the rectilinear boundary (LAW 13 — no curved masks), and the icon
- * sits in a sharp bordered square (no rounded-full).
+ * sits in a sharp bordered square (no pill or circular mask).
  */
 export function CardDecorator({
   children,

@@ -72,7 +72,7 @@ function OpsAnalyticsView({ kpis }: OpsAnalyticsViewProps) {
           variant="compact"
           label="Open Exceptions"
           value={kpis.openExceptions}
-          context="All clear"
+          context={kpis.openExceptions > 0 ? `${kpis.openExceptions} open` : "All clear"}
           visual={<RiAlertLine aria-hidden className="size-5 text-muted-foreground" />}
         />
         <StatCard

@@ -12,7 +12,7 @@ import { EASE_SMOOTH } from "./motion"
  * <SectorMarquee> — social-proof strip.
  *
  * Replaces the source template's brand-logo InfiniteSlider (which relied on
- * third-party trademarks + a backdrop-blur ProgressiveBlur, both off-limits
+ * third-party trademarks + a glass ProgressiveBlur overlay, both off-limits
  * here) with a seamless marquee of the sectors TAC Express serves, rendered
  * as mono chips. The track is duplicated so an x: 0 → -50% loop is seamless;
  * `prefers-reduced-motion` renders it static. Edge gradients fade into the

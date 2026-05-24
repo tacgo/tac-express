@@ -654,6 +654,9 @@
      keep the compact h-8 default. Form fields breathe at 48px. */
   --spacing-form-control: 3rem;          /* 48px — input / select height in forms */
   --spacing-form-control-textarea: 7.5rem; /* 120px — textarea min-height in forms */
+  --spacing-form-control-px: 0.75rem;    /* 12px — horizontal inset for form controls */
+  --spacing-form-control-textarea-py: 0.625rem; /* 10px — textarea vertical inset */
+  --text-form-control: 0.875rem;         /* 14px — form-control text size */
 
   /* ── Page-gutter + card-rhythm tokens (NextAdmin parity, Violet-Grid translated) ──
      Responsive page padding scales by breakpoint; card padding + gap are
@@ -1518,14 +1521,14 @@
       [type="file"]
     ) {
     height: var(--spacing-form-control);
-    padding-inline: 0.75rem;
-    font-size: 0.875rem;
+    padding-inline: var(--spacing-form-control-px);
+    font-size: var(--text-form-control);
     border-radius: var(--radius-control);
   }
   :is([data-slot="form-field"], [data-slot="wizard-field"]) textarea {
     min-height: var(--spacing-form-control-textarea);
-    padding: 0.625rem 0.75rem;
-    font-size: 0.875rem;
+    padding: var(--spacing-form-control-textarea-py) var(--spacing-form-control-px);
+    font-size: var(--text-form-control);
     border-radius: var(--radius-control);
   }
 }
