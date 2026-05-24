@@ -45,8 +45,8 @@ function OpsErrorState({
         <RiErrorWarningLine aria-hidden className="size-6 text-destructive" />
       </div>
       <div className="col-span-11 space-y-2">
-        <span className="paper-eyebrow text-destructive">{code}</span>
-        <h3 className="paper-h3">{headline}</h3>
+        <span className="tac-mono-label text-destructive">{code}</span>
+        <h3 className="t-h3 text-foreground">{headline}</h3>
         {message && (
           <p className="font-mono text-ui-12 text-muted-foreground">
             {message}

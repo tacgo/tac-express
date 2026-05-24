@@ -42,9 +42,9 @@ function OpsEmptyState({
       {Icon && (
         <Icon aria-hidden className="size-10 text-muted-foreground" />
       )}
-      <span className="paper-eyebrow">{eyebrow}</span>
-      <h3 className="paper-h3">{headline}</h3>
-      <p className="font-sans text-ui-13 text-muted-foreground max-w-prose">
+      <span className="tac-mono-label text-muted-foreground">{eyebrow}</span>
+      <h3 className="t-h3 text-foreground">{headline}</h3>
+      <p className="t-body-sm text-muted-foreground max-w-prose">
         {description}
       </p>
       {cta && <div className="mt-2">{cta}</div>}
