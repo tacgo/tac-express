@@ -33,11 +33,8 @@ export {
 // OpsRateCardsView (v6 paper) retired in Phase 4 composition unification —
 // the rates route renders the canonical V7OpsRateCards. RateCardRow now lives
 // in `rates/v7-ops-rate-cards`.
-export {
-  OpsCustomersView,
-  type OpsCustomersViewProps,
-  type CustomerRow,
-} from "./ops-customers-view"
+// OpsCustomersView (v6 paper) retired in Phase 4 — customers route renders
+// V7OpsCustomers; CustomerRow lives in `customers/v7-ops-customers`.
 export {
   OpsManagementView,
   type OpsManagementViewProps,
