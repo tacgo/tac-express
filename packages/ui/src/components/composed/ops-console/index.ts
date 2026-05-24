@@ -2,7 +2,7 @@ export { OpsShell, type OpsShellProps } from "./ops-shell"
 // OpsSidebar removed — consolidated into the shared `<Sidebar>` at
 // `@workspace/ui/components/composed/sidebar`. Import that instead.
 export { OpsTopbar, type OpsTopbarProps } from "./ops-topbar"
-export { OpsFrame, type OpsFrameProps } from "./ops-frame"
+export { OpsFrame, WorkflowShell, type OpsFrameProps } from "./ops-frame"
 export { OpsPageHead, type OpsPageHeadProps } from "./ops-page-head"
 export { OpsButton, opsButtonVariants, type OpsButtonProps } from "./ops-button"
 export { OpsBadge, opsBadgeVariants, type OpsBadgeProps } from "./ops-badge"
