@@ -38,11 +38,11 @@ function OpsAnalyticsView({ kpis }: OpsAnalyticsViewProps) {
         sub="Operations overview across all hubs"
       />
 
-      {/* KPI grid — propagated to the StatCard hierarchy system so Analytics
-          shares the overview's metric scale + spacing rhythm (consistency
-          propagation phase). Sharp surfaces, violet signal, mono numerals
-          retained. Replaces the legacy paper-* KPI cards which mixed two value
-          sizes (paper-stat-value vs text-ui-28) — the hierarchy inconsistency. */}
+      {/* KPI hierarchy (STEP 3 — surface grouping). Two tiers instead of one
+          flat 6-box grid: primary business metrics lead at the default 32px
+          scale; secondary operational metrics recede to the compact tier. Same
+          StatCard system as the overview — sharp surfaces, violet, mono
+          numerals, no added borders (grouping via spacing + scale, not boxes). */}
       <div className="grid grid-cols-3 gap-4 mb-4">
         <StatCard
           label="Total Shipments"
@@ -60,18 +60,23 @@ function OpsAnalyticsView({ kpis }: OpsAnalyticsViewProps) {
           context={`${kpis.deliveryRate}% delivery rate`}
           visual={<RiCheckboxCircleLine aria-hidden className="size-5 text-muted-foreground" />}
         />
+      </div>
+      <div className="grid grid-cols-3 gap-4 mb-4">
         <StatCard
+          variant="compact"
           label="In Transit"
           value={kpis.inTransit}
           visual={<RiPlaneLine aria-hidden className="size-5 text-muted-foreground" />}
         />
         <StatCard
+          variant="compact"
           label="Open Exceptions"
           value={kpis.openExceptions}
           context="All clear"
           visual={<RiAlertLine aria-hidden className="size-5 text-muted-foreground" />}
         />
         <StatCard
+          variant="compact"
           label="Avg Delivery Days"
           value={kpis.avgDeliveryDays}
           monoValue={false}
