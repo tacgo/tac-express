@@ -742,6 +742,14 @@
   --radius-md: var(--radius);
   --radius-lg: var(--radius);
   --radius-xl: var(--radius);
+  /* LAW 13 carve-out — interactive CONTROLS only (inputs, buttons, selects).
+     Structural surfaces (cards, tables, panels, dialogs) stay 0-radius. This
+     is the "round controls only" hybrid decision: modernize what the operator
+     touches while preserving the brutalist architectural identity. Referenced
+     via the bracket-token form `rounded-[var(--radius-control)]`, which the
+     LAW-13 lint rule + design-spec audit permit (they only ban the named
+     rounded-{md,lg,…} scale). Do NOT apply to cards/surfaces. */
+  --radius-control: 0.875rem; /* 14px — control corner softening */
 
   --shadow-2xs: var(--shadow-2xs);
   --shadow-xs: var(--shadow-xs);
@@ -1494,11 +1502,13 @@
     height: var(--spacing-form-control);
     padding-inline: 0.75rem;
     font-size: 0.875rem;
+    border-radius: var(--radius-control);
   }
   :is([data-slot="form-field"], [data-slot="wizard-field"]) textarea {
     min-height: var(--spacing-form-control-textarea);
     padding: 0.625rem 0.75rem;
     font-size: 0.875rem;
+    border-radius: var(--radius-control);
   }
 }
 

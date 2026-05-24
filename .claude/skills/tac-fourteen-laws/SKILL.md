@@ -178,18 +178,40 @@ pnpm add foo
 pnpm dlx some-tool
 ```
 
-### LAW 13 — Straight lines only
+### LAW 13 — Straight lines only (structural surfaces)
 
 ```
 ❌ rounded-full / rounded-2xl / rounded-lg with non-zero radius
 ❌ SVG paths with curve commands: C, S, Q, T, A
 ❌ border-radius: 50% / 9999px
 ❌ Wavy decorations / blob shapes / organic gradients
+❌ --radius-control on cards / tables / panels / dialogs / containers
 
-✅ rounded-none everywhere (var(--radius) = 0rem)
+✅ rounded-none on all structural surfaces (var(--radius) = 0rem)
 ✅ SVG paths with M / L / H / V / Z only
 ✅ Crosshairs, brackets, hazard stripes, scanlines, grids
 ```
+
+**Control carve-out (2026-05-24 — "round controls only" hybrid).** Interactive
+controls — `<input>`, `<button>`/`Button`, `<select>`/`SelectTrigger`,
+`<textarea>` — may soften their corners with the dedicated `--radius-control`
+token (14px) via the bracket form `rounded-[var(--radius-control)]`:
+
+```tsx
+// ✅ Controls only:
+<input className="rounded-[var(--radius-control)] …" />
+<button className="rounded-[var(--radius-control)] …" />
+// Form fields get it automatically via the [data-slot="form-field"] /
+// [data-slot="wizard-field"] rule in globals.css.
+
+// ❌ NEVER on a structural surface:
+<SurfaceCard className="rounded-[var(--radius-control)]" />   // cards stay sharp
+```
+
+This is the ONLY permitted non-zero radius. The lint rule + design-spec audit
+already allow bracket-token radii (they ban only the named `rounded-{md,lg,…,full}`
+scale), so no rule change was needed — but the carve-out is intentional and
+documented in `AGENTS.md`. Structural geometry stays brutalist.
 
 ### LAW 14 — Wrap shadcn primitives, never rebuild
 

@@ -23,7 +23,7 @@ const buttonVariants = cva(
   [
     "group/button inline-flex shrink-0 items-center justify-center",
     "border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap",
-    "rounded-[var(--radius-md)] outline-none select-none",
+    "rounded-[var(--radius-control)] outline-none select-none",
     // v6: multi-axis transition handles bg + border + transform
     "transition-[background-color,border-color,transform,box-shadow] duration-fast ease-linear will-change-transform",
     // v6: premium focus signal
@@ -81,8 +81,8 @@ const buttonVariants = cva(
       },
       size: {
         default: "h-9 px-4 py-2",
-        sm: "h-8 rounded-[var(--radius-sm)] px-3 text-xs",
-        lg: "h-12 rounded-[var(--radius-lg)] px-8 text-base",
+        sm: "h-8 rounded-[var(--radius-control)] px-3 text-xs",
+        lg: "h-12 rounded-[var(--radius-control)] px-8 text-base",
         icon: "h-9 w-9",
       },
     },
