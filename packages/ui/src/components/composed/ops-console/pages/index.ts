@@ -30,11 +30,9 @@ export {
   type InvoiceRow,
   type AgingBucket,
 } from "./ops-finance-view"
-export {
-  OpsRateCardsView,
-  type OpsRateCardsViewProps,
-  type RateCardRow,
-} from "./ops-rate-cards-view"
+// OpsRateCardsView (v6 paper) retired in Phase 4 composition unification —
+// the rates route renders the canonical V7OpsRateCards. RateCardRow now lives
+// in `rates/v7-ops-rate-cards`.
 export {
   OpsCustomersView,
   type OpsCustomersViewProps,

@@ -4,12 +4,10 @@ import * as React from "react"
 
 import { useRateCards } from "@workspace/services/hooks/use-rate-cards"
 import type { RateCard } from "@workspace/types"
-import { useDesignVersion } from "@workspace/ui/hooks/use-design-version"
 import {
-  OpsRateCardsView,
+  V7OpsRateCards,
   type RateCardRow,
-} from "@workspace/ui/components/composed/ops-console/pages"
-import { V7OpsRateCards } from "@workspace/ui/components/composed/rates/v7-ops-rate-cards"
+} from "@workspace/ui/components/composed/rates/v7-ops-rate-cards"
 
 function toRow(rc: RateCard): RateCardRow {
   return {
@@ -28,8 +26,8 @@ function toRow(rc: RateCard): RateCardRow {
 
 export function OpsRateCardsLive() {
   const { data = [] } = useRateCards({ isActive: true })
-  const { version } = useDesignVersion()
   const rows = data.map(toRow)
-  if (version === "v7") return <V7OpsRateCards rows={rows} />
-  return <OpsRateCardsView rows={rows} />
+  // Canonical v7 composition — the v6 paper view was retired in the Phase 4
+  // composition unification (one component per route, no design-version fork).
+  return <V7OpsRateCards rows={rows} />
 }
