@@ -179,8 +179,8 @@ function Field({ label, required, children, hint, error, className }: FieldProps
   // The label text lives in a <span> child so the label is structural
   // rather than visual; layout uses `space-y-1.5` on the label itself.
   return (
-    <div className={cn("space-y-1.5", className)} data-slot="wizard-field">
-      <label className="block space-y-1.5">
+    <div className={cn("space-y-2", className)} data-slot="wizard-field">
+      <label className="block space-y-2">
         <span className="flex items-center gap-1 font-mono text-2xs uppercase tracking-widest text-muted-foreground">
           {label}
           {required && <span className="text-destructive">*</span>}
@@ -223,8 +223,8 @@ function BasicsStep({
   isGeneratingAwb?: boolean
 }) {
   return (
-    <div className="space-y-4" data-slot="basics-step">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div className="space-y-6" data-slot="basics-step">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Field
           label="AWB Number"
           required
@@ -269,7 +269,7 @@ function BasicsStep({
         </Field>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <Field label="Payment Mode" required>
           <select
             value={state.paymentMode}
@@ -299,7 +299,7 @@ function BasicsStep({
         </Field>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Field label="Remarks" hint="Optional — printed on invoice">
           <textarea
             value={state.remarks}
@@ -361,9 +361,9 @@ function PartiesStep({
 
   return (
     <div className="space-y-6" data-slot="parties-step">
-      <div className="space-y-4">
+      <div className="space-y-6">
         <p className="font-mono text-xs uppercase tracking-widest text-primary border-b border-border pb-1">Billing Party</p>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
           {/* Customer lookup — combobox when options available, text when none */}
           {hasCustomerOptions ? (
@@ -472,7 +472,7 @@ function PartiesStep({
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-border">
         {/* Consignor */}
-        <div className="space-y-4">
+        <div className="space-y-6">
           <p className="t-overline text-muted-foreground border-b border-border pb-1">Consignor</p>
           <Field label="Name">
             <input
@@ -502,7 +502,7 @@ function PartiesStep({
         </div>
 
         {/* Consignee */}
-        <div className="space-y-4">
+        <div className="space-y-6">
           <p className="t-overline text-muted-foreground border-b border-border pb-1">Consignee</p>
           <Field label="Name">
             <input
@@ -583,7 +583,7 @@ function CargoStep({
   const computedFreight = weight > 0 && rate > 0 ? Math.round(weight * rate * 100) / 100 : null
 
   return (
-    <div className="space-y-4" data-slot="cargo-step">
+    <div className="space-y-6" data-slot="cargo-step">
       {/* AWB selection prompt — surfaces the AWB chosen in Basics + lets the
           operator override here. Some operators jump straight to the Cargo
           step (e.g. when invoicing an existing shipment), and previously the
@@ -606,7 +606,7 @@ function CargoStep({
         />
       </Field>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <Field label="Origin Hub" required>
           <select
             value={state.origin}
@@ -642,7 +642,7 @@ function CargoStep({
         </Field>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <Field label="Actual Weight (kg)">
           <input
             type="number"
@@ -678,7 +678,7 @@ function CargoStep({
       </div>
 
       {/* Per-kg rate row — drives base freight auto-calculation */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Field
           label="Rate per kg (₹)"
           hint="Base Freight = chargeable weight × rate. Override in Step 4 if needed."
@@ -828,7 +828,7 @@ function PaymentStep({
   const sgst = totals.gst / 2
 
   return (
-    <div className="space-y-4" data-slot="payment-step">
+    <div className="space-y-6" data-slot="payment-step">
       <div className="border border-border bg-card">
         {/* Header */}
         <div className="flex items-center justify-between border-b border-border px-4 py-2 gap-4">
@@ -1060,7 +1060,7 @@ function InvoiceWizard({
     : undefined
 
   return (
-    <div data-slot="invoice-wizard" className={cn("space-y-5", className)}>
+    <div data-slot="invoice-wizard" className={cn("space-y-8", className)}>
       <Wizard
         steps={INVOICE_WIZARD_STEPS}
         currentIndex={currentIndex}

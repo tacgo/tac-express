@@ -173,7 +173,7 @@ export function ManifestBuilderWizard({
   return (
     <div
       data-slot="manifest-builder-wizard"
-      className={cn("flex flex-col gap-4", className)}
+      className={cn("flex flex-col gap-8", className)}
     >
       <Wizard steps={STEPS} currentIndex={step} />
 

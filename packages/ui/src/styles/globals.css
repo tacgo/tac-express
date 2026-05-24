@@ -640,6 +640,11 @@
   --spacing-field-sm: 16ch;        /* short: flight no., phone, postal */
   --spacing-field-md: 24ch;        /* medium: vehicle reg, short names */
   --spacing-field-lg: 40ch;        /* long: names, addresses, descriptions */
+  /* Comfortable form-control sizing (v8 ops rhythm). Scoped to FormField via
+     the @layer utilities rule below — dense table filters / command inputs
+     keep the compact h-8 default. Form fields breathe at 48px. */
+  --spacing-form-control: 3rem;          /* 48px — input / select height in forms */
+  --spacing-form-control-textarea: 7.5rem; /* 120px — textarea min-height in forms */
 
   /* ── Page-gutter + card-rhythm tokens (NextAdmin parity, Violet-Grid translated) ──
      Responsive page padding scales by breakpoint; card padding + gap are
@@ -1462,6 +1467,29 @@
 
   .pause-on-hover:hover > div {
     animation-play-state: paused;
+  }
+
+  /* ── Comfortable form-control sizing (v8 ops rhythm) ──
+     Scoped to FormField descendants so form inputs/selects/textareas breathe
+     at 48px while dense table filters, command-palette inputs, and inline
+     controls keep the compact h-8 Input default. The `[data-slot="form-field"]
+     :is(...)` selector is (0,1,1) — higher than the `.h-8`/`.h-9` utilities
+     (0,1,0) in this same layer, so it wins without `!important`. File/checkbox/
+     radio inputs are excluded (they aren't text controls). Covers both the
+     FormField primitive (`form-field`) and the invoice wizard's self-contained
+     field (`wizard-field`) so every form control shares the 48px rhythm. */
+  :is([data-slot="form-field"], [data-slot="wizard-field"])
+    :is(input, select):not([type="checkbox"]):not([type="radio"]):not(
+      [type="file"]
+    ) {
+    height: var(--spacing-form-control);
+    padding-inline: 0.75rem;
+    font-size: 0.875rem;
+  }
+  :is([data-slot="form-field"], [data-slot="wizard-field"]) textarea {
+    min-height: var(--spacing-form-control-textarea);
+    padding: 0.625rem 0.75rem;
+    font-size: 0.875rem;
   }
 }
 
