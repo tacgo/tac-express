@@ -34,7 +34,11 @@ const surfaceCardVariants = cva(
         tactical: "bg-muted/30",
       },
       density: {
-        default: "gap-3 p-[var(--spacing-card-pad)]",
+        // Primary tier — editorial breathing room (v8 ops rhythm): 32px pad,
+        // 16px internal gap. The standard operational card surface.
+        default: "gap-4 p-[var(--spacing-card-pad-lg)]",
+        // Dense tier — tight 18px pad for high-density contexts (settings,
+        // nested panels). Intentionally tighter than the v8 compact spec.
         compact: "gap-2 p-[var(--spacing-gutter-md)]",
       },
     },

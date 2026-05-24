@@ -204,7 +204,7 @@ function V7CreateShipmentWizard({
   return (
     <div
       data-slot="v7-create-shipment-wizard"
-      className={cn("flex flex-col gap-6", className)}
+      className={cn("flex flex-col gap-8", className)}
     >
       <Wizard
         steps={STEPS}

@@ -24,8 +24,12 @@ import { cn } from "@workspace/ui/lib/utils"
  * consumer.
  */
 
+// Editorial rhythm (v8 ops spike, translated to Violet Grid): a form is a
+// primary surface — 32px padding (p-card-pad-lg) and 32px between sections
+// (gap-8) for calm, scannable density. Identity unchanged: sharp corners,
+// bg-card, brutalist offset shadow.
 const formCardVariants = cva(
-  "flex flex-col gap-6 border border-border bg-card text-card-foreground p-card-pad shadow-brutal-sm"
+  "flex flex-col gap-8 border border-border bg-card text-card-foreground p-card-pad-lg shadow-brutal-sm"
 )
 
 interface FormCardProps
@@ -77,7 +81,7 @@ function FormSection({
     <section
       data-slot="form-section"
       aria-labelledby={headingId}
-      className={cn("flex flex-col gap-3", className)}
+      className={cn("flex flex-col gap-4", className)}
       {...props}
     >
       {(title || description) && (
@@ -111,7 +115,7 @@ function FormGrid({ cols = 2, className, children, ...props }: FormGridProps) {
       data-slot="form-grid"
       data-cols={cols}
       className={cn(
-        "grid gap-4",
+        "grid gap-6",
         cols === 2 ? "grid-cols-1 sm:grid-cols-2" : "grid-cols-1",
         className
       )}
@@ -169,7 +173,7 @@ function FormField({
     <div
       data-slot="form-field"
       data-has-error={error ? "true" : undefined}
-      className={cn("flex flex-col gap-1.5", className)}
+      className={cn("flex flex-col gap-2", className)}
       {...props}
     >
       <label
@@ -213,7 +217,7 @@ function FormFooter({
       data-slot="form-footer"
       className={cn(
         "flex items-center justify-end gap-2",
-        separator && "border-t border-border pt-4",
+        separator && "border-t border-border pt-6",
         className
       )}
       {...props}

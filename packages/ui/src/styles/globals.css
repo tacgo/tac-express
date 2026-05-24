@@ -650,9 +650,13 @@
   --spacing-page-pad-y-sm: 1rem;
   --spacing-page-pad-y-md: 1.5rem;
   --spacing-page-pad-y-lg: 2rem;
-  --spacing-card-pad:      1.5rem;   /* 24px  — internal padding (default card)  */
-  --spacing-card-pad-lg:   1.875rem; /* 30px  — hero / KPI card                  */
-  --spacing-card-gap:      1.5rem;   /* 24px  — gap between sibling cards        */
+  --spacing-card-pad:      1.5rem;   /* 24px  — compact card padding (dense tier) */
+  --spacing-card-pad-lg:   2rem;     /* 32px  — primary card / form surface.
+                                        Editorial breathing room adopted from the
+                                        v8 ops spike: primary surfaces get 32px,
+                                        compact surfaces stay 24px. Used by the
+                                        default SurfaceCard tier + FormCard.       */
+  --spacing-card-gap:      1.5rem;   /* 24px  — gap between sibling cards (v8 grid) */
   --spacing-panel-sm: 13.75rem;    /* 220px — chart container / hero (mobile)     */
   --spacing-panel-md: 15rem;       /* 240px — scroll-list panel                   */
   --spacing-panel-lg: 16.25rem;    /* 260px — hero (lg viewport)                  */
