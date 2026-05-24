@@ -90,8 +90,10 @@ function OpsTopbar({ crumbs, onMenuClick }: OpsTopbarProps) {
         </button>
       ) : null}
 
-      {/* Breadcrumbs */}
-      <div className="font-mono font-medium text-ui-12 tracking-crumb text-muted-foreground">
+      {/* Breadcrumbs — hidden on small screens so the topbar's right cluster
+          (search + theme + notifications + account) fits; the page header +
+          mobile nav drawer carry route context there. */}
+      <div className="hidden sm:block font-mono font-medium text-ui-12 tracking-crumb text-muted-foreground">
         {crumbs.map((c, i) => (
           <React.Fragment key={`${c}-${i}`}>
             {i > 0 && <span className="mx-2 text-muted-foreground">›</span>}
