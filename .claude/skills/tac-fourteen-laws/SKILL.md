@@ -192,26 +192,23 @@ pnpm dlx some-tool
 ✅ Crosshairs, brackets, hazard stripes, scanlines, grids
 ```
 
-**Control carve-out (2026-05-24 — "round controls only" hybrid).** Interactive
-controls — `<input>`, `<button>`/`Button`, `<select>`/`SelectTrigger`,
-`<textarea>` — may soften their corners with the dedicated `--radius-control`
-token (14px) via the bracket form `rounded-[var(--radius-control)]`:
+**`--radius-control` token (currently `0` — controls are SHARP).** A brief
+"round controls only" experiment (2026-05-24) softened inputs/buttons/selects/
+textareas via `rounded-[var(--radius-control)]`, but it was reverted to `0` on
+render review — fully square controls read more premium-operational. The token
+and the `rounded-[var(--radius-control)]` references on the control primitives
+remain as a single dial, but the value is `0`, so **nothing rounds**.
 
 ```tsx
-// ✅ Controls only:
-<input className="rounded-[var(--radius-control)] …" />
-<button className="rounded-[var(--radius-control)] …" />
-// Form fields get it automatically via the [data-slot="form-field"] /
-// [data-slot="wizard-field"] rule in globals.css.
+// Controls reference the token, but it resolves to 0 (sharp):
+<input className="rounded-[var(--radius-control)] …" />   // → square
 
-// ❌ NEVER on a structural surface:
-<SurfaceCard className="rounded-[var(--radius-control)]" />   // cards stay sharp
+// ❌ NEVER put a radius on a structural surface regardless:
+<SurfaceCard className="rounded-[var(--radius-control)]" />
 ```
 
-This is the ONLY permitted non-zero radius. The lint rule + design-spec audit
-already allow bracket-token radii (they ban only the named `rounded-{md,lg,…,full}`
-scale), so no rule change was needed — but the carve-out is intentional and
-documented in `AGENTS.md`. Structural geometry stays brutalist.
+If control softening is ever revisited, change ONLY the `--radius-control`
+token in `globals.css`. Structural geometry stays brutally sharp always.
 
 ### LAW 14 — Wrap shadcn primitives, never rebuild
 

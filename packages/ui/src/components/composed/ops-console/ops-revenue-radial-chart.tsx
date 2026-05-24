@@ -51,9 +51,7 @@ function OpsRevenueRadialChart({ className }: OpsRevenueRadialChartProps) {
   return (
     <div className={cn("flex flex-col", className)}>
       <div className="flex items-center justify-between">
-        <div className="font-sans font-semibold text-ui-13 text-foreground">
-          Revenue Trend
-        </div>
+        <h3 className="t-h4 text-foreground">Revenue Trend</h3>
         <span className="paper-label">Jan — Jun</span>
       </div>
 
