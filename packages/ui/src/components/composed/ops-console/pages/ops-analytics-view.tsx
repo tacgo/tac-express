@@ -13,6 +13,7 @@ import { OpsPageHead } from "../ops-page-head"
 import { OpsCard } from "../ops-card"
 import { OpsShipmentBarChart } from "../ops-shipment-bar-chart"
 import { OpsRevenueRadialChart } from "../ops-revenue-radial-chart"
+import { StatCard } from "../../stat-card"
 
 interface AnalyticsKpis {
   totalShipments: number
@@ -37,64 +38,45 @@ function OpsAnalyticsView({ kpis }: OpsAnalyticsViewProps) {
         sub="Operations overview across all hubs"
       />
 
-      {/* Top stats — violet-underline */}
+      {/* KPI grid — propagated to the StatCard hierarchy system so Analytics
+          shares the overview's metric scale + spacing rhythm (consistency
+          propagation phase). Sharp surfaces, violet signal, mono numerals
+          retained. Replaces the legacy paper-* KPI cards which mixed two value
+          sizes (paper-stat-value vs text-ui-28) — the hierarchy inconsistency. */}
       <div className="grid grid-cols-3 gap-4 mb-4">
-        <OpsCard accent="violet-under">
-          <div className="paper-label flex items-center gap-2">
-            <RiBox3Line aria-hidden className="size-3.5" />
-            <span>Total Shipments</span>
-          </div>
-          <div className="paper-stat-value mt-2.5">{kpis.totalShipments}</div>
-        </OpsCard>
-        <OpsCard accent="violet-under">
-          <div className="paper-label flex items-center gap-2">
-            <RiMoneyDollarCircleLine aria-hidden className="size-3.5" />
-            <span>Total Revenue</span>
-          </div>
-          <div className="paper-stat-value mt-2.5">{kpis.totalRevenue}</div>
-        </OpsCard>
-        <OpsCard accent="violet-under">
-          <div className="paper-label flex items-center gap-2">
-            <RiCheckboxCircleLine aria-hidden className="size-3.5" />
-            <span>Delivered</span>
-          </div>
-          <div className="paper-stat-value mt-2.5">{kpis.delivered}</div>
-          <div className="paper-label mt-1">
-            {kpis.deliveryRate}% delivery rate
-          </div>
-        </OpsCard>
-      </div>
-
-      {/* Secondary stats */}
-      <div className="grid grid-cols-3 gap-4 mb-4">
-        <OpsCard>
-          <div className="paper-label flex items-center gap-2">
-            <RiPlaneLine aria-hidden className="size-3.5" />
-            <span>In Transit</span>
-          </div>
-          <div className="font-sans font-extrabold text-ui-28 mt-2.5">
-            {kpis.inTransit}
-          </div>
-        </OpsCard>
-        <OpsCard>
-          <div className="paper-label flex items-center gap-2">
-            <RiAlertLine aria-hidden className="size-3.5" />
-            <span>Open Exceptions</span>
-          </div>
-          <div className="font-sans font-extrabold text-ui-28 mt-2.5">
-            {kpis.openExceptions}
-          </div>
-          <div className="paper-label mt-1">All clear</div>
-        </OpsCard>
-        <OpsCard>
-          <div className="paper-label flex items-center gap-2">
-            <RiTimeLine aria-hidden className="size-3.5" />
-            <span>Avg Delivery Days</span>
-          </div>
-          <div className="font-sans font-extrabold text-ui-28 mt-2.5">
-            {kpis.avgDeliveryDays}
-          </div>
-        </OpsCard>
+        <StatCard
+          label="Total Shipments"
+          value={kpis.totalShipments}
+          visual={<RiBox3Line aria-hidden className="size-5 text-muted-foreground" />}
+        />
+        <StatCard
+          label="Total Revenue"
+          value={kpis.totalRevenue}
+          visual={<RiMoneyDollarCircleLine aria-hidden className="size-5 text-muted-foreground" />}
+        />
+        <StatCard
+          label="Delivered"
+          value={kpis.delivered}
+          context={`${kpis.deliveryRate}% delivery rate`}
+          visual={<RiCheckboxCircleLine aria-hidden className="size-5 text-muted-foreground" />}
+        />
+        <StatCard
+          label="In Transit"
+          value={kpis.inTransit}
+          visual={<RiPlaneLine aria-hidden className="size-5 text-muted-foreground" />}
+        />
+        <StatCard
+          label="Open Exceptions"
+          value={kpis.openExceptions}
+          context="All clear"
+          visual={<RiAlertLine aria-hidden className="size-5 text-muted-foreground" />}
+        />
+        <StatCard
+          label="Avg Delivery Days"
+          value={kpis.avgDeliveryDays}
+          monoValue={false}
+          visual={<RiTimeLine aria-hidden className="size-5 text-muted-foreground" />}
+        />
       </div>
 
       {/* Charts */}

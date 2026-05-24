@@ -30,13 +30,17 @@ const chartData = [
   { service: "other", revenue: 90, fill: "var(--color-other)" },
 ]
 
+// Calm monochrome violet ramp — service classes step down the --chart-1..5
+// ramp (now the violet ramp) instead of a violet/blue/green/amber/grey
+// rainbow. Aligns the radial with the bar charts + the operational palette
+// (hybrid modernization: restrained accent, low-noise analytics).
 const chartConfig = {
   revenue: { label: "Revenue" },
-  standard: { label: "Standard", color: "var(--primary)" },
-  express: { label: "Express", color: "var(--accent-info)" },
-  priority: { label: "Priority", color: "var(--accent-success)" },
-  returns: { label: "Returns", color: "var(--accent-warning)" },
-  other: { label: "Other", color: "var(--muted-foreground)" },
+  standard: { label: "Standard", color: "var(--chart-1)" },
+  express: { label: "Express", color: "var(--chart-2)" },
+  priority: { label: "Priority", color: "var(--chart-3)" },
+  returns: { label: "Returns", color: "var(--chart-4)" },
+  other: { label: "Other", color: "var(--chart-5)" },
 } satisfies ChartConfig
 
 interface OpsRevenueRadialChartProps {

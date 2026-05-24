@@ -65,6 +65,12 @@ interface StatCardProps
   label: string
   value: React.ReactNode
   trend?: TrendDescriptor
+  /**
+   * Supporting context line beneath the metric — e.g. "92% delivery rate",
+   * "All clear". Muted, ~13px. This is the "supporting context" hierarchy
+   * tier, distinct from `trend` (the operational-state signal).
+   */
+  context?: React.ReactNode
   /** Right-aligned visual slot — sparkline, donut, or icon. */
   visual?: React.ReactNode
   onClick?: () => void
@@ -82,6 +88,7 @@ function StatCard({
   label,
   value,
   trend,
+  context,
   visual,
   onClick,
   monoValue = true,
@@ -156,6 +163,14 @@ function StatCard({
           </div>
         ) : null}
       </div>
+      {context ? (
+        <p
+          data-slot="stat-card-context"
+          className="t-caption text-muted-foreground"
+        >
+          {context}
+        </p>
+      ) : null}
       {trend ? <StatCardTrend {...trend} /> : null}
     </div>
   )
