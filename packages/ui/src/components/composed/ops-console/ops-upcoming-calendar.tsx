@@ -57,9 +57,7 @@ function OpsUpcomingCalendar({
     <div className={cn("flex flex-col", className)}>
       {/* Row 1: title + "View all" affordance — matches other ops panels */}
       <div className="flex items-center justify-between">
-        <div className="font-sans font-semibold text-ui-13 text-foreground">
-          Upcoming Operations
-        </div>
+        <h3 className="t-h4 text-foreground">Upcoming Operations</h3>
         <OpsButton variant="dark" size="sm" onClick={onViewAll}>
           View all
         </OpsButton>

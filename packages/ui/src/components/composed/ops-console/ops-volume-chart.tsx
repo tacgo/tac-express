@@ -149,9 +149,7 @@ function OpsVolumeBarChart({ className }: OpsVolumeBarChartProps) {
     <div className={cn("flex flex-col", className)}>
       {/* Row 1: title + range pill toggle (mirrored in OpsGrowthAreaChart) */}
       <div className="flex items-center justify-between">
-        <div className="font-sans font-semibold text-ui-13 text-foreground">
-          Shipment Volume
-        </div>
+        <h3 className="t-h4 text-foreground">Shipment Volume</h3>
         <div
           role="tablist"
           aria-label="Time range"
