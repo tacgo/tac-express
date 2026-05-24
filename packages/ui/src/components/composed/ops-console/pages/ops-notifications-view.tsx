@@ -50,7 +50,7 @@ function OpsNotificationsView({
         title="Notifications"
         sub="System alerts and activity updates"
       />
-      <div className="grid grid-cols-[1.4fr_1fr] gap-[length:var(--spacing-gutter-md)]">
+      <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-[length:var(--spacing-gutter-md)]">
         {/* Inbox */}
         <div>
           <div className="flex items-center justify-between mb-2">

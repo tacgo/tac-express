@@ -81,7 +81,7 @@ function OpsSettingsView({
 
       {/* Profile tab — the live editable form + completion + shortcuts. */}
       {tab === "Profile" && (
-        <div className="grid grid-cols-[1.5fr_1fr] gap-[length:var(--spacing-gutter-md)]">
+        <div className="grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-[length:var(--spacing-gutter-md)]">
           <OpsCard ticks>
             <div className="paper-label mb-3.5">Profile</div>
             <div className="flex flex-col gap-3.5">
@@ -362,7 +362,7 @@ function OpsHubsSection({
   const renamedCount = Object.keys(config.renames).length
 
   return (
-    <div className="grid grid-cols-[1.5fr_1fr] gap-[length:var(--spacing-gutter-md)]">
+    <div className="grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-[length:var(--spacing-gutter-md)]">
       <OpsCard ticks>
         <div className="paper-label mb-3.5">Hubs in your network</div>
 

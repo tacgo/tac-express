@@ -41,8 +41,8 @@ function OpsScanningView() {
         sub="Scan AWBs and manifests — works offline with auto-sync"
       />
 
-      {/* Console header */}
-      <div className="flex items-center justify-between mb-3.5">
+      {/* Console header — stacks on mobile so the stat strip doesn't overflow */}
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mb-3.5">
         <div className="flex items-center gap-3">
           <span aria-hidden className="size-2 bg-primary animate-pulse motion-reduce:animate-none" />
           <div>
@@ -55,7 +55,7 @@ function OpsScanningView() {
             </div>
           </div>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <OpsBadge>Total 0</OpsBadge>
           <OpsBadge>OK 0</OpsBadge>
           <OpsBadge>Err 0</OpsBadge>
@@ -90,7 +90,7 @@ function OpsScanningView() {
       </div>
 
       {/* Manual + Camera input area + feed */}
-      <div className="grid grid-cols-[1.6fr_1fr] gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-[1.6fr_1fr] gap-4">
         <div>
           <div className="flex items-center gap-2 mb-2">
             <OpsButton>
