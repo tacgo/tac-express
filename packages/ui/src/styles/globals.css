@@ -43,11 +43,17 @@
   --input: oklch(0.92 0.004 286.32);
   --ring: oklch(0.705 0.015 286.067);
 
-  --chart-1: oklch(0.905 0.182 98.111);
-  --chart-2: oklch(0.795 0.184 86.047);
-  --chart-3: oklch(0.681 0.162 75.834);
-  --chart-4: oklch(0.554 0.135 66.442);
-  --chart-5: oklch(0.476 0.114 61.907);
+  /* Categorical chart series — calm monochrome violet ramp (hybrid: borrow the
+     v8 "95% monochrome, one accent" analytics philosophy without leaving the
+     Violet Grid palette). Aliased to the mode-adaptive --chart-ramp-* tokens
+     (defined below; they color-mix against --primary/--background so they
+     re-resolve correctly in dark mode). Replaces the preset's yellow/gold ramp,
+     which read as a rainbow against the violet signal. */
+  --chart-1: var(--chart-ramp-5);
+  --chart-2: var(--chart-ramp-4);
+  --chart-3: var(--chart-ramp-3);
+  --chart-4: var(--chart-ramp-2);
+  --chart-5: var(--chart-ramp-1);
 
   --sidebar: oklch(0.985 0 0);          /* ivory sidebar — one subtle step from page bg */
   --sidebar-foreground: oklch(0.141 0.005 285.823);
@@ -319,11 +325,14 @@
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.552 0.016 285.938);
 
-  --chart-1: oklch(0.905 0.182 98.111);
-  --chart-2: oklch(0.795 0.184 86.047);
-  --chart-3: oklch(0.681 0.162 75.834);
-  --chart-4: oklch(0.554 0.135 66.442);
-  --chart-5: oklch(0.476 0.114 61.907);
+  /* Dark-mode categorical chart series — same calm violet ramp. The
+     --chart-ramp-* tokens color-mix against --primary/--background, both of
+     which are overridden in .dark, so the ramp re-resolves for dark surfaces. */
+  --chart-1: var(--chart-ramp-5);
+  --chart-2: var(--chart-ramp-4);
+  --chart-3: var(--chart-ramp-3);
+  --chart-4: var(--chart-ramp-2);
+  --chart-5: var(--chart-ramp-1);
 
   --sidebar: oklch(0.21 0.006 285.885);
   --sidebar-foreground: oklch(0.985 0 0);
