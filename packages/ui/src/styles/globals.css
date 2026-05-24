@@ -630,6 +630,14 @@
      Authored from observed design needs in dashboard panels + hero sections.
      Reusable as `h-panel-sm`, `min-h-panel-xl`, `max-w-control`, etc. */
   --spacing-control: 100rem;       /* 1600px — outer mission-control hardware frame */
+  /* ── ContentFrame bounded-composition scale (enterprise composition system) ──
+     The canonical bounded content measures. ContentFrame centers content at
+     one of these so no surface stretches edge-to-edge on an ultrawide ops
+     monitor. Tighter than the 1600px hardware frame on purpose. */
+  --spacing-frame-shell:    90rem;    /* 1440px — page shell (outer bound)      */
+  --spacing-frame-content:  80rem;    /* 1280px — primary content frame         */
+  --spacing-frame-table:    86.25rem; /* 1380px — data-heavy table surfaces     */
+  --spacing-frame-workflow: 70rem;    /* 1120px — bounded workflow / form width */
   --spacing-page-content: 80rem;   /* 1280px — canonical page-content width
                                       (PageShell). Caps reading/working width
                                       below the 1600px hardware frame so all
