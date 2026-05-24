@@ -5,7 +5,6 @@ import * as React from "react"
 import { useShiftReport } from "@workspace/services/hooks/use-shift-report"
 import { useHubs } from "@workspace/services/hooks/use-hubs"
 
-import { useDesignVersion } from "@workspace/ui/hooks/use-design-version"
 import { PageShell } from "@workspace/ui/components/composed/page-shell"
 import { PageHeader } from "@workspace/ui/components/composed/page-header"
 import { Button } from "@workspace/ui/components/button"
@@ -33,11 +32,9 @@ export function ShiftReportClient() {
     hours,
     hubCode: hubCode || undefined,
   })
-  // v7 widens the canvas to match Dashboard/Inventory rhythm; v6 keeps
-  // the default `content` shell (1280px) so the existing Paper Ops
-  // Console pages stay visually unchanged.
-  const { version } = useDesignVersion()
-  const pageShellWidth = version === "v7" ? "wide" : "content"
+  // Canonical v7 — widened canvas to match Dashboard/Inventory rhythm. The
+  // design-version fork was removed in the Phase 5 composition unification.
+  const pageShellWidth = "wide"
 
   const exportCsv = () => {
     if (!report.data) return

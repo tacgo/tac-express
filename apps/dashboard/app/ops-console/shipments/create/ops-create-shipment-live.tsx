@@ -5,8 +5,6 @@ import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 
 import { useCreateShipment } from "@workspace/services/hooks/use-shipments"
-import { useDesignVersion } from "@workspace/ui/hooks/use-design-version"
-import { CreateShipmentForm } from "@workspace/ui/components/composed/shipments/create-shipment-form"
 import type { CreateShipmentInput } from "@workspace/ui/components/composed/shipments/create-shipment-schema"
 import { V7CreateShipmentWizard } from "@workspace/ui/components/composed/shipments/v7-create-shipment-wizard"
 
@@ -32,7 +30,6 @@ import { V7CreateShipmentWizard } from "@workspace/ui/components/composed/shipme
 export function OpsCreateShipmentLive() {
   const router = useRouter()
   const { mutateAsync, isPending } = useCreateShipment()
-  const { version } = useDesignVersion()
 
   const onSubmit = async (data: CreateShipmentInput) => {
     try {
@@ -71,8 +68,6 @@ export function OpsCreateShipmentLive() {
     }
   }
 
-  if (version === "v7") {
-    return <V7CreateShipmentWizard onSubmit={onSubmit} isLoading={isPending} />
-  }
-  return <CreateShipmentForm onSubmit={onSubmit} isLoading={isPending} />
+  // Canonical v7 — v6 CreateShipmentForm retired in Phase 5.
+  return <V7CreateShipmentWizard onSubmit={onSubmit} isLoading={isPending} />
 }

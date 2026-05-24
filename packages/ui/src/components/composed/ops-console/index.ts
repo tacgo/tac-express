@@ -8,7 +8,7 @@ export { OpsButton, opsButtonVariants, type OpsButtonProps } from "./ops-button"
 export { OpsBadge, opsBadgeVariants, type OpsBadgeProps } from "./ops-badge"
 export { OpsCard, opsCardVariants, type OpsCardProps } from "./ops-card"
 export { OpsStatCard, type OpsStatCardProps } from "./ops-stat-card"
-export { OpsDashboard, type OpsDashboardProps } from "./ops-dashboard"
+// OpsDashboard (v6 paper) retired in Phase 5 — dashboard renders V7OpsDashboard.
 export { OpsGrowthAreaChart, type OpsGrowthAreaChartProps } from "./ops-growth-chart"
 export { OpsVolumeBarChart, type OpsVolumeBarChartProps } from "./ops-volume-chart"
 export {
