@@ -1152,6 +1152,20 @@
     font-feature-settings: "tnum" 1, "zero" 1;
   }
 
+  .t-data-md {
+    /* 32px primary KPI — the default StatCard value. Sits between the dominant
+       hero metric (.t-data, 40px) and the dense compact metric (.t-data-sm,
+       20px) so a KPI row reads with a clear metric hierarchy instead of a flat
+       same-size stack. */
+    font-family: var(--font-mono);
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1.05;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1, "zero" 1;
+  }
+
   .t-data-sm {
     font-family: var(--font-mono);
     font-size: 1.25rem;

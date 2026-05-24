@@ -23,12 +23,16 @@ import {
  */
 
 const statCardVariants = cva(
-  "group/stat relative flex w-full flex-col gap-3 border border-border bg-card text-card-foreground transition-[box-shadow,transform] duration-[var(--duration-fast)] ease-[var(--ease-smooth)]",
+  "group/stat relative flex w-full flex-col gap-4 border border-border bg-card text-card-foreground transition-[box-shadow,transform] duration-[var(--duration-fast)] ease-[var(--ease-smooth)]",
   {
     variants: {
       variant: {
+        // Primary KPI surface — 32px metric, 32px padding-class kept at the
+        // card-pad default for row density.
         default: "p-[var(--spacing-card-pad)] shadow-[var(--shadow-brutal-sm)]",
-        compact: "p-[var(--spacing-card-pad)] shadow-[var(--shadow-brutal-sm)]",
+        // Dense tier — tighter metric for high-count KPI strips.
+        compact: "gap-3 p-[var(--spacing-card-pad)] shadow-[var(--shadow-brutal-sm)]",
+        // Dominant tier — leads a KPI constellation with the 40px metric.
         hero: "p-[var(--spacing-card-pad-lg)] shadow-[var(--shadow-brutal)]",
       },
       interactive: {
@@ -85,6 +89,25 @@ function StatCard({
   ...props
 }: StatCardProps) {
   const isInteractive = Boolean(onClick)
+
+  // Metric hierarchy by tier. Numeric KPIs use the mono data scale
+  // (.t-data* — already font-mono + tabular-nums); non-numeric values
+  // (status strings) fall back to the serif heading scale. The three tiers
+  // give a KPI row a clear primary→dense rhythm instead of a flat same-size
+  // stack: compact 20px · default 32px · hero 40px.
+  const resolvedVariant = variant ?? "default"
+  const valueClass = monoValue
+    ? resolvedVariant === "hero"
+      ? "t-data"
+      : resolvedVariant === "compact"
+        ? "t-data-sm"
+        : "t-data-md"
+    : resolvedVariant === "hero"
+      ? "t-h1"
+      : resolvedVariant === "compact"
+        ? "t-h3"
+        : "t-h2"
+
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     userOnKeyDown?.(event)
     if (!isInteractive || event.defaultPrevented) return
@@ -118,19 +141,7 @@ function StatCard({
           </p>
           <p
             data-slot="stat-card-value"
-            className={cn(
-              // Hero KPIs carry real visual gravity — the value steps up to
-              // the .t-data display scale (40px mono) so a dominant primary
-              // metric reads first. Non-hero cards stay at .t-h2.
-              variant === "hero"
-                ? monoValue
-                  ? "t-data text-foreground"
-                  : "t-h1 text-foreground"
-                : cn(
-                    "t-h2 text-foreground",
-                    monoValue && "font-mono tabular-nums tracking-tight"
-                  )
-            )}
+            className={cn(valueClass, "text-foreground")}
           >
             {value}
           </p>
