@@ -5,10 +5,8 @@ import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 
 import { useCreateRateCard } from "@workspace/services/hooks/use-rate-cards"
-import {
-  OpsRateCardForm,
-  type OpsRateCardFormInput,
-} from "@workspace/ui/components/composed/ops-console/forms"
+import { type OpsRateCardFormInput } from "@workspace/ui/components/composed/ops-console/forms"
+import { V7RateCardForm } from "@workspace/ui/components/composed/rates/v7-rate-card-form"
 
 export function OpsCreateRateCardLive() {
   const router = useRouter()
@@ -38,5 +36,8 @@ export function OpsCreateRateCardLive() {
     }
   }
 
-  return <OpsRateCardForm onSubmit={onSubmit} isLoading={isPending} />
+  // Canonical v7 — v6 OpsRateCardForm render retired in Phase 10a. Its zod
+  // schema + OpsRateCardFormInput type are still consumed by V7RateCardForm,
+  // so the v6 form module stays as the schema home (mirrors V7CustomerForm).
+  return <V7RateCardForm onSubmit={onSubmit} isLoading={isPending} />
 }
