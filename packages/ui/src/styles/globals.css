@@ -57,12 +57,15 @@
 
   --sidebar: oklch(0.985 0 0);          /* ivory sidebar — one subtle step from page bg */
   --sidebar-foreground: oklch(0.141 0.005 285.823);
-  --sidebar-primary: oklch(0.511 0.262 276.966);
-  --sidebar-primary-foreground: oklch(0.962 0.018 272.314);
-  --sidebar-accent: oklch(0.967 0.001 286.375);
-  --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
+  /* Violet sidebar chrome — promoted from the former .ops-console scope so the
+     violet hover/selected/focus identity is canonical, not context-dependent.
+     var() expressions are theme-aware (resolve per light/.dark at use-time). */
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: oklch(0.9850 0.0030 85);
+  --sidebar-accent: color-mix(in oklch, var(--primary) 10%, var(--background));
+  --sidebar-accent-foreground: var(--primary);
   --sidebar-border: oklch(0.92 0.004 286.32);
-  --sidebar-ring: oklch(0.705 0.015 286.067);
+  --sidebar-ring: var(--primary);
 
   /* Semantic status colors */
   --accent-success: oklch(0.60 0.18 150);
@@ -215,9 +218,11 @@
   --chart-ramp-5: var(--primary);
 
   /* ══════════════════════════════════════════════════════════════════════════
-     PAPER OPS CONSOLE — additive design mode (LAW 1)
-     "A serious operator's terminal, dressed in warm paper."
-     Coexists with Violet Grid v6 — scoped via .ops-console wrapper class.
+     PAPER OPS CONSOLE — legacy token aliases (LAW 1)
+     The former `.ops-console` wrapper scope is retired (Phase 10d). These
+     paper-* aliases remain only because a few unmigrated paper primitives
+     (OpsPageHead on the create pages) still reference them; they resolve to
+     the canonical Violet Grid tokens at :root, so no scope class is needed.
      Source: .design-bundle (Anthropic Design export, May 2026).
      ══════════════════════════════════════════════════════════════════════════ */
 
@@ -266,26 +271,10 @@
   --foreground: oklch(0.141 0.005 285.823);
 }
 
-/* ══════════════════════════════════════════════════════════════════════════════
-   PAPER OPS CONSOLE — sidebar token overrides
-   The unified `<Sidebar>` component (packages/ui/src/components/composed/sidebar)
-   reads `--sidebar-*` variables for chrome. Inside the `.ops-console` scope we
-   re-bind those variables to the paper-* palette so the same component renders
-   with the warm-paper aesthetic without prop-level branching. Outside this
-   scope (i.e. on every v6 (dashboard) route) the sidebar falls back to the
-   `:root` definitions, which carry the Modern Ivory dashboard chrome.
-   ══════════════════════════════════════════════════════════════════════════════ */
-
-.ops-console {
-  --sidebar:                     var(--paper-2);
-  --sidebar-foreground:          var(--paper-fg-1);
-  --sidebar-primary:             var(--paper-violet);
-  --sidebar-primary-foreground:  oklch(0.9850 0.0030 85);
-  --sidebar-accent:              var(--paper-violet-50);
-  --sidebar-accent-foreground:   var(--paper-violet);
-  --sidebar-border:              var(--paper-line);
-  --sidebar-ring:                var(--paper-violet);
-}
+/* The `.ops-console` sidebar-token rebind was retired (Phase 10d). The violet
+   sidebar chrome it produced is now canonical in the `:root` / `.dark`
+   `--sidebar-*` definitions above, so the `<Sidebar>` renders violet hover/
+   selected/focus states on every route without a wrapper scope class. */
 
 .dark {
   /* ── DARK MODE (Violet Grid — purple-tinted backgrounds) ── */
@@ -336,12 +325,10 @@
 
   --sidebar: oklch(0.21 0.006 285.885);
   --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.585 0.233 277.117);
-  --sidebar-primary-foreground: oklch(0.962 0.018 272.314);
-  --sidebar-accent: oklch(0.274 0.006 286.033);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.552 0.016 285.938);
+  /* --sidebar-primary / -primary-foreground / -accent / -accent-foreground /
+     -ring inherit the canonical violet :root values (theme-aware via
+     var(--primary) / var(--background)) — formerly the .ops-console rebind. */
 
   --accent-success: oklch(0.60 0.18 150);
   --accent-success-foreground: oklch(0.10 0 0);

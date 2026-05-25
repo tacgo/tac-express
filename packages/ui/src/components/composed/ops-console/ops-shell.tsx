@@ -80,12 +80,9 @@ function OpsShell({
     <div
       data-slot="ops-shell"
       className={cn(
-        // The ops-console class scopes the paper-* utilities below.
-        "ops-console",
         // Responsive shell: single column on mobile/tablet (content full-width,
         // sidebar lives in the drawer), two-column sidebar + content from lg up.
         "grid grid-cols-1 lg:grid-cols-[var(--sidebar-w)_1fr] min-h-screen bg-background text-foreground",
-        // Force Paper-Console fonts inside this subtree without touching v6 routes.
         "font-sans",
         className,
       )}
