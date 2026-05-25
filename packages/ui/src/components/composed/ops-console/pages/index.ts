@@ -27,9 +27,7 @@ export {
 // `notifications/v7-ops-notifications`.
 // OpsSettingsView (v6 paper) retired in Phase 6 — settings route renders
 // V7OpsSettings, in `settings/v7-ops-settings`.
-export {
-  OpsWhatsAppFailedSendsView,
-  type OpsWhatsAppFailedSendsViewProps,
-} from "./ops-whatsapp-failed-sends-view"
+// OpsWhatsAppFailedSendsView (v6 paper) retired in Phase 9 — failed-sends route
+// renders V7OpsWhatsAppFailedSends, in `whatsapp/v7-ops-whatsapp-failed-sends`.
 // ContactLeadsView (v6 paper) retired in Phase 6 — support route renders
 // V7ContactLeads, in `support/v7-contact-leads`.
