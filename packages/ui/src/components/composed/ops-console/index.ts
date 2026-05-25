@@ -7,7 +7,8 @@ export { OpsPageHead, type OpsPageHeadProps } from "./ops-page-head"
 export { OpsButton, opsButtonVariants, type OpsButtonProps } from "./ops-button"
 export { OpsBadge, opsBadgeVariants, type OpsBadgeProps } from "./ops-badge"
 export { OpsCard, opsCardVariants, type OpsCardProps } from "./ops-card"
-export { OpsStatCard, type OpsStatCardProps } from "./ops-stat-card"
+// OpsStatCard (v6 paper) retired in Phase 6 — last orphan, no consumers; v7
+// KPI surfaces use StatCard.
 // OpsDashboard (v6 paper) retired in Phase 5 — dashboard renders V7OpsDashboard.
 export { OpsGrowthAreaChart, type OpsGrowthAreaChartProps } from "./ops-growth-chart"
 export { OpsVolumeBarChart, type OpsVolumeBarChartProps } from "./ops-volume-chart"
@@ -41,14 +42,16 @@ export {
   type OpsFieldSelectProps,
   type OpsFieldLabelProps,
 } from "./ops-field"
-export { OpsKbd } from "./ops-kbd"
+// OpsKbd (v6 paper) retired in Phase 6 — V7OpsSettings inlines <kbd> tokens
+// rather than the Ops* primitive.
 export {
   OpsSkeleton,
   OpsSkeletonRow,
   OpsSkeletonStatCard,
 } from "./ops-skeleton"
 export { OpsEmptyState, type OpsEmptyStateProps } from "./ops-empty-state"
-export { OpsErrorState, type OpsErrorStateProps } from "./ops-error-state"
+// OpsErrorState (v6 paper) retired in Phase 6 — last orphan, no consumers; v7
+// surfaces use EmptyState for error rendering.
 export {
   OpsAccessFallback,
   type OpsAccessFallbackProps,

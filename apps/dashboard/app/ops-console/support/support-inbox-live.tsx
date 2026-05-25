@@ -7,7 +7,7 @@ import {
   useUpdateContactLeadStatus,
 } from "@workspace/services/hooks/use-contact-leads"
 import type { ContactLeadStatus } from "@workspace/types"
-import { ContactLeadsView } from "@workspace/ui/components/composed/ops-console/pages"
+import { V7ContactLeads } from "@workspace/ui/components/composed/support/v7-contact-leads"
 
 export function SupportInboxLive() {
   // Fetch the full set (RLS gates to MANAGER+; a lower-role session gets zero
@@ -24,7 +24,7 @@ export function SupportInboxLive() {
   )
 
   return (
-    <ContactLeadsView
+    <V7ContactLeads
       leads={data}
       isLoading={isLoading}
       isError={isError}

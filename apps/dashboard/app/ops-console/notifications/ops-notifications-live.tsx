@@ -8,9 +8,9 @@ import {
 } from "@workspace/services/hooks/use-notifications"
 import { useSession } from "@workspace/ui/hooks/use-session"
 import {
-  OpsNotificationsView,
+  V7OpsNotifications,
   type SystemService,
-} from "@workspace/ui/components/composed/ops-console/pages"
+} from "@workspace/ui/components/composed/notifications/v7-ops-notifications"
 
 // Channels + services are static reference data — not driven by an API yet.
 const CHANNELS = [
@@ -36,7 +36,7 @@ export function OpsNotificationsLive() {
   const { data: unread = 0 } = useUnreadNotificationCount(userId)
 
   return (
-    <OpsNotificationsView
+    <V7OpsNotifications
       totalNotifications={all.length}
       unreadNotifications={typeof unread === "number" ? unread : 0}
       channels={CHANNELS}
