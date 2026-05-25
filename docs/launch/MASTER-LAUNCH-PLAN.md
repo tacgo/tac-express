@@ -21,7 +21,7 @@ The verdict is BOOLEAN — `engineering_ready AND product_ready AND customer_fac
 - 🚀 **LB-1** (Sentry alert provisioning, ~20 min, independent) — remaining.
 - 🚀 **LB-2** (PL-2b live notifications) — remaining; now unblocked by PI-1. Split into **LB-2a** (submit Meta WhatsApp template — external-clock long-pole) + **LB-2b** (WPBOX env + production e2e, gated on Meta approval).
 
-Customer-facing burn-down is **complete** (WS-1 / WS-2 / WS-2B / WS-3 / WS-4A all CLOSED). **WS-4B** (dashboard support inbox) is unblocked and sequenced as the next agent session, post-reconciliation. Both remaining items (LB-1, LB-2) are owner-side and parallelizable with WS-4B.
+Customer-facing burn-down is **complete** (WS-1 / WS-2 / WS-2B / WS-3 / WS-4A all CLOSED). **WS-4B — the ops-shell-rebuild arc — is STRUCTURALLY COMPLETE** (`feat/ops-shell-rebuild`, Phase 4→10d): the full v6→v7 dashboard migration (Body 1) and the dashboard-wide token fixes (Body 2) are done; every ops-console route renders Violet Grid v7. Body 3 (premium polish) remains as a separate **optional** session. Both remaining launch items (LB-1, LB-2) are owner-side and were always parallelizable with this arc.
 
 > **Production-deploy policy (codified after the PI-1 arc).** Database migrations
 > deploy via the `migration-deploy.yml` workflow **only**. Direct production writes —
@@ -166,10 +166,10 @@ LB-1 (Sentry — independent; run anytime)
 
 LB-4 ✅ RESOLVED (Free-tier stance; 30-day review issue filed)
 
-WS-4B (next agent build — unblocked by PI-1; parallelizable with LB-1/LB-2)
+WS-4B ✅ STRUCTURALLY COMPLETE (ops-shell-rebuild arc, Phase 4→10d; Body 1 + Body 2 done; Body 3 polish optional, separate session)
 ```
 
-**Critical path to launch-ready:** LB-2a → (Meta approval, external clock) → LB-2b. Submit LB-2a first; every hour it waits shifts the launch-ready date by an hour. LB-1 and WS-4B run in parallel and do not gate LB-2.
+**Critical path to launch-ready:** LB-2a → (Meta approval, external clock) → LB-2b. Submit LB-2a first; every hour it waits shifts the launch-ready date by an hour. LB-1 runs independently and does not gate LB-2. (WS-4B / ops-shell-rebuild is structurally complete and never gated launch — Body 3 polish is optional and post-launch-safe.)
 
 LB-3 closed 2026-05-19 (PR #179). LB-5 + LB-6 closed 2026-05-19 (the WS-1+WS-2 PR).
 

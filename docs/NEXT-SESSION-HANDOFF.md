@@ -1,74 +1,68 @@
 # Next-Session Handoff — Start Here
 
-> **The launch authority is [`docs/launch/MASTER-LAUNCH-PLAN.md`](launch/MASTER-LAUNCH-PLAN.md) (v1.4).** Customer-facing detail: [`docs/launch/CUSTOMER-FACING-PLAN.md`](launch/CUSTOMER-FACING-PLAN.md). UI/UX standard: [`docs/playbooks/UI-UX-CONSISTENCY-PLAYBOOK.md`](playbooks/UI-UX-CONSISTENCY-PLAYBOOK.md).
+> **The launch authority is [`docs/launch/MASTER-LAUNCH-PLAN.md`](launch/MASTER-LAUNCH-PLAN.md).** Customer-facing detail: [`docs/launch/CUSTOMER-FACING-PLAN.md`](launch/CUSTOMER-FACING-PLAN.md). UI/UX standard: [`docs/playbooks/UI-UX-CONSISTENCY-PLAYBOOK.md`](playbooks/UI-UX-CONSISTENCY-PLAYBOOK.md).
 
-**Last code commit on main:** `f337540` (PI-1 EVIDENCED DONE docs, #191). This PR is the launch-readiness reconciliation (docs-only).
-**This handoff covers:** the reconciliation session (2026-05-21). See [`docs/retros/2026-05-21-launch-readiness-reconciliation.md`](retros/2026-05-21-launch-readiness-reconciliation.md).
-**Author:** Claude Code (Opus 4.7), PM lens.
+**Branch:** `feat/ops-shell-rebuild` — the full WS-4B ops-shell-rebuild arc (Phase 4→10d). Ready for PR review / merge per standard process.
+**This handoff covers:** the ops-shell-rebuild arc completion (2026-05-26). Full retro: [`docs/retros/2026-05-26-ops-shell-rebuild-arc-complete.md`](retros/2026-05-26-ops-shell-rebuild-arc-complete.md).
+**Author:** Claude Code, design-system lens.
 
 ---
 
-## 1. LAUNCH VERDICT
+## 1. WHERE THINGS STAND
 
-> # **NOT READY** (BOOLEAN) — launch surface now **2 owner actions**, down from 4.
-
-| | |
+| Workstream | Status |
 |---|---|
-| ✅ PI-1 | **EVIDENCED DONE** — 4 migrations deployed (run `26180576599`); tables live, RLS correct, security advisors clean |
-| ✅ LB-4 | **RESOLVED** — operating on Supabase **Free** for launch (active stance; upgrade-when-warranted; 30-day review [#192](https://github.com/<YOUR_GITHUB_ORG>/<YOUR_GITHUB_REPO>/issues/192)) |
-| 🚀 LB-1 | SB-2 Sentry alert provisioning (~20 min) — independent, runnable now |
-| 🚀 LB-2a | Submit the Meta WhatsApp template — **external-clock long-pole** (24–48h approval); run first |
-| 🚀 LB-2b | WPBOX env vars + production e2e — gated on LB-2a approval |
+| **Body 1 — v6→v7 dashboard migration** | ✅ **COMPLETE** — every ops-console route (overview, workhorse, detail, create) renders Violet Grid v7. All v6 Paper view + detail primitives retired. |
+| **Body 2 — dashboard-wide token fixes** | ✅ **COMPLETE** — PageHeader t-h1, `--font-heading`, dead-font removal, violet wordmark, and the `.ops-console` scope retirement (violet sidebar chrome promoted to `:root`/`.dark` canonical). |
+| **Body 3 — premium polish** | ⏳ **OPTIONAL, NOT STARTED** — the rubric 85→90+ session. Owner-judgment-heavy; post-launch-safe. |
+| **Launch readiness (LB-1 / LB-2)** | 🚀 **OWNER-SIDE, OUTSTANDING** — the actual path to launching. Unchanged by the design arc. |
+
+> The design arc never gated launch. The launch-ready critical path is still **LB-2a → Meta approval → LB-2b** (see the launch plan).
 
 ---
 
-## 2. What happened this session
+## 2. NEXT SESSION — candidates in recommended priority order
 
-Reconciliation only (docs). Recorded PI-1 EVIDENCED DONE in the verdict; codified the **production-deploy policy** (pipeline-only; no MCP/manual prod writes; two-signal verification; `pg_dump` before destructive ops on Free); **resolved LB-4** as a Free-tier stance with documented residual risk, compensations, and 5 upgrade triggers; **split LB-2** into a/b to surface the Meta-template external clock; filed the 30-day LB-4 review issue #192.
+### (a) Launch-readiness items — LB-1 / LB-2 (OWNER-SIDE) — highest leverage
+These pre-date the WS-4B design work and are the path to actually launching. **Not agent-actionable** (owner credentials / external services), but they are the real priority.
+- **LB-2a** — submit the Meta WhatsApp template. **External clock (24–48h approval); run this FIRST** — every hour it waits shifts the launch date.
+- **LB-2b** — WPBOX env vars + production e2e, after LB-2a approval.
+- **LB-1** — SB-2 Sentry alert provisioning (~20 min). Independent; run anytime.
+- **LB-4** — RESOLVED (Free-tier launch stance); 30-day review tracked in issue #192.
 
----
+### (b) Body 3 — premium polish (AGENT session; owner picks the direction)
+The rubric **85→90+** session. Requires owner judgment for the display-moment direction. Scope:
+- **Display moments** on overview routes — **dashboard** is the strongest candidate (still standard PageHeader, unlike analytics' Phase-7 `t-display`+gradient treatment).
+- **State-router pattern** + **micro-interaction sweep** (tac-blink/scanline/hover-lift) where it earns its place.
+- **`text-ui-*` residue sweep** (paper-era sizing tokens still used by a few reused components, e.g. `payment-timeline.tsx`).
+- **The 4 `OpsPageHead` create-page headers** (`customers`/`manifests`/`rates`/`shipments` `create/page.tsx`) — optional "Phase 11" for full v7 purity. They use `:root` paper aliases so they're cosmetic-only, **block nothing**. Retiring them unlocks deleting the `--paper-*` aliases + `OpsPageHead`/`OpsFrame`.
 
-## 3. Open items
-
-- **Open PRs:** this reconciliation PR. After merge → 0 open PRs.
-- **Open issues:** #192 (30-day LB-4 review, intentionally open). #174 closed last session.
-- **Deferred, non-blocking:** perf-tuning for the 2 new PII tables (FK indexes + `(select auth.uid())` RLS wrapping) — see the PI-1 retro § 6.
-
----
-
-## 4. Customer-facing status
-
-WS-1, WS-2 + WS-2B, WS-3, WS-4A all closed (landing at clean PREMIUM ~92). The agent-actionable customer-facing burn-down is complete.
-
----
-
-## 5. Operating principles for production-affecting work (carry forward)
-
-- **Pipeline-only deploys** — migrations via `migration-deploy.yml` only. No MCP `apply_migration`, no manual prod SQL, no off-pipeline `db push`.
-- **Two-signal verification** — pair every action with a state-layer read (it caught all four PI-1 false-success modes).
-- **`pg_dump` before any destructive prod op** on the Free tier — the standing backup substitute (no PITR).
+### (c) Trivial-debt batches (interleave with either above)
+- 8 stale `useDesignVersion` docstrings (mechanism deleted in `ea96da5`).
+- `finance/create/page.tsx` stale comment (references an OpsPageHead removed in Phase 10a).
+- `payment-timeline.tsx` `text-ui-*` residue (also in (b)).
+- Orphan baseline shrink via `pnpm audit:orphans:refresh-baseline` (3 grandfathered entries — `ops-list-state`, `tracking-timeline`, `shipment-detail-tabs` — are now wired). **Cosmetic only**; governance is green either way.
 
 ---
 
-## 6. Next session's lead task — WS-4B (dashboard support inbox)
+## 3. Branch state (for PR/merge)
 
-The next **agent** session is the WS-4B build. Preconditions, all now met:
-- ✅ PI-1 done — `contact_leads` exists in production with RLS (MANAGER+ select, MANAGER+ update; no insert/delete policy — service-role writes only).
-- ✅ LB-4 resolved — operating on Free; `pg_dump` discipline established.
-- No other agent dependencies.
-
-WS-4B is a NEW `apps/dashboard` surface reading `contact_leads`. It needs its own PHASE-0: confirm/extend the RLS read path for MANAGER+, additive schema columns (e.g., `read_at`/`triaged_by` if the inbox needs triage state — design in the build session, NOT before), service-layer methods, composed UI components, audit-trail wiring. ~half-day PR-scale. Load the UI-UX consistency playbook first (customer-facing-adjacent dashboard surface).
-
-**LB-1 and LB-2 are owner-side and parallelizable with WS-4B** — they do not block the next agent session.
+`feat/ops-shell-rebuild` — 40+ commits, full Phase 4→10d arc. **All gates green**: `pnpm test` 588/588 · typecheck clean *except* 2 pre-existing errors (`globe.tsx` three.js deps, `v7-ops-shipments` `"CREATED"` status) that **predate this arc and are unrelated** · `pnpm lint` clean on touched files · `pnpm audit:governance` fully green (LAW 2 passes, wasteland-landing baselined with a 2026-06-24 review guard).
 
 ---
 
-## 7. OWNER ACTIONS — before next session
+## 4. Operating principles (carry forward)
 
-1. ✅ **PI-1 — DONE.** No action.
-2. ✅ **LB-4 — RESOLVED** (Free for launch). No action; #192 holds the 30-day review.
-3. 🚀 **LB-2a** — submit the Meta WhatsApp template **now** (external-clock long-pole; 24–48h approval). This is the launch-ready critical path.
-4. 🚀 **LB-1** — SB-2 Sentry alert provisioning (~20 min). Independent; run anytime.
-5. 🚀 **LB-2b** — WPBOX env vars + production e2e, after LB-2a approval lands.
+**Production-affecting work** (unchanged):
+- **Pipeline-only deploys** — migrations via `migration-deploy.yml` only. No MCP `apply_migration`, no manual prod SQL.
+- **Two-signal verification** — pair every action with a state-layer read.
+- **`pg_dump` before any destructive prod op** on the Free tier (no PITR).
 
-🤖 Handoff written by Claude (Opus 4.7), 2026-05-21, post launch-readiness reconciliation.
+**Design-system arcs** (new, from this arc — see the retro):
+- **Bounded-autonomy with mandatory checkpoints** is the working pattern for multi-phase design migrations on this project.
+- **The agent's read of the actual code beats pre-investigation plans** — every phase opened with read-only STEP 0; it caught a stale flag-promotion premise and a mis-scoped create/detail plan.
+- **LAW 2 firing on a UI composition is a signal to promote it to `packages/ui`, not to allowlist** — the audit pointing somewhere is usually right about direction.
+
+---
+
+🤖 Handoff written by Claude, 2026-05-26, on ops-shell-rebuild arc completion.
