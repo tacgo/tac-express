@@ -100,6 +100,7 @@
     "./components/composed/shipments/*": "./src/components/composed/shipments/*.tsx",
     "./components/composed/manifests/*": "./src/components/composed/manifests/*.tsx",
     "./components/composed/finance/*": "./src/components/composed/finance/*.tsx",
+    "./components/composed/rates/*": "./src/components/composed/rates/*.tsx",
     "./components/composed/auth/*": "./src/components/composed/auth/*.tsx",
     "./components/composed/customers/*": "./src/components/composed/customers/*.tsx",
     "./components/composed/exceptions/*": "./src/components/composed/exceptions/*.tsx",
