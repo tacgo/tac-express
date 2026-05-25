@@ -108,6 +108,7 @@
     "./components/composed/management/*": "./src/components/composed/management/*.tsx",
     "./components/composed/notifications/*": "./src/components/composed/notifications/*.tsx",
     "./components/composed/scanning/*": "./src/components/composed/scanning/*.tsx",
+    "./components/composed/whatsapp/*": "./src/components/composed/whatsapp/*.tsx",
     "./components/composed/settings/*": "./src/components/composed/settings/*.tsx",
     "./components/composed/support/*": "./src/components/composed/support/*.tsx",
     "./components/composed/ops-console": "./src/components/composed/ops-console/index.ts",
