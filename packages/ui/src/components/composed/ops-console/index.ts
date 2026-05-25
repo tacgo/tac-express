@@ -44,12 +44,10 @@ export {
 } from "./ops-field"
 // OpsKbd (v6 paper) retired in Phase 6 — V7OpsSettings inlines <kbd> tokens
 // rather than the Ops* primitive.
-export {
-  OpsSkeleton,
-  OpsSkeletonRow,
-  OpsSkeletonStatCard,
-} from "./ops-skeleton"
-export { OpsEmptyState, type OpsEmptyStateProps } from "./ops-empty-state"
+// OpsSkeleton/Row/StatCard (v6 paper) retired in Phase 10c — detail routes use
+// the v7 Skeleton primitive.
+// OpsEmptyState (v6 paper) retired in Phase 10c — detail routes use the v7
+// EmptyState primitive.
 // OpsErrorState (v6 paper) retired in Phase 6 — last orphan, no consumers; v7
 // surfaces use EmptyState for error rendering.
 export {
@@ -57,18 +55,11 @@ export {
   type OpsAccessFallbackProps,
   type OpsAccessFallbackReason,
 } from "./ops-access-fallback"
-export { OpsDetailFrame, type OpsDetailFrameProps } from "./ops-detail-frame"
-export {
-  OpsTimeline,
-  type OpsTimelineProps,
-  type TimelineEvent,
-} from "./ops-timeline"
-export { OpsShipmentStepper } from "./ops-shipment-stepper"
-export {
-  OpsPanelTabs,
-  OpsPanelTabsList,
-  OpsPanelTabsTrigger,
-  OpsPanelTabsContent,
-} from "./ops-panel-tabs"
+// Phase 10c — v6 paper detail primitives retired (shipments/[id] was the last
+// consumer; detail routes now compose v7 directly):
+//   OpsDetailFrame     → DetailShell (apps/dashboard/components/ops-detail-shell)
+//   OpsTimeline        → TrackingTimeline (composed/shipments/tracking-timeline)
+//   OpsShipmentStepper → ShipmentStepper (composed/shipments/shipment-stepper)
+//   OpsPanelTabs*      → ShipmentDetailTabs (composed/shipments/shipment-detail-tabs)
 export * from "./pages"
 export * from "./forms"
