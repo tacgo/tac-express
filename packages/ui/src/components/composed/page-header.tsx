@@ -34,7 +34,7 @@ function PageHeader({
           </AnimatedGroupItem>
         )}
         <AnimatedGroupItem distance={10} duration={0.45}>
-          <h1 className={cn("t-h2 text-foreground", gradient && "t-gradient-primary")}>
+          <h1 className={cn("t-h1 text-foreground", gradient && "t-gradient-primary")}>
             {title}
           </h1>
         </AnimatedGroupItem>

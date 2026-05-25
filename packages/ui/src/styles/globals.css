@@ -622,6 +622,9 @@
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);
   --font-serif: var(--font-serif);
+  /* Card / Dialog / Sheet / AlertDialog titles reference `font-heading`;
+     resolve it to the serif stack (Noto Serif) — the intended heading face. */
+  --font-heading: var(--font-serif);
 
   --text-3xs: 0.5625rem;
   --text-2xs: 0.625rem;

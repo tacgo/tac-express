@@ -1,11 +1,4 @@
-import {
-  Outfit,
-  IBM_Plex_Mono,
-  Noto_Serif,
-  Inter,
-  JetBrains_Mono,
-  Instrument_Serif,
-} from "next/font/google"
+import { Outfit, IBM_Plex_Mono, Noto_Serif } from "next/font/google"
 
 import "@workspace/ui/globals.css"
 import { Providers } from "@/components/providers"
@@ -43,31 +36,6 @@ const notoSerif = Noto_Serif({
   preload: false,
 })
 
-// ── Paper Ops Console (default since May 2026 promotion) ───────────────────
-// Loaded here per LAW 4 (fonts only in app/layout.tsx). Preloaded — this is
-// the default visual surface, so the first paint should have them ready.
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
-  variable: "--paper-font-display",
-  display: "swap",
-})
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--paper-font-mono",
-  display: "swap",
-})
-
-const instrumentSerif = Instrument_Serif({
-  subsets: ["latin"],
-  weight: ["400"],
-  style: ["normal", "italic"],
-  variable: "--paper-font-serif",
-  display: "swap",
-})
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -82,9 +50,6 @@ export default function RootLayout({
         outfit.variable,
         ibmPlexMono.variable,
         notoSerif.variable,
-        inter.variable,
-        jetbrainsMono.variable,
-        instrumentSerif.variable,
         "font-sans"
       )}
     >

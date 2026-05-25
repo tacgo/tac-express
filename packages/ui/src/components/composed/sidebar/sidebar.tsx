@@ -264,7 +264,7 @@ export function Sidebar({ collapsible = false }: SidebarProps = {}) {
               >
                 <div className="font-mono font-extrabold text-base leading-none tracking-tight flex items-baseline">
                   <span className="text-sidebar-foreground">TAC</span>
-                  <span className="ml-1.5 text-accent-warning">
+                  <span className="ml-1.5 text-primary">
                     EXPRESS →
                   </span>
                 </div>
