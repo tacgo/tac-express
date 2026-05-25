@@ -4,7 +4,8 @@
 // V7OpsShipments; ShipmentRow lives in `shipments/v7-ops-shipments`.
 // OpsManifestsView (v6 paper) retired in Phase 5 — manifests route renders
 // V7OpsManifests; ManifestRow lives in `manifests/v7-ops-manifests`.
-export { OpsScanningView } from "./ops-scanning-view"
+// OpsScanningView (v6 paper) retired in Phase 8 — scanning route renders
+// V7OpsScanning, in `scanning/v7-ops-scanning`.
 // OpsInventoryView (v6 paper) retired in Phase 5 — inventory route renders
 // V7OpsInventory; HubInventory lives in `inventory/v7-ops-inventory`.
 // OpsExceptionsView (v6 paper) retired in Phase 6 — exceptions route renders
