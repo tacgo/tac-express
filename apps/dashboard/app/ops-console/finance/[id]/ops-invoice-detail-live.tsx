@@ -1,7 +1,6 @@
 "use client"
 
 import * as React from "react"
-import Link from "next/link"
 
 import {
   useInvoice,
@@ -22,7 +21,6 @@ import { PaymentResponseLostError } from "@workspace/services/payment.service"
 import { useNotificationStore } from "@workspace/services/stores/notification.store"
 import { InvoiceStatus } from "@workspace/types"
 import {
-  RiArrowLeftLine,
   RiPrinterLine,
   RiEyeLine,
   RiMoneyDollarCircleLine,
@@ -31,7 +29,11 @@ import {
   RiErrorWarningLine,
 } from "@workspace/ui/icons"
 import { cn } from "@workspace/ui/lib/utils"
-import { PageShell } from "@workspace/ui/components/composed/page-shell"
+import {
+  DetailShell,
+  FIELD_LABEL,
+  STATUS_TONE_CLASS,
+} from "@/components/ops-detail-shell"
 import { SurfaceCard } from "@workspace/ui/components/composed/surface-card"
 import { Badge } from "@workspace/ui/components/primitives/badge"
 import { Button } from "@workspace/ui/components/button"
@@ -56,24 +58,12 @@ import {
  * SurfaceCard grid). No services, hooks, or handlers changed.
  */
 
-// Mono field-key label — muted, replaces the paper-label class (mono 11px
-// uppercase, --paper-fg-3) with its v7 token equivalent.
-const FIELD_LABEL = "font-mono text-2xs uppercase tracking-widest text-muted-foreground"
-
 const STATUS_TONE: Record<InvoiceStatus, "neutral" | "ok" | "warn" | "err" | "violet"> = {
   [InvoiceStatus.DRAFT]: "warn",
   [InvoiceStatus.ISSUED]: "violet",
   [InvoiceStatus.PAID]: "ok",
   [InvoiceStatus.OVERDUE]: "err",
   [InvoiceStatus.CANCELLED]: "neutral",
-}
-
-const STATUS_TONE_CLASS: Record<"neutral" | "ok" | "warn" | "err" | "violet", string> = {
-  neutral: "border-border text-muted-foreground",
-  ok: "border-accent-success/30 bg-accent-success/15 text-accent-success",
-  warn: "border-accent-warning/30 bg-accent-warning/15 text-accent-warning",
-  err: "border-destructive/30 bg-destructive/15 text-destructive",
-  violet: "border-primary/30 bg-primary/15 text-primary",
 }
 
 interface ParsedNotes {
@@ -181,70 +171,6 @@ function MetaField({
         {value}
       </p>
     </div>
-  )
-}
-
-/**
- * DetailShell — v7 replacement for OpsDetailFrame. PageShell + back link +
- * header (eyebrow / mono-tabular ID title / sub / status / actions) + an 8/4
- * grid (main + optional aside). Direct composition, matching how customers/[id]
- * frames its detail surface (no extracted V7DetailFrame primitive).
- */
-function DetailShell({
-  eyebrow,
-  title,
-  sub,
-  status,
-  actions,
-  backHref,
-  aside,
-  children,
-}: {
-  eyebrow: string
-  title: string
-  sub?: React.ReactNode
-  status?: React.ReactNode
-  actions?: React.ReactNode
-  backHref?: string
-  aside?: React.ReactNode
-  children: React.ReactNode
-}) {
-  return (
-    <PageShell width="wide">
-      {backHref && (
-        <Link
-          href={backHref}
-          className={cn(
-            FIELD_LABEL,
-            "inline-flex items-center gap-1.5 hover:text-primary transition-colors duration-fast ease-linear focus-visible:outline-none focus-visible:tac-focus-premium",
-          )}
-        >
-          <RiArrowLeftLine aria-hidden className="size-3" />
-          Back
-        </Link>
-      )}
-
-      <header className="flex items-start justify-between gap-4 pb-4 border-b border-border">
-        <div className="min-w-0">
-          <p className={FIELD_LABEL}>{eyebrow}</p>
-          <h1 className="font-mono text-3xl font-bold tabular-nums tracking-tight text-foreground mt-1 break-all">
-            {title}
-          </h1>
-          {sub && <p className="t-body-sm text-muted-foreground mt-1.5">{sub}</p>}
-        </div>
-        <div className="flex flex-col items-end gap-3 shrink-0">
-          {status && <div>{status}</div>}
-          {actions && <div className="flex items-center gap-2">{actions}</div>}
-        </div>
-      </header>
-
-      <div
-        className={cn("grid gap-6", aside ? "grid-cols-1 lg:grid-cols-12" : "grid-cols-1")}
-      >
-        <div className={cn(aside && "lg:col-span-8 space-y-4")}>{children}</div>
-        {aside && <aside className="lg:col-span-4 space-y-4">{aside}</aside>}
-      </div>
-    </PageShell>
   )
 }
 

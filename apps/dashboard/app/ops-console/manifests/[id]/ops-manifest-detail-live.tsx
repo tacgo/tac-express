@@ -1,7 +1,6 @@
 "use client"
 
 import * as React from "react"
-import Link from "next/link"
 
 import {
   useManifest,
@@ -15,8 +14,12 @@ import {
 import { useNotificationStore } from "@workspace/services/stores/notification.store"
 import { ManifestStatus } from "@workspace/types"
 import { cn } from "@workspace/ui/lib/utils"
-import { RiArrowLeftLine, RiErrorWarningLine, RiAddLine } from "@workspace/ui/icons"
-import { PageShell } from "@workspace/ui/components/composed/page-shell"
+import { RiErrorWarningLine, RiAddLine } from "@workspace/ui/icons"
+import {
+  DetailShell,
+  FIELD_LABEL,
+  STATUS_TONE_CLASS,
+} from "@/components/ops-detail-shell"
 import { SurfaceCard } from "@workspace/ui/components/composed/surface-card"
 import { Badge } from "@workspace/ui/components/primitives/badge"
 import { Button } from "@workspace/ui/components/button"
@@ -31,8 +34,6 @@ import { Input } from "@workspace/ui/components/primitives/input"
  * SurfaceCard grid). No services, hooks, or handlers changed.
  */
 
-const FIELD_LABEL = "font-mono text-2xs uppercase tracking-widest text-muted-foreground"
-
 const STATUS_TONE: Record<string, "neutral" | "ok" | "warn" | "err" | "violet"> = {
   DRAFT: "neutral",
   BUILDING: "warn",
@@ -42,14 +43,6 @@ const STATUS_TONE: Record<string, "neutral" | "ok" | "warn" | "err" | "violet"> 
   ARRIVED: "ok",
   RECONCILED: "neutral",
   CANCELLED: "err",
-}
-
-const STATUS_TONE_CLASS: Record<"neutral" | "ok" | "warn" | "err" | "violet", string> = {
-  neutral: "border-border text-muted-foreground",
-  ok: "border-accent-success/30 bg-accent-success/15 text-accent-success",
-  warn: "border-accent-warning/30 bg-accent-warning/15 text-accent-warning",
-  err: "border-destructive/30 bg-destructive/15 text-destructive",
-  violet: "border-primary/30 bg-primary/15 text-primary",
 }
 
 const NEXT_ACTION: Partial<
@@ -62,63 +55,6 @@ const NEXT_ACTION: Partial<
   [ManifestStatus.CLOSED]: { label: "Mark Departed", key: "depart" },
   [ManifestStatus.DEPARTED]: { label: "Mark Arrived", key: "arrive" },
   [ManifestStatus.ARRIVED]: { label: "Reconcile", key: "reconcile" },
-}
-
-/**
- * DetailShell — v7 replacement for OpsDetailFrame. PageShell + back link +
- * header + 8/4 grid. Direct composition (Approach A), matching customers/[id].
- */
-function DetailShell({
-  eyebrow,
-  title,
-  sub,
-  status,
-  backHref,
-  aside,
-  children,
-}: {
-  eyebrow: string
-  title: string
-  sub?: React.ReactNode
-  status?: React.ReactNode
-  backHref?: string
-  aside?: React.ReactNode
-  children: React.ReactNode
-}) {
-  return (
-    <PageShell width="wide">
-      {backHref && (
-        <Link
-          href={backHref}
-          className={cn(
-            FIELD_LABEL,
-            "inline-flex items-center gap-1.5 hover:text-primary transition-colors duration-fast ease-linear focus-visible:outline-none focus-visible:tac-focus-premium",
-          )}
-        >
-          <RiArrowLeftLine aria-hidden className="size-3" />
-          Back
-        </Link>
-      )}
-
-      <header className="flex items-start justify-between gap-4 pb-4 border-b border-border">
-        <div className="min-w-0">
-          <p className={FIELD_LABEL}>{eyebrow}</p>
-          <h1 className="font-mono text-3xl font-bold tabular-nums tracking-tight text-foreground mt-1 break-all">
-            {title}
-          </h1>
-          {sub && <p className="t-body-sm text-muted-foreground mt-1.5">{sub}</p>}
-        </div>
-        {status && <div className="shrink-0">{status}</div>}
-      </header>
-
-      <div
-        className={cn("grid gap-6", aside ? "grid-cols-1 lg:grid-cols-12" : "grid-cols-1")}
-      >
-        <div className={cn(aside && "lg:col-span-8 space-y-4")}>{children}</div>
-        {aside && <aside className="lg:col-span-4 space-y-4">{aside}</aside>}
-      </div>
-    </PageShell>
-  )
 }
 
 interface OpsManifestDetailLiveProps {
