@@ -1,8 +1,5 @@
-export {
-  OpsAnalyticsView,
-  type OpsAnalyticsViewProps,
-  type AnalyticsKpis,
-} from "./ops-analytics-view"
+// OpsAnalyticsView (v6 paper) retired in Phase 7 — analytics route renders
+// V7OpsAnalytics; AnalyticsKpis lives in `analytics/v7-ops-analytics`.
 // OpsShipmentsView (v6 paper) retired in Phase 5 — shipments route renders
 // V7OpsShipments; ShipmentRow lives in `shipments/v7-ops-shipments`.
 // OpsManifestsView (v6 paper) retired in Phase 5 — manifests route renders
