@@ -1,11 +1,11 @@
 import type { Metadata } from "next"
 
-import { OpsScanningView } from "@workspace/ui/components/composed/ops-console/pages"
+import { V7OpsScanning } from "@workspace/ui/components/composed/scanning/v7-ops-scanning"
 
 export const metadata: Metadata = {
   title: "Scanning — TAC Express Ops Console",
 }
 
 export default function OpsConsoleScanningPage() {
-  return <OpsScanningView />
+  return <V7OpsScanning />
 }
