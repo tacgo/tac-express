@@ -14,7 +14,7 @@ import {
   DetailShell,
   FIELD_LABEL,
   STATUS_TONE_CLASS,
-} from "@/components/ops-detail-shell"
+} from "@workspace/ui/components/composed/detail-shell"
 import { SurfaceCard } from "@workspace/ui/components/composed/surface-card"
 import { Badge } from "@workspace/ui/components/primitives/badge"
 import { Button } from "@workspace/ui/components/button"

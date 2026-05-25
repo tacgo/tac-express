@@ -1,5 +1,3 @@
-"use client"
-
 import * as React from "react"
 import Link from "next/link"
 
@@ -8,12 +6,15 @@ import { RiArrowLeftLine } from "@workspace/ui/icons"
 import { PageShell } from "@workspace/ui/components/composed/page-shell"
 
 /**
- * Shared detail-page composition for the ops-console `[id]` routes — the v7
- * replacement for the retired Paper `OpsDetailFrame`. Co-located in
- * apps/dashboard/components (not packages/ui) per the Approach-A decision:
- * direct composition in the app layer, mirroring customers/[id], rather than
- * a packages/ui V7DetailFrame primitive. Consumed by finance/[id],
- * manifests/[id], and shipments/[id].
+ * DetailShell — generic v7 layout primitive for `[id]` detail pages. A peer to
+ * PageShell / SurfaceCard: thin, slot-only, zero domain knowledge. Replaces the
+ * retired Paper `OpsDetailFrame`.
+ *
+ * Layout: PageShell + optional back link + header (eyebrow / mono-tabular ID
+ * title / sub / status / actions) + an 8/4 main+aside grid (single column when
+ * no aside). Callers supply all content as slots and own their data/handlers.
+ * Consumed by the finance/[id], manifests/[id], and shipments/[id] detail
+ * wrappers.
  */
 
 /** Mono field-key label — muted; the v7 token equivalent of the paper-label class. */
@@ -50,11 +51,6 @@ interface DetailShellProps {
   children: React.ReactNode
 }
 
-/**
- * DetailShell — PageShell + back link + header (eyebrow / mono-tabular ID title
- * / sub / status / actions) + an 8/4 main+aside grid (single column when no
- * aside). Direct PageShell + SurfaceCard composition; no shared primitive.
- */
 export function DetailShell({
   eyebrow,
   title,
