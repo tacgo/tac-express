@@ -169,7 +169,7 @@ export function ManagementClient() {
   )
 
   return (
-    <PageShell>
+    <PageShell width="wide">
       <PageHeader
         overline="Administration"
         title="Operations & Access"
