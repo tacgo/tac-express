@@ -241,14 +241,15 @@ export function ScanningConsole({
           const isActive = m.id === mode
           const Icon = m.icon
           return (
-            <button
+            <Button
               key={m.id}
               type="button"
+              variant="ghost"
               onClick={() => onModeChange(m.id)}
               data-active={isActive}
               data-tone={m.tone}
               className={cn(
-                "flex items-center justify-center gap-2 bg-background px-3 py-2 transition-colors",
+                "flex h-auto w-full items-center justify-center gap-2 bg-background px-3 py-2 transition-colors",
                 "hover:bg-muted/40",
                 isActive && "bg-primary text-primary-foreground hover:bg-primary",
                 m.tone === "info" && isActive && "bg-status-info text-background",
@@ -264,7 +265,7 @@ export function ScanningConsole({
               <span className="font-mono text-ui-11 font-semibold uppercase tracking-widest">
                 {m.label}
               </span>
-            </button>
+            </Button>
           )
         })}
       </nav>
@@ -376,13 +377,14 @@ export function ScanningConsole({
                 Scan feed · last 100
               </span>
               {feed.length > 0 && (
-                <button
+                <Button
                   type="button"
+                  variant="ghost"
                   onClick={() => setFeed([])}
-                  className="tac-mono-label text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:tac-focus-premium"
+                  className="h-auto px-1 py-0.5 tac-mono-label text-muted-foreground hover:text-foreground focus-visible:tac-focus-premium"
                 >
                   Clear
-                </button>
+                </Button>
               )}
             </header>
             <ScrollArea className="h-72">

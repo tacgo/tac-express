@@ -415,13 +415,14 @@ export function SendWhatsAppDialog({
               </p>
               {errorDetail && (
                 <>
-                  <button
+                  <Button
                     type="button"
+                    variant="ghost"
                     onClick={() => setShowDetail((v) => !v)}
-                    className="font-mono text-2xs uppercase tracking-widest text-destructive/80 hover:text-destructive underline-offset-2 hover:underline"
+                    className="h-auto px-0 py-0 font-mono text-2xs uppercase tracking-widest text-destructive/80 hover:text-destructive hover:underline underline-offset-2 hover:bg-transparent"
                   >
                     {showDetail ? "Hide details" : "View details"}
-                  </button>
+                  </Button>
                   {showDetail && (
                     <pre className="mt-1 max-h-32 overflow-auto border border-destructive/20 bg-background/60 px-2 py-1.5 font-mono text-2xs leading-snug text-foreground/80 whitespace-pre-wrap break-all">
                       {errorDetail}
@@ -505,13 +506,14 @@ function ConfigStatusPill({
           </p>
         </div>
         {onRetry && (
-          <button
+          <Button
             type="button"
+            variant="ghost"
             onClick={onRetry}
-            className="font-mono text-2xs uppercase tracking-widest text-destructive/80 hover:text-destructive underline-offset-2 hover:underline shrink-0"
+            className="h-auto shrink-0 px-0 py-0 font-mono text-2xs uppercase tracking-widest text-destructive/80 hover:text-destructive hover:underline underline-offset-2 hover:bg-transparent"
           >
             Retry
-          </button>
+          </Button>
         )}
       </div>
       {!status.configured && (

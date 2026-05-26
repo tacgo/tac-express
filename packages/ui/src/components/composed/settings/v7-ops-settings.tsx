@@ -470,22 +470,26 @@ function HubsSection({
                         aria-label={`Rename hub ${code}`}
                         className="h-8 min-w-0 flex-1 font-mono tracking-badge"
                       />
-                      <button
+                      <Button
                         type="button"
+                        variant="ghost"
+                        size="icon"
                         onClick={() => commitEdit(code)}
                         aria-label="Save"
-                        className="text-accent-success hover:bg-accent-success/15 p-1 transition-colors duration-fast ease-linear"
+                        className="text-accent-success hover:bg-accent-success/15 h-7 w-7"
                       >
                         <RiCheckLine className="size-3.5" aria-hidden />
-                      </button>
-                      <button
+                      </Button>
+                      <Button
                         type="button"
+                        variant="ghost"
+                        size="icon"
                         onClick={cancelEdit}
                         aria-label="Cancel"
-                        className="text-muted-foreground hover:bg-muted p-1 transition-colors duration-fast ease-linear"
+                        className="text-muted-foreground h-7 w-7"
                       >
                         <RiCloseLine className="size-3.5" aria-hidden />
-                      </button>
+                      </Button>
                     </>
                   ) : (
                     <div className="min-w-0">
@@ -502,16 +506,20 @@ function HubsSection({
                 </div>
                 {!isEditing && (
                   <div className="flex items-center gap-1">
-                    <button
+                    <Button
                       type="button"
+                      variant="ghost"
+                      size="icon"
                       onClick={() => startEdit(code)}
                       aria-label={`Rename ${display}`}
-                      className="text-muted-foreground hover:text-primary hover:bg-muted p-1.5 transition-colors duration-fast ease-linear"
+                      className="text-muted-foreground hover:text-primary h-7 w-7"
                     >
                       <RiEditLine className="size-3.5" aria-hidden />
-                    </button>
-                    <button
+                    </Button>
+                    <Button
                       type="button"
+                      variant="ghost"
+                      size="icon"
                       onClick={() => confirmDelete(code)}
                       aria-label={
                         isPendingDelete
@@ -519,14 +527,14 @@ function HubsSection({
                           : `Delete ${display}`
                       }
                       className={cn(
-                        "p-1.5 transition-colors duration-fast ease-linear",
+                        "h-7 w-7",
                         isPendingDelete
                           ? "text-destructive bg-destructive/15"
-                          : "text-muted-foreground hover:text-destructive hover:bg-muted",
+                          : "text-muted-foreground hover:text-destructive",
                       )}
                     >
                       <RiDeleteBinLine className="size-3.5" aria-hidden />
-                    </button>
+                    </Button>
                     {isPendingDelete && (
                       <span className="tac-mono-label text-destructive ml-1 whitespace-nowrap">
                         Click again

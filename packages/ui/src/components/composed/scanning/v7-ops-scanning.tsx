@@ -97,13 +97,15 @@ function V7OpsScanning({ className }: { className?: string }) {
           <StatReadout label="OK" value="0" tone="success" />
           <StatReadout label="Err" value="0" tone="danger" />
           <StatReadout label="Rate" value="0%" />
-          <button
+          <Button
             type="button"
+            variant="ghost"
+            size="icon"
             aria-label="Scanner settings"
-            className="size-8 border border-border bg-card grid place-items-center text-foreground hover:bg-muted focus-visible:outline-none focus-visible:tac-focus-premium transition-colors duration-fast ease-linear"
+            className="size-8 border border-border bg-card hover:bg-muted focus-visible:tac-focus-premium"
           >
             <RiSettingsLine aria-hidden className="size-3.5" />
-          </button>
+          </Button>
         </div>
       </div>
 

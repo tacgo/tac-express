@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 
 
@@ -287,7 +287,7 @@ function IndianCityCombobox({
                   >
                     <RiMapPinLine className="size-4 shrink-0 text-primary" />
                     <span className="truncate">
-                      Use “{trimmedQuery}”
+                      Use &ldquo;{trimmedQuery}&rdquo;
                     </span>
                     <span className="ml-auto font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
                       CUSTOM
@@ -365,7 +365,7 @@ function IndianCityCombobox({
                     }}
                   >
                     <RiMapPinLine className="size-4 shrink-0 text-primary" />
-                    <span className="truncate">Use “{trimmedQuery}”</span>
+                    <span className="truncate">Use &ldquo;{trimmedQuery}&rdquo;</span>
                     <span className="ml-auto font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
                       CUSTOM
                     </span>

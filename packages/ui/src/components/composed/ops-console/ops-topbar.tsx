@@ -13,6 +13,7 @@ import {
   RiSettingsLine,
   RiMenuLine,
 } from "@workspace/ui/icons"
+import { Button } from "@workspace/ui/components/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -80,14 +81,16 @@ function OpsTopbar({ crumbs, onMenuClick }: OpsTopbarProps) {
       {/* Mobile nav toggle — opens the sidebar drawer. Hidden on lg+ where the
           sidebar is always visible in the shell grid. */}
       {onMenuClick ? (
-        <button
+        <Button
           type="button"
+          variant="ghost"
+          size="icon"
           aria-label="Open navigation menu"
           onClick={onMenuClick}
-          className="lg:hidden -ml-1 mr-2 flex size-8 items-center justify-center border border-border bg-card text-muted-foreground hover:bg-muted focus-visible:outline-none focus-visible:tac-focus-premium transition-colors duration-fast ease-linear"
+          className="lg:hidden -ml-1 mr-2 size-8 border border-border bg-card text-muted-foreground hover:bg-muted focus-visible:tac-focus-premium"
         >
           <RiMenuLine aria-hidden className="size-4" />
-        </button>
+        </Button>
       ) : null}
 
       {/* Breadcrumbs — hidden on small screens so the topbar's right cluster
@@ -109,16 +112,17 @@ function OpsTopbar({ crumbs, onMenuClick }: OpsTopbarProps) {
       {/* Right cluster */}
       <div className="ml-auto flex items-center gap-2">
         {/* Search */}
-        <button
+        <Button
           type="button"
+          variant="ghost"
           aria-label="Open command palette"
-          className="flex items-center gap-1.5 h-8 px-2 border border-border bg-card text-muted-foreground hover:bg-muted focus-visible:outline-none focus-visible:tac-focus-premium transition-colors duration-fast ease-linear"
+          className="flex items-center gap-1.5 h-8 px-2 border border-border bg-card text-muted-foreground hover:bg-muted focus-visible:tac-focus-premium"
         >
           <RiSearchLine aria-hidden className="size-3.5" />
           <span className="font-mono font-medium text-ui-10 px-1.5 py-0.5 border border-border text-foreground">
             ⌘K
           </span>
-        </button>
+        </Button>
 
         {/* Theme selector — C / M / S, wired to next-themes */}
         <div
@@ -129,9 +133,10 @@ function OpsTopbar({ crumbs, onMenuClick }: OpsTopbarProps) {
           {(["C", "M", "S"] as const).map((t) => {
             const isActive = mounted && theme === t
             return (
-              <button
+              <Button
                 key={t}
                 type="button"
+                variant="ghost"
                 // `suppressHydrationWarning` is belt-and-suspenders: even with
                 // the `mounted` gate, the *first* commit after mount swaps the
                 // active button. React 19 logs a dev warning on that single
@@ -143,31 +148,34 @@ function OpsTopbar({ crumbs, onMenuClick }: OpsTopbarProps) {
                 className={cn(
                   "w-7 h-[length:var(--toggle-h)] border-r border-border last:border-r-0 bg-card",
                   "font-mono font-semibold text-ui-11 text-foreground",
-                  "hover:bg-muted transition-colors duration-fast ease-linear",
-                  "focus-visible:outline-none focus-visible:tac-focus-premium",
+                  "hover:bg-muted focus-visible:tac-focus-premium",
                   isActive && "bg-primary text-primary-foreground hover:bg-primary",
                 )}
               >
                 {t}
-              </button>
+              </Button>
             )
           })}
         </div>
 
         {/* Bell */}
-        <button
+        <Button
           type="button"
+          variant="ghost"
+          size="icon"
           aria-label="Notifications"
-          className="size-8 border border-border bg-card grid place-items-center text-foreground hover:bg-muted focus-visible:outline-none focus-visible:tac-focus-premium transition-colors duration-fast ease-linear"
+          className="size-8 border border-border bg-card text-foreground hover:bg-muted focus-visible:tac-focus-premium"
         >
           <RiNotification3Line aria-hidden className="size-4" />
-        </button>
+        </Button>
 
         {/* Light/dark toggle — toggles between the two non-system modes. Use a
             neutral aria-label until mounted so SSR and first client paint
             agree; after mount it switches to the directional variant. */}
-        <button
+        <Button
           type="button"
+          variant="ghost"
+          size="icon"
           suppressHydrationWarning
           aria-label={
             mounted
@@ -177,10 +185,10 @@ function OpsTopbar({ crumbs, onMenuClick }: OpsTopbarProps) {
               : "Toggle theme"
           }
           onClick={() => setNextTheme(isDark ? "light" : "dark")}
-          className="size-8 border border-border bg-card grid place-items-center text-foreground hover:bg-muted focus-visible:outline-none focus-visible:tac-focus-premium transition-colors duration-fast ease-linear"
+          className="size-8 border border-border bg-card text-foreground hover:bg-muted focus-visible:tac-focus-premium"
         >
           <RiMoonClearLine aria-hidden className="size-4" />
-        </button>
+        </Button>
 
         {/* Divider grouping the session controls from the account chip. */}
         <span aria-hidden className="mx-1 h-5 w-px bg-border" />

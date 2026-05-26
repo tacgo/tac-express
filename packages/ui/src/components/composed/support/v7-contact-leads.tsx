@@ -16,6 +16,7 @@ import {
 import { PageShell } from "@workspace/ui/components/composed/page-shell"
 import { PageHeader } from "@workspace/ui/components/composed/page-header"
 import { DataTableCard } from "@workspace/ui/components/composed/data-table-card"
+import { Button } from "@workspace/ui/components/button"
 import { Input } from "@workspace/ui/components/primitives/input"
 import { Badge } from "@workspace/ui/components/primitives/badge"
 import { EmptyState } from "@workspace/ui/components/primitives/empty-state"
@@ -181,8 +182,10 @@ function V7ContactLeads({
                       <React.Fragment key={lead.id}>
                         <tr className="bg-card hover:bg-surface-hover transition-colors duration-fast ease-linear">
                           <td className="px-3 py-2.5">
-                            <button
+                            <Button
                               type="button"
+                              variant="ghost"
+                              size="icon"
                               aria-expanded={isOpen}
                               aria-label={`${isOpen ? "Collapse" : "Expand"} details for ${lead.name}`}
                               onClick={() =>
@@ -190,7 +193,7 @@ function V7ContactLeads({
                                   prev === lead.id ? null : lead.id,
                                 )
                               }
-                              className="flex items-center justify-center text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:tac-focus-premium"
+                              className="text-muted-foreground hover:text-foreground focus-visible:tac-focus-premium"
                             >
                               <RiArrowDownSLine
                                 aria-hidden
@@ -199,7 +202,7 @@ function V7ContactLeads({
                                   isOpen && "rotate-180",
                                 )}
                               />
-                            </button>
+                            </Button>
                           </td>
                           <td className="px-3 py-2.5 t-mono-sm text-muted-foreground">
                             {new Date(lead.created_at).toLocaleString()}

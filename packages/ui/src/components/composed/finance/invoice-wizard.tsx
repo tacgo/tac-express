@@ -260,18 +260,20 @@ function BasicsStep({
               autoFocus
             />
             {onRegenerateAwb && (
-              <button
+              <Button
                 type="button"
+                variant="ghost"
+                size="icon"
                 aria-label="Regenerate AWB number"
                 onClick={onRegenerateAwb}
                 disabled={isGeneratingAwb}
-                className="flex h-12 w-12 shrink-0 items-center justify-center border border-border text-muted-foreground hover:border-primary/60 hover:text-primary disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="h-12 w-12 shrink-0 border border-border text-muted-foreground hover:border-primary/60 hover:text-primary"
               >
                 <RiRefreshLine
                   className={cn("h-3.5 w-3.5", isGeneratingAwb && "animate-spin")}
                   aria-hidden="true"
                 />
-              </button>
+              </Button>
             )}
           </div>
         </Field>
@@ -400,14 +402,16 @@ function PartiesStep({
                   triggerClassName="h-12 border-border font-sans text-sm normal-case tracking-normal"
                 />
                 {state.customerId && (
-                  <button
+                  <Button
                     type="button"
+                    variant="ghost"
+                    size="icon"
                     aria-label="Clear customer"
                     onClick={handleClearCustomer}
-                    className="flex h-12 w-12 shrink-0 items-center justify-center border border-border text-muted-foreground hover:border-destructive/60 hover:text-destructive transition-colors"
+                    className="h-12 w-12 shrink-0 border border-border text-muted-foreground hover:border-destructive/60 hover:text-destructive"
                   >
                     <RiCloseLine className="h-3.5 w-3.5" />
-                  </button>
+                  </Button>
                 )}
               </div>
             </Field>

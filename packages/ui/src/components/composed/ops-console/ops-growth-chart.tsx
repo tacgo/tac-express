@@ -12,6 +12,10 @@ import {
   ChartTooltipContent,
   type ChartConfig,
 } from "@workspace/ui/components/primitives/chart"
+import {
+  ToggleGroup,
+  ToggleGroupItem,
+} from "@workspace/ui/components/primitives/toggle-group"
 
 /**
  * OpsGrowthAreaChart — stacked area chart for the Paper Ops "Growth" panel.
@@ -156,32 +160,23 @@ function OpsGrowthAreaChart({ className }: OpsGrowthAreaChartProps) {
       {/* Row 1: title + range pill toggle (mirrored in OpsVolumeBarChart) */}
       <div className="flex items-center justify-between">
         <h3 className="t-h4 text-foreground">Growth</h3>
-        <div
-          role="tablist"
-          aria-label="Time range"
-          className="inline-flex border border-border bg-card"
+        <ToggleGroup
+          type="single"
+          value={range}
+          onValueChange={(v) => { if (v) setRange(v as Range) }}
+          className="border border-border bg-card"
         >
-          {RANGES.map((r) => {
-            const active = r.value === range
-            return (
-              <button
-                key={r.value}
-                role="tab"
-                aria-selected={active}
-                onClick={() => setRange(r.value)}
-                className={cn(
-                  "px-2 py-1 font-mono font-medium text-ui-10 tracking-badge uppercase transition-colors",
-                  "border-l border-border first:border-l-0",
-                  active
-                    ? "bg-primary text-primary-foreground"
-                    : "text-foreground hover:bg-muted",
-                )}
-              >
-                {r.label}
-              </button>
-            )
-          })}
-        </div>
+          {RANGES.map((r) => (
+            <ToggleGroupItem
+              key={r.value}
+              value={r.value}
+              aria-label={`${r.label} time range`}
+              className="h-auto px-2 py-1 font-mono font-medium text-ui-10 tracking-badge uppercase border-l border-border first:border-l-0 data-[state=on]:bg-primary data-[state=on]:text-primary-foreground hover:bg-muted"
+            >
+              {r.label}
+            </ToggleGroupItem>
+          ))}
+        </ToggleGroup>
       </div>
 
       {/* Row 2: paper-label subtitle (matches OpsVolumeBarChart) */}

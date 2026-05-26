@@ -135,17 +135,19 @@ export function SavedViewSelector({
                 <DropdownMenuItem key={v.id} onSelect={() => onApply?.(v)}>
                   <span className="truncate">{v.name}</span>
                   {onDelete && (
-                    <button
+                    <Button
                       type="button"
+                      variant="ghost"
+                      size="icon"
                       onClick={(e) => {
                         e.stopPropagation()
                         onDelete(v)
                       }}
                       aria-label={`Delete view ${v.name}`}
-                      className="ml-auto opacity-0 hover:opacity-100 group-hover:opacity-100"
+                      className="ml-auto h-5 w-5 opacity-0 hover:opacity-100 group-hover:opacity-100"
                     >
                       <RiDeleteBinLine className="size-3" />
-                    </button>
+                    </Button>
                   )}
                 </DropdownMenuItem>
               ))}
