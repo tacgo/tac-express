@@ -140,7 +140,7 @@ interface DataTableProps<TData, TValue> {
 /**
  * DataTable — Violet Grid v6, subgrid layout.
  *
- * Every level (`<table>`, `<thead>`, `<tbody>`, `<tr>`) is `display: grid`,
+ * Every level (grid container, header group, body group, row) is `display: grid`,
  * with each child level inheriting the parent's column tracks via
  * `grid-template-columns: subgrid`. Result: header cells, body cells, and
  * the empty-state row stay perfectly column-aligned regardless of content
@@ -150,9 +150,14 @@ interface DataTableProps<TData, TValue> {
  * Column widths come from `column.columnDef.size` when set; otherwise each
  * column gets `minmax(min-content, 1fr)` so columns fill available space.
  *
- * Native `<table>` semantics are preserved. Explicit ARIA roles are added
- * as a safety net — most modern browsers retain table semantics under
- * `display: grid`, but a few older versions strip them.
+ * div+role elements are used instead of native table elements. The ARIA
+ * role contract (role="table", role="rowgroup", role="row",
+ * role="columnheader", role="cell", aria-sort) is identical to the native
+ * element contract — AT semantics are preserved. The motivation is CSS Grid
+ * sizing: <table> UA-stylesheet shrink-to-fit behavior causes the grid
+ * track-sizing algorithm to treat available space as indefinite, so
+ * `minmax(min-content, 1fr)` degrades to `min-content`. <div> has
+ * unambiguous block-sizing — 1fr distributes free space as intended.
  *
  * See `docs/VIOLET-GRID-V6-EVOLUTION.md` § 4 (Layout Intelligence).
  */
@@ -257,18 +262,18 @@ function DataTable<TData, TValue>({
       )}
 
       <div className="bg-surface-elevated tac-fui-border max-h-table-viewport overflow-auto shadow-sm">
-        <table
+        <div
           role="table"
           aria-label="Data table"
           className="grid w-full caption-bottom t-mono"
           style={{ gridTemplateColumns }}
         >
-          <thead
+          <div
             role="rowgroup"
             className="col-span-full grid grid-cols-subgrid border-b border-border bg-muted sticky top-0 z-20"
           >
             {table.getHeaderGroups().map((headerGroup) => (
-              <tr
+              <div
                 key={headerGroup.id}
                 role="row"
                 className="col-span-full grid grid-cols-subgrid"
@@ -286,7 +291,7 @@ function DataTable<TData, TValue>({
                     </span>
                   )
                   return (
-                    <th
+                    <div
                       key={header.id}
                       role="columnheader"
                       aria-sort={
@@ -317,19 +322,19 @@ function DataTable<TData, TValue>({
                           {headerContent}
                         </span>
                       )}
-                    </th>
+                    </div>
                   )
                 })}
-              </tr>
+              </div>
             ))}
-          </thead>
-          <tbody
+          </div>
+          <div
             role="rowgroup"
             className="col-span-full grid grid-cols-subgrid divide-y divide-border"
           >
             {table.getRowModel().rows.length ? (
               table.getRowModel().rows.map((row) => (
-                <tr
+                <div
                   key={row.id}
                   role="row"
                   // v6: subgrid passes column tracks down; surface-hover row tint + 2px primary edge on selection.
@@ -344,19 +349,19 @@ function DataTable<TData, TValue>({
                   onClick={onRowClick ? () => onRowClick(row.original) : undefined}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <td
+                    <div
                       key={cell.id}
                       role="cell"
                       className="px-3 py-2.5 flex items-center min-w-0"
                     >
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    </td>
+                    </div>
                   ))}
-                </tr>
+                </div>
               ))
             ) : (
-              <tr role="row" className="col-span-full grid grid-cols-subgrid">
-                <td
+              <div role="row" className="col-span-full grid grid-cols-subgrid">
+                <div
                   role="cell"
                   // v6: empty-state row spans the full grid via `col-span-full` (replaces colSpan).
                   // Renders the new Violet Grid 4-element pattern (icon + eyebrow + headline + CTA)
@@ -372,11 +377,11 @@ function DataTable<TData, TValue>({
                       </p>
                     </div>
                   )}
-                </td>
-              </tr>
+                </div>
+              </div>
             )}
-          </tbody>
-        </table>
+          </div>
+        </div>
       </div>
 
       <div className="flex items-center justify-between gap-2">
