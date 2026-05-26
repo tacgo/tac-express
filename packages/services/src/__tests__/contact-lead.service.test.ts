@@ -37,11 +37,37 @@ const CONFIG = {
   templateLanguage: "en",
 }
 
-function makeDbWithInsert(result: { data: { id: string } | null; error: { message: string } | null }) {
+function makeDbWithInsert(
+  result: { data: { id: string } | null; error: { message: string } | null },
+  managerIds: string[] = [],
+) {
   const updateCalls: Array<{ table: string; values: unknown }> = []
   const insertCalls: Array<{ table: string; values: unknown }> = []
 
   const from = vi.fn((table: string) => {
+    if (table === "profiles") {
+      // Step 3: return the configured manager IDs for in-app broadcast.
+      const sel: Record<string, unknown> = {}
+      sel.in = vi.fn(() => sel)
+      sel.eq = vi.fn(() =>
+        Promise.resolve({
+          data: managerIds.map((id) => ({ id })),
+          error: null,
+        }),
+      )
+      return { select: vi.fn(() => sel) }
+    }
+
+    if (table === "notifications") {
+      return {
+        insert: vi.fn((values: unknown) => {
+          insertCalls.push({ table, values })
+          return Promise.resolve({ data: null, error: null })
+        }),
+      }
+    }
+
+    // contact_leads
     const builder: Record<string, unknown> = {}
     builder.insert = vi.fn((values: unknown) => {
       insertCalls.push({ table, values })
@@ -228,5 +254,95 @@ describe("createContactLeadService.submitContactLead", () => {
     const call = (whatsapp.sendTemplate as ReturnType<typeof vi.fn>).mock.calls[0]?.[0]
     const bodyParams = call?.components?.[0]?.parameters as Array<{ text: string }>
     expect(bodyParams[0]?.text).toBe("Partner")
+  })
+})
+
+describe("createContactLeadService — in-app notification broadcast (Step 3)", () => {
+  it("inserts one in_app notification row per active MANAGER+ user", async () => {
+    const { db, insertCalls } = makeDbWithInsert(
+      { data: { id: "lead-7" }, error: null },
+      ["mgr-1", "mgr-2"],
+    )
+    const whatsapp = makeWhatsapp({ ok: true })
+    const service = createContactLeadService(db, whatsapp, CONFIG)
+
+    const result = await service.submitContactLead(SAMPLE_INPUT, SAMPLE_META)
+
+    expect(result.ok).toBe(true)
+    const notifInserts = insertCalls.filter((c) => c.table === "notifications")
+    expect(notifInserts).toHaveLength(1)
+    const rows = notifInserts[0]?.values as Array<Record<string, unknown>>
+    expect(rows).toHaveLength(2)
+    expect(rows[0]).toMatchObject({
+      user_id: "mgr-1",
+      channel: "in_app",
+      title: "New contact lead",
+      entity_type: "contact_lead",
+      entity_id: "lead-7",
+      link: "/ops-console/support",
+    })
+    // Body includes name and company snippet.
+    expect(rows[0]?.body).toContain("Aman Sharma")
+    expect(rows[0]?.body).toContain("Tea Cooperative")
+    // Both users get a row.
+    expect(rows[1]?.user_id).toBe("mgr-2")
+  })
+
+  it("skips the notifications insert when no active managers exist", async () => {
+    const { db, insertCalls } = makeDbWithInsert(
+      { data: { id: "lead-8" }, error: null },
+      [], // zero managers
+    )
+    const whatsapp = makeWhatsapp({ ok: true })
+    const service = createContactLeadService(db, whatsapp, CONFIG)
+
+    const result = await service.submitContactLead(SAMPLE_INPUT, SAMPLE_META)
+
+    expect(result.ok).toBe(true)
+    expect(insertCalls.filter((c) => c.table === "notifications")).toHaveLength(0)
+  })
+
+  it("still returns ok:true when the profiles query throws (lead already captured)", async () => {
+    const db = {
+      from: vi.fn((table: string) => {
+        if (table === "profiles") {
+          return {
+            select: vi.fn(() => ({
+              in: vi.fn(() => ({
+                eq: vi.fn(() => Promise.reject(new Error("db timeout"))),
+              })),
+            })),
+          }
+        }
+        if (table === "notifications") {
+          return { insert: vi.fn(() => Promise.resolve({ data: null, error: null })) }
+        }
+        // contact_leads — normal happy path
+        return {
+          insert: vi.fn(() => ({
+            select: vi.fn(() => ({
+              single: vi.fn(() =>
+                Promise.resolve({ data: { id: "lead-9" }, error: null }),
+              ),
+            })),
+          })),
+          update: vi.fn(() => ({
+            eq: vi.fn(() => Promise.resolve({ data: null, error: null })),
+          })),
+        }
+      }),
+    } as unknown as SupabaseClient
+
+    const whatsapp = makeWhatsapp({ ok: true })
+    const service = createContactLeadService(db, whatsapp, CONFIG)
+
+    const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => undefined)
+    try {
+      const result = await service.submitContactLead(SAMPLE_INPUT, SAMPLE_META)
+      // WhatsApp still succeeded — that status is unaffected by the notify failure.
+      expect(result).toMatchObject({ ok: true, notificationStatus: "sent" })
+    } finally {
+      consoleSpy.mockRestore()
+    }
   })
 })
