@@ -6,9 +6,9 @@ import { useExceptions } from "@workspace/services/hooks/use-exceptions"
 import { useRealtimeExceptions } from "@workspace/services/hooks/use-realtime"
 import type { ExceptionSummary } from "@workspace/types/exception.types"
 import {
-  OpsExceptionsView,
+  V7OpsExceptions,
   type ExceptionRow,
-} from "@workspace/ui/components/composed/ops-console/pages"
+} from "@workspace/ui/components/composed/exceptions/v7-ops-exceptions"
 
 function toRow(e: ExceptionSummary): ExceptionRow {
   return {
@@ -23,5 +23,5 @@ function toRow(e: ExceptionSummary): ExceptionRow {
 export function OpsExceptionsLive() {
   useRealtimeExceptions()
   const { data = [] } = useExceptions({})
-  return <OpsExceptionsView rows={data.map(toRow)} />
+  return <V7OpsExceptions rows={data.map(toRow)} />
 }

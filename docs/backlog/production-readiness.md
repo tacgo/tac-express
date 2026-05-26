@@ -125,7 +125,7 @@ file: packages/services/src/whatsapp/invoice-replay-payload.ts
 file: packages/ui/src/components/composed/whatsapp/whatsapp-send-status-badge.tsx
 file: packages/ui/src/components/composed/whatsapp/failed-sends-table.tsx
 file: packages/ui/src/components/composed/whatsapp/whatsapp-retry-button.tsx
-file: packages/ui/src/components/composed/ops-console/pages/ops-whatsapp-failed-sends-view.tsx
+file: packages/ui/src/components/composed/whatsapp/v7-ops-whatsapp-failed-sends.tsx
 symbol: packages/services/src/whatsapp-tracked.service.ts::listFailedWhatsappSends
 symbol: packages/services/src/whatsapp-tracked.service.ts::getWhatsappSendById
 symbol: packages/services/src/whatsapp-tracked.service.ts::retryWhatsappSend
@@ -134,7 +134,7 @@ symbol: packages/services/src/whatsapp/invoice-replay-payload.ts::buildInvoiceTe
 symbol: packages/ui/src/components/composed/whatsapp/whatsapp-send-status-badge.tsx::WhatsAppSendStatusBadge
 symbol: packages/ui/src/components/composed/whatsapp/failed-sends-table.tsx::FailedSendsTable
 symbol: packages/ui/src/components/composed/whatsapp/whatsapp-retry-button.tsx::WhatsAppRetryButton
-symbol: packages/ui/src/components/composed/ops-console/pages/ops-whatsapp-failed-sends-view.tsx::OpsWhatsAppFailedSendsView
+symbol: packages/ui/src/components/composed/whatsapp/v7-ops-whatsapp-failed-sends.tsx::V7OpsWhatsAppFailedSends
 symbol: packages/types/src/whatsapp-send.types.ts::FailedWhatsappSendRow
 ```
 

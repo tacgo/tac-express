@@ -30,13 +30,17 @@ const chartData = [
   { service: "other", revenue: 90, fill: "var(--color-other)" },
 ]
 
+// Calm monochrome violet ramp — service classes step down the --chart-1..5
+// ramp (now the violet ramp) instead of a violet/blue/green/amber/grey
+// rainbow. Aligns the radial with the bar charts + the operational palette
+// (hybrid modernization: restrained accent, low-noise analytics).
 const chartConfig = {
   revenue: { label: "Revenue" },
-  standard: { label: "Standard", color: "var(--primary)" },
-  express: { label: "Express", color: "var(--accent-info)" },
-  priority: { label: "Priority", color: "var(--accent-success)" },
-  returns: { label: "Returns", color: "var(--accent-warning)" },
-  other: { label: "Other", color: "var(--muted-foreground)" },
+  standard: { label: "Standard", color: "var(--chart-1)" },
+  express: { label: "Express", color: "var(--chart-2)" },
+  priority: { label: "Priority", color: "var(--chart-3)" },
+  returns: { label: "Returns", color: "var(--chart-4)" },
+  other: { label: "Other", color: "var(--chart-5)" },
 } satisfies ChartConfig
 
 interface OpsRevenueRadialChartProps {
@@ -47,13 +51,11 @@ function OpsRevenueRadialChart({ className }: OpsRevenueRadialChartProps) {
   return (
     <div className={cn("flex flex-col", className)}>
       <div className="flex items-center justify-between">
-        <div className="font-sans font-semibold text-ui-13 text-foreground">
-          Revenue Trend
-        </div>
-        <span className="paper-label">Jan — Jun</span>
+        <h3 className="t-h4 text-foreground">Revenue Trend</h3>
+        <span className="font-mono text-2xs uppercase tracking-widest text-muted-foreground">Jan — Jun</span>
       </div>
 
-      <div className="paper-label mt-2.5">Revenue by service class</div>
+      <div className="font-mono text-2xs uppercase tracking-widest text-muted-foreground mt-2.5">Revenue by service class</div>
 
       <ChartContainer
         config={chartConfig}
@@ -73,7 +75,7 @@ function OpsRevenueRadialChart({ className }: OpsRevenueRadialChartProps) {
           Trending up 5.2% this month
           <RiArrowUpLine aria-hidden className="size-3.5 text-accent-success" />
         </div>
-        <div className="paper-label">Showing service-class revenue mix — last 6 months</div>
+        <div className="font-mono text-2xs uppercase tracking-widest text-muted-foreground">Showing service-class revenue mix — last 6 months</div>
       </div>
     </div>
   )

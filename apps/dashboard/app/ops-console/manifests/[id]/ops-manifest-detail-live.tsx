@@ -13,20 +13,25 @@ import {
 } from "@workspace/services/hooks/use-manifests"
 import { useNotificationStore } from "@workspace/services/stores/notification.store"
 import { ManifestStatus } from "@workspace/types"
+import { cn } from "@workspace/ui/lib/utils"
 import { RiErrorWarningLine, RiAddLine } from "@workspace/ui/icons"
 import {
-  OpsDetailFrame,
-  OpsBadge,
-  OpsButton,
-  OpsCard,
-  OpsSkeleton,
-  OpsFieldInput,
-} from "@workspace/ui/components/composed/ops-console"
+  DetailShell,
+  FIELD_LABEL,
+  STATUS_TONE_CLASS,
+} from "@workspace/ui/components/composed/detail-shell"
+import { SurfaceCard } from "@workspace/ui/components/composed/surface-card"
+import { Badge } from "@workspace/ui/components/primitives/badge"
+import { Button } from "@workspace/ui/components/button"
+import { Skeleton } from "@workspace/ui/components/primitives/skeleton"
+import { Input } from "@workspace/ui/components/primitives/input"
 
 /**
- * Paper-aesthetic manifest detail. Preserves v6's full state machine
- * (close → depart → arrive → reconcile), inline AWB scan input, and
- * notification store wiring. Only the visual layer changes.
+ * Violet Grid v7 manifest detail (Phase 10b in-place re-tokenize). Preserves
+ * v6's full state machine (close → depart → arrive → reconcile), inline AWB
+ * scan input, and notification-store wiring. Only the visual layer moved from
+ * Paper Ops Console primitives to v7 (PageShell + inline header + 8/4
+ * SurfaceCard grid). No services, hooks, or handlers changed.
  */
 
 const STATUS_TONE: Record<string, "neutral" | "ok" | "warn" | "err" | "violet"> = {
@@ -124,38 +129,31 @@ export function OpsManifestDetailLive({ id }: OpsManifestDetailLiveProps) {
 
   if (manifestQuery.isPending) {
     return (
-      <OpsDetailFrame
-        eyebrow="Manifest"
-        title="…"
-        backHref="/ops-console/manifests"
-      >
-        <OpsSkeleton className="h-4 w-2/3" />
-        <OpsSkeleton className="h-32 w-full" />
-      </OpsDetailFrame>
+      <DetailShell eyebrow="Manifest" title="…" backHref="/ops-console/manifests">
+        <Skeleton className="h-4 w-2/3" />
+        <Skeleton className="h-32 w-full" />
+      </DetailShell>
     )
   }
 
   if (manifestQuery.isError || !m) {
     return (
-      <OpsDetailFrame
-        eyebrow="Manifest"
-        title={id}
-        backHref="/ops-console/manifests"
-      >
+      <DetailShell eyebrow="Manifest" title={id} backHref="/ops-console/manifests">
         <div className="border border-destructive/40 border-l-[length:var(--indicator-w)] border-l-destructive bg-destructive/15 p-6 flex items-start gap-3">
           <RiErrorWarningLine
             aria-hidden
             className="size-5 text-destructive shrink-0"
           />
           <div>
-            <div className="paper-eyebrow text-destructive">NOT FOUND</div>
-            <p className="font-sans text-ui-13 mt-1">
-              Could not load manifest{" "}
-              <span className="font-mono">{id}</span>.
+            <div className="font-mono text-2xs uppercase tracking-widest text-destructive">
+              NOT FOUND
+            </div>
+            <p className="t-body-sm mt-1">
+              Could not load manifest <span className="font-mono">{id}</span>.
             </p>
           </div>
         </div>
-      </OpsDetailFrame>
+      </DetailShell>
     )
   }
 
@@ -164,32 +162,38 @@ export function OpsManifestDetailLive({ id }: OpsManifestDetailLiveProps) {
     m.status === ManifestStatus.OPEN || m.status === ManifestStatus.DRAFT
 
   return (
-    <OpsDetailFrame
+    <DetailShell
       eyebrow="Manifest"
       title={m.manifestNumber}
       sub={`${m.originHub} → ${m.destHub} · ${m.transportMode}`}
       backHref="/ops-console/manifests"
       status={
-        <OpsBadge tone={STATUS_TONE[m.status] ?? "neutral"}>{m.status}</OpsBadge>
+        <Badge
+          variant="outline"
+          className={cn(
+            "font-mono uppercase tracking-tag",
+            STATUS_TONE_CLASS[STATUS_TONE[m.status] ?? "neutral"],
+          )}
+        >
+          {m.status}
+        </Badge>
       }
       aside={
         <>
-          <OpsCard ticks>
-            <div className="paper-label">Shipments</div>
-            <div className="paper-stat-value mt-1">{m.totalShipments}</div>
-          </OpsCard>
-          <OpsCard ticks>
-            <div className="paper-label">Total Weight</div>
-            <div className="paper-stat-value mt-1">
+          <SurfaceCard density="compact">
+            <div className={FIELD_LABEL}>Shipments</div>
+            <div className="t-data-md text-foreground mt-1">{m.totalShipments}</div>
+          </SurfaceCard>
+          <SurfaceCard density="compact">
+            <div className={FIELD_LABEL}>Total Weight</div>
+            <div className="t-data-md text-foreground mt-1">
               {m.totalWeight.toFixed(1)} kg
             </div>
-            <div className="paper-label mt-2">
-              {m.totalPieces} pcs
-            </div>
-          </OpsCard>
-          <OpsCard>
-            <div className="paper-label mb-1">Created</div>
-            <div className="font-mono text-ui-13 tabular-nums">
+            <div className={cn(FIELD_LABEL, "mt-2")}>{m.totalPieces} pcs</div>
+          </SurfaceCard>
+          <SurfaceCard density="compact">
+            <div className={cn(FIELD_LABEL, "mb-1")}>Created</div>
+            <div className="t-mono">
               {new Date(m.createdAt).toLocaleString("en-IN", {
                 day: "2-digit",
                 month: "short",
@@ -200,8 +204,8 @@ export function OpsManifestDetailLive({ id }: OpsManifestDetailLiveProps) {
             </div>
             {m.departureDate && (
               <>
-                <div className="paper-label mb-1 mt-3">Departure</div>
-                <div className="font-mono text-ui-13 tabular-nums">
+                <div className={cn(FIELD_LABEL, "mb-1 mt-3")}>Departure</div>
+                <div className="t-mono">
                   {new Date(m.departureDate).toLocaleString("en-IN", {
                     day: "2-digit",
                     month: "short",
@@ -210,36 +214,35 @@ export function OpsManifestDetailLive({ id }: OpsManifestDetailLiveProps) {
                 </div>
               </>
             )}
-          </OpsCard>
+          </SurfaceCard>
         </>
       }
     >
       {nextAction && (
-        <OpsCard ticks>
+        <SurfaceCard>
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-2">
-              <span className="paper-label">Next Action</span>
-              <span className="font-mono text-ui-12 text-foreground">
+              <span className={FIELD_LABEL}>Next Action</span>
+              <span className="font-mono text-xs text-foreground">
                 → {nextAction.label}
               </span>
             </div>
-            <OpsButton
-              variant="primary"
+            <Button
               size="sm"
               onClick={() => handleAction(nextAction.key)}
               disabled={isActionLoading}
             >
               {isActionLoading ? "Processing…" : nextAction.label}
-            </OpsButton>
+            </Button>
           </div>
-        </OpsCard>
+        </SurfaceCard>
       )}
 
       {canAddAwb && (
-        <OpsCard ticks>
-          <div className="paper-label mb-2">Add AWB to manifest</div>
+        <SurfaceCard>
+          <div className={cn(FIELD_LABEL, "mb-2")}>Add AWB to manifest</div>
           <div className="flex items-stretch gap-2">
-            <OpsFieldInput
+            <Input
               value={awbInput}
               onChange={(e) => setAwbInput(e.target.value)}
               onKeyDown={(e) => {
@@ -249,32 +252,31 @@ export function OpsManifestDetailLive({ id }: OpsManifestDetailLiveProps) {
                 }
               }}
               placeholder="Scan or enter AWB…"
-              className="flex-1"
+              className="flex-1 font-mono uppercase"
               autoFocus
             />
-            <OpsButton
+            <Button
               onClick={() => void handleAddAwb()}
               disabled={addShipment.isPending || !awbInput.trim()}
-              size="default"
             >
               <RiAddLine aria-hidden className="size-3.5" />
               Add
-            </OpsButton>
+            </Button>
           </div>
-        </OpsCard>
+        </SurfaceCard>
       )}
 
-      <OpsCard ticks>
-        <div className="paper-label mb-3">
+      <SurfaceCard>
+        <div className={cn(FIELD_LABEL, "mb-3")}>
           Loadlist · {shipments.length} AWBs
         </div>
         {shipmentsQuery.isPending ? (
           <div className="space-y-2">
-            <OpsSkeleton className="h-3 w-1/2" />
-            <OpsSkeleton className="h-3 w-2/3" />
+            <Skeleton className="h-3 w-1/2" />
+            <Skeleton className="h-3 w-2/3" />
           </div>
         ) : shipments.length === 0 ? (
-          <div className="paper-label text-muted-foreground">
+          <div className={cn(FIELD_LABEL, "text-muted-foreground")}>
             No shipments loaded yet.
           </div>
         ) : (
@@ -285,29 +287,37 @@ export function OpsManifestDetailLive({ id }: OpsManifestDetailLiveProps) {
                 className="flex items-center justify-between gap-3 py-2.5"
               >
                 <div className="flex items-center gap-3">
-                  <span className="paper-id">{s.awb_number}</span>
-                  <OpsBadge tone="neutral">{s.status}</OpsBadge>
-                </div>
-                <div className="flex items-center gap-4 font-mono text-ui-12 text-muted-foreground tabular-nums">
-                  <span>{s.pieces ?? 0} pcs</span>
-                  <span>
-                    {s.chargeable_weight?.toFixed?.(1) ?? "—"} kg
+                  <span className="t-mono font-semibold text-primary">
+                    {s.awb_number}
                   </span>
+                  <Badge
+                    variant="outline"
+                    className={cn(
+                      "font-mono uppercase tracking-tag",
+                      STATUS_TONE_CLASS.neutral,
+                    )}
+                  >
+                    {s.status}
+                  </Badge>
+                </div>
+                <div className="flex items-center gap-4 font-mono text-xs text-muted-foreground tabular-nums">
+                  <span>{s.pieces ?? 0} pcs</span>
+                  <span>{s.chargeable_weight?.toFixed?.(1) ?? "—"} kg</span>
                 </div>
               </li>
             ))}
           </ul>
         )}
-      </OpsCard>
+      </SurfaceCard>
 
       {m.notes && (
-        <OpsCard ticks>
-          <div className="paper-label mb-2">Notes</div>
-          <p className="font-mono text-ui-12 text-foreground whitespace-pre-line">
+        <SurfaceCard>
+          <div className={cn(FIELD_LABEL, "mb-2")}>Notes</div>
+          <p className="font-mono text-xs text-foreground whitespace-pre-line">
             {m.notes}
           </p>
-        </OpsCard>
+        </SurfaceCard>
       )}
-    </OpsDetailFrame>
+    </DetailShell>
   )
 }

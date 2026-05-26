@@ -249,7 +249,8 @@ tac-express/
 > **Canonical name (reconciliation 2026-05-18):** the design system is **"TAC Express v5.0 Violet Grid"** in every authoritative source (this file, `DESIGN_SYSTEM.md`, `CLAUDE.md`, `README.md`, every `.claude/skills/` file). Legacy labels seen in older docs/comments — *TAC Precision*, *Velox*, *Wasteland*, *Orbital* — are superseded; see § 9. **Important disambiguation:** "TAC Orbital" survives as the legitimate name of the **telemetry/charts subsystem** (`packages/services/src/orbital.service.ts`, `packages/types/src/orbital.types.ts`, `packages/ui/src/components/charts/`, plus the `--telemetry-*` token block in `globals.css`). That subsystem uses Violet Grid tokens; the name is scoped to that adapter, not the design system as a whole. Comment headers in non-chart components that still read "TAC Orbital design system" are stale and should be corrected on touch.
 
 The design identity for TAC Express:
-- **Zero radius** — `--radius: 0rem`. Sharp corners everywhere. LAW 13.
+- **Zero radius** — `--radius: 0rem`. Sharp corners **everywhere** — structural surfaces AND controls. LAW 13.
+  - **`--radius-control` token (currently `0` — controls are sharp):** a brief "round controls only" experiment (2026-05-24) softened inputs/buttons/selects/textareas to 14px, then 6px, then was reverted to **`0`** on render review — controls read more premium-operational fully square. The token + the `rounded-[var(--radius-control)]` references on the control primitives remain as a single dial, but its value is `0`, so **nothing in the system rounds**. If control softening is ever revisited, change only this token. Structural surfaces must never carry a non-zero radius regardless.
 - **Straight lines only** — no curves, no wavy paths, no organic shapes.
 - **Violet-anchored signal palette** — primary (`oklch(0.457 0.24 277.023)` light / `oklch(0.398 0.195 277.366)` dark — preset `b5Fxrc2eNU` indigo), green (success), amber (warning), red (danger). Neutrals: zinc.
 - **Brutalist offset shadows** — `2px 2px 0 0 var(--border)` and `4px 4px 0 0 var(--border)`. No soft drop shadows. Tailwind `shadow-*` utilities resolve to `none`.
@@ -287,7 +288,7 @@ All colors, fonts, radii, and shadows live exclusively in `globals.css`. See `DE
 | LAW 10 | No Tailwind color class (`bg-blue-500`, `text-red-400`) — semantic tokens only | ESLint error |
 | LAW 11 | No arbitrary Tailwind values (`w-[347px]`, `h-[52px]`) — use scale tokens | ESLint error |
 | LAW 12 | No `npm` or `yarn` — `pnpm` only across entire monorepo | Pre-commit hook |
-| LAW 13 | No curved or wavy lines (SVGs, paths, decorations). Straight lines/angles only. | PR rejection |
+| LAW 13 | No curved/wavy lines. Zero radius everywhere — structural surfaces and controls. (`--radius-control` token exists but is currently `0`; see § identity.) | PR rejection |
 | LAW 14 | Never rebuild a shadcn primitive from scratch. Wrap and style only. | PR rejection |
 
 ### Forbidden Packages (Never Install)

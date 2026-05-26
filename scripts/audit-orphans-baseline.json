@@ -37,6 +37,7 @@
     "packages/ui/src/components/composed/settings/system-info-card.tsx",
     "packages/ui/src/components/composed/shipments/shipment-columns.tsx",
     "packages/ui/src/components/composed/shipments/shipment-detail-tabs.tsx",
-    "packages/ui/src/components/composed/shipments/tracking-timeline.tsx"
+    "packages/ui/src/components/composed/shipments/tracking-timeline.tsx",
+    "packages/ui/src/components/composed/wasteland-landing.tsx"
   ]
 }

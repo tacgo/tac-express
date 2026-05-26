@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import Link from "next/link"
 import { useTheme } from "next-themes"
 
 import { cn } from "@workspace/ui/lib/utils"
@@ -8,10 +9,24 @@ import {
   RiSearchLine,
   RiNotification3Line,
   RiMoonClearLine,
+  RiArrowDownSLine,
+  RiSettingsLine,
+  RiMenuLine,
 } from "@workspace/ui/icons"
+import { Button } from "@workspace/ui/components/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@workspace/ui/components/primitives/dropdown-menu"
 
 interface OpsTopbarProps {
   crumbs: string[]
+  /** Opens the mobile navigation drawer. Renders a hamburger (< lg only). */
+  onMenuClick?: () => void
 }
 
 type ThemeKey = "C" | "M" | "S"
@@ -26,7 +41,7 @@ const NEXT_TO_THEME: Record<string, ThemeKey> = {
   system: "S",
 }
 
-function OpsTopbar({ crumbs }: OpsTopbarProps) {
+function OpsTopbar({ crumbs, onMenuClick }: OpsTopbarProps) {
   const { theme: nextTheme, setTheme: setNextTheme, resolvedTheme } = useTheme()
 
   // `next-themes` returns `undefined` on the server (it can't read
@@ -61,10 +76,27 @@ function OpsTopbar({ crumbs }: OpsTopbarProps) {
       data-slot="ops-topbar"
       role="banner"
       aria-label="Session controls"
-      className="flex items-center px-6 h-14 border-b border-transparent"
+      className="flex items-center px-6 h-14 border-b border-border bg-card"
     >
-      {/* Breadcrumbs */}
-      <div className="font-mono font-medium text-ui-12 tracking-crumb text-muted-foreground">
+      {/* Mobile nav toggle — opens the sidebar drawer. Hidden on lg+ where the
+          sidebar is always visible in the shell grid. */}
+      {onMenuClick ? (
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          aria-label="Open navigation menu"
+          onClick={onMenuClick}
+          className="lg:hidden -ml-1 mr-2 size-8 border border-border bg-card text-muted-foreground hover:bg-muted focus-visible:tac-focus-premium"
+        >
+          <RiMenuLine aria-hidden className="size-4" />
+        </Button>
+      ) : null}
+
+      {/* Breadcrumbs — hidden on small screens so the topbar's right cluster
+          (search + theme + notifications + account) fits; the page header +
+          mobile nav drawer carry route context there. */}
+      <div className="hidden sm:block font-mono font-medium text-ui-12 tracking-crumb text-muted-foreground">
         {crumbs.map((c, i) => (
           <React.Fragment key={`${c}-${i}`}>
             {i > 0 && <span className="mx-2 text-muted-foreground">›</span>}
@@ -78,18 +110,19 @@ function OpsTopbar({ crumbs }: OpsTopbarProps) {
       </div>
 
       {/* Right cluster */}
-      <div className="ml-auto flex items-center gap-1">
+      <div className="ml-auto flex items-center gap-2">
         {/* Search */}
-        <button
+        <Button
           type="button"
+          variant="ghost"
           aria-label="Open command palette"
-          className="flex items-center gap-1.5 h-8 px-2 border border-border bg-card text-muted-foreground hover:bg-muted focus-visible:outline-none focus-visible:tac-focus-premium transition-colors duration-fast ease-linear"
+          className="flex items-center gap-1.5 h-8 px-2 border border-border bg-card text-muted-foreground hover:bg-muted focus-visible:tac-focus-premium"
         >
           <RiSearchLine aria-hidden className="size-3.5" />
           <span className="font-mono font-medium text-ui-10 px-1.5 py-0.5 border border-border text-foreground">
             ⌘K
           </span>
-        </button>
+        </Button>
 
         {/* Theme selector — C / M / S, wired to next-themes */}
         <div
@@ -100,9 +133,10 @@ function OpsTopbar({ crumbs }: OpsTopbarProps) {
           {(["C", "M", "S"] as const).map((t) => {
             const isActive = mounted && theme === t
             return (
-              <button
+              <Button
                 key={t}
                 type="button"
+                variant="ghost"
                 // `suppressHydrationWarning` is belt-and-suspenders: even with
                 // the `mounted` gate, the *first* commit after mount swaps the
                 // active button. React 19 logs a dev warning on that single
@@ -114,31 +148,34 @@ function OpsTopbar({ crumbs }: OpsTopbarProps) {
                 className={cn(
                   "w-7 h-[length:var(--toggle-h)] border-r border-border last:border-r-0 bg-card",
                   "font-mono font-semibold text-ui-11 text-foreground",
-                  "hover:bg-muted transition-colors duration-fast ease-linear",
-                  "focus-visible:outline-none focus-visible:tac-focus-premium",
+                  "hover:bg-muted focus-visible:tac-focus-premium",
                   isActive && "bg-primary text-primary-foreground hover:bg-primary",
                 )}
               >
                 {t}
-              </button>
+              </Button>
             )
           })}
         </div>
 
         {/* Bell */}
-        <button
+        <Button
           type="button"
+          variant="ghost"
+          size="icon"
           aria-label="Notifications"
-          className="size-8 border border-border bg-card grid place-items-center text-foreground hover:bg-muted focus-visible:outline-none focus-visible:tac-focus-premium transition-colors duration-fast ease-linear"
+          className="size-8 border border-border bg-card text-foreground hover:bg-muted focus-visible:tac-focus-premium"
         >
           <RiNotification3Line aria-hidden className="size-4" />
-        </button>
+        </Button>
 
         {/* Light/dark toggle — toggles between the two non-system modes. Use a
             neutral aria-label until mounted so SSR and first client paint
             agree; after mount it switches to the directional variant. */}
-        <button
+        <Button
           type="button"
+          variant="ghost"
+          size="icon"
           suppressHydrationWarning
           aria-label={
             mounted
@@ -148,22 +185,47 @@ function OpsTopbar({ crumbs }: OpsTopbarProps) {
               : "Toggle theme"
           }
           onClick={() => setNextTheme(isDark ? "light" : "dark")}
-          className="size-8 border border-border bg-card grid place-items-center text-foreground hover:bg-muted focus-visible:outline-none focus-visible:tac-focus-premium transition-colors duration-fast ease-linear"
+          className="size-8 border border-border bg-card text-foreground hover:bg-muted focus-visible:tac-focus-premium"
         >
           <RiMoonClearLine aria-hidden className="size-4" />
-        </button>
+        </Button>
 
-        {/* Avatar — interactive (account menu placeholder). A plain <div>
-           with aria-label is ignored by most assistive tech; a <button>
-           with aria-haspopup="menu" is the WCAG 4.1.2-compliant equivalent. */}
-        <button
-          type="button"
-          aria-label="Account menu"
-          aria-haspopup="menu"
-          className="size-8 bg-primary text-primary-foreground border border-primary grid place-items-center font-mono font-semibold text-ui-12 hover:bg-primary focus-visible:outline-none focus-visible:tac-focus-premium transition-colors duration-fast ease-linear"
-        >
-          A
-        </button>
+        {/* Divider grouping the session controls from the account chip. */}
+        <span aria-hidden className="mx-1 h-5 w-px bg-border" />
+
+        {/* Account chip — solid avatar + chevron, opens an account menu.
+           Replaces the bare avatar square for a more finished, clearly-
+           interactive control (the reviewer-flagged "outdated" header look). */}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            {/* eslint-disable-next-line no-restricted-syntax -- Radix DropdownMenuTrigger asChild requires a native element */}
+            <button
+              type="button"
+              aria-label="Account menu"
+              className="flex items-center gap-1.5 h-8 pl-1 pr-1.5 border border-border bg-card hover:bg-muted focus-visible:outline-none focus-visible:tac-focus-premium transition-colors duration-fast ease-linear"
+            >
+              <span
+                aria-hidden
+                className="size-6 bg-primary text-primary-foreground grid place-items-center font-mono font-semibold text-ui-11"
+              >
+                A
+              </span>
+              <RiArrowDownSLine aria-hidden className="size-3.5 text-muted-foreground" />
+            </button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-44">
+            <DropdownMenuLabel className="font-mono text-2xs uppercase tracking-wider text-muted-foreground">
+              Account
+            </DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem asChild className="text-xs">
+              <Link href="/ops-console/settings">
+                <RiSettingsLine className="size-3.5" aria-hidden="true" />
+                Settings
+              </Link>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </header>
   )

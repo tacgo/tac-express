@@ -4,7 +4,7 @@ import * as React from "react"
 import { useRouter } from "next/navigation"
 
 import type { FailedWhatsappSendRow, UUID } from "@workspace/types"
-import { OpsWhatsAppFailedSendsView } from "@workspace/ui/components/composed/ops-console/pages"
+import { V7OpsWhatsAppFailedSends } from "@workspace/ui/components/composed/whatsapp/v7-ops-whatsapp-failed-sends"
 import type {
   FailedSendsTableRetryConfig,
   RetryRowState,
@@ -177,7 +177,7 @@ export function OpsWhatsAppFailedSendsClient({
   )
 
   return (
-    <OpsWhatsAppFailedSendsView
+    <V7OpsWhatsAppFailedSends
       rows={initialRows}
       windowDays={windowDays}
       retryConfig={retryConfig}

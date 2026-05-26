@@ -12,13 +12,17 @@ import {
   ChartTooltipContent,
   type ChartConfig,
 } from "@workspace/ui/components/primitives/chart"
+import {
+  ToggleGroup,
+  ToggleGroupItem,
+} from "@workspace/ui/components/primitives/toggle-group"
 
 /**
  * OpsVolumeBarChart — stacked bar chart for the Paper Ops "Shipment Volume"
  * panel. Shares the panel anatomy with OpsGrowthAreaChart so the two cards
- * read as one design: title + 7D/30D/90D toggle on top, paper-label
+ * read as one design: title + 7D/30D/90D toggle on top, mono-label
  * subtitle, 200px chart, mono legend at bottom. Two-color palette:
- * --paper-violet (outbound, primary brand) + --paper-info (inbound). Both
+ * var(--primary) (outbound, primary brand) + var(--accent-info) (inbound). Both
  * series stack so the operator sees total daily throughput. Mock 90-day
  * dataset stays inline until a real time-series hook lands.
  */
@@ -149,39 +153,28 @@ function OpsVolumeBarChart({ className }: OpsVolumeBarChartProps) {
     <div className={cn("flex flex-col", className)}>
       {/* Row 1: title + range pill toggle (mirrored in OpsGrowthAreaChart) */}
       <div className="flex items-center justify-between">
-        <div className="font-sans font-semibold text-ui-13 text-foreground">
-          Shipment Volume
-        </div>
-        <div
-          role="tablist"
-          aria-label="Time range"
-          className="inline-flex border border-border bg-card"
+        <h3 className="t-h4 text-foreground">Shipment Volume</h3>
+        <ToggleGroup
+          type="single"
+          value={range}
+          onValueChange={(v) => { if (v) setRange(v as Range) }}
+          className="border border-border bg-card"
         >
-          {RANGES.map((r) => {
-            const active = r.value === range
-            return (
-              <button
-                key={r.value}
-                role="tab"
-                aria-selected={active}
-                onClick={() => setRange(r.value)}
-                className={cn(
-                  "px-2 py-1 font-mono font-medium text-ui-10 tracking-badge uppercase transition-colors",
-                  "border-l border-border first:border-l-0",
-                  active
-                    ? "bg-primary text-primary-foreground"
-                    : "text-foreground hover:bg-muted",
-                )}
-              >
-                {r.label}
-              </button>
-            )
-          })}
-        </div>
+          {RANGES.map((r) => (
+            <ToggleGroupItem
+              key={r.value}
+              value={r.value}
+              aria-label={`${r.label} time range`}
+              className="h-auto px-2 py-1 font-mono font-medium text-ui-10 tracking-badge uppercase border-l border-border first:border-l-0 data-[state=on]:bg-primary data-[state=on]:text-primary-foreground hover:bg-muted"
+            >
+              {r.label}
+            </ToggleGroupItem>
+          ))}
+        </ToggleGroup>
       </div>
 
-      {/* Row 2: paper-label subtitle (matches OpsGrowthAreaChart) */}
-      <div className="paper-label mt-2.5">
+      {/* Row 2: mono-label subtitle (matches OpsGrowthAreaChart) */}
+      <div className="font-mono text-2xs uppercase tracking-widest text-muted-foreground mt-2.5">
         Daily flow — outbound vs. inbound
       </div>
 

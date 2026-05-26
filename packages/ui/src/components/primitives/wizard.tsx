@@ -33,7 +33,10 @@ interface WizardStep {
   icon?: RemixiconComponentType
 }
 
-interface WizardProps extends Omit<React.HTMLAttributes<HTMLOListElement>, "children"> {
+interface WizardProps extends Omit<
+  React.HTMLAttributes<HTMLOListElement>,
+  "children"
+> {
   steps: WizardStep[]
   currentIndex: number
   /**
@@ -55,101 +58,155 @@ function Wizard({
   // rendering an empty <ol> with malformed accessibility tree).
   if (total <= 0) return null
   const clamped = Math.max(0, Math.min(currentIndex, total - 1))
+  const activeStep = steps[clamped]!
+  const ActiveIcon = activeStep.icon
+  const progressPct = ((clamped + 1) / total) * 100
 
   return (
-    <ol
-      data-slot="wizard"
-      className={cn(
-        "flex w-full overflow-hidden border border-border bg-card shadow-brutal-sm",
-        className
-      )}
-      {...props}
-    >
-      {steps.map((step, idx) => {
-        const isActive = idx === clamped
-        const isCompleted = idx < clamped
-        const clickable = typeof onStepClick === "function" && idx <= clamped
-        const Icon = step.icon
+    <>
+      {/*
+        Mobile (< sm): the full segmented bar can't fit N labelled steps on a
+        phone — labels truncate to a single char and later steps clip. Instead
+        show a compact "Step N / M" + active label + progress track. The full
+        bar takes over from sm up.
+      */}
+      <div
+        data-slot="wizard-compact"
+        aria-label={`Step ${clamped + 1} of ${total}: ${activeStep.label}`}
+        className="border border-border bg-card p-3 shadow-brutal-sm sm:hidden"
+      >
+        <div className="flex items-center justify-between gap-2">
+          <span className="font-mono text-2xs tracking-widest text-primary uppercase">
+            Step {clamped + 1} / {total}
+          </span>
+          <span className="font-mono text-2xs text-muted-foreground tabular-nums">
+            {Math.round(progressPct)}%
+          </span>
+        </div>
+        <div className="mt-1.5 flex items-center gap-1.5">
+          {ActiveIcon ? (
+            <ActiveIcon
+              className="size-4 shrink-0 text-primary"
+              aria-hidden="true"
+            />
+          ) : null}
+          <span className="truncate font-sans text-sm font-medium text-foreground">
+            {activeStep.label}
+          </span>
+        </div>
+        <div className="mt-2 h-1 w-full bg-muted" aria-hidden="true">
+          <div
+            className="h-full bg-primary transition-[width] duration-[var(--duration-base)] ease-[var(--ease-smooth)]"
+            style={{ width: `${progressPct}%` }}
+          />
+        </div>
+      </div>
 
-        return (
-          <li
-            key={step.id}
-            data-slot="wizard-step"
-            data-state={isActive ? "active" : isCompleted ? "done" : "pending"}
-            className={cn(
-              "group/step relative min-w-0 flex-1 border-r border-border last:border-r-0",
-              isActive && "bg-primary/5"
-            )}
-            aria-current={isActive ? "step" : undefined}
-          >
-            <button
-              type="button"
-              disabled={!clickable}
-              onClick={() => clickable && onStepClick?.(idx)}
+      <ol
+        data-slot="wizard"
+        className={cn(
+          "hidden w-full overflow-hidden border border-border bg-card shadow-brutal-sm sm:flex",
+          className
+        )}
+        {...props}
+      >
+        {steps.map((step, idx) => {
+          const isActive = idx === clamped
+          const isCompleted = idx < clamped
+          const clickable = typeof onStepClick === "function" && idx <= clamped
+          const Icon = step.icon
+
+          return (
+            <li
+              key={step.id}
+              data-slot="wizard-step"
+              data-state={
+                isActive ? "active" : isCompleted ? "done" : "pending"
+              }
               className={cn(
-                "flex w-full items-center gap-3 px-4 py-3 text-left",
-                "transition-colors duration-[var(--duration-fast)] ease-linear",
-                "focus:outline-none focus-visible:outline-1 focus-visible:outline-primary focus-visible:[outline-offset:var(--outline-offset-inset)]",
-                clickable ? "hover:bg-accent/50" : "cursor-default"
+                "group/step relative min-w-0 flex-1 border-r border-border last:border-r-0",
+                isActive && "bg-primary/5"
               )}
+              aria-current={isActive ? "step" : undefined}
             >
-              <span
-                aria-hidden="true"
+              <button
+                type="button"
+                disabled={!clickable}
+                onClick={() => clickable && onStepClick?.(idx)}
                 className={cn(
-                  "flex h-7 w-7 shrink-0 items-center justify-center border font-mono text-xs font-semibold tabular-nums",
-                  isCompleted && "border-primary bg-primary text-primary-foreground",
-                  isActive && !isCompleted && "border-primary bg-card text-primary",
-                  !isActive && !isCompleted && "border-border bg-card text-muted-foreground"
+                  "flex w-full items-center gap-3 px-4 py-3 text-left",
+                  "transition-colors duration-[var(--duration-fast)] ease-linear",
+                  "focus:outline-none focus-visible:outline-1 focus-visible:[outline-offset:var(--outline-offset-inset)] focus-visible:outline-primary",
+                  clickable ? "hover:bg-accent/50" : "cursor-default"
                 )}
               >
-                {isCompleted ? (
-                  <RiCheckLine className="size-3.5" aria-hidden="true" />
-                ) : (
-                  idx + 1
-                )}
-              </span>
+                <span
+                  aria-hidden="true"
+                  className={cn(
+                    "flex h-7 w-7 shrink-0 items-center justify-center border font-mono text-xs font-semibold tabular-nums",
+                    isCompleted &&
+                      "border-primary bg-primary text-primary-foreground",
+                    isActive &&
+                      !isCompleted &&
+                      "border-primary bg-card text-primary",
+                    !isActive &&
+                      !isCompleted &&
+                      "border-border bg-card text-muted-foreground"
+                  )}
+                >
+                  {isCompleted ? (
+                    <RiCheckLine className="size-3.5" aria-hidden="true" />
+                  ) : (
+                    idx + 1
+                  )}
+                </span>
 
-              <div className="flex min-w-0 flex-col">
-                <span
-                  className={cn(
-                    "font-mono text-2xs uppercase tracking-widest",
-                    isActive ? "text-primary" : "text-muted-foreground"
-                  )}
-                >
-                  Step {idx + 1} / {total}
-                </span>
-                <span
-                  className={cn(
-                    "flex items-center gap-1.5 truncate font-sans text-sm font-medium",
-                    isActive || isCompleted ? "text-foreground" : "text-muted-foreground"
-                  )}
-                >
-                  {Icon ? <Icon className="size-3.5" /> : null}
-                  {step.label}
-                </span>
-                {step.description ? (
-                  <span className="mt-0.5 truncate font-sans text-2xs text-muted-foreground">
-                    {step.description}
+                <div className="flex min-w-0 flex-col">
+                  <span
+                    className={cn(
+                      "font-mono text-2xs tracking-widest uppercase",
+                      isActive ? "text-primary" : "text-muted-foreground"
+                    )}
+                  >
+                    Step {idx + 1} / {total}
                   </span>
-                ) : null}
-              </div>
-            </button>
+                  <span
+                    className={cn(
+                      "flex items-center gap-1.5 truncate font-sans text-sm font-medium",
+                      isActive || isCompleted
+                        ? "text-foreground"
+                        : "text-muted-foreground"
+                    )}
+                  >
+                    {Icon ? <Icon className="size-3.5" /> : null}
+                    {step.label}
+                  </span>
+                  {step.description ? (
+                    <span className="mt-0.5 truncate font-sans text-2xs text-muted-foreground">
+                      {step.description}
+                    </span>
+                  ) : null}
+                </div>
+              </button>
 
-            {isActive ? (
-              <span
-                aria-hidden="true"
-                className="absolute right-0 bottom-0 left-0 h-0.5 bg-primary"
-              />
-            ) : null}
-          </li>
-        )
-      })}
-    </ol>
+              {isActive ? (
+                <span
+                  aria-hidden="true"
+                  className="absolute right-0 bottom-0 left-0 h-0.5 bg-primary"
+                />
+              ) : null}
+            </li>
+          )
+        })}
+      </ol>
+    </>
   )
 }
 
-interface WizardActionsProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, "children"> {
+interface WizardActionsProps extends Omit<
+  React.HTMLAttributes<HTMLDivElement>,
+  "children"
+> {
   currentIndex: number
   totalSteps: number
   /**
@@ -268,7 +325,12 @@ function WizardActions({
         disabled={backDisabled}
       >
         {!isFirst ? <RiArrowLeftLine aria-hidden="true" /> : null}
-        <span className={cn("font-mono uppercase tracking-wider", !isFirst && "ml-1.5")}>
+        <span
+          className={cn(
+            "font-mono tracking-wider uppercase",
+            !isFirst && "ml-1.5"
+          )}
+        >
           {isFirst && cancellable ? "CANCEL" : "BACK"}
         </span>
       </Button>
@@ -277,7 +339,7 @@ function WizardActions({
         <div
           data-slot="wizard-step-counter"
           aria-live="polite"
-          className="font-mono text-2xs uppercase tracking-widest text-muted-foreground"
+          className="font-mono text-2xs tracking-widest text-muted-foreground uppercase"
         >
           Step {safeIndex + 1} of {totalSteps}
         </div>
@@ -289,7 +351,7 @@ function WizardActions({
         onClick={handleNextClick}
         disabled={isSubmitting || nextDisabled}
       >
-        <span className="mr-1.5 font-mono uppercase tracking-wider">
+        <span className="mr-1.5 font-mono tracking-wider uppercase">
           {isSubmitting ? submittingLabel : final ? finalLabel : "NEXT"}
         </span>
         {final ? (

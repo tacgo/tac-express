@@ -43,20 +43,29 @@
   --input: oklch(0.92 0.004 286.32);
   --ring: oklch(0.705 0.015 286.067);
 
-  --chart-1: oklch(0.905 0.182 98.111);
-  --chart-2: oklch(0.795 0.184 86.047);
-  --chart-3: oklch(0.681 0.162 75.834);
-  --chart-4: oklch(0.554 0.135 66.442);
-  --chart-5: oklch(0.476 0.114 61.907);
+  /* Categorical chart series — calm monochrome violet ramp (hybrid: borrow the
+     v8 "95% monochrome, one accent" analytics philosophy without leaving the
+     Violet Grid palette). Aliased to the mode-adaptive --chart-ramp-* tokens
+     (defined below; they color-mix against --primary/--background so they
+     re-resolve correctly in dark mode). Replaces the preset's yellow/gold ramp,
+     which read as a rainbow against the violet signal. */
+  --chart-1: var(--chart-ramp-5);
+  --chart-2: var(--chart-ramp-4);
+  --chart-3: var(--chart-ramp-3);
+  --chart-4: var(--chart-ramp-2);
+  --chart-5: var(--chart-ramp-1);
 
   --sidebar: oklch(0.985 0 0);          /* ivory sidebar — one subtle step from page bg */
   --sidebar-foreground: oklch(0.141 0.005 285.823);
-  --sidebar-primary: oklch(0.511 0.262 276.966);
-  --sidebar-primary-foreground: oklch(0.962 0.018 272.314);
-  --sidebar-accent: oklch(0.967 0.001 286.375);
-  --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
+  /* Violet sidebar chrome — promoted from the former .ops-console scope so the
+     violet hover/selected/focus identity is canonical, not context-dependent.
+     var() expressions are theme-aware (resolve per light/.dark at use-time). */
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: oklch(0.9850 0.0030 85);
+  --sidebar-accent: color-mix(in oklch, var(--primary) 10%, var(--background));
+  --sidebar-accent-foreground: var(--primary);
   --sidebar-border: oklch(0.92 0.004 286.32);
-  --sidebar-ring: oklch(0.705 0.015 286.067);
+  --sidebar-ring: var(--primary);
 
   /* Semantic status colors */
   --accent-success: oklch(0.60 0.18 150);
@@ -209,77 +218,22 @@
   --chart-ramp-5: var(--primary);
 
   /* ══════════════════════════════════════════════════════════════════════════
-     PAPER OPS CONSOLE — additive design mode (LAW 1)
-     "A serious operator's terminal, dressed in warm paper."
-     Coexists with Violet Grid v6 — scoped via .ops-console wrapper class.
+     PAPER OPS CONSOLE — legacy token aliases (LAW 1)
+     The former `.ops-console` wrapper scope is retired (Phase 10d). These
+     paper-* aliases remain only because a few unmigrated paper primitives
+     (OpsPageHead on the create pages) still reference them; they resolve to
+     the canonical Violet Grid tokens at :root, so no scope class is needed.
      Source: .design-bundle (Anthropic Design export, May 2026).
      ══════════════════════════════════════════════════════════════════════════ */
 
-  /* ── paper-* → Violet Grid convergence (paper-to-violet-grid Phase 2/3) ──
-     The former bespoke "Modern Ivory / Midnight" paper palette + Inter/JetBrains/
-     Instrument-Serif fonts are RETIRED. These tokens now alias the semantic
-     Violet Grid tokens so every legacy `paper-*` utility / `.paper-*` class
-     renders in the canonical design system. var() resolves at use-time, so a
-     single :root definition is theme-aware (light + .dark) — no dark overrides
-     needed. Call-site class names are migrated off `paper-*` separately. */
-  --paper-ink:       var(--foreground);
-  --paper-orange:    var(--accent-warning);
-  --paper-violet:    var(--primary);
-  --paper-violet-2:  var(--primary);
-  --paper-violet-50: color-mix(in oklch, var(--primary) 10%, var(--background));
-
-  --paper-bg:        var(--background);
-  --paper-2:         var(--sidebar);
-  --paper-3:         var(--muted);
-  --paper-line:      var(--border);
-  --paper-line-2:    var(--border);
-  --paper-line-3:    var(--border);
-
-  --paper-fg-1:      var(--foreground);
-  --paper-fg-2:      var(--foreground);
-  --paper-fg-3:      var(--muted-foreground);
-  --paper-fg-4:      var(--muted-foreground);
-
-  --paper-card:      var(--card);
-  --paper-card-2:    var(--muted);
-
-  --paper-ok:        var(--accent-success);
-  --paper-ok-bg:     color-mix(in oklch, var(--accent-success) 15%, var(--background));
-  --paper-warn:      var(--accent-warning);
-  --paper-warn-bg:   color-mix(in oklch, var(--accent-warning) 15%, var(--background));
-  --paper-err:       var(--destructive);
-  --paper-err-bg:    color-mix(in oklch, var(--destructive) 15%, var(--background));
-  --paper-info:      var(--accent-info);
-  --paper-info-bg:   color-mix(in oklch, var(--accent-info) 15%, var(--background));
-
-  /* Fonts → Violet Grid trio (LAW 4): Outfit / IBM Plex Mono / Noto Serif */
-  --paper-font-display: var(--font-sans);
-  --paper-font-mono:    var(--font-mono);
-  --paper-font-serif:   var(--font-serif);
   --background: oklch(1 0 0);
   --foreground: oklch(0.141 0.005 285.823);
 }
 
-/* ══════════════════════════════════════════════════════════════════════════════
-   PAPER OPS CONSOLE — sidebar token overrides
-   The unified `<Sidebar>` component (packages/ui/src/components/composed/sidebar)
-   reads `--sidebar-*` variables for chrome. Inside the `.ops-console` scope we
-   re-bind those variables to the paper-* palette so the same component renders
-   with the warm-paper aesthetic without prop-level branching. Outside this
-   scope (i.e. on every v6 (dashboard) route) the sidebar falls back to the
-   `:root` definitions, which carry the Modern Ivory dashboard chrome.
-   ══════════════════════════════════════════════════════════════════════════════ */
-
-.ops-console {
-  --sidebar:                     var(--paper-2);
-  --sidebar-foreground:          var(--paper-fg-1);
-  --sidebar-primary:             var(--paper-violet);
-  --sidebar-primary-foreground:  oklch(0.9850 0.0030 85);
-  --sidebar-accent:              var(--paper-violet-50);
-  --sidebar-accent-foreground:   var(--paper-violet);
-  --sidebar-border:              var(--paper-line);
-  --sidebar-ring:                var(--paper-violet);
-}
+/* The `.ops-console` sidebar-token rebind was retired (Phase 10d). The violet
+   sidebar chrome it produced is now canonical in the `:root` / `.dark`
+   `--sidebar-*` definitions above, so the `<Sidebar>` renders violet hover/
+   selected/focus states on every route without a wrapper scope class. */
 
 .dark {
   /* ── DARK MODE (Violet Grid — purple-tinted backgrounds) ── */
@@ -319,20 +273,21 @@
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.552 0.016 285.938);
 
-  --chart-1: oklch(0.905 0.182 98.111);
-  --chart-2: oklch(0.795 0.184 86.047);
-  --chart-3: oklch(0.681 0.162 75.834);
-  --chart-4: oklch(0.554 0.135 66.442);
-  --chart-5: oklch(0.476 0.114 61.907);
+  /* Dark-mode categorical chart series — same calm violet ramp. The
+     --chart-ramp-* tokens color-mix against --primary/--background, both of
+     which are overridden in .dark, so the ramp re-resolves for dark surfaces. */
+  --chart-1: var(--chart-ramp-5);
+  --chart-2: var(--chart-ramp-4);
+  --chart-3: var(--chart-ramp-3);
+  --chart-4: var(--chart-ramp-2);
+  --chart-5: var(--chart-ramp-1);
 
   --sidebar: oklch(0.21 0.006 285.885);
   --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.585 0.233 277.117);
-  --sidebar-primary-foreground: oklch(0.962 0.018 272.314);
-  --sidebar-accent: oklch(0.274 0.006 286.033);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.552 0.016 285.938);
+  /* --sidebar-primary / -primary-foreground / -accent / -accent-foreground /
+     -ring inherit the canonical violet :root values (theme-aware via
+     var(--primary) / var(--background)) — formerly the .ops-console rebind. */
 
   --accent-success: oklch(0.60 0.18 150);
   --accent-success-foreground: oklch(0.10 0 0);
@@ -524,38 +479,7 @@
   --color-print-accent: var(--print-accent);
   --color-print-surface-muted: var(--print-surface-muted);
 
-  /* ── Paper Ops Console — Tailwind utility bindings (bg-paper-*, text-paper-*) ── */
-  --color-paper-bg:        var(--paper-bg);
-  --color-paper-2:         var(--paper-2);
-  --color-paper-3:         var(--paper-3);
-  --color-paper-line:      var(--paper-line);
-  --color-paper-line-2:    var(--paper-line-2);
-  --color-paper-line-3:    var(--paper-line-3);
-  --color-paper-ink:       var(--paper-ink);
-  --color-paper-orange:    var(--paper-orange);
-  --color-paper-violet:    var(--paper-violet);
-  --color-paper-violet-2:  var(--paper-violet-2);
-  --color-paper-violet-50: var(--paper-violet-50);
-  --color-paper-fg-1:      var(--paper-fg-1);
-  --color-paper-fg-2:      var(--paper-fg-2);
-  --color-paper-fg-3:      var(--paper-fg-3);
-  --color-paper-fg-4:      var(--paper-fg-4);
-  --color-paper-ok:        var(--paper-ok);
-  --color-paper-ok-bg:     var(--paper-ok-bg);
-  --color-paper-warn:      var(--paper-warn);
-  --color-paper-warn-bg:   var(--paper-warn-bg);
-  --color-paper-err:       var(--paper-err);
-  --color-paper-err-bg:    var(--paper-err-bg);
-  --color-paper-info:      var(--paper-info);
-  --color-paper-info-bg:   var(--paper-info-bg);
-  --color-paper-card:      var(--paper-card);
-  --color-paper-card-2:    var(--paper-card-2);
-
-  --font-paper-display: var(--paper-font-display);
-  --font-paper-mono:    var(--paper-font-mono);
-  --font-paper-serif:   var(--paper-font-serif);
-
-  /* Paper Ops Console — text scale (LAW 11: extends Tailwind's text scale with the bundle's
+  /* v7 text scale (LAW 11: extends Tailwind's text scale with the bundle's
      pixel-perfect sizes — 9/10/11/12/13/14/16/18/22/26/28/32 — so components never reach
      for `text-[Npx]` arbitrary values). */
   --text-ui-9:  0.5625rem;   /* 9px  — sidebar subtitle */
@@ -613,6 +537,9 @@
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);
   --font-serif: var(--font-serif);
+  /* Card / Dialog / Sheet / AlertDialog titles reference `font-heading`;
+     resolve it to the serif stack (Noto Serif) — the intended heading face. */
+  --font-heading: var(--font-serif);
 
   --text-3xs: 0.5625rem;
   --text-2xs: 0.625rem;
@@ -621,6 +548,14 @@
      Authored from observed design needs in dashboard panels + hero sections.
      Reusable as `h-panel-sm`, `min-h-panel-xl`, `max-w-control`, etc. */
   --spacing-control: 100rem;       /* 1600px — outer mission-control hardware frame */
+  /* ── ContentFrame bounded-composition scale (enterprise composition system) ──
+     The canonical bounded content measures. ContentFrame centers content at
+     one of these so no surface stretches edge-to-edge on an ultrawide ops
+     monitor. Tighter than the 1600px hardware frame on purpose. */
+  --spacing-frame-shell:    90rem;    /* 1440px — page shell (outer bound)      */
+  --spacing-frame-content:  80rem;    /* 1280px — primary content frame         */
+  --spacing-frame-table:    86.25rem; /* 1380px — data-heavy table surfaces     */
+  --spacing-frame-workflow: 70rem;    /* 1120px — bounded workflow / form width */
   --spacing-page-content: 80rem;   /* 1280px — canonical page-content width
                                       (PageShell). Caps reading/working width
                                       below the 1600px hardware frame so all
@@ -630,6 +565,24 @@
                                       Inventory). Sits between page-content
                                       and the 1600px hardware frame. Added
                                       Phase 1 of the NextAdmin refactor. */
+  --spacing-table-viewport: 65vh;  /* DataTable body scroll height — keeps the
+                                      sticky header + toolbar + pagination in
+                                      view while the row body scrolls. Used as
+                                      `max-h-table-viewport`. */
+  /* Semantic form-field widths (ch-based) — a field's width communicates its
+     expected input length. Used as `max-w-field-code` / `-sm` / `-md`. */
+  --spacing-field-code: 8ch;       /* 3–4 char codes (airline, hub, PIN) */
+  --spacing-field-sm: 16ch;        /* short: flight no., phone, postal */
+  --spacing-field-md: 24ch;        /* medium: vehicle reg, short names */
+  --spacing-field-lg: 40ch;        /* long: names, addresses, descriptions */
+  /* Comfortable form-control sizing (v8 ops rhythm). Scoped to FormField via
+     the @layer utilities rule below — dense table filters / command inputs
+     keep the compact h-8 default. Form fields breathe at 48px. */
+  --spacing-form-control: 3rem;          /* 48px — input / select height in forms */
+  --spacing-form-control-textarea: 7.5rem; /* 120px — textarea min-height in forms */
+  --spacing-form-control-px: 0.75rem;    /* 12px — horizontal inset for form controls */
+  --spacing-form-control-textarea-py: 0.625rem; /* 10px — textarea vertical inset */
+  --text-form-control: 0.875rem;         /* 14px — form-control text size */
 
   /* ── Page-gutter + card-rhythm tokens (NextAdmin parity, Violet-Grid translated) ──
      Responsive page padding scales by breakpoint; card padding + gap are
@@ -640,9 +593,13 @@
   --spacing-page-pad-y-sm: 1rem;
   --spacing-page-pad-y-md: 1.5rem;
   --spacing-page-pad-y-lg: 2rem;
-  --spacing-card-pad:      1.5rem;   /* 24px  — internal padding (default card)  */
-  --spacing-card-pad-lg:   1.875rem; /* 30px  — hero / KPI card                  */
-  --spacing-card-gap:      1.5rem;   /* 24px  — gap between sibling cards        */
+  --spacing-card-pad:      1.5rem;   /* 24px  — compact card padding (dense tier) */
+  --spacing-card-pad-lg:   2rem;     /* 32px  — primary card / form surface.
+                                        Editorial breathing room adopted from the
+                                        v8 ops spike: primary surfaces get 32px,
+                                        compact surfaces stay 24px. Used by the
+                                        default SurfaceCard tier + FormCard.       */
+  --spacing-card-gap:      1.5rem;   /* 24px  — gap between sibling cards (v8 grid) */
   --spacing-panel-sm: 13.75rem;    /* 220px — chart container / hero (mobile)     */
   --spacing-panel-md: 15rem;       /* 240px — scroll-list panel                   */
   --spacing-panel-lg: 16.25rem;    /* 260px — hero (lg viewport)                  */
@@ -714,6 +671,18 @@
   --radius-md: var(--radius);
   --radius-lg: var(--radius);
   --radius-xl: var(--radius);
+  /* LAW 13 carve-out — interactive CONTROLS only (inputs, buttons, selects).
+     Structural surfaces (cards, tables, panels, dialogs) stay 0-radius. This
+     is the "round controls only" hybrid decision: modernize what the operator
+     touches while preserving the brutalist architectural identity. Referenced
+     via the bracket-token form `rounded-[var(--radius-control)]`, which the
+     LAW-13 lint rule + design-spec audit permit (they only ban the named
+     rounded-{md,lg,…} scale). Do NOT apply to cards/surfaces. */
+  --radius-control: 0; /* 0px — controls are SHARP (2026-05-24 decision: keep
+                          controls fully square; LAW 13 is fully intact in
+                          practice). The token remains as the single dial if
+                          control softening is ever revisited, but its value is
+                          0 — nothing in the system rounds. */
 
   --shadow-2xs: var(--shadow-2xs);
   --shadow-xs: var(--shadow-xs);
@@ -1005,6 +974,24 @@
     }
   }
 
+  /* Banner scrim — editorial image backdrop with a card-colored left→right
+     scrim so overlaid operational text stays readable. The consumer supplies
+     the image URL via the `--banner-image` custom property (content, not a
+     color); all color composition lives here per LAW 1. */
+  .tac-banner-scrim {
+    background-image:
+      linear-gradient(
+        90deg,
+        var(--card) 0%,
+        var(--card) 38%,
+        color-mix(in oklch, var(--card) 55%, transparent) 100%
+      ),
+      var(--banner-image);
+    background-size: cover;
+    background-position: center right;
+    background-repeat: no-repeat;
+  }
+
   /* ── TYPE SCALE — Violet Grid (premium rendering) ── */
 
   .t-display {
@@ -1094,6 +1081,20 @@
     font-weight: 600;
     letter-spacing: -0.05em;
     line-height: 1;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1, "zero" 1;
+  }
+
+  .t-data-md {
+    /* 32px primary KPI — the default StatCard value. Sits between the dominant
+       hero metric (.t-data, 40px) and the dense compact metric (.t-data-sm,
+       20px) so a KPI row reads with a clear metric hierarchy instead of a flat
+       same-size stack. */
+    font-family: var(--font-mono);
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1.05;
     font-variant-numeric: tabular-nums;
     font-feature-settings: "tnum" 1, "zero" 1;
   }
@@ -1240,132 +1241,6 @@
     stroke: var(--chart-grid);
   }
 
-  /* ══════════════════════════════════════════════════════════════════════════
-     PAPER OPS CONSOLE UTILITIES
-     Scoped to elements rendered inside `.ops-console` so they never leak into
-     Violet Grid v6 pages. All values reference --paper-* tokens (LAW 1).
-     ══════════════════════════════════════════════════════════════════════════ */
-
-  /* Diagonal hatch stripe — top + bottom edge of every Frame */
-  .paper-hatch-band {
-    background-image: repeating-linear-gradient(
-      135deg,
-      var(--paper-line) 0 6px,
-      transparent 6px 12px
-    );
-    height: 0.5rem;
-  }
-
-  /* Corner brackets — 1.5px L-tick on top-left + bottom-right of cards */
-  .paper-card-ticks {
-    position: relative;
-  }
-  .paper-card-ticks::before,
-  .paper-card-ticks::after {
-    content: "";
-    position: absolute;
-    width: 0.625rem;
-    height: 0.625rem;
-    pointer-events: none;
-  }
-  .paper-card-ticks::before {
-    top: 0.375rem;
-    left: 0.375rem;
-    border-top: 1.5px solid var(--paper-line-2);
-    border-left: 1.5px solid var(--paper-line-2);
-  }
-  .paper-card-ticks::after {
-    bottom: 0.375rem;
-    right: 0.375rem;
-    border-bottom: 1.5px solid var(--paper-line-2);
-    border-right: 1.5px solid var(--paper-line-2);
-  }
-
-  /* Frame ticks — larger 2px L-tick at content frame corners */
-  .paper-frame-ticks {
-    position: relative;
-  }
-  .paper-frame-ticks > .paper-tick-tl,
-  .paper-frame-ticks > .paper-tick-br {
-    position: absolute;
-    width: 0.75rem;
-    height: 0.75rem;
-    pointer-events: none;
-  }
-  .paper-frame-ticks > .paper-tick-tl {
-    top: 0.875rem;
-    left: 0.375rem;
-    border-top: 2px solid var(--paper-line-3);
-    border-left: 2px solid var(--paper-line-3);
-  }
-  .paper-frame-ticks > .paper-tick-br {
-    bottom: 0.875rem;
-    right: 0.375rem;
-    border-bottom: 2px solid var(--paper-line-3);
-    border-right: 2px solid var(--paper-line-3);
-  }
-
-  /* Paper type — mono uppercase labels carry the operator-terminal voice */
-  .paper-eyebrow,
-  .paper-label {
-    font-family: var(--paper-font-mono);
-    font-size: 0.6875rem;
-    font-weight: 500;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--paper-fg-3);
-    line-height: 1;
-  }
-  .paper-id {
-    font-family: var(--paper-font-mono);
-    font-size: 0.8125rem;
-    font-weight: 600;
-    letter-spacing: 0.02em;
-    color: var(--paper-violet);
-  }
-  .paper-code {
-    font-family: var(--paper-font-mono);
-    font-size: 0.8125rem;
-    font-weight: 500;
-    line-height: 1.4;
-    color: var(--paper-fg-1);
-  }
-  .paper-h1 {
-    font-family: var(--paper-font-display);
-    font-size: 2rem;
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    line-height: 1.15;
-    color: var(--paper-fg-1);
-  }
-  .paper-h2 {
-    font-family: var(--paper-font-display);
-    font-size: 1.375rem;
-    font-weight: 700;
-    letter-spacing: -0.01em;
-    line-height: 1.2;
-    color: var(--paper-fg-1);
-  }
-  .paper-h3 {
-    font-family: var(--paper-font-display);
-    font-size: 1rem;
-    font-weight: 600;
-    line-height: 1.3;
-    color: var(--paper-fg-1);
-  }
-  .paper-stat-value {
-    font-family: var(--paper-font-display);
-    font-size: 2rem;
-    font-weight: 800;
-    line-height: 1.1;
-    color: var(--paper-fg-1);
-    font-variant-numeric: tabular-nums;
-  }
-
-  /* Inset 1px line — the only "elevation" the paper system uses */
-  .paper-inset-line {
-    box-shadow: inset 0 0 0 1px var(--paper-line);
-  }
 }
 
 /* ══════════════════════════════════════════════════════════════════════════════
@@ -1430,6 +1305,31 @@
 
   .pause-on-hover:hover > div {
     animation-play-state: paused;
+  }
+
+  /* ── Comfortable form-control sizing (v8 ops rhythm) ──
+     Scoped to FormField descendants so form inputs/selects/textareas breathe
+     at 48px while dense table filters, command-palette inputs, and inline
+     controls keep the compact h-8 Input default. The `[data-slot="form-field"]
+     :is(...)` selector is (0,1,1) — higher than the `.h-8`/`.h-9` utilities
+     (0,1,0) in this same layer, so it wins without `!important`. File/checkbox/
+     radio inputs are excluded (they aren't text controls). Covers both the
+     FormField primitive (`form-field`) and the invoice wizard's self-contained
+     field (`wizard-field`) so every form control shares the 48px rhythm. */
+  :is([data-slot="form-field"], [data-slot="wizard-field"])
+    :is(input, select):not([type="checkbox"]):not([type="radio"]):not(
+      [type="file"]
+    ) {
+    height: var(--spacing-form-control);
+    padding-inline: var(--spacing-form-control-px);
+    font-size: var(--text-form-control);
+    border-radius: var(--radius-control);
+  }
+  :is([data-slot="form-field"], [data-slot="wizard-field"]) textarea {
+    min-height: var(--spacing-form-control-textarea);
+    padding: var(--spacing-form-control-textarea-py) var(--spacing-form-control-px);
+    font-size: var(--text-form-control);
+    border-radius: var(--radius-control);
   }
 }
 

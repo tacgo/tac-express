@@ -63,6 +63,7 @@ function V7CustomerForm({ onSubmit, isLoading, className }: V7CustomerFormProps)
         <FormGrid cols={2}>
           <FormField
             fieldId="v7-cust-name"
+            controlWidth="lg"
             label="Name"
             required
             error={errors.name?.message}
@@ -76,6 +77,7 @@ function V7CustomerForm({ onSubmit, isLoading, className }: V7CustomerFormProps)
           </FormField>
           <FormField
             fieldId="v7-cust-phone"
+            controlWidth="sm"
             label="Phone"
             required
             error={errors.phone?.message}
@@ -90,6 +92,7 @@ function V7CustomerForm({ onSubmit, isLoading, className }: V7CustomerFormProps)
           </FormField>
           <FormField
             fieldId="v7-cust-email"
+            controlWidth="lg"
             label="Email"
             error={errors.email?.message}
           >
@@ -103,6 +106,7 @@ function V7CustomerForm({ onSubmit, isLoading, className }: V7CustomerFormProps)
           </FormField>
           <FormField
             fieldId="v7-cust-gstin"
+            controlWidth="md"
             label="GSTIN"
             hint="Optional. 15-digit GST identification."
             error={errors.gstin?.message}
@@ -121,6 +125,7 @@ function V7CustomerForm({ onSubmit, isLoading, className }: V7CustomerFormProps)
         <FormGrid cols={1}>
           <FormField
             fieldId="v7-cust-addr1"
+            controlWidth="lg"
             label="Address line 1"
             required
             error={errors.addressLine1?.message}
@@ -134,6 +139,7 @@ function V7CustomerForm({ onSubmit, isLoading, className }: V7CustomerFormProps)
           </FormField>
           <FormField
             fieldId="v7-cust-addr2"
+            controlWidth="lg"
             label="Address line 2"
             error={errors.addressLine2?.message}
           >
@@ -148,6 +154,7 @@ function V7CustomerForm({ onSubmit, isLoading, className }: V7CustomerFormProps)
         <FormGrid cols={2}>
           <FormField
             fieldId="v7-cust-city"
+            controlWidth="md"
             label="City"
             required
             error={errors.city?.message}
@@ -160,6 +167,7 @@ function V7CustomerForm({ onSubmit, isLoading, className }: V7CustomerFormProps)
           </FormField>
           <FormField
             fieldId="v7-cust-state"
+            controlWidth="md"
             label="State"
             required
             error={errors.state?.message}
@@ -172,6 +180,7 @@ function V7CustomerForm({ onSubmit, isLoading, className }: V7CustomerFormProps)
           </FormField>
           <FormField
             fieldId="v7-cust-zip"
+            controlWidth="code"
             label="PIN"
             required
             error={errors.zip?.message}

@@ -4,7 +4,7 @@ import * as React from "react"
 
 import { useSession } from "@workspace/ui/hooks/use-session"
 import { useInventoryByHub } from "@workspace/services/hooks/use-analytics"
-import { OpsSettingsView } from "@workspace/ui/components/composed/ops-console/pages"
+import { V7OpsSettings } from "@workspace/ui/components/composed/settings/v7-ops-settings"
 
 export function OpsSettingsLive() {
   const { user } = useSession()
@@ -32,7 +32,7 @@ export function OpsSettingsLive() {
   }, [inventoryQuery.data])
 
   return (
-    <OpsSettingsView
+    <V7OpsSettings
       email={email}
       displayName={displayName}
       hubCode={hubCode}

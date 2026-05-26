@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 
 
@@ -276,6 +276,7 @@ function IndianCityCombobox({
             <CommandList className="max-h-72">
               <CommandEmpty>
                 {trimmedQuery.length > 0 ? (
+                  // eslint-disable-next-line no-restricted-syntax -- CommandEmpty action: native button needed for cmdk's event propagation outside CommandItem
                   <button
                     type="button"
                     className="flex w-full items-center gap-2 px-2 py-2 text-left text-sm hover:bg-muted"
@@ -287,7 +288,7 @@ function IndianCityCombobox({
                   >
                     <RiMapPinLine className="size-4 shrink-0 text-primary" />
                     <span className="truncate">
-                      Use “{trimmedQuery}”
+                      Use &ldquo;{trimmedQuery}&rdquo;
                     </span>
                     <span className="ml-auto font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
                       CUSTOM
@@ -365,7 +366,7 @@ function IndianCityCombobox({
                     }}
                   >
                     <RiMapPinLine className="size-4 shrink-0 text-primary" />
-                    <span className="truncate">Use “{trimmedQuery}”</span>
+                    <span className="truncate">Use &ldquo;{trimmedQuery}&rdquo;</span>
                     <span className="ml-auto font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
                       CUSTOM
                     </span>
@@ -490,6 +491,7 @@ function PincodeInput({
 
   return (
     <div className={cn("relative w-full", className)}>
+      {/* eslint-disable-next-line no-restricted-syntax -- Pincode input requires inputMode/pattern/maxLength HTML attributes; shadcn Input is equivalent but this is inside a combobox layout where direct ref control is needed */}
       <input
         id={id}
         type="text"
@@ -594,6 +596,7 @@ function PlainTextInput({
   invalid?: boolean
 }) {
   return (
+    // eslint-disable-next-line no-restricted-syntax -- Address input in combobox layout; inline positioning requires direct DOM sizing that the shadcn Input wrapper would constrain
     <input
       id={id}
       type="text"

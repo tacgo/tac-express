@@ -1,65 +1,34 @@
-export {
-  OpsAnalyticsView,
-  type OpsAnalyticsViewProps,
-  type AnalyticsKpis,
-} from "./ops-analytics-view"
-export {
-  OpsShipmentsView,
-  type OpsShipmentsViewProps,
-  type ShipmentRow,
-} from "./ops-shipments-view"
-export {
-  OpsManifestsView,
-  type OpsManifestsViewProps,
-  type ManifestRow,
-} from "./ops-manifests-view"
-export { OpsScanningView } from "./ops-scanning-view"
-export {
-  OpsInventoryView,
-  type OpsInventoryViewProps,
-  type HubInventory,
-} from "./ops-inventory-view"
-export {
-  OpsExceptionsView,
-  type OpsExceptionsViewProps,
-  type ExceptionRow,
-} from "./ops-exceptions-view"
-export {
-  OpsFinanceView,
-  type OpsFinanceViewProps,
-  type InvoiceRow,
-  type AgingBucket,
-} from "./ops-finance-view"
-export {
-  OpsRateCardsView,
-  type OpsRateCardsViewProps,
-  type RateCardRow,
-} from "./ops-rate-cards-view"
-export {
-  OpsCustomersView,
-  type OpsCustomersViewProps,
-  type CustomerRow,
-} from "./ops-customers-view"
-export {
-  OpsManagementView,
-  type OpsManagementViewProps,
-  type StaffRow,
-} from "./ops-management-view"
-export {
-  OpsNotificationsView,
-  type OpsNotificationsViewProps,
-  type Channel,
-  type SystemService,
-} from "./ops-notifications-view"
-export {
-  OpsSettingsView,
-  type OpsSettingsViewProps,
-} from "./ops-settings-view"
-export {
-  OpsWhatsAppFailedSendsView,
-  type OpsWhatsAppFailedSendsViewProps,
-} from "./ops-whatsapp-failed-sends-view"
-export {
-  ContactLeadsView,
-  type ContactLeadsViewProps,
-} from "./contact-leads-view"
+// All v6 paper page-level view components retired across Phases 4–9.
+// See retirement comments below for the v7 replacements.
+//
+// OpsAnalyticsView (v6 paper) retired in Phase 7 — analytics route renders
+// V7OpsAnalytics; AnalyticsKpis lives in `analytics/v7-ops-analytics`.
+// OpsShipmentsView (v6 paper) retired in Phase 5 — shipments route renders
+// V7OpsShipments; ShipmentRow lives in `shipments/v7-ops-shipments`.
+// OpsManifestsView (v6 paper) retired in Phase 5 — manifests route renders
+// V7OpsManifests; ManifestRow lives in `manifests/v7-ops-manifests`.
+// OpsScanningView (v6 paper) retired in Phase 8 — scanning route renders
+// V7OpsScanning, in `scanning/v7-ops-scanning`.
+// OpsInventoryView (v6 paper) retired in Phase 5 — inventory route renders
+// V7OpsInventory; HubInventory lives in `inventory/v7-ops-inventory`.
+// OpsExceptionsView (v6 paper) retired in Phase 6 — exceptions route renders
+// V7OpsExceptions; ExceptionRow lives in `exceptions/v7-ops-exceptions`.
+// OpsFinanceView (v6 paper) retired in Phase 5 — finance route renders
+// V7OpsFinance; InvoiceRow + AgingBucket live in `finance/v7-ops-finance`.
+// OpsRateCardsView (v6 paper) retired in Phase 4 composition unification —
+// the rates route renders the canonical V7OpsRateCards. RateCardRow now lives
+// in `rates/v7-ops-rate-cards`.
+// OpsCustomersView (v6 paper) retired in Phase 4 — customers route renders
+// V7OpsCustomers; CustomerRow lives in `customers/v7-ops-customers`.
+// OpsManagementView (v6 paper reference variant) archived in Phase 4-C —
+// management route renders management-client.tsx (fully separate composition).
+// Archived to `_archive/2026-05-26/ops-management-view.tsx`.
+// OpsNotificationsView (v6 paper) retired in Phase 6 — notifications route
+// renders V7OpsNotifications; Channel + SystemService live in
+// `notifications/v7-ops-notifications`.
+// OpsSettingsView (v6 paper) retired in Phase 6 — settings route renders
+// V7OpsSettings, in `settings/v7-ops-settings`.
+// OpsWhatsAppFailedSendsView (v6 paper) retired in Phase 9 — failed-sends route
+// renders V7OpsWhatsAppFailedSends, in `whatsapp/v7-ops-whatsapp-failed-sends`.
+// ContactLeadsView (v6 paper) retired in Phase 6 — support route renders
+// V7ContactLeads, in `support/v7-contact-leads`.

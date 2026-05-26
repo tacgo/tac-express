@@ -1,3 +1,5 @@
+/* eslint-disable no-restricted-syntax -- Print-view file: <table> is required for print-safe
+   layout; CSS grid does not print correctly across page breaks in all browsers. */
 "use client"
 
 import * as React from "react"

@@ -148,6 +148,7 @@ export function BulkImportClient() {
 
       {!file && (
         <label className="tac-fui-panel relative flex cursor-pointer flex-col items-center justify-center gap-2 px-8 py-16 text-center transition-colors hover:border-primary">
+          {/* eslint-disable-next-line no-restricted-syntax -- Native <input type="file"> inside <label> is the standard pattern for custom file upload UI; shadcn Input does not support file picking */}
           <input
             type="file"
             accept=".csv,text/csv"

@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import Link from "next/link"
 
 import { cn } from "@workspace/ui/lib/utils"
 import {
@@ -8,9 +9,13 @@ import {
   RiTruckLine,
   RiAlertLine,
   RiFlightTakeoffLine,
+  RiAddLine,
+  RiFileList3Line,
 } from "@workspace/ui/icons"
 import { PageShell } from "@workspace/ui/components/composed/page-shell"
 import { PageHeader } from "@workspace/ui/components/composed/page-header"
+import { SurfaceCard } from "@workspace/ui/components/composed/surface-card"
+import { Button } from "@workspace/ui/components/button"
 import { StatCard } from "@workspace/ui/components/composed/stat-card"
 import { OpsGrowthAreaChart } from "@workspace/ui/components/composed/ops-console/ops-growth-chart"
 import { OpsVolumeBarChart } from "@workspace/ui/components/composed/ops-console/ops-volume-chart"
@@ -69,21 +74,74 @@ function V7OpsDashboard({
         description="Real-time operations overview across the network."
       />
 
+      {/* Operational overview — the orchestration layer of the page. A
+          `command` SurfaceCard (elevated, violet top accent) carrying live
+          network state + the primary workflow launchers, so the dashboard
+          reads as a command center rather than a metrics grid. */}
+      <SurfaceCard
+        emphasis="command"
+        className="relative overflow-hidden tac-banner-scrim"
+        style={
+          // Only the image URL (content, not a color) is set inline; the
+          // scrim's color composition lives in .tac-banner-scrim (globals.css,
+          // LAW 1 — no color values in the component).
+          { "--banner-image": 'url("/dashboard-banner-v3.png")' } as React.CSSProperties
+        }
+        eyebrow={
+          <span className="inline-flex items-center gap-1.5">
+            <span
+              aria-hidden
+              className="size-1.5 bg-accent-success tac-blink motion-reduce:animate-none"
+            />
+            Network · Live
+          </span>
+        }
+        title="Operations Overview"
+        subtitle="Imphal hub · real-time sync active across the corridor."
+        actions={
+          <>
+            <Button asChild variant="outline" size="sm">
+              <Link href="/ops-console/manifests/create">
+                <RiFileList3Line className="size-4" aria-hidden="true" />
+                New Manifest
+              </Link>
+            </Button>
+            <Button asChild size="sm">
+              <Link href="/ops-console/shipments/create">
+                <RiAddLine className="size-4" aria-hidden="true" />
+                New Shipment
+              </Link>
+            </Button>
+          </>
+        }
+      />
+
+      {/* Asymmetric KPI constellation (12-col, 5/3/2/2) — a dominant primary
+          metric carries operational gravity instead of four equal tiles.
+          Open Exceptions gets a destructive left-edge when non-zero so the
+          alert reads pre-attentively regardless of its compact width. */}
       <div
         data-slot="v7-ops-dashboard-kpis"
-        className="grid grid-cols-1 gap-card-gap sm:grid-cols-2 lg:grid-cols-4"
+        className="grid grid-cols-1 gap-card-gap sm:grid-cols-2 lg:grid-cols-12"
       >
         <StatCard
+          className="lg:col-span-5"
+          variant="hero"
           label="Active Shipments"
           value={activeShipments}
-          visual={<RiBox3Line className="size-6 text-primary" aria-hidden="true" />}
+          visual={<RiBox3Line className="size-7 text-primary" aria-hidden="true" />}
         />
         <StatCard
+          className="lg:col-span-3"
           label="In Transit"
           value={inTransit}
           visual={<RiTruckLine className="size-6 text-primary" aria-hidden="true" />}
         />
         <StatCard
+          className={cn(
+            "lg:col-span-2",
+            openExceptions > 0 && "border-l-2 border-l-destructive"
+          )}
           label="Open Exceptions"
           value={openExceptions}
           visual={
@@ -97,6 +155,7 @@ function V7OpsDashboard({
           }
         />
         <StatCard
+          className="lg:col-span-2"
           label="Next Flight ETA"
           value={nextFlightEta ?? "—"}
           monoValue={Boolean(nextFlightEta)}
@@ -114,17 +173,19 @@ function V7OpsDashboard({
           are universal; the outer "Card" surface is the v7 vocabulary
           (sharp corners, brutalist offset shadow, --spacing-card-pad).
           Chart-component v7 redesign is Phase 2d/e. */}
+      {/* Asymmetric panel row (12-col, 5/4/3) — the primary trend leads,
+          the departure calendar compresses to the right rail. */}
       <div
         data-slot="v7-ops-dashboard-panels"
-        className="grid grid-cols-1 gap-card-gap lg:grid-cols-3"
+        className="grid grid-cols-1 gap-card-gap lg:grid-cols-12"
       >
-        <V7Panel data-testid="v7-panel-growth">
+        <V7Panel className="lg:col-span-5" data-testid="v7-panel-growth">
           <OpsGrowthAreaChart />
         </V7Panel>
-        <V7Panel data-testid="v7-panel-volume">
+        <V7Panel className="lg:col-span-4" data-testid="v7-panel-volume">
           <OpsVolumeBarChart />
         </V7Panel>
-        <V7Panel data-testid="v7-panel-upcoming">
+        <V7Panel className="lg:col-span-3" data-testid="v7-panel-upcoming">
           <OpsUpcomingCalendar upcoming={upcoming} />
         </V7Panel>
       </div>

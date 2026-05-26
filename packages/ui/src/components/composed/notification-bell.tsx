@@ -8,6 +8,7 @@ import {
   PopoverTrigger,
 } from "@workspace/ui/components/primitives/popover"
 import { cn } from "@workspace/ui/lib/utils"
+import { Button } from "@workspace/ui/components/button"
 import { useNotificationStore } from "@workspace/services/stores/notification.store"
 import {
   RiNotification3Line,
@@ -52,20 +53,23 @@ function NotificationBell() {
 
   if (!mounted) {
     return (
-      <button
+      <Button
         data-slot="notifications-trigger"
         type="button"
-        className="relative flex h-8 w-8 items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors"
+        variant="ghost"
+        size="icon"
+        className="relative h-8 w-8 text-muted-foreground hover:text-foreground hover:bg-muted/50"
         aria-label="Notifications"
       >
         <RiNotification3Line className="h-4 w-4" />
-      </button>
+      </Button>
     )
   }
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
+        {/* eslint-disable-next-line no-restricted-syntax -- Radix PopoverTrigger asChild requires a native element */}
         <button
           data-slot="notifications-trigger"
           type="button"
@@ -110,13 +114,14 @@ function NotificationBell() {
               Notifications
             </p>
             {unreadCount > 0 && (
-              <button
+              <Button
                 type="button"
+                variant="ghost"
                 onClick={markAllRead}
-                className="font-mono text-2xs uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors"
+                className="h-auto px-1 py-0.5 font-mono text-2xs uppercase tracking-widest text-muted-foreground hover:text-foreground"
               >
                 Mark all read
-              </button>
+              </Button>
             )}
           </div>
 
@@ -216,22 +221,24 @@ function NotificationBell() {
                         {mainBody}
                       </Link>
                     ) : (
-                      <button
-                        type="button"
+                      <Button
+                        variant="ghost"
                         onClick={handleActivate}
-                        className="flex flex-1 min-w-0 items-start gap-3 text-left focus:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                        className="flex flex-1 h-auto min-w-0 items-start gap-3 px-0 py-0 text-left font-normal hover:bg-transparent focus-visible:ring-1 focus-visible:ring-ring"
                       >
                         {mainBody}
-                      </button>
+                      </Button>
                     )}
-                    <button
+                    <Button
                       type="button"
+                      variant="ghost"
+                      size="icon"
                       onClick={() => removeNotification(n.id)}
-                      className="shrink-0 h-5 w-5 flex items-center justify-center text-muted-foreground/50 hover:text-destructive transition-colors"
+                      className="shrink-0 h-5 w-5 text-muted-foreground/50 hover:text-destructive"
                       aria-label={`Dismiss ${n.title}`}
                     >
                       <RiCloseLine className="h-3.5 w-3.5" />
-                    </button>
+                    </Button>
                   </li>
                 )
               })}

@@ -30,12 +30,14 @@ import {
 } from "@workspace/ui/icons"
 import { cn } from "@workspace/ui/lib/utils"
 import {
-  OpsDetailFrame,
-  OpsBadge,
-  OpsButton,
-  OpsCard,
-  OpsSkeleton,
-} from "@workspace/ui/components/composed/ops-console"
+  DetailShell,
+  FIELD_LABEL,
+  STATUS_TONE_CLASS,
+} from "@workspace/ui/components/composed/detail-shell"
+import { SurfaceCard } from "@workspace/ui/components/composed/surface-card"
+import { Badge } from "@workspace/ui/components/primitives/badge"
+import { Button } from "@workspace/ui/components/button"
+import { Skeleton } from "@workspace/ui/components/primitives/skeleton"
 import { PaymentTimeline } from "@workspace/ui/components/composed/finance/payment-timeline"
 import {
   RecordPaymentDialog,
@@ -47,11 +49,13 @@ import {
 } from "@workspace/ui/components/composed/finance/send-whatsapp-dialog"
 
 /**
- * Paper-aesthetic invoice detail. 1:1 feature parity with the v6
- * `InvoiceDetailClient`: WhatsApp send (kill-switch aware), payment
- * recording (with PaymentResponseLostError + Sentry capture), PDF/label
- * print routes, issue / mark-paid / cancel state transitions. Only the
- * visual chrome differs.
+ * Violet Grid v7 invoice detail (Phase 10b in-place re-tokenize). 1:1 feature
+ * parity with the prior paper view — WhatsApp send (kill-switch aware), payment
+ * recording (with PaymentResponseLostError + Sentry capture), PDF/label print
+ * routes, issue / mark-paid / cancel transitions. Only the visual chrome moved
+ * from the Paper Ops Console primitives (OpsDetailFrame/OpsCard/OpsBadge/
+ * OpsButton/OpsSkeleton) to v7 primitives (PageShell + inline header + 8/4
+ * SurfaceCard grid). No services, hooks, or handlers changed.
  */
 
 const STATUS_TONE: Record<InvoiceStatus, "neutral" | "ok" | "warn" | "err" | "violet"> = {
@@ -122,6 +126,10 @@ function fmtDate(iso: string): string {
   })
 }
 
+// Math-display row — label left, value right (justify-between), value in
+// `.t-mono` (0.8125rem mono + tabular-nums, matching the v6 font-mono
+// text-ui-13 tabular-nums). Column count, alignment, mono, and tabular-nums
+// preserved 1:1 from the paper version.
 function ChargeRow({
   label,
   value,
@@ -133,10 +141,10 @@ function ChargeRow({
 }) {
   return (
     <div className="flex items-center justify-between gap-4 border-b border-border/60 py-2 last:border-b-0">
-      <span className="paper-label">{label}</span>
+      <span className={FIELD_LABEL}>{label}</span>
       <span
         className={cn(
-          "font-mono text-ui-13 tabular-nums",
+          "t-mono",
           accent ? "text-primary font-semibold" : "text-foreground",
         )}
       >
@@ -158,8 +166,8 @@ function MetaField({
   if (value === undefined || value === null || value === "") return null
   return (
     <div className={cn("space-y-1", className)}>
-      <p className="paper-label">{label}</p>
-      <p className="font-mono text-ui-12 text-foreground whitespace-pre-line break-words">
+      <p className={FIELD_LABEL}>{label}</p>
+      <p className="font-mono text-xs text-foreground whitespace-pre-line break-words">
         {value}
       </p>
     </div>
@@ -330,33 +338,29 @@ export function OpsInvoiceDetailLive({ id }: OpsInvoiceDetailLiveProps) {
 
   if (isLoading) {
     return (
-      <OpsDetailFrame eyebrow="Invoice" title="…" backHref="/ops-console/finance">
-        <OpsSkeleton className="h-4 w-2/3" />
-        <OpsSkeleton className="h-32 w-full" />
-      </OpsDetailFrame>
+      <DetailShell eyebrow="Invoice" title="…" backHref="/ops-console/finance">
+        <Skeleton className="h-4 w-2/3" />
+        <Skeleton className="h-32 w-full" />
+      </DetailShell>
     )
   }
 
   if (!invoice) {
     return (
-      <OpsDetailFrame
-        eyebrow="Invoice"
-        title={id}
-        backHref="/ops-console/finance"
-      >
+      <DetailShell eyebrow="Invoice" title={id} backHref="/ops-console/finance">
         <div className="border border-destructive/40 border-l-[length:var(--indicator-w)] border-l-destructive bg-destructive/15 p-6 flex items-start gap-3">
           <RiErrorWarningLine
             aria-hidden
             className="size-5 text-destructive shrink-0"
           />
           <div>
-            <div className="paper-eyebrow text-destructive">NOT FOUND</div>
-            <p className="font-sans text-ui-13 mt-1">
-              Could not load invoice.
-            </p>
+            <div className="font-mono text-2xs uppercase tracking-widest text-destructive">
+              NOT FOUND
+            </div>
+            <p className="t-body-sm mt-1">Could not load invoice.</p>
           </div>
         </div>
-      </OpsDetailFrame>
+      </DetailShell>
     )
   }
 
@@ -372,35 +376,41 @@ export function OpsInvoiceDetailLive({ id }: OpsInvoiceDetailLiveProps) {
 
   return (
     <>
-      <OpsDetailFrame
+      <DetailShell
         eyebrow="Invoice"
         title={invoice.invoiceNumber}
         sub={`${invoice.customerName}${invoice.awbNumber ? ` · AWB ${invoice.awbNumber}` : ""}`}
         backHref="/ops-console/finance"
         status={
-          <OpsBadge tone={STATUS_TONE[invoice.status] ?? "neutral"}>
+          <Badge
+            variant="outline"
+            className={cn(
+              "font-mono uppercase tracking-tag",
+              STATUS_TONE_CLASS[STATUS_TONE[invoice.status] ?? "neutral"],
+            )}
+          >
             {invoice.status}
-          </OpsBadge>
+          </Badge>
         }
         actions={
           <div className="flex flex-wrap items-center gap-2">
-            <OpsButton
+            <Button
               variant="ghost"
               size="sm"
               onClick={() => window.open(`/print/invoice/${id}`, "_blank")}
             >
               <RiEyeLine aria-hidden className="size-3" />
               Preview
-            </OpsButton>
-            <OpsButton
+            </Button>
+            <Button
               variant="ghost"
               size="sm"
               onClick={() => window.open(`/print/invoice/${id}?print=1`, "_blank")}
             >
               <RiPrinterLine aria-hidden className="size-3" />
               Print / PDF
-            </OpsButton>
-            <OpsButton
+            </Button>
+            <Button
               variant="ghost"
               size="sm"
               onClick={() =>
@@ -409,10 +419,9 @@ export function OpsInvoiceDetailLive({ id }: OpsInvoiceDetailLiveProps) {
             >
               <RiBarcodeBoxLine aria-hidden className="size-3" />
               Label
-            </OpsButton>
+            </Button>
             {invoice.status !== InvoiceStatus.CANCELLED && (
-              <OpsButton
-                variant="primary"
+              <Button
                 size="sm"
                 onClick={() => setWhatsappOpen(true)}
                 disabled={!whatsappAvailable}
@@ -430,74 +439,66 @@ export function OpsInvoiceDetailLive({ id }: OpsInvoiceDetailLiveProps) {
               >
                 <RiWhatsappLine aria-hidden className="size-3" />
                 WhatsApp
-              </OpsButton>
+              </Button>
             )}
           </div>
         }
         aside={
           <>
-            <OpsCard ticks>
-              <div className="paper-label">Total</div>
-              <div className="paper-stat-value mt-1">
+            <SurfaceCard density="compact">
+              <div className={FIELD_LABEL}>Total</div>
+              <div className="t-data-md text-foreground mt-1">
                 {fmtINR(invoice.totalAmount)}
               </div>
-            </OpsCard>
-            <OpsCard ticks>
-              <div className="paper-label">Balance Due</div>
+            </SurfaceCard>
+            <SurfaceCard density="compact">
+              <div className={FIELD_LABEL}>Balance Due</div>
               <div
                 className={cn(
-                  "paper-stat-value mt-1",
+                  "t-data-md mt-1",
                   invoice.balance > 0 ? "text-accent-warning" : "text-accent-success",
                 )}
               >
                 {fmtINR(invoice.balance)}
               </div>
               {invoice.advancePaid > 0 && (
-                <div className="paper-label mt-2">
+                <div className={cn(FIELD_LABEL, "mt-2")}>
                   Advance {fmtINR(invoice.advancePaid)}
                 </div>
               )}
-            </OpsCard>
-            <OpsCard>
-              <div className="paper-label mb-1">Created</div>
-              <div className="font-mono text-ui-13 tabular-nums">
-                {fmtDate(invoice.createdAt)}
-              </div>
+            </SurfaceCard>
+            <SurfaceCard density="compact">
+              <div className={cn(FIELD_LABEL, "mb-1")}>Created</div>
+              <div className="t-mono">{fmtDate(invoice.createdAt)}</div>
               {invoice.issuedAt && (
                 <>
-                  <div className="paper-label mb-1 mt-3">Issued</div>
-                  <div className="font-mono text-ui-13 tabular-nums">
-                    {fmtDate(invoice.issuedAt)}
-                  </div>
+                  <div className={cn(FIELD_LABEL, "mb-1 mt-3")}>Issued</div>
+                  <div className="t-mono">{fmtDate(invoice.issuedAt)}</div>
                 </>
               )}
               {invoice.dueDate && (
                 <>
-                  <div className="paper-label mb-1 mt-3">Due</div>
-                  <div className="font-mono text-ui-13 tabular-nums">
-                    {fmtDate(invoice.dueDate)}
-                  </div>
+                  <div className={cn(FIELD_LABEL, "mb-1 mt-3")}>Due</div>
+                  <div className="t-mono">{fmtDate(invoice.dueDate)}</div>
                 </>
               )}
-            </OpsCard>
+            </SurfaceCard>
           </>
         }
       >
-        <OpsCard ticks>
+        <SurfaceCard>
           <div className="flex items-start justify-between gap-4 border-b border-border pb-3 mb-4">
             <div className="space-y-0.5">
-              <p className="paper-label">Invoice</p>
-              <p className="font-sans text-ui-16 font-bold uppercase tracking-wide text-primary">
+              <p className={FIELD_LABEL}>Invoice</p>
+              <p className="font-sans text-base font-bold uppercase tracking-wide text-primary">
                 {invoice.invoiceNumber}
               </p>
             </div>
             <div className="space-y-0.5 text-right">
-              <p className="paper-label">AWB</p>
-              <p className="font-mono text-ui-13 font-semibold">
-                {invoice.awbNumber || "—"}
-              </p>
+              <p className={FIELD_LABEL}>AWB</p>
+              <p className="t-mono font-semibold">{invoice.awbNumber || "—"}</p>
               {invoice.issuedAt && (
-                <p className="font-mono text-ui-10 text-muted-foreground">
+                <p className="font-mono text-2xs text-muted-foreground">
                   Issued {fmtDate(invoice.issuedAt)}
                 </p>
               )}
@@ -548,10 +549,10 @@ export function OpsInvoiceDetailLive({ id }: OpsInvoiceDetailLiveProps) {
           </div>
 
           <div className="flex items-center justify-between border-t-2 border-foreground/80 pt-3 mt-3">
-            <span className="font-mono text-ui-12 font-bold uppercase tracking-badge text-foreground">
+            <span className="font-mono text-xs font-bold uppercase tracking-badge text-foreground">
               Total
             </span>
-            <span className="font-sans text-ui-18 font-bold tabular-nums text-primary">
+            <span className="font-sans text-lg font-bold tabular-nums text-primary">
               {fmtINR(invoice.totalAmount)}
             </span>
           </div>
@@ -569,7 +570,7 @@ export function OpsInvoiceDetailLive({ id }: OpsInvoiceDetailLiveProps) {
               value={fmtINR(invoice.balance)}
             />
           </div>
-        </OpsCard>
+        </SurfaceCard>
 
         {parsedNotes &&
           (parsedNotes.consignor ||
@@ -577,8 +578,8 @@ export function OpsInvoiceDetailLive({ id }: OpsInvoiceDetailLiveProps) {
             parsedNotes.bookingDate ||
             parsedNotes.natureOfQuantity ||
             parsedNotes.declaredValue) && (
-            <OpsCard ticks>
-              <div className="paper-label mb-3">Shipment metadata</div>
+            <SurfaceCard>
+              <div className={cn(FIELD_LABEL, "mb-3")}>Shipment metadata</div>
 
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 <MetaField label="Booking date" value={parsedNotes.bookingDate} />
@@ -604,7 +605,7 @@ export function OpsInvoiceDetailLive({ id }: OpsInvoiceDetailLiveProps) {
                 <div className="grid grid-cols-1 gap-4 border-t border-border pt-4 mt-4 sm:grid-cols-2">
                   {parsedNotes.consignor && (
                     <div className="space-y-1.5">
-                      <p className="paper-label text-primary">Consignor</p>
+                      <p className={cn(FIELD_LABEL, "text-primary")}>Consignor</p>
                       <MetaField label="Name" value={parsedNotes.consignor.name} />
                       <MetaField label="Phone" value={parsedNotes.consignor.phone} />
                       <MetaField label="Address" value={parsedNotes.consignor.address} />
@@ -612,7 +613,7 @@ export function OpsInvoiceDetailLive({ id }: OpsInvoiceDetailLiveProps) {
                   )}
                   {parsedNotes.consignee && (
                     <div className="space-y-1.5">
-                      <p className="paper-label text-primary">Consignee</p>
+                      <p className={cn(FIELD_LABEL, "text-primary")}>Consignee</p>
                       <MetaField label="Name" value={parsedNotes.consignee.name} />
                       <MetaField label="Phone" value={parsedNotes.consignee.phone} />
                       <MetaField label="Address" value={parsedNotes.consignee.address} />
@@ -627,25 +628,20 @@ export function OpsInvoiceDetailLive({ id }: OpsInvoiceDetailLiveProps) {
                   <MetaField label="Remarks" value={parsedNotes.remarks} />
                 </div>
               )}
-            </OpsCard>
+            </SurfaceCard>
           )}
 
-        <OpsCard ticks>
-          <div className="paper-label mb-3">Actions</div>
+        <SurfaceCard>
+          <div className={cn(FIELD_LABEL, "mb-3")}>Actions</div>
           <div className="flex flex-wrap items-center gap-2">
             {invoice.status === InvoiceStatus.DRAFT && (
-              <OpsButton
-                variant="primary"
-                size="sm"
-                onClick={handleIssue}
-                disabled={isActionLoading}
-              >
+              <Button size="sm" onClick={handleIssue} disabled={isActionLoading}>
                 Issue Invoice
-              </OpsButton>
+              </Button>
             )}
             {invoice.status === InvoiceStatus.ISSUED && (
               <>
-                <OpsButton
+                <Button
                   variant="ghost"
                   size="sm"
                   onClick={() => setRecordOpen(true)}
@@ -653,33 +649,28 @@ export function OpsInvoiceDetailLive({ id }: OpsInvoiceDetailLiveProps) {
                 >
                   <RiMoneyDollarCircleLine aria-hidden className="size-3" />
                   Record Payment
-                </OpsButton>
-                <OpsButton
-                  variant="primary"
-                  size="sm"
-                  onClick={handleMarkPaid}
-                  disabled={isActionLoading}
-                >
+                </Button>
+                <Button size="sm" onClick={handleMarkPaid} disabled={isActionLoading}>
                   Mark Fully Paid
-                </OpsButton>
+                </Button>
               </>
             )}
             {(invoice.status === InvoiceStatus.DRAFT ||
               invoice.status === InvoiceStatus.ISSUED) && (
-              <OpsButton
-                variant="danger"
+              <Button
+                variant="destructive"
                 size="sm"
                 onClick={handleCancel}
                 disabled={isActionLoading}
               >
                 Cancel
-              </OpsButton>
+              </Button>
             )}
           </div>
-        </OpsCard>
+        </SurfaceCard>
 
         <PaymentTimeline payments={payments} onDelete={handleDeletePayment} />
-      </OpsDetailFrame>
+      </DetailShell>
 
       <RecordPaymentDialog
         open={recordOpen}

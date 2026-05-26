@@ -4,6 +4,7 @@ import * as React from "react"
 import { differenceInDays, parseISO } from "date-fns"
 
 import { cn } from "@workspace/ui/lib/utils"
+import { Button } from "@workspace/ui/components/button"
 import type { Invoice } from "@workspace/types"
 
 export interface AgingBucket {
@@ -246,17 +247,18 @@ function BucketTile({
   )
 
   return onSelect ? (
-    <button
+    <Button
       type="button"
+      variant="ghost"
       onClick={onSelect}
       aria-pressed={isActive}
       aria-label={`Filter to ${bucket.label} aging bucket — ${bucket.count} invoice${
         bucket.count === 1 ? "" : "s"
       }`}
-      className="text-left focus-visible:outline-none focus-visible:tac-focus-premium"
+      className="h-auto w-full p-0 text-left font-normal hover:bg-transparent focus-visible:ring-0 focus-visible:tac-focus-premium"
     >
       {Inner}
-    </button>
+    </Button>
   ) : (
     <div>{Inner}</div>
   )

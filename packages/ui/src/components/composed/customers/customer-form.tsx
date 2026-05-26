@@ -96,6 +96,7 @@ function Input({
   ...props
 }: React.InputHTMLAttributes<HTMLInputElement>) {
   return (
+    // eslint-disable-next-line no-restricted-syntax -- Local Input wrapper with form-specific h-9 sizing; pending migration to shared @workspace/ui Input primitive
     <input
       className={cn(
         "h-9 w-full border border-border bg-background px-3 font-sans text-sm text-foreground",

@@ -2,13 +2,17 @@ export { OpsShell, type OpsShellProps } from "./ops-shell"
 // OpsSidebar removed — consolidated into the shared `<Sidebar>` at
 // `@workspace/ui/components/composed/sidebar`. Import that instead.
 export { OpsTopbar, type OpsTopbarProps } from "./ops-topbar"
-export { OpsFrame, type OpsFrameProps } from "./ops-frame"
+export { OpsFrame, WorkflowShell, type OpsFrameProps } from "./ops-frame"
 export { OpsPageHead, type OpsPageHeadProps } from "./ops-page-head"
+// OpsButton kept — still used by OpsUpcomingCalendar (dashboard widget).
 export { OpsButton, opsButtonVariants, type OpsButtonProps } from "./ops-button"
-export { OpsBadge, opsBadgeVariants, type OpsBadgeProps } from "./ops-badge"
-export { OpsCard, opsCardVariants, type OpsCardProps } from "./ops-card"
-export { OpsStatCard, type OpsStatCardProps } from "./ops-stat-card"
-export { OpsDashboard, type OpsDashboardProps } from "./ops-dashboard"
+// OpsBadge (v6 paper) retired in Phase 4-C — last consumer (OpsManagementView)
+// archived; detail routes use the shadcn Badge primitive.
+// OpsCard (v6 paper) retired in Phase 4-C — last consumers were OpsManagementView
+// (archived) and the form schema-home JSX (stripped in Phase 4-B).
+// OpsStatCard (v6 paper) retired in Phase 6 — last orphan, no consumers; v7
+// KPI surfaces use StatCard.
+// OpsDashboard (v6 paper) retired in Phase 5 — dashboard renders V7OpsDashboard.
 export { OpsGrowthAreaChart, type OpsGrowthAreaChartProps } from "./ops-growth-chart"
 export { OpsVolumeBarChart, type OpsVolumeBarChartProps } from "./ops-volume-chart"
 export {
@@ -24,48 +28,30 @@ export {
   OpsRevenueRadialChart,
   type OpsRevenueRadialChartProps,
 } from "./ops-revenue-radial-chart"
-export { OpsTabs, type OpsTabsProps } from "./ops-tabs"
-export {
-  OpsTable,
-  OpsTableHead,
-  OpsTableBody,
-  OpsTableRow,
-  OpsTableHeader,
-  OpsTableCell,
-} from "./ops-table"
-export {
-  OpsFieldInput,
-  OpsFieldSelect,
-  OpsFieldLabel,
-  type OpsFieldInputProps,
-  type OpsFieldSelectProps,
-  type OpsFieldLabelProps,
-} from "./ops-field"
-export { OpsKbd } from "./ops-kbd"
-export {
-  OpsSkeleton,
-  OpsSkeletonRow,
-  OpsSkeletonStatCard,
-} from "./ops-skeleton"
-export { OpsEmptyState, type OpsEmptyStateProps } from "./ops-empty-state"
-export { OpsErrorState, type OpsErrorStateProps } from "./ops-error-state"
+// OpsTabs (v6 paper) retired in Phase 4-C — sole consumer was OpsManagementView
+// (archived); v7 surfaces use the shadcn Tabs primitive.
+// OpsTable suite (v6 paper) retired in Phase 4-C — sole consumer was
+// OpsManagementView (archived); v7 surfaces use the shadcn Table primitive.
+// OpsField* (v6 paper) retired in Phase 4-C — consumers were OpsManagementView
+// (archived) and the form schema-home JSX (stripped in Phase 4-B).
+// OpsKbd (v6 paper) retired in Phase 6 — V7OpsSettings inlines <kbd> tokens
+// rather than the Ops* primitive.
+// OpsSkeleton/Row/StatCard (v6 paper) retired in Phase 10c — detail routes use
+// the v7 Skeleton primitive.
+// OpsEmptyState (v6 paper) retired in Phase 10c — detail routes use the v7
+// EmptyState primitive.
+// OpsErrorState (v6 paper) retired in Phase 6 — last orphan, no consumers; v7
+// surfaces use EmptyState for error rendering.
 export {
   OpsAccessFallback,
   type OpsAccessFallbackProps,
   type OpsAccessFallbackReason,
 } from "./ops-access-fallback"
-export { OpsDetailFrame, type OpsDetailFrameProps } from "./ops-detail-frame"
-export {
-  OpsTimeline,
-  type OpsTimelineProps,
-  type TimelineEvent,
-} from "./ops-timeline"
-export { OpsShipmentStepper } from "./ops-shipment-stepper"
-export {
-  OpsPanelTabs,
-  OpsPanelTabsList,
-  OpsPanelTabsTrigger,
-  OpsPanelTabsContent,
-} from "./ops-panel-tabs"
+// Phase 10c — v6 paper detail primitives retired (shipments/[id] was the last
+// consumer; detail routes now compose v7 directly):
+//   OpsDetailFrame     → DetailShell (apps/dashboard/components/ops-detail-shell)
+//   OpsTimeline        → TrackingTimeline (composed/shipments/tracking-timeline)
+//   OpsShipmentStepper → ShipmentStepper (composed/shipments/shipment-stepper)
+//   OpsPanelTabs*      → ShipmentDetailTabs (composed/shipments/shipment-detail-tabs)
 export * from "./pages"
 export * from "./forms"

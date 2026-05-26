@@ -23,12 +23,16 @@ import {
  */
 
 const statCardVariants = cva(
-  "group/stat relative flex w-full flex-col gap-3 border border-border bg-card text-card-foreground transition-[box-shadow,transform] duration-[var(--duration-fast)] ease-[var(--ease-smooth)]",
+  "group/stat relative flex w-full flex-col gap-4 border border-border bg-card text-card-foreground transition-[box-shadow,transform] duration-[var(--duration-fast)] ease-[var(--ease-smooth)]",
   {
     variants: {
       variant: {
+        // Primary KPI surface — 32px metric, 32px padding-class kept at the
+        // card-pad default for row density.
         default: "p-[var(--spacing-card-pad)] shadow-[var(--shadow-brutal-sm)]",
-        compact: "p-[var(--spacing-card-pad)] shadow-[var(--shadow-brutal-sm)]",
+        // Dense tier — tighter metric for high-count KPI strips.
+        compact: "gap-3 p-[var(--spacing-card-pad)] shadow-[var(--shadow-brutal-sm)]",
+        // Dominant tier — leads a KPI constellation with the 40px metric.
         hero: "p-[var(--spacing-card-pad-lg)] shadow-[var(--shadow-brutal)]",
       },
       interactive: {
@@ -61,6 +65,12 @@ interface StatCardProps
   label: string
   value: React.ReactNode
   trend?: TrendDescriptor
+  /**
+   * Supporting context line beneath the metric — e.g. "92% delivery rate",
+   * "All clear". Muted, ~13px. This is the "supporting context" hierarchy
+   * tier, distinct from `trend` (the operational-state signal).
+   */
+  context?: React.ReactNode
   /** Right-aligned visual slot — sparkline, donut, or icon. */
   visual?: React.ReactNode
   onClick?: () => void
@@ -78,6 +88,7 @@ function StatCard({
   label,
   value,
   trend,
+  context,
   visual,
   onClick,
   monoValue = true,
@@ -85,6 +96,25 @@ function StatCard({
   ...props
 }: StatCardProps) {
   const isInteractive = Boolean(onClick)
+
+  // Metric hierarchy by tier. Numeric KPIs use the mono data scale
+  // (.t-data* — already font-mono + tabular-nums); non-numeric values
+  // (status strings) fall back to the serif heading scale. The three tiers
+  // give a KPI row a clear primary→dense rhythm instead of a flat same-size
+  // stack: compact 20px · default 32px · hero 40px.
+  const resolvedVariant = variant ?? "default"
+  const valueClass = monoValue
+    ? resolvedVariant === "hero"
+      ? "t-data"
+      : resolvedVariant === "compact"
+        ? "t-data-sm"
+        : "t-data-md"
+    : resolvedVariant === "hero"
+      ? "t-h1"
+      : resolvedVariant === "compact"
+        ? "t-h3"
+        : "t-h2"
+
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     userOnKeyDown?.(event)
     if (!isInteractive || event.defaultPrevented) return
@@ -118,10 +148,7 @@ function StatCard({
           </p>
           <p
             data-slot="stat-card-value"
-            className={cn(
-              "t-h2 text-foreground",
-              monoValue && "font-mono tabular-nums tracking-tight"
-            )}
+            className={cn(valueClass, "text-foreground")}
           >
             {value}
           </p>
@@ -136,6 +163,14 @@ function StatCard({
           </div>
         ) : null}
       </div>
+      {context ? (
+        <p
+          data-slot="stat-card-context"
+          className="t-caption text-muted-foreground"
+        >
+          {context}
+        </p>
+      ) : null}
       {trend ? <StatCardTrend {...trend} /> : null}
     </div>
   )

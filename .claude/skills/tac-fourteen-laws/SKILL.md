@@ -178,18 +178,37 @@ pnpm add foo
 pnpm dlx some-tool
 ```
 
-### LAW 13 — Straight lines only
+### LAW 13 — Straight lines only (structural surfaces)
 
 ```
 ❌ rounded-full / rounded-2xl / rounded-lg with non-zero radius
 ❌ SVG paths with curve commands: C, S, Q, T, A
 ❌ border-radius: 50% / 9999px
 ❌ Wavy decorations / blob shapes / organic gradients
+❌ --radius-control on cards / tables / panels / dialogs / containers
 
-✅ rounded-none everywhere (var(--radius) = 0rem)
+✅ rounded-none on all structural surfaces (var(--radius) = 0rem)
 ✅ SVG paths with M / L / H / V / Z only
 ✅ Crosshairs, brackets, hazard stripes, scanlines, grids
 ```
+
+**`--radius-control` token (currently `0` — controls are SHARP).** A brief
+"round controls only" experiment (2026-05-24) softened inputs/buttons/selects/
+textareas via `rounded-[var(--radius-control)]`, but it was reverted to `0` on
+render review — fully square controls read more premium-operational. The token
+and the `rounded-[var(--radius-control)]` references on the control primitives
+remain as a single dial, but the value is `0`, so **nothing rounds**.
+
+```tsx
+// Controls reference the token, but it resolves to 0 (sharp):
+<input className="rounded-[var(--radius-control)] …" />   // → square
+
+// ❌ NEVER put a radius on a structural surface regardless:
+<SurfaceCard className="rounded-[var(--radius-control)]" />
+```
+
+If control softening is ever revisited, change ONLY the `--radius-control`
+token in `globals.css`. Structural geometry stays brutally sharp always.
 
 ### LAW 14 — Wrap shadcn primitives, never rebuild
 

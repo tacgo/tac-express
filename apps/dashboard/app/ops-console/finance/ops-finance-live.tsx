@@ -4,13 +4,11 @@ import * as React from "react"
 
 import { useInvoices } from "@workspace/services/hooks/use-invoices"
 import type { InvoiceSummary } from "@workspace/types"
-import { useDesignVersion } from "@workspace/ui/hooks/use-design-version"
 import {
-  OpsFinanceView,
+  V7OpsFinance,
   type InvoiceRow,
   type AgingBucket,
-} from "@workspace/ui/components/composed/ops-console/pages"
-import { V7OpsFinance } from "@workspace/ui/components/composed/finance/v7-ops-finance"
+} from "@workspace/ui/components/composed/finance/v7-ops-finance"
 
 const TONE_BY_STATUS: Record<string, InvoiceRow["tone"]> = {
   DRAFT: "warn",
@@ -98,7 +96,6 @@ function deriveBuckets(invoices: InvoiceSummary[]): {
 
 export function OpsFinanceLive() {
   const query = useInvoices({})
-  const { version } = useDesignVersion()
   // Memoise the data array so the useMemo for buckets has a stable reference
   // — otherwise `?? []` allocates a fresh empty array on every render and
   // the bucket derivation recomputes.
@@ -106,22 +103,9 @@ export function OpsFinanceLive() {
   const { outstanding, buckets } = React.useMemo(() => deriveBuckets(data), [data])
   const rows = React.useMemo(() => data.map(toRow), [data])
 
-  if (version === "v7") {
-    return (
-      <V7OpsFinance
-        outstanding={fmtINR(outstanding)}
-        totalInvoices={data.length}
-        buckets={buckets}
-        rows={rows}
-        isLoading={query.isPending}
-        isError={query.isError}
-        onRetry={() => void query.refetch()}
-      />
-    )
-  }
-
+  // Canonical v7 — v6 paper view retired in Phase 5 composition unification.
   return (
-    <OpsFinanceView
+    <V7OpsFinance
       outstanding={fmtINR(outstanding)}
       totalInvoices={data.length}
       buckets={buckets}

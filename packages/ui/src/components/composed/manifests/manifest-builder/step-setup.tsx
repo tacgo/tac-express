@@ -132,6 +132,7 @@ export function StepSetup({
 
       {/* Route */}
       <section className="grid gap-3 sm:grid-cols-2">
+        <SectionEyebrow className="sm:col-span-2">Route</SectionEyebrow>
         <div className="grid gap-1.5">
           <Label htmlFor="from-hub">From Hub</Label>
           <Combobox
@@ -183,13 +184,16 @@ export function StepSetup({
       {/* Mode-specific block */}
       {value.type === "AIR" ? (
         <section className="grid gap-3 sm:grid-cols-2">
+          <SectionEyebrow className="sm:col-span-2">Flight details</SectionEyebrow>
           <div className="grid gap-1.5">
             <Label htmlFor="airline">Airline Code (3-char)</Label>
+            {/* Semantic width — a 3-char code field should look like one. */}
             <Input
               id="airline"
               value={value.airlineCode ?? ""}
               maxLength={3}
               placeholder="6E"
+              className="max-w-field-code font-mono uppercase tabular-nums"
               onChange={(e) =>
                 update("airlineCode", e.target.value.toUpperCase())
               }
@@ -201,6 +205,7 @@ export function StepSetup({
               id="flight"
               value={value.flightNumber ?? ""}
               placeholder="6E-7042"
+              className="max-w-field-sm font-mono uppercase tabular-nums"
               onChange={(e) =>
                 update("flightNumber", e.target.value.toUpperCase())
               }
@@ -236,12 +241,14 @@ export function StepSetup({
         </section>
       ) : (
         <section className="grid gap-3 sm:grid-cols-2">
+          <SectionEyebrow className="sm:col-span-2">Vehicle &amp; driver</SectionEyebrow>
           <div className="grid gap-1.5">
             <Label htmlFor="vehicle">Vehicle Number</Label>
             <Input
               id="vehicle"
               value={value.vehicleNumber ?? ""}
               placeholder="MN-04-AB-1234"
+              className="max-w-field-md font-mono uppercase tabular-nums"
               onChange={(e) =>
                 update("vehicleNumber", e.target.value.toUpperCase())
               }
@@ -260,8 +267,10 @@ export function StepSetup({
             <Input
               id="driver-phone"
               type="tel"
+              inputMode="numeric"
               value={value.driverPhone ?? ""}
               maxLength={10}
+              className="max-w-field-sm font-mono tabular-nums"
               onChange={(e) =>
                 update("driverPhone", e.target.value.replace(/\D/g, ""))
               }
@@ -334,5 +343,26 @@ export function StepSetup({
         />
       </section>
     </div>
+  )
+}
+
+/** Section group heading — mono eyebrow that chunks the form into scannable
+ *  operational blocks (Route / Flight details / Vehicle & driver / …). */
+function SectionEyebrow({
+  children,
+  className,
+}: {
+  children: React.ReactNode
+  className?: string
+}) {
+  return (
+    <p
+      className={cn(
+        "font-mono text-ui-10 uppercase tracking-widest text-muted-foreground",
+        className
+      )}
+    >
+      {children}
+    </p>
   )
 }

@@ -17,6 +17,7 @@ import {
   RiMenuLine,
   RiUserLine,
 } from "@workspace/ui/icons"
+import { Button } from "@workspace/ui/components/button"
 
 import {
   NAV_GROUPS,
@@ -158,15 +159,16 @@ function SidebarGroup({
   return (
     <div data-slot="sidebar-group">
       {!collapsed && (
-        <button
+        <Button
           type="button"
+          variant="ghost"
           onClick={() => setOpen((o) => !o)}
           aria-expanded={open}
           className={cn(
-            "flex w-full items-center justify-between px-[length:var(--spacing-gutter-md)] py-1 mt-2",
+            "flex h-auto w-full items-center justify-between px-[length:var(--spacing-gutter-md)] py-1 mt-2",
             "font-mono text-3xs font-medium tracking-eyebrow uppercase",
-            "text-sidebar-foreground/65 hover:text-sidebar-foreground",
-            "focus-visible:outline-none focus-visible:tac-focus-premium",
+            "text-sidebar-foreground/65 hover:text-sidebar-foreground hover:bg-transparent",
+            "focus-visible:tac-focus-premium",
             "transition-colors duration-fast ease-linear",
           )}
         >
@@ -181,7 +183,7 @@ function SidebarGroup({
               open ? "rotate-0" : "-rotate-90",
             )}
           />
-        </button>
+        </Button>
       )}
       {open &&
         items.map((item) => (
@@ -264,7 +266,7 @@ export function Sidebar({ collapsible = false }: SidebarProps = {}) {
               >
                 <div className="font-mono font-extrabold text-base leading-none tracking-tight flex items-baseline">
                   <span className="text-sidebar-foreground">TAC</span>
-                  <span className="ml-1.5 text-accent-warning">
+                  <span className="ml-1.5 text-primary">
                     EXPRESS →
                   </span>
                 </div>
@@ -274,35 +276,37 @@ export function Sidebar({ collapsible = false }: SidebarProps = {}) {
               </Link>
             </div>
             {collapsible && (
-              <button
+              <Button
                 type="button"
+                variant="ghost"
+                size="icon"
                 onClick={() => setCollapsed(true)}
                 aria-label="Collapse sidebar"
                 className={cn(
-                  "size-[22px] grid place-items-center shrink-0",
+                  "size-[22px] shrink-0",
                   "border border-sidebar-border bg-sidebar text-sidebar-foreground/70",
                   "hover:bg-sidebar-accent hover:text-sidebar-foreground",
-                  "focus-visible:outline-none focus-visible:tac-focus-premium",
-                  "transition-colors duration-fast ease-linear",
+                  "focus-visible:tac-focus-premium",
                 )}
               >
                 <RiArrowRightSLine aria-hidden className="size-3" />
-              </button>
+              </Button>
             )}
           </>
         ) : (
-          <button
+          <Button
             type="button"
+            variant="ghost"
             onClick={() => setCollapsed(false)}
             aria-label="Expand sidebar"
             className={cn(
-              "mx-auto size-8 grid place-items-center",
+              "mx-auto size-8",
               "bg-sidebar-primary text-sidebar-primary-foreground border border-sidebar-border",
-              "hover:opacity-90 focus-visible:outline-none focus-visible:tac-focus-premium",
+              "hover:opacity-90 hover:bg-sidebar-primary focus-visible:tac-focus-premium",
             )}
           >
             <span className="font-mono font-extrabold text-xs">TAC</span>
-          </button>
+          </Button>
         )}
       </div>
 
@@ -365,17 +369,18 @@ export function Sidebar({ collapsible = false }: SidebarProps = {}) {
               {rbac.role?.replace(/_/g, " ") ?? "guest"}
             </div>
           </div>
-          <button
+          <Button
             type="button"
+            variant="ghost"
+            size="icon"
             aria-label="User menu"
             className={cn(
               "text-sidebar-foreground/70 hover:text-sidebar-foreground",
-              "focus-visible:outline-none focus-visible:tac-focus-premium",
-              "transition-colors duration-fast ease-linear",
+              "focus-visible:tac-focus-premium",
             )}
           >
             <RiMenuLine aria-hidden className="size-4" />
-          </button>
+          </Button>
         </div>
       )}
     </aside>

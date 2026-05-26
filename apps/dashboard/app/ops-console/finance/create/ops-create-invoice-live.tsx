@@ -18,8 +18,8 @@ import {
   type InvoiceWizardState,
   type ComboboxOption,
 } from "@workspace/ui/components/composed/finance/invoice-wizard"
-import { OpsPageHead } from "@workspace/ui/components/composed/ops-console/ops-page-head"
-import { OpsButton } from "@workspace/ui/components/composed/ops-console/ops-button"
+import { PageHeader } from "@workspace/ui/components/composed/page-header"
+import { Button } from "@workspace/ui/components/button"
 import { useFormAutosave } from "@workspace/ui/hooks/use-form-autosave"
 
 /**
@@ -289,19 +289,20 @@ export function OpsCreateInvoiceLive() {
 
   return (
     <>
-      <OpsPageHead
-        eyebrow="Business"
+      <PageHeader
+        overline="Business"
         title="New Invoice"
-        sub="Generate an invoice for an AWB with automatic rate-card lookup. Draft autosaves every 5 seconds."
+        description="Generate an invoice for an AWB with automatic rate-card lookup. Draft autosaves every 5 seconds."
         actions={
           autosave.savedAt ? (
-            <div className="flex items-center gap-2 paper-label text-muted-foreground">
-              <span>
+            <div className="flex items-center gap-2">
+              <span className="t-mono-sm text-muted-foreground">
                 Draft saved · {format(new Date(autosave.savedAt), "HH:mm:ss")}
               </span>
-              <OpsButton
+              <Button
                 type="button"
                 variant="ghost"
+                size="sm"
                 onClick={() => {
                   if (window.confirm("Discard this draft?")) {
                     autosave.clearDraft()
@@ -311,7 +312,7 @@ export function OpsCreateInvoiceLive() {
                 }}
               >
                 Discard
-              </OpsButton>
+              </Button>
             </div>
           ) : undefined
         }

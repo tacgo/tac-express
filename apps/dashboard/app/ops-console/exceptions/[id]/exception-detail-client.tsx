@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import { useException, useResolveException } from "@workspace/services/hooks/use-exceptions"
 import { ExceptionDetailCard } from "@workspace/ui/components/composed/exceptions/exception-detail-card"
 import { ExceptionResolveForm } from "@workspace/ui/components/composed/exceptions/exception-resolve-form"
+import { Button } from "@workspace/ui/components/button"
 import { RiArrowLeftLine } from "@workspace/ui/icons"
 import { useNotificationStore } from "@workspace/services/stores/notification.store"
 
@@ -41,13 +42,14 @@ export function ExceptionDetailClient({ exceptionId }: ExceptionDetailClientProp
 
   return (
     <div className="max-w-4xl mx-auto space-y-5">
-      <button
+      <Button
+        variant="ghost"
         onClick={() => router.back()}
-        className="flex items-center gap-1.5 font-mono text-xs uppercase tracking-wider text-muted-foreground hover:text-foreground transition-colors"
+        className="h-auto px-0 py-0 font-mono text-xs uppercase tracking-wider text-muted-foreground hover:bg-transparent hover:text-foreground"
       >
         <RiArrowLeftLine className="h-3.5 w-3.5" />
         Exceptions
-      </button>
+      </Button>
       <ExceptionDetailCard exception={exception} />
       <ExceptionResolveForm
         onSubmit={handleResolve}
