@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-16T00:35:42.026Z",
+  "generatedAt": "2026-05-26T05:26:01.796Z",
   "paths": [
     "packages/ui/src/components/composed/dashboard/anomaly-detector-widget.tsx",
     "packages/ui/src/components/composed/dashboard/date-range-selector.tsx",
@@ -25,8 +25,6 @@
     "packages/ui/src/components/composed/notifications/channel-legend-card.tsx",
     "packages/ui/src/components/composed/notifications/notification-inbox.tsx",
     "packages/ui/src/components/composed/notifications/system-status-card.tsx",
-    "packages/ui/src/components/composed/ops-console/ops-list-state.tsx",
-    "packages/ui/src/components/composed/ops-console/pages/ops-management-view.tsx",
     "packages/ui/src/components/composed/query-provider.tsx",
     "packages/ui/src/components/composed/saved-view-selector.tsx",
     "packages/ui/src/components/composed/scanning/pod-capture.tsx",
@@ -35,9 +33,6 @@
     "packages/ui/src/components/composed/settings/profile-form.tsx",
     "packages/ui/src/components/composed/settings/shortcuts-card.tsx",
     "packages/ui/src/components/composed/settings/system-info-card.tsx",
-    "packages/ui/src/components/composed/shipments/shipment-columns.tsx",
-    "packages/ui/src/components/composed/shipments/shipment-detail-tabs.tsx",
-    "packages/ui/src/components/composed/shipments/tracking-timeline.tsx",
-    "packages/ui/src/components/composed/wasteland-landing.tsx"
+    "packages/ui/src/components/composed/shipments/shipment-columns.tsx"
   ]
 }
