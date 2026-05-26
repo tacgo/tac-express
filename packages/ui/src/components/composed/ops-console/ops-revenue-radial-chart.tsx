@@ -52,10 +52,10 @@ function OpsRevenueRadialChart({ className }: OpsRevenueRadialChartProps) {
     <div className={cn("flex flex-col", className)}>
       <div className="flex items-center justify-between">
         <h3 className="t-h4 text-foreground">Revenue Trend</h3>
-        <span className="paper-label">Jan — Jun</span>
+        <span className="font-mono text-2xs uppercase tracking-widest text-muted-foreground">Jan — Jun</span>
       </div>
 
-      <div className="paper-label mt-2.5">Revenue by service class</div>
+      <div className="font-mono text-2xs uppercase tracking-widest text-muted-foreground mt-2.5">Revenue by service class</div>
 
       <ChartContainer
         config={chartConfig}
@@ -75,7 +75,7 @@ function OpsRevenueRadialChart({ className }: OpsRevenueRadialChartProps) {
           Trending up 5.2% this month
           <RiArrowUpLine aria-hidden className="size-3.5 text-accent-success" />
         </div>
-        <div className="paper-label">Showing service-class revenue mix — last 6 months</div>
+        <div className="font-mono text-2xs uppercase tracking-widest text-muted-foreground">Showing service-class revenue mix — last 6 months</div>
       </div>
     </div>
   )

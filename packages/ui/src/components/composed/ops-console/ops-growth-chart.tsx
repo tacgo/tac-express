@@ -20,9 +20,9 @@ import {
 /**
  * OpsGrowthAreaChart — stacked area chart for the Paper Ops "Growth" panel.
  * Shares the panel anatomy with OpsVolumeBarChart so the two cards read as
- * one design: title + 7D/30D/90D toggle on top, paper-label subtitle, 200px
- * chart, mono legend at bottom. Two-color palette: --paper-violet (primary
- * brand) + --paper-info (secondary). Mock 90-day dataset stays inline until
+ * one design: title + 7D/30D/90D toggle on top, mono-label subtitle, 200px
+ * chart, mono legend at bottom. Two-color palette: var(--primary) (brand) +
+ * var(--accent-info) (secondary). Mock 90-day dataset stays inline until
  * a real time-series hook lands in `@workspace/services`.
  */
 
@@ -179,8 +179,8 @@ function OpsGrowthAreaChart({ className }: OpsGrowthAreaChartProps) {
         </ToggleGroup>
       </div>
 
-      {/* Row 2: paper-label subtitle (matches OpsVolumeBarChart) */}
-      <div className="paper-label mt-2.5">
+      {/* Row 2: mono-label subtitle (matches OpsVolumeBarChart) */}
+      <div className="font-mono text-2xs uppercase tracking-widest text-muted-foreground mt-2.5">
         Delivery activity — delivered vs. exceptions
       </div>
 

@@ -24,7 +24,7 @@ interface OpsUpcomingCalendarProps {
 
 /**
  * OpsUpcomingCalendar — Paper Ops Console enhancement of the "Upcoming
- * Operations" panel. Shares the title + paper-label subtitle anatomy with
+ * Operations" panel. Shares the title + mono-label subtitle anatomy with
  * OpsGrowthAreaChart and OpsVolumeBarChart, then replaces the empty-state
  * text with a Calendar that highlights every day with a scheduled
  * departure. The compact list of next-N ops sits below the calendar with
@@ -63,8 +63,8 @@ function OpsUpcomingCalendar({
         </OpsButton>
       </div>
 
-      {/* Row 2: paper-label subtitle (matches Growth / Volume panels) */}
-      <div className="paper-label mt-2.5">
+      {/* Row 2: mono-label subtitle (matches Growth / Volume panels) */}
+      <div className="font-mono text-2xs uppercase tracking-widest text-muted-foreground mt-2.5">
         Scheduled manifests by departure date
       </div>
 
@@ -92,7 +92,7 @@ function OpsUpcomingCalendar({
           slot in the other two panels. Each item: paper-id (manifest) +
           eta + label. */}
       {upcoming.length === 0 ? (
-        <div className="paper-label mt-3">No scheduled departures</div>
+        <div className="font-mono text-2xs uppercase tracking-widest text-muted-foreground mt-3">No scheduled departures</div>
       ) : (
         <ul className="mt-3 divide-y divide-border border-t border-border">
           {upcoming.slice(0, 3).map((op) => (
@@ -101,12 +101,12 @@ function OpsUpcomingCalendar({
               className="py-2 flex items-center justify-between"
             >
               <div>
-                <div className="paper-label">{op.eta}</div>
+                <div className="font-mono text-2xs uppercase tracking-widest text-muted-foreground">{op.eta}</div>
                 <div className="font-sans font-semibold text-ui-12 mt-0.5 text-foreground">
                   {op.label}
                 </div>
               </div>
-              <span className="paper-id text-ui-11">{op.id.slice(0, 6)}</span>
+              <span className="font-mono font-semibold tracking-wide text-primary text-ui-11">{op.id.slice(0, 6)}</span>
             </li>
           ))}
         </ul>

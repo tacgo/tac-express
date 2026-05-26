@@ -32,13 +32,11 @@ function OpsFrame({ children, className, size = "content", ...props }: OpsFrameP
       <div
         data-slot="ops-frame"
         className={cn(
-          "paper-frame-ticks relative bg-background border border-border overflow-hidden",
+          "relative bg-background border border-border overflow-hidden",
           className,
         )}
         {...props}
       >
-        <span aria-hidden className="paper-tick-tl" />
-        <span aria-hidden className="paper-tick-br" />
         {/* Tighter gutters on mobile so the bordered frame doesn't eat a phone's
             narrow width; full editorial padding from sm up. */}
         <div className="px-4 pt-5 pb-6 sm:px-8 sm:pt-7 sm:pb-9">{children}</div>
