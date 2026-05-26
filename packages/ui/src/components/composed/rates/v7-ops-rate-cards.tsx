@@ -39,6 +39,7 @@ function V7OpsRateCards({ rows, className }: V7OpsRateCardsProps) {
       {
         accessorKey: "route",
         header: "Route",
+        meta: { flex: true },
         cell: ({ getValue }) => (
           <span className="font-mono tabular-nums text-sm text-foreground">
             {getValue<string>()}
@@ -48,6 +49,7 @@ function V7OpsRateCards({ rows, className }: V7OpsRateCardsProps) {
       {
         accessorKey: "service",
         header: "Service",
+        size: 120,
         cell: ({ getValue }) => (
           <span className="t-caption uppercase tracking-wider text-foreground">
             {getValue<string>()}
@@ -57,6 +59,7 @@ function V7OpsRateCards({ rows, className }: V7OpsRateCardsProps) {
       {
         accessorKey: "slab",
         header: "Weight Slab (kg)",
+        size: 140,
         cell: ({ getValue }) => (
           <span className="font-mono tabular-nums text-sm text-muted-foreground">
             {getValue<string>()}
@@ -66,6 +69,7 @@ function V7OpsRateCards({ rows, className }: V7OpsRateCardsProps) {
       {
         accessorKey: "rate",
         header: "Rate / kg",
+        size: 100,
         cell: ({ getValue }) => (
           <span className="font-mono tabular-nums text-sm text-right block text-foreground">
             {getValue<string>()}
@@ -75,6 +79,7 @@ function V7OpsRateCards({ rows, className }: V7OpsRateCardsProps) {
       {
         accessorKey: "docket",
         header: "Docket",
+        size: 100,
         cell: ({ getValue }) => (
           <span className="font-mono tabular-nums text-sm text-right block text-muted-foreground">
             {getValue<string>()}
@@ -84,6 +89,7 @@ function V7OpsRateCards({ rows, className }: V7OpsRateCardsProps) {
       {
         accessorKey: "fuelPct",
         header: "Fuel %",
+        size: 90,
         cell: ({ getValue }) => (
           <span className="font-mono tabular-nums text-sm text-right block text-muted-foreground">
             {getValue<string>()}
@@ -93,6 +99,7 @@ function V7OpsRateCards({ rows, className }: V7OpsRateCardsProps) {
       {
         accessorKey: "handling",
         header: "Handling",
+        size: 100,
         cell: ({ getValue }) => (
           <span className="font-mono tabular-nums text-sm text-right block text-muted-foreground">
             {getValue<string>()}

@@ -52,6 +52,7 @@ function V7OpsManifests({
       {
         accessorKey: "id",
         header: "Manifest",
+        size: 160,
         cell: ({ getValue }) => (
           <span className="font-mono tabular-nums text-sm text-foreground">
             {getValue<string>()}
@@ -61,6 +62,7 @@ function V7OpsManifests({
       {
         accessorKey: "from",
         header: "Route",
+        meta: { flex: true },
         cell: ({ row }) => (
           <span className="font-mono tabular-nums text-sm text-foreground">
             {row.original.from} → {row.original.to}
@@ -70,6 +72,7 @@ function V7OpsManifests({
       {
         accessorKey: "shipments",
         header: "Shipments",
+        size: 100,
         cell: ({ getValue }) => (
           <span className="font-mono tabular-nums text-sm text-right block">
             {getValue<number>()}
@@ -79,6 +82,7 @@ function V7OpsManifests({
       {
         accessorKey: "weight",
         header: "Weight (kg)",
+        size: 110,
         cell: ({ getValue }) => (
           <span className="font-mono tabular-nums text-sm text-right block">
             {getValue<string>()}
@@ -88,6 +92,7 @@ function V7OpsManifests({
       {
         accessorKey: "date",
         header: "Date",
+        size: 120,
         cell: ({ getValue }) => (
           <span className="font-mono tabular-nums text-sm text-muted-foreground">
             {getValue<string>()}
@@ -97,6 +102,7 @@ function V7OpsManifests({
       {
         accessorKey: "status",
         header: "Status",
+        size: 110,
         cell: ({ getValue }) => (
           <span className="t-caption uppercase tracking-wider text-foreground">
             {getValue<string>()}

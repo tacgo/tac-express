@@ -95,6 +95,7 @@ function V7OpsShipments({
       {
         accessorKey: "id",
         header: "AWB",
+        size: 160,
         cell: ({ getValue }) => (
           <span className="font-mono tabular-nums text-sm text-foreground">
             {getValue<string>()}
@@ -104,6 +105,7 @@ function V7OpsShipments({
       {
         accessorKey: "customer",
         header: "Customer",
+        meta: { flex: true },
         cell: ({ row }) => (
           <div className="flex flex-col min-w-0">
             <span className="text-sm font-medium text-foreground truncate">
@@ -118,6 +120,7 @@ function V7OpsShipments({
       {
         accessorKey: "route",
         header: "Route",
+        size: 120,
         cell: ({ getValue }) => (
           <span className="font-mono tabular-nums text-sm text-foreground">
             {getValue<string>()}
@@ -127,6 +130,7 @@ function V7OpsShipments({
       {
         accessorKey: "service",
         header: "Service",
+        size: 100,
         filterFn: (row, id, value: string[]) =>
           value.includes(row.getValue<string>(id)),
         cell: ({ getValue }) => {
@@ -149,6 +153,7 @@ function V7OpsShipments({
       {
         accessorKey: "weight",
         header: "Weight",
+        size: 90,
         cell: ({ getValue }) => (
           <span className="font-mono tabular-nums text-sm text-right block">
             {getValue<string>()}
@@ -158,6 +163,7 @@ function V7OpsShipments({
       {
         accessorKey: "status",
         header: "Status",
+        size: 120,
         filterFn: (row, id, value: string[]) =>
           value.includes(row.getValue<string>(id)),
         cell: ({ getValue }) => (
@@ -167,6 +173,7 @@ function V7OpsShipments({
       {
         accessorKey: "age",
         header: "Age",
+        size: 72,
         cell: ({ getValue }) => (
           <span className="t-caption text-muted-foreground">
             {getValue<string>()}
