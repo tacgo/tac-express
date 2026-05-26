@@ -57,6 +57,7 @@ function V7OpsCustomers({ rows, className }: V7OpsCustomersProps) {
       {
         accessorKey: "name",
         header: "Name",
+        meta: { flex: true },
         cell: ({ row }) => (
           <div className="flex flex-col">
             <span className="t-data text-foreground">{row.original.name}</span>
@@ -71,6 +72,7 @@ function V7OpsCustomers({ rows, className }: V7OpsCustomersProps) {
       {
         accessorKey: "phone",
         header: "Phone",
+        size: 130,
         cell: ({ getValue }) => (
           <span className="font-mono tabular-nums text-sm">
             {getValue<string>()}
@@ -80,6 +82,7 @@ function V7OpsCustomers({ rows, className }: V7OpsCustomersProps) {
       {
         accessorKey: "location",
         header: "Location",
+        size: 140,
         cell: ({ row }) => (
           <div className="flex flex-col">
             <span className="t-data text-foreground">{row.original.location}</span>
@@ -92,6 +95,7 @@ function V7OpsCustomers({ rows, className }: V7OpsCustomersProps) {
       {
         accessorKey: "gstin",
         header: "GSTIN",
+        size: 150,
         cell: ({ getValue }) => (
           <span className="font-mono tabular-nums text-sm text-muted-foreground">
             {getValue<string | undefined>() ?? "—"}
@@ -101,6 +105,7 @@ function V7OpsCustomers({ rows, className }: V7OpsCustomersProps) {
       {
         accessorKey: "shipments",
         header: "Shipments",
+        size: 100,
         cell: ({ getValue }) => (
           <span className="font-mono tabular-nums text-sm text-right block">
             {getValue<number>()}
@@ -110,6 +115,7 @@ function V7OpsCustomers({ rows, className }: V7OpsCustomersProps) {
       {
         accessorKey: "revenue",
         header: "Revenue",
+        size: 110,
         cell: ({ getValue }) => (
           <span className="font-mono tabular-nums text-sm text-right block">
             {getValue<string>()}
@@ -119,6 +125,7 @@ function V7OpsCustomers({ rows, className }: V7OpsCustomersProps) {
       {
         accessorKey: "outstanding",
         header: "Outstanding",
+        size: 120,
         cell: ({ getValue }) => (
           <span className="font-mono tabular-nums text-sm text-right block">
             {getValue<string>()}

@@ -204,8 +204,14 @@ function DataTable<TData, TValue>({
     return table
       .getVisibleLeafColumns()
       .map((c) => {
-        const size = c.columnDef.size
-        return typeof size === "number" ? `${size}px` : "minmax(min-content, 1fr)"
+        // TanStack merges a default size:150 into every columnDef, so we can't
+        // distinguish "unsized" from "explicitly sized 150" via size alone.
+        // `meta.flex` is the explicit opt-in for a column that should absorb
+        // surplus space via 1fr — the consumer sets this, we honour it here.
+        if ((c.columnDef.meta as { flex?: boolean } | undefined)?.flex) {
+          return "minmax(min-content, 1fr)"
+        }
+        return `${c.columnDef.size}px`
       })
       .join(" ")
     // eslint-disable-next-line react-hooks/exhaustive-deps
