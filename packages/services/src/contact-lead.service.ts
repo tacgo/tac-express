@@ -70,6 +70,9 @@ import type { TrackedWhatsAppService } from "./whatsapp-tracked.service"
  *  ~1024 chars per Meta's docs; 200 keeps the notification scannable. */
 const MESSAGE_EXCERPT_CHARS = 200
 
+/** Dashboard roles that receive in-app notifications for new leads. */
+const MANAGER_ROLES = ["SUPER_ADMIN", "ADMIN", "MANAGER"] as const
+
 /** Reason-label lookup. The form posts the enum key; the notification
  *  shows a human label. Mirrors REASONS in contact-form.tsx. */
 const REASON_LABELS: Record<string, string> = {
@@ -201,6 +204,39 @@ export function createContactLeadService(
         notificationStatus = "failed"
         const message = err instanceof Error ? err.message : String(err)
         await markNotificationFailed(db, leadId, `unexpected: ${message}`)
+      }
+
+      // ── Step 3: In-app notification broadcast (best-effort) ────────────
+      // Fan out one in_app row to every active MANAGER+ user so the
+      // support inbox has a bell signal. Never throws — a failure here
+      // must not change the ok:true contract (same posture as Step 2).
+      try {
+        const { data: managers } = await db
+          .from("profiles")
+          .select("id")
+          .in("role", MANAGER_ROLES)
+          .eq("is_active", true)
+        const ids = (managers ?? []).map((m) => (m as { id: string }).id)
+        if (ids.length > 0) {
+          const companySnippet =
+            company && company.length > 0 ? ` (${company})` : ""
+          await db.from("notifications").insert(
+            ids.map((userId) => ({
+              user_id: userId,
+              channel: "in_app",
+              title: "New contact lead",
+              body: `${input.name}${companySnippet} — ${REASON_LABELS[input.reason] ?? input.reason}`,
+              link: "/ops-console/support",
+              entity_type: "contact_lead",
+              entity_id: leadId,
+            })),
+          )
+        }
+      } catch (err) {
+        const message = err instanceof Error ? err.message : String(err)
+        console.error(
+          `[contact-lead] in-app notify failed for lead=${leadId}: ${message}`,
+        )
       }
 
       return { ok: true, id: leadId, notificationStatus }
