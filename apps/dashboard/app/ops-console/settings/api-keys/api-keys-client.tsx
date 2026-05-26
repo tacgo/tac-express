@@ -58,6 +58,7 @@ export function ApiKeysClient() {
           </label>
           <label className="space-y-1">
             <span className="block font-mono text-2xs uppercase tracking-wider text-muted-foreground">Scope</span>
+            {/* eslint-disable-next-line no-restricted-syntax -- Native select for API key scope; direct state binding without RHF */}
             <select
               value={scope}
               onChange={(e) => setScope(e.target.value as ApiKeyScope)}

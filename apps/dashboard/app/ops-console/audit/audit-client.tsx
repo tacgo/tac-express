@@ -5,6 +5,7 @@ import * as React from "react"
 import { useAuditLogs } from "@workspace/services/hooks/use-audit-logs"
 import type { AuditLog } from "@workspace/types"
 import { PageHeader } from "@workspace/ui/components/composed/page-header"
+import { Button } from "@workspace/ui/components/button"
 import { Input } from "@workspace/ui/components/primitives/input"
 import { SkeletonTable } from "@workspace/ui/components/primitives/skeleton"
 import { EmptyState } from "@workspace/ui/components/primitives/empty-state"
@@ -139,13 +140,13 @@ export function AuditClient() {
             const isOpen = expandedId === log.id
             return (
               <React.Fragment key={log.id}>
-                <button
-                  type="button"
+                <Button
+                  variant="ghost"
                   onClick={() =>
                     setExpandedId((prev) => (prev === log.id ? null : log.id))
                   }
                   aria-expanded={isOpen}
-                  className="grid w-full grid-cols-[150px_140px_140px_1fr_140px_32px] items-center border-b border-border px-3 py-2 text-left text-sm transition-colors last:border-0 hover:bg-muted/30"
+                  className="grid h-auto w-full grid-cols-[150px_140px_140px_1fr_140px_32px] items-center border-b border-border px-3 py-2 text-left text-sm font-normal transition-colors last:border-0 hover:bg-muted/30 hover:text-foreground rounded-none"
                 >
                   <span className="font-mono text-ui-11 text-muted-foreground">
                     {new Date(log.createdAt).toLocaleString()}
@@ -168,7 +169,7 @@ export function AuditClient() {
                   >
                     <RiArrowDownSLine className="size-3.5" />
                   </span>
-                </button>
+                </Button>
                 {isOpen && (
                   <div className="grid gap-3 border-b border-border bg-muted/10 px-4 py-4 last:border-0 md:grid-cols-[1fr_2fr]">
                     <div className="space-y-2 font-mono text-ui-11">
@@ -218,6 +219,7 @@ function Filter({ label, options, value, onChange }: FilterProps) {
       <span className="font-mono uppercase tracking-wider text-muted-foreground">
         {label}
       </span>
+      {/* eslint-disable-next-line no-restricted-syntax -- Native select for audit filter; simple direct binding, Radix Select adds unnecessary Popover for this compact control */}
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}

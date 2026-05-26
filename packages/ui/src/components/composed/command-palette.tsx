@@ -171,6 +171,7 @@ function CommandPalette({ open: controlledOpen, onOpenChange }: CommandPalettePr
 
           <div className="flex items-center gap-2 border-b border-border px-4 py-3">
             <RiSearchLine className="h-4 w-4 text-muted-foreground shrink-0" aria-hidden="true" />
+            {/* eslint-disable-next-line no-restricted-syntax -- Custom command palette search: direct imperative ref focus + keyboard navigation require native input control */}
             <input
               ref={inputRef}
               value={query}

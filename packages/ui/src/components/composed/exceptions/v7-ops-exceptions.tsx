@@ -49,6 +49,7 @@ function V7OpsExceptions({ rows, className }: V7OpsExceptionsProps) {
           <EmptyExceptions />
         ) : (
           <div className="bg-surface-elevated tac-fui-border overflow-x-auto shadow-sm">
+            {/* eslint-disable-next-line no-restricted-syntax -- Display-only table with no interactive sorting or filtering; DataTable primitive is overkill for this read-only tabular output */}
             <table className="w-full border-collapse t-mono">
               <thead className="border-b border-border bg-muted">
                 <tr>

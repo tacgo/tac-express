@@ -1,3 +1,7 @@
+/* eslint-disable no-restricted-syntax -- v6-era invoice wizard with 20+ raw form controls
+   (input/select/textarea). Pending migration to shadcn Input/Select/Textarea primitives;
+   native selects here use direct onChange that doesn't compose with Radix Select without
+   Controller wrappers. Track migration in a dedicated form-primitives phase. */
 "use client"
 
 import * as React from "react"

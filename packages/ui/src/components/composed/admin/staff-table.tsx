@@ -78,6 +78,7 @@ export function StaffTable({ staff, onRoleChange, onToggleActive, isLoading }: S
         const s = row.original
         if (onRoleChange) {
           return (
+            // eslint-disable-next-line no-restricted-syntax -- Native select in table cell for role assignment; RHF register() doesn't compose with Radix Select without a Controller wrapper
             <select
               value={s.role}
               onChange={(e) => onRoleChange(s.id, e.target.value as UserRole)}

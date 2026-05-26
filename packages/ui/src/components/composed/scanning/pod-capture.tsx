@@ -114,6 +114,7 @@ export function PodCapture({
         </div>
         <div className="grid gap-1.5">
           <Label htmlFor="pod-relation">Relation</Label>
+          {/* eslint-disable-next-line no-restricted-syntax -- Native select for POD relation field; used with direct state binding, not RHF */}
           <select
             id="pod-relation"
             value={recipientRelation}

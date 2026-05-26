@@ -24,6 +24,7 @@ export function HubContextSwitcher({ className }: { className?: string }) {
       <div className="pointer-events-none absolute left-2 flex items-center">
         <RiBuilding4Line className="h-3.5 w-3.5 text-primary" aria-hidden="true" />
       </div>
+      {/* eslint-disable-next-line no-restricted-syntax -- Native select preserves OS accessibility contract for hub switching; Radix Select adds unnecessary Popover overhead for this compact ops-bar control */}
       <select
         id="hub-switcher"
         value={activeHubCode ?? ""}

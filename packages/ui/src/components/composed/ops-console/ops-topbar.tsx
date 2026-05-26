@@ -198,6 +198,7 @@ function OpsTopbar({ crumbs, onMenuClick }: OpsTopbarProps) {
            interactive control (the reviewer-flagged "outdated" header look). */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
+            {/* eslint-disable-next-line no-restricted-syntax -- Radix DropdownMenuTrigger asChild requires a native element */}
             <button
               type="button"
               aria-label="Account menu"

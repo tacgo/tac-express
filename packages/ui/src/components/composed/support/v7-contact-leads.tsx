@@ -153,6 +153,7 @@ function V7ContactLeads({
 
           {!isLoading && !isError && filtered.length > 0 && (
             <div className="bg-surface-elevated tac-fui-border overflow-x-auto shadow-sm">
+              {/* eslint-disable-next-line no-restricted-syntax -- Display-only table for contact leads list; no interactive sort/filter; DataTable would be over-engineered here */}
               <table className="w-full border-collapse t-mono">
                 <thead className="border-b border-border bg-muted">
                   <tr>
@@ -266,6 +267,7 @@ function V7ContactLeads({
                                   >
                                     Triage status
                                   </label>
+                                  {/* eslint-disable-next-line no-restricted-syntax -- Native select for triage status: direct onChange binding to service call; Radix Select adds unnecessary complexity for this inline editor */}
                                   <select
                                     id={`lead-status-${lead.id}`}
                                     value={lead.status}

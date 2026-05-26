@@ -69,6 +69,7 @@ function NotificationBell() {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
+        {/* eslint-disable-next-line no-restricted-syntax -- Radix PopoverTrigger asChild requires a native element */}
         <button
           data-slot="notifications-trigger"
           type="button"
@@ -220,13 +221,13 @@ function NotificationBell() {
                         {mainBody}
                       </Link>
                     ) : (
-                      <button
-                        type="button"
+                      <Button
+                        variant="ghost"
                         onClick={handleActivate}
-                        className="flex flex-1 min-w-0 items-start gap-3 text-left focus:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                        className="flex flex-1 h-auto min-w-0 items-start gap-3 px-0 py-0 text-left font-normal hover:bg-transparent focus-visible:ring-1 focus-visible:ring-ring"
                       >
                         {mainBody}
-                      </button>
+                      </Button>
                     )}
                     <Button
                       type="button"

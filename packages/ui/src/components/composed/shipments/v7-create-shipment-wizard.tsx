@@ -523,11 +523,7 @@ function V7CreateShipmentWizard({
                 required
                 error={errors.paymentMode?.message}
               >
-                {/* Native select kept here — shadcn Select is a Radix popover
-                    that doesn't compose with RHF's register() without a
-                    Controller wrapper. The native control is keyboard-
-                    accessible, screen-reader friendly, and matches the v6
-                    form's behavior 1:1. */}
+                {/* eslint-disable-next-line no-restricted-syntax -- Native select: Radix Select doesn't compose with RHF register() without Controller; keyboard-accessible, screen-reader friendly */}
                 <select
                   id="v7-ship-pay"
                   className="border-input bg-background h-9 w-full border px-3 text-sm font-sans"
@@ -545,6 +541,7 @@ function V7CreateShipmentWizard({
                 required
                 error={errors.serviceType?.message}
               >
+                {/* eslint-disable-next-line no-restricted-syntax -- Native select: same rationale as paymentMode above */}
                 <select
                   id="v7-ship-svc"
                   className="border-input bg-background h-9 w-full border px-3 text-sm font-sans"

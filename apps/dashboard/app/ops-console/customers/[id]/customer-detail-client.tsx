@@ -21,6 +21,7 @@ import { CustomerForm } from "@workspace/ui/components/composed/customers/custom
 import { CustomerDetailTabs } from "@workspace/ui/components/composed/customers/customer-detail-tabs"
 import { NotesPanel } from "@workspace/ui/components/composed/notes/notes-panel"
 import type { CustomerFormValues } from "@workspace/ui/components/composed/customers/customer-form"
+import { Button } from "@workspace/ui/components/button"
 import { RiArrowLeftLine, RiEditLine } from "@workspace/ui/icons"
 
 interface CustomerDetailClientProps {
@@ -157,20 +158,22 @@ export function CustomerDetailClient({ customerId }: CustomerDetailClientProps) 
       {/* Toolbar — light hairline below, no heavy border-block. Matches the
           rhythm of the other v6 detail pages (manifests, shipments). */}
       <div className="flex items-center justify-between">
-        <button
+        <Button
+          variant="ghost"
           onClick={() => router.back()}
-          className="flex items-center gap-1.5 font-mono text-xs uppercase tracking-wider text-muted-foreground transition-colors hover:text-foreground"
+          className="h-auto px-0 py-0 font-mono text-xs uppercase tracking-wider text-muted-foreground hover:bg-transparent hover:text-foreground"
         >
           <RiArrowLeftLine className="h-3.5 w-3.5" />
           Back
-        </button>
-        <button
+        </Button>
+        <Button
+          variant="ghost"
           onClick={() => setEditing((v) => !v)}
-          className="flex h-8 items-center gap-1.5 border border-border px-3 font-mono text-xs uppercase tracking-wider text-muted-foreground transition-colors hover:border-foreground hover:text-foreground"
+          className="h-8 border border-border px-3 font-mono text-xs uppercase tracking-wider text-muted-foreground hover:border-foreground hover:bg-transparent hover:text-foreground"
         >
           <RiEditLine className="h-3.5 w-3.5" />
           {editing ? "Cancel" : "Edit"}
-        </button>
+        </Button>
       </div>
 
       <CustomerDetailTabs

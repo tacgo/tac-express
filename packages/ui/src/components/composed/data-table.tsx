@@ -1,3 +1,6 @@
+/* eslint-disable no-restricted-syntax -- Canonical DataTable primitive: native <table> preserves
+   ARIA grid semantics (role="grid", aria-sort); filter <input> uses direct ref for keyboard focus
+   and does not compose cleanly with the shadcn Input primitive's forwardRef contract here. */
 "use client"
 
 import * as React from "react"

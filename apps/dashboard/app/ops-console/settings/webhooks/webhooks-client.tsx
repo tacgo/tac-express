@@ -69,18 +69,19 @@ export function WebhooksClient() {
             {WEBHOOK_EVENTS.map((evt) => {
               const active = events.includes(evt)
               return (
-                <button
+                <Button
                   key={evt}
-                  type="button"
+                  variant="ghost"
+                  aria-pressed={active}
                   onClick={() => toggleEvent(evt)}
                   className={
-                    "inline-flex items-center gap-1 border px-2 py-1 font-mono text-xs uppercase tracking-wider tac-fui-hover " +
-                    (active ? "border-primary bg-primary/10 text-primary" : "border-border text-muted-foreground")
+                    "h-auto gap-1 border px-2 py-1 font-mono text-xs uppercase tracking-wider tac-fui-hover " +
+                    (active ? "border-primary bg-primary/10 text-primary hover:bg-primary/15" : "border-border text-muted-foreground")
                   }
                 >
                   {active ? <RiCheckLine className="size-3" aria-hidden="true" /> : null}
                   {evt}
-                </button>
+                </Button>
               )
             })}
           </div>
