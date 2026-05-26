@@ -6,6 +6,7 @@ import { toast } from "sonner"
 
 import { useCreateRateCard } from "@workspace/services/hooks/use-rate-cards"
 import { type OpsRateCardFormInput } from "@workspace/ui/components/composed/ops-console/forms"
+import { PageShell } from "@workspace/ui/components/composed/page-shell"
 import { V7RateCardForm } from "@workspace/ui/components/composed/rates/v7-rate-card-form"
 
 export function OpsCreateRateCardLive() {
@@ -39,5 +40,9 @@ export function OpsCreateRateCardLive() {
   // Canonical v7 — v6 OpsRateCardForm render retired in Phase 10a. Its zod
   // schema + OpsRateCardFormInput type are still consumed by V7RateCardForm,
   // so the v6 form module stays as the schema home (mirrors V7CustomerForm).
-  return <V7RateCardForm onSubmit={onSubmit} isLoading={isPending} />
+  return (
+    <PageShell width="wide">
+      <V7RateCardForm onSubmit={onSubmit} isLoading={isPending} />
+    </PageShell>
+  )
 }

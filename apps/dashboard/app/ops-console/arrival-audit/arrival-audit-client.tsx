@@ -2,6 +2,7 @@
 
 import * as React from "react"
 
+import { PageShell } from "@workspace/ui/components/composed/page-shell"
 import { PageHeader } from "@workspace/ui/components/composed/page-header"
 import { Button } from "@workspace/ui/components/button"
 import { Combobox } from "@workspace/ui/components/primitives/combobox"
@@ -156,7 +157,7 @@ export function ArrivalAuditClient() {
   }))
 
   return (
-    <div className="space-y-6">
+    <PageShell width="wide">
       <PageHeader
         overline="Operations"
         title="Arrival Audit"
@@ -234,6 +235,6 @@ export function ArrivalAuditClient() {
           )}
         </>
       )}
-    </div>
+    </PageShell>
   )
 }

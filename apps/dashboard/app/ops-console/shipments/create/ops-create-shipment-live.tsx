@@ -6,6 +6,7 @@ import { toast } from "sonner"
 
 import { useCreateShipment } from "@workspace/services/hooks/use-shipments"
 import type { CreateShipmentInput } from "@workspace/ui/components/composed/shipments/create-shipment-schema"
+import { PageShell } from "@workspace/ui/components/composed/page-shell"
 import { V7CreateShipmentWizard } from "@workspace/ui/components/composed/shipments/v7-create-shipment-wizard"
 
 /**
@@ -69,5 +70,9 @@ export function OpsCreateShipmentLive() {
   }
 
   // Canonical v7 — v6 CreateShipmentForm retired in Phase 5.
-  return <V7CreateShipmentWizard onSubmit={onSubmit} isLoading={isPending} />
+  return (
+    <PageShell width="wide">
+      <V7CreateShipmentWizard onSubmit={onSubmit} isLoading={isPending} />
+    </PageShell>
+  )
 }

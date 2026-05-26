@@ -7,6 +7,7 @@ import {
   useRevokeApiKey,
 } from "@workspace/services/hooks/use-api-keys"
 import type { ApiKeyScope } from "@workspace/types"
+import { PageShell } from "@workspace/ui/components/composed/page-shell"
 import { PageHeader } from "@workspace/ui/components/composed/page-header"
 import { Button } from "@workspace/ui/components/button"
 import { Input } from "@workspace/ui/components/primitives/input"
@@ -40,7 +41,7 @@ export function ApiKeysClient() {
   }
 
   return (
-    <div className="space-y-6">
+    <PageShell width="wide">
       <PageHeader
         overline="Settings · Developers"
         title="API Keys"
@@ -143,6 +144,6 @@ export function ApiKeysClient() {
           </div>
         ))}
       </div>
-    </div>
+    </PageShell>
   )
 }

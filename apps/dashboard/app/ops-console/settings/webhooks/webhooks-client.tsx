@@ -7,6 +7,7 @@ import {
   useDeleteWebhook,
 } from "@workspace/services/hooks/use-webhooks"
 import { WEBHOOK_EVENTS, type WebhookEvent } from "@workspace/types"
+import { PageShell } from "@workspace/ui/components/composed/page-shell"
 import { PageHeader } from "@workspace/ui/components/composed/page-header"
 import { Button } from "@workspace/ui/components/button"
 import { Input } from "@workspace/ui/components/primitives/input"
@@ -37,7 +38,7 @@ export function WebhooksClient() {
   }
 
   return (
-    <div className="space-y-6">
+    <PageShell width="wide">
       <PageHeader
         overline="Settings · Integrations"
         title="Webhooks"
@@ -146,7 +147,7 @@ export function WebhooksClient() {
           </div>
         ))}
       </div>
-    </div>
+    </PageShell>
   )
 }
 
