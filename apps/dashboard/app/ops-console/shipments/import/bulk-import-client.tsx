@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { PageShell } from "@workspace/ui/components/composed/page-shell"
 import { PageHeader } from "@workspace/ui/components/composed/page-header"
 import { Button } from "@workspace/ui/components/button"
 import { EmptyState } from "@workspace/ui/components/primitives/empty-state"
@@ -127,7 +128,7 @@ export function BulkImportClient() {
   }
 
   return (
-    <div className="space-y-6">
+    <PageShell width="wide">
       <PageHeader
         overline="Operations"
         title="Bulk Import Shipments"
@@ -242,7 +243,7 @@ export function BulkImportClient() {
           )}
         </div>
       )}
-    </div>
+    </PageShell>
   )
 }
 

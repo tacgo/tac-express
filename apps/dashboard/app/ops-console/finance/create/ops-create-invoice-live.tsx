@@ -18,6 +18,7 @@ import {
   type InvoiceWizardState,
   type ComboboxOption,
 } from "@workspace/ui/components/composed/finance/invoice-wizard"
+import { PageShell } from "@workspace/ui/components/composed/page-shell"
 import { PageHeader } from "@workspace/ui/components/composed/page-header"
 import { Button } from "@workspace/ui/components/button"
 import { useFormAutosave } from "@workspace/ui/hooks/use-form-autosave"
@@ -288,7 +289,7 @@ export function OpsCreateInvoiceLive() {
   }
 
   return (
-    <>
+    <PageShell width="wide">
       <PageHeader
         overline="Business"
         title="New Invoice"
@@ -331,6 +332,6 @@ export function OpsCreateInvoiceLive() {
         onRegenerateAwb={handleRegenerateAwb}
         isGeneratingAwb={generateAwb.isPending}
       />
-    </>
+    </PageShell>
   )
 }

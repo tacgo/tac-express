@@ -6,6 +6,7 @@ import { toast } from "sonner"
 
 import { useCreateCustomer } from "@workspace/services/hooks/use-customers"
 import { type OpsCustomerFormInput } from "@workspace/ui/components/composed/ops-console/forms"
+import { PageShell } from "@workspace/ui/components/composed/page-shell"
 import { V7CustomerForm } from "@workspace/ui/components/composed/customers/v7-customer-form"
 
 export function OpsCreateCustomerLive() {
@@ -39,5 +40,9 @@ export function OpsCreateCustomerLive() {
   // Canonical v7 — v6 OpsCustomerForm render retired in Phase 5. (Its zod
   // schema + OpsCustomerFormInput type are still consumed by V7CustomerForm,
   // so the form module stays as the schema home pending a types rehome.)
-  return <V7CustomerForm onSubmit={onSubmit} isLoading={isPending} />
+  return (
+    <PageShell width="wide">
+      <V7CustomerForm onSubmit={onSubmit} isLoading={isPending} />
+    </PageShell>
+  )
 }

@@ -4,6 +4,7 @@ import * as React from "react"
 
 import { useAuditLogs } from "@workspace/services/hooks/use-audit-logs"
 import type { AuditLog } from "@workspace/types"
+import { PageShell } from "@workspace/ui/components/composed/page-shell"
 import { PageHeader } from "@workspace/ui/components/composed/page-header"
 import { Button } from "@workspace/ui/components/button"
 import { Input } from "@workspace/ui/components/primitives/input"
@@ -75,7 +76,7 @@ export function AuditClient() {
   }, [query.data, search])
 
   return (
-    <div className="space-y-6">
+    <PageShell width="wide">
       <PageHeader
         overline="System"
         title="Audit Log"
@@ -83,10 +84,7 @@ export function AuditClient() {
       />
 
       <div className="flex flex-wrap items-center gap-3">
-        <div
-          className="relative flex-1"
-          style={{ minWidth: "260px" }}
-        >
+        <div className="relative flex-1 min-w-64">
           <RiSearchLine
             className="absolute left-2 top-1/2 size-4 -translate-y-1/2 text-muted-foreground"
             aria-hidden="true"
@@ -198,7 +196,7 @@ export function AuditClient() {
           })}
         </div>
       )}
-    </div>
+    </PageShell>
   )
 }
 

@@ -148,7 +148,7 @@ interface DataTableProps<TData, TValue> {
  * with the parent table's columns the same way.
  *
  * Column widths come from `column.columnDef.size` when set; otherwise each
- * column gets `minmax(min-content, auto)` so it sizes to its content.
+ * column gets `minmax(min-content, 1fr)` so columns fill available space.
  *
  * Native `<table>` semantics are preserved. Explicit ARIA roles are added
  * as a safety net — most modern browsers retain table semantics under
@@ -200,7 +200,7 @@ function DataTable<TData, TValue>({
       .getVisibleLeafColumns()
       .map((c) => {
         const size = c.columnDef.size
-        return typeof size === "number" ? `${size}px` : "minmax(min-content, auto)"
+        return typeof size === "number" ? `${size}px` : "minmax(min-content, 1fr)"
       })
       .join(" ")
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -355,7 +355,7 @@ function DataTable<TData, TValue>({
                 </tr>
               ))
             ) : (
-              <tr role="row" className="col-span-full grid">
+              <tr role="row" className="col-span-full grid grid-cols-subgrid">
                 <td
                   role="cell"
                   // v6: empty-state row spans the full grid via `col-span-full` (replaces colSpan).

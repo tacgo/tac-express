@@ -29,7 +29,7 @@ import { cn } from "@workspace/ui/lib/utils"
 // (gap-8) for calm, scannable density. Identity unchanged: sharp corners,
 // bg-card, brutalist offset shadow.
 const formCardVariants = cva(
-  "flex flex-col gap-8 border border-border bg-card text-card-foreground p-card-pad-lg shadow-brutal-sm"
+  "flex flex-col gap-8 mx-auto border border-border bg-card text-card-foreground p-card-pad-lg shadow-brutal-sm"
 )
 
 interface FormCardProps

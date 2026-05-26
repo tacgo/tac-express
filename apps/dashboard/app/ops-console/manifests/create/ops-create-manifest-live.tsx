@@ -12,6 +12,7 @@ import { useHubs } from "@workspace/services/hooks/use-hubs"
 import { shipmentService } from "@workspace/services/hooks/use-shipments"
 import { useNotificationStore } from "@workspace/services/stores/notification.store"
 
+import { PageShell } from "@workspace/ui/components/composed/page-shell"
 import { ManifestBuilderWizard } from "@workspace/ui/components/composed/manifests/manifest-builder/manifest-builder-wizard"
 import type { ManifestSetupValue } from "@workspace/ui/components/composed/manifests/manifest-builder/step-setup"
 import type {
@@ -129,13 +130,15 @@ export function OpsCreateManifestLive() {
   }
 
   return (
-    <ManifestBuilderWizard
-      hubs={hubOptions}
-      onSetupCommit={handleSetupCommit}
-      onAddAwb={handleAddAwb}
-      onSaveOpen={handleSaveOpen}
-      onClose={handleClose}
-      onExit={() => router.push("/ops-console/manifests")}
-    />
+    <PageShell width="wide">
+      <ManifestBuilderWizard
+        hubs={hubOptions}
+        onSetupCommit={handleSetupCommit}
+        onAddAwb={handleAddAwb}
+        onSaveOpen={handleSaveOpen}
+        onClose={handleClose}
+        onExit={() => router.push("/ops-console/manifests")}
+      />
+    </PageShell>
   )
 }

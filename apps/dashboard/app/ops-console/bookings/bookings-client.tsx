@@ -11,6 +11,7 @@ import {
 } from "@workspace/services/hooks/use-bookings"
 import { useNotificationStore } from "@workspace/services/stores/notification.store"
 
+import { PageShell } from "@workspace/ui/components/composed/page-shell"
 import { PageHeader } from "@workspace/ui/components/composed/page-header"
 import {
   BookingsInbox,
@@ -62,7 +63,7 @@ export function BookingsClient() {
   )
 
   return (
-    <div className="space-y-6">
+    <PageShell width="wide">
       <PageHeader
         overline="Operations"
         title="Booking inbox"
@@ -122,6 +123,6 @@ export function BookingsClient() {
           }
         }}
       />
-    </div>
+    </PageShell>
   )
 }
