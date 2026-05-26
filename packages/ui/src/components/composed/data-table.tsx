@@ -309,7 +309,7 @@ function DataTable<TData, TValue>({
                           ? "descending"
                           : "none"
                       }
-                      className="h-9 flex items-stretch text-left t-mono-sm uppercase tracking-wider text-muted-foreground"
+                      className="h-9 flex items-stretch text-left tac-mono-label-base text-muted-foreground"
                     >
                       {canSort ? (
                         // v6 a11y: sortable headers use the Button primitive (ghost)
@@ -319,7 +319,7 @@ function DataTable<TData, TValue>({
                           type="button"
                           variant="ghost"
                           onClick={header.column.getToggleSortingHandler()}
-                          className="flex h-full w-full items-center justify-start rounded-none px-3 t-mono-sm font-normal uppercase tracking-wider text-muted-foreground select-none hover:bg-transparent hover:text-foreground"
+                          className="flex h-full w-full items-center justify-start rounded-none px-3 tac-mono-label-base font-normal text-muted-foreground select-none hover:bg-transparent hover:text-foreground"
                         >
                           {headerContent}
                         </Button>
