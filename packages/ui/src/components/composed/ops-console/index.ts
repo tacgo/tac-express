@@ -4,9 +4,12 @@ export { OpsShell, type OpsShellProps } from "./ops-shell"
 export { OpsTopbar, type OpsTopbarProps } from "./ops-topbar"
 export { OpsFrame, WorkflowShell, type OpsFrameProps } from "./ops-frame"
 export { OpsPageHead, type OpsPageHeadProps } from "./ops-page-head"
+// OpsButton kept — still used by OpsUpcomingCalendar (dashboard widget).
 export { OpsButton, opsButtonVariants, type OpsButtonProps } from "./ops-button"
-export { OpsBadge, opsBadgeVariants, type OpsBadgeProps } from "./ops-badge"
-export { OpsCard, opsCardVariants, type OpsCardProps } from "./ops-card"
+// OpsBadge (v6 paper) retired in Phase 4-C — last consumer (OpsManagementView)
+// archived; detail routes use the shadcn Badge primitive.
+// OpsCard (v6 paper) retired in Phase 4-C — last consumers were OpsManagementView
+// (archived) and the form schema-home JSX (stripped in Phase 4-B).
 // OpsStatCard (v6 paper) retired in Phase 6 — last orphan, no consumers; v7
 // KPI surfaces use StatCard.
 // OpsDashboard (v6 paper) retired in Phase 5 — dashboard renders V7OpsDashboard.
@@ -25,23 +28,12 @@ export {
   OpsRevenueRadialChart,
   type OpsRevenueRadialChartProps,
 } from "./ops-revenue-radial-chart"
-export { OpsTabs, type OpsTabsProps } from "./ops-tabs"
-export {
-  OpsTable,
-  OpsTableHead,
-  OpsTableBody,
-  OpsTableRow,
-  OpsTableHeader,
-  OpsTableCell,
-} from "./ops-table"
-export {
-  OpsFieldInput,
-  OpsFieldSelect,
-  OpsFieldLabel,
-  type OpsFieldInputProps,
-  type OpsFieldSelectProps,
-  type OpsFieldLabelProps,
-} from "./ops-field"
+// OpsTabs (v6 paper) retired in Phase 4-C — sole consumer was OpsManagementView
+// (archived); v7 surfaces use the shadcn Tabs primitive.
+// OpsTable suite (v6 paper) retired in Phase 4-C — sole consumer was
+// OpsManagementView (archived); v7 surfaces use the shadcn Table primitive.
+// OpsField* (v6 paper) retired in Phase 4-C — consumers were OpsManagementView
+// (archived) and the form schema-home JSX (stripped in Phase 4-B).
 // OpsKbd (v6 paper) retired in Phase 6 — V7OpsSettings inlines <kbd> tokens
 // rather than the Ops* primitive.
 // OpsSkeleton/Row/StatCard (v6 paper) retired in Phase 10c — detail routes use

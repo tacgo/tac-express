@@ -1,3 +1,6 @@
+// All v6 paper page-level view components retired across Phases 4–9.
+// See retirement comments below for the v7 replacements.
+//
 // OpsAnalyticsView (v6 paper) retired in Phase 7 — analytics route renders
 // V7OpsAnalytics; AnalyticsKpis lives in `analytics/v7-ops-analytics`.
 // OpsShipmentsView (v6 paper) retired in Phase 5 — shipments route renders
@@ -17,11 +20,9 @@
 // in `rates/v7-ops-rate-cards`.
 // OpsCustomersView (v6 paper) retired in Phase 4 — customers route renders
 // V7OpsCustomers; CustomerRow lives in `customers/v7-ops-customers`.
-export {
-  OpsManagementView,
-  type OpsManagementViewProps,
-  type StaffRow,
-} from "./ops-management-view"
+// OpsManagementView (v6 paper reference variant) archived in Phase 4-C —
+// management route renders management-client.tsx (fully separate composition).
+// Archived to `_archive/2026-05-26/ops-management-view.tsx`.
 // OpsNotificationsView (v6 paper) retired in Phase 6 — notifications route
 // renders V7OpsNotifications; Channel + SystemService live in
 // `notifications/v7-ops-notifications`.

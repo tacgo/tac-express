@@ -1,3 +1,5 @@
+// @ts-nocheck — archived dead code; imported primitives (ops-badge, ops-card,
+// ops-field, ops-tabs, ops-table) were deleted in Phase 4-C. Not type-checked.
 "use client"
 
 // NOTE FOR FUTURE READERS:
@@ -12,6 +14,12 @@
 // not a footgun if someone adopts it. The wiring matches the parent
 // callback shape used by management-client.tsx (onRoleChange(email, role)
 // + onInvite()) so adoption would be straightforward.
+//
+// ARCHIVED in Phase 4-C (2026-05-26) — this was the last active consumer of
+// OpsCard, OpsBadge, OpsField, OpsTable, and OpsTabs, which were removed from
+// the ops-console barrel at the same time. To resurrect, port to v7 primitives
+// (SurfaceCard, Badge, Input/Select, Table, Tabs).
+// See docs/migrations/2026-05-26-shadcn-purity-final-cleanup.md §4-C.
 
 import * as React from "react"
 
@@ -46,19 +54,7 @@ interface OpsManagementViewProps {
   inactive: number
   hubsCovered: number
   staff: StaffRow[]
-  /**
-   * Fires when the operator picks a different role for a staff row.
-   * Receives the row's email (stable identifier in this view) and the
-   * newly-selected role string. The string is narrowed to the StaffRow
-   * `role` union by the consumer.
-   */
   onRoleChange?: (email: string, role: StaffRow["role"]) => void
-  /**
-   * Fires when the operator clicks "Invite Staff" in the page header.
-   * The consumer typically opens a modal/sheet collecting email + role + hub.
-   * If omitted, the button is rendered disabled with a tooltip explaining
-   * the action is not yet wired (per #54 acceptance criteria).
-   */
   onInvite?: () => void
 }
 
