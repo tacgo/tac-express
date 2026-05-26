@@ -219,7 +219,7 @@ function V7OpsFinance({
                   </span>
                   <span
                     className={cn(
-                      "border px-2 py-0.5 t-caption uppercase tracking-wider",
+                      "border px-2 py-0.5 tac-mono-label-base",
                       TONE_BADGE_CLASS[row.tone]
                     )}
                   >

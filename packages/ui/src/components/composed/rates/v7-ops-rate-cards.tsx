@@ -51,7 +51,7 @@ function V7OpsRateCards({ rows, className }: V7OpsRateCardsProps) {
         header: "Service",
         size: 120,
         cell: ({ getValue }) => (
-          <span className="t-caption uppercase tracking-wider text-foreground">
+          <span className="tac-mono-label-base text-foreground">
             {getValue<string>()}
           </span>
         ),

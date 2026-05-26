@@ -104,7 +104,7 @@ function V7OpsManifests({
         header: "Status",
         size: 110,
         cell: ({ getValue }) => (
-          <span className="t-caption uppercase tracking-wider text-foreground">
+          <span className="tac-mono-label-base text-foreground">
             {getValue<string>()}
           </span>
         ),
