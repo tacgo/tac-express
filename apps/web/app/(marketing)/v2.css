@@ -1,0 +1,267 @@
+/*
+ * Landing v2 — isolated, editorial-minimal design system.
+ * Scoped entirely under `.landing-v2` so it never touches Violet Grid or the
+ * dashboard. Own tokens, own type scale, own soft-depth surfaces. Fonts come
+ * from layout.tsx (--v2-font-display = Fraunces, --v2-font-body = Manrope).
+ * See docs/LANDING-V2-POLICY.md.
+ */
+
+.landing-v2 {
+  /* Palette — warm editorial paper + ink + a single clay accent */
+  --v2-bg: #f6f4ee;
+  --v2-bg-2: #efece3;
+  --v2-surface: #fffefb;
+  --v2-ink: #17150f;
+  --v2-ink-2: #3b372e;
+  --v2-muted: #6c675b;
+  --v2-faint: #9a9486;
+  --v2-line: #e4dfd3;
+  --v2-line-2: #d8d2c4;
+  --v2-accent: #b6552e;
+  --v2-accent-ink: #8c3d1e;
+  --v2-accent-soft: #f3e7de;
+  --v2-on-accent: #fdf6f1;
+
+  /* Contained elevation — reduced editorial softness, crisper/tighter than the
+     original diffuse shadows for closer operational alignment (still soft, not
+     brutalist; landing-scoped only). */
+  --v2-shadow-sm: 0 1px 2px rgba(23, 21, 15, 0.06);
+  --v2-shadow: 0 2px 6px rgba(23, 21, 15, 0.07), 0 6px 16px rgba(23, 21, 15, 0.06);
+  --v2-shadow-lg: 0 6px 16px rgba(23, 21, 15, 0.09), 0 16px 36px rgba(23, 21, 15, 0.08);
+
+  /* Sharp geometry — straight lines, zero radius (operational TAC language).
+     Convergence pass 2026-05-23: was 16px/10px + 999px pills. */
+  --v2-radius: 0;
+  --v2-radius-sm: 0;
+  --v2-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  min-height: 100vh;
+  width: 100%;
+  background: var(--v2-bg);
+  color: var(--v2-ink);
+  font-family: var(--v2-font-body), ui-sans-serif, system-ui, sans-serif;
+  font-feature-settings: "ss01", "cv01";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ── Typography ─────────────────────────────────────────────────────────── */
+.landing-v2 .v2-display {
+  font-family: var(--v2-font-display), Georgia, serif;
+  font-weight: 500;
+  font-optical-sizing: auto;
+  letter-spacing: -0.025em;
+  line-height: 0.98;
+  text-wrap: balance;
+}
+.landing-v2 .v2-h2 {
+  font-family: var(--v2-font-display), Georgia, serif;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.04;
+  text-wrap: balance;
+}
+.landing-v2 .v2-h3 {
+  font-family: var(--v2-font-display), Georgia, serif;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  line-height: 1.1;
+}
+.landing-v2 .v2-serif-italic {
+  font-family: var(--v2-font-display), Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+}
+.landing-v2 .v2-eyebrow {
+  font-weight: 600;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--v2-accent-ink);
+}
+.landing-v2 .v2-lead {
+  font-size: clamp(1.05rem, 1.6vw, 1.3rem);
+  line-height: 1.55;
+  color: var(--v2-ink-2);
+  text-wrap: pretty;
+}
+.landing-v2 .v2-size-hero { font-size: clamp(2.7rem, 6.2vw, 5.3rem); }
+.landing-v2 .v2-size-h2 { font-size: clamp(1.9rem, 3.6vw, 2.9rem); }
+.landing-v2 .v2-size-h3 { font-size: 1.2rem; }
+.landing-v2 .v2-size-stat { font-size: clamp(2.4rem, 4.5vw, 3.4rem); }
+.landing-v2 .v2-mono {
+  font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+/* ── Color utilities ────────────────────────────────────────────────────── */
+.landing-v2 .v2-muted { color: var(--v2-muted); }
+.landing-v2 .v2-faint { color: var(--v2-faint); }
+.landing-v2 .v2-accent { color: var(--v2-accent); }
+.landing-v2 .v2-bg-surface { background: var(--v2-surface); }
+.landing-v2 .v2-bg-2 { background: var(--v2-bg-2); }
+.landing-v2 .v2-bg-accent-soft { background: var(--v2-accent-soft); }
+
+/* ── Surfaces ───────────────────────────────────────────────────────────── */
+.landing-v2 .v2-card {
+  background: var(--v2-surface);
+  border: 1px solid var(--v2-line);
+  border-radius: var(--v2-radius);
+  box-shadow: var(--v2-shadow-sm);
+  transition: box-shadow 0.4s var(--v2-ease), transform 0.4s var(--v2-ease),
+    border-color 0.4s var(--v2-ease);
+}
+.landing-v2 .v2-card-hover:hover {
+  box-shadow: var(--v2-shadow);
+  transform: translateY(-3px);
+  border-color: var(--v2-line-2);
+}
+.landing-v2 .v2-hairline { border-color: var(--v2-line); }
+.landing-v2 .v2-frame {
+  border-radius: var(--v2-radius);
+  overflow: hidden;
+  box-shadow: var(--v2-shadow-lg);
+  border: 1px solid var(--v2-line);
+}
+
+.landing-v2 .v2-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 0;
+  border: 1px solid var(--v2-line-2);
+  background: var(--v2-surface);
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--v2-ink-2);
+}
+
+/* ── Buttons ────────────────────────────────────────────────────────────── */
+.landing-v2 .v2-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  padding: 0.8rem 1.4rem;
+  border-radius: 0;
+  font-weight: 600;
+  font-size: 0.92rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: transform 0.25s var(--v2-ease), box-shadow 0.3s var(--v2-ease),
+    background 0.25s var(--v2-ease), color 0.25s var(--v2-ease);
+  white-space: nowrap;
+}
+.landing-v2 .v2-btn:active { transform: translateY(1px) scale(0.99); }
+.landing-v2 .v2-btn:focus-visible {
+  outline: 2px solid var(--v2-accent);
+  outline-offset: 3px;
+}
+.landing-v2 .v2-btn-accent {
+  background: var(--v2-ink);
+  color: var(--v2-bg);
+  box-shadow: var(--v2-shadow-sm);
+}
+.landing-v2 .v2-btn-accent:hover {
+  background: var(--v2-accent);
+  color: var(--v2-on-accent);
+  box-shadow: var(--v2-shadow);
+  transform: translateY(-2px);
+}
+.landing-v2 .v2-btn-ghost {
+  background: transparent;
+  color: var(--v2-ink);
+  border: 1px solid var(--v2-line-2);
+}
+.landing-v2 .v2-btn-ghost:hover {
+  border-color: var(--v2-ink);
+  transform: translateY(-2px);
+}
+
+/* ── Nav links ──────────────────────────────────────────────────────────── */
+.landing-v2 .v2-navlink {
+  color: var(--v2-muted);
+  transition: color 0.25s var(--v2-ease);
+}
+.landing-v2 .v2-navlink:hover { color: var(--v2-ink); }
+.landing-v2 .v2-menu-link {
+  display: block;
+  padding: 0.625rem 0.75rem;
+  border-radius: var(--v2-radius-sm);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--v2-muted);
+  transition: background 0.2s, color 0.2s;
+}
+.landing-v2 .v2-menu-link:hover {
+  background: var(--v2-bg-2);
+  color: var(--v2-ink);
+}
+
+/* ── Section bits ───────────────────────────────────────────────────────── */
+.landing-v2 .v2-section {
+  padding-top: clamp(4rem, 9vw, 7.5rem);
+  padding-bottom: clamp(4rem, 9vw, 7.5rem);
+}
+.landing-v2 .v2-icon-tile {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 0;
+  background: var(--v2-accent-soft);
+  color: var(--v2-accent-ink);
+}
+.landing-v2 .v2-num {
+  font-family: var(--v2-font-display), Georgia, serif;
+  font-size: 1.7rem;
+  font-weight: 500;
+  color: var(--v2-accent);
+  line-height: 1;
+}
+.landing-v2 .v2-divider { height: 1px; background: var(--v2-line); }
+
+/* ── Decorative ─────────────────────────────────────────────────────────── */
+.landing-v2 .v2-rule {
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--v2-line-2), transparent);
+}
+.landing-v2 .v2-grid-faint {
+  background-image:
+    linear-gradient(var(--v2-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--v2-line) 1px, transparent 1px);
+  background-size: 64px 64px;
+  /* Straight linear fade (no radial curve) — sharp operational geometry. */
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 22%, #000 68%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 22%, #000 68%, transparent);
+  opacity: 0.5;
+}
+
+/* ── On-media (over the hero footage) ───────────────────────────────────── */
+.landing-v2 .v2-on-media { color: rgba(255, 255, 255, 0.92); }
+.landing-v2 .v2-media-scrim {
+  background: linear-gradient(to top, rgba(15, 13, 9, 0.74), rgba(15, 13, 9, 0) 60%);
+}
+.landing-v2 .v2-pulse {
+  width: 9px;
+  height: 9px;
+  border-radius: 0;
+  background: #ffffff;
+  animation: v2pulse 2.2s var(--v2-ease) infinite;
+}
+@keyframes v2pulse {
+  0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.5); }
+  70% { box-shadow: 0 0 0 9px rgba(255, 255, 255, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-v2 .v2-card,
+  .landing-v2 .v2-btn {
+    transition: none;
+  }
+  .landing-v2 .v2-pulse { animation: none; }
+}
