@@ -358,7 +358,7 @@ function SectionEyebrow({
   return (
     <p
       className={cn(
-        "font-mono text-ui-10 uppercase tracking-widest text-muted-foreground",
+        "tac-mono-label-base font-normal text-muted-foreground",
         className
       )}
     >
