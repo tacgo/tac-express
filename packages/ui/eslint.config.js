@@ -6,6 +6,7 @@ import {
 
 /** @type {import("eslint").Linter.Config[]} */
 export default [
+  { ignores: ["src/components/composed/_archive/**"] },
   ...config,
   // Scoped gate: forbid raw interactive HTML elements in composed components.
   // The global designSystemConfig applies its no-restricted-syntax selectors
