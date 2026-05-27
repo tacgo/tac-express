@@ -3,6 +3,7 @@
 import * as React from "react"
 import { useRouter } from "next/navigation"
 import { SignInForm } from "@workspace/ui/components/composed/auth/sign-in-form"
+import { describeSignInError } from "@workspace/ui/components/composed/auth/sign-in-error"
 import { createBrowserClient } from "@workspace/database/client"
 
 interface SignInPageClientProps {
@@ -24,7 +25,7 @@ function SignInPageClient({ redirectTo }: SignInPageClientProps) {
       router.push(redirectTo)
       router.refresh()
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Sign-in failed. Check your credentials.")
+      setError(describeSignInError(err))
     } finally {
       setIsLoading(false)
     }
