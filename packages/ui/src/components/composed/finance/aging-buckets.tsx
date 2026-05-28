@@ -165,7 +165,7 @@ function BucketTile({
   )
 
   const railClass = cn(
-    "absolute inset-y-0 left-0 w-[length:var(--indicator-w)]",
+    "absolute inset-y-0 left-0 w-indicator",
     bucket.tone === "ok" && "bg-primary/40",
     bucket.tone === "warning" && "bg-accent-warning/50",
     bucket.tone === "danger" && "bg-destructive/60",

@@ -14,10 +14,10 @@ import { MapLibreMap } from "./maplibre-map"
 // CSS variables). These names are pulled from the design tokens at runtime
 // so the map status palette always matches the active theme + brand violet.
 const MAP_TOKEN_NAMES = [
-  "--paper-err",
-  "--paper-ok",
-  "--paper-line-3",
-  "--paper-violet",
+  "--destructive",
+  "--accent-success",
+  "--border",
+  "--primary",
 ] as const
 
 export interface CorridorHub {
@@ -140,12 +140,12 @@ export function LiveCorridorMap({
                 "match",
                 ["get", "status"],
                 "EXCEPTION",
-                tokens["--paper-err"],
+                tokens["--destructive"],
                 "ARRIVED",
-                tokens["--paper-ok"],
+                tokens["--accent-success"],
                 "OPEN",
-                tokens["--paper-line-3"],
-                /* default IN_TRANSIT */ tokens["--paper-violet"],
+                tokens["--border"],
+                /* default IN_TRANSIT */ tokens["--primary"],
               ],
               "line-width": [
                 "interpolate",

@@ -14,7 +14,7 @@ import {
   RiMore2Line,
   RiTruckLine,
 } from "@workspace/ui/icons"
-import type { ShipmentStatus } from "@workspace/types"
+import { ShipmentStatus } from "@workspace/types"
 import { PageShell } from "@workspace/ui/components/composed/page-shell"
 import { PageHeader } from "@workspace/ui/components/composed/page-header"
 import { DataTableCard } from "@workspace/ui/components/composed/data-table-card"
@@ -46,7 +46,7 @@ function toShipmentStatus(label: string): ShipmentStatus {
   const candidate = label.trim().toUpperCase().replace(/\s+/g, "_")
   return SHIPMENT_STATUS_ENUMS.includes(candidate as ShipmentStatus)
     ? (candidate as ShipmentStatus)
-    : "CREATED"
+    : ShipmentStatus.CREATED
 }
 
 interface ShipmentRow {

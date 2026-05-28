@@ -1,27 +1,23 @@
 import type { Metadata } from "next"
 
-import {
-  OpsFrame,
-  OpsPageHead,
-} from "@workspace/ui/components/composed/ops-console"
+import { PageShell } from "@workspace/ui/components/composed/page-shell"
 
 import { OpsCreateManifestLive } from "./ops-create-manifest-live"
 
 export const metadata: Metadata = { title: "New Manifest — TAC Express Ops Console" }
 export const dynamic = "force-dynamic"
 
-// OpsPageHead is required (not optional) — the ManifestBuilderWizard step
-// indicator is not an <h1>, so without OpsPageHead the page fails axe's
-// `page-has-heading-one` rule (WCAG 2.4.6 / 1.3.1). See R0.1 audit findings.
+// h1 required: ManifestBuilderWizard step indicator is not an <h1>,
+// so the inline header below satisfies WCAG 2.4.6 / 1.3.1. See R0.1 audit findings.
 export default function Page() {
   return (
-    <OpsFrame>
-      <OpsPageHead
-        eyebrow="Operations"
-        title="New Manifest"
-        sub="Build a transit manifest — pick a route, scan in AWBs, save or close to lock the loadlist."
-      />
+    <PageShell>
+      <header className="pb-4 border-b border-border">
+        <p className="font-mono text-2xs uppercase tracking-widest text-muted-foreground">Operations</p>
+        <h1 className="font-sans text-2xl font-bold text-foreground mt-0.5">New Manifest</h1>
+        <p className="t-body-sm text-muted-foreground mt-1">Build a transit manifest — pick a route, scan in AWBs, save or close to lock the loadlist.</p>
+      </header>
       <OpsCreateManifestLive />
-    </OpsFrame>
+    </PageShell>
   )
 }

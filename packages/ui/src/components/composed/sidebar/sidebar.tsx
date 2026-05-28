@@ -116,7 +116,7 @@ function SidebarItem({
       {active && (
         <span
           aria-hidden
-          className="absolute left-0 top-0 bottom-0 w-[length:var(--indicator-w)] bg-sidebar-primary"
+          className="absolute left-0 top-0 bottom-0 w-indicator bg-sidebar-primary"
         />
       )}
       <Icon aria-hidden className="size-4 shrink-0" />

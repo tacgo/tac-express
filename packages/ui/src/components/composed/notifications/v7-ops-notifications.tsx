@@ -38,6 +38,20 @@ interface V7OpsNotificationsProps {
   className?: string
 }
 
+function serviceStatusTone(status: SystemService["status"]) {
+  if (status === "Down")
+    return { text: "text-destructive", dot: "bg-destructive" }
+  if (status === "Degraded")
+    return { text: "text-accent-warning", dot: "bg-accent-warning" }
+  return { text: "text-accent-success", dot: "bg-accent-success" }
+}
+
+function aggregateStatusTitle(services: SystemService[]): string {
+  if (services.some((s) => s.status === "Down")) return "Service disruption"
+  if (services.some((s) => s.status === "Degraded")) return "Degraded performance"
+  return "All systems normal"
+}
+
 /**
  * V7OpsNotifications — Violet Grid v7 layout for the Notifications route.
  *
@@ -96,26 +110,26 @@ function V7OpsNotifications({
                 System status
               </span>
             }
-            title="All systems normal"
+            title={aggregateStatusTitle(services)}
           >
             <div className="flex flex-col">
-              {services.map((s) => (
-                <div
-                  key={s.name}
-                  className="flex items-center justify-between py-2 border-t border-border first:border-t-0"
-                >
-                  <span className="font-mono uppercase text-2xs tracking-badge text-muted-foreground">
-                    {s.name}
-                  </span>
-                  <span className="t-mono-sm inline-flex items-center gap-1.5 text-accent-success">
-                    <span
-                      aria-hidden
-                      className="size-1.5 bg-accent-success"
-                    />
-                    {s.status}
-                  </span>
-                </div>
-              ))}
+              {services.map((s) => {
+                const tone = serviceStatusTone(s.status)
+                return (
+                  <div
+                    key={s.name}
+                    className="flex items-center justify-between py-2 border-t border-border first:border-t-0"
+                  >
+                    <span className="font-mono uppercase text-2xs tracking-badge text-muted-foreground">
+                      {s.name}
+                    </span>
+                    <span className={cn("t-mono-sm inline-flex items-center gap-1.5", tone.text)}>
+                      <span aria-hidden className={cn("size-1.5", tone.dot)} />
+                      {s.status}
+                    </span>
+                  </div>
+                )
+              })}
             </div>
           </SurfaceCard>
 
@@ -133,7 +147,7 @@ function V7OpsNotifications({
                 <div key={c.key} className="flex items-start gap-3">
                   <Badge
                     variant="outline"
-                    className="min-w-[length:var(--spacing-field-code)] justify-center font-mono uppercase tracking-tag"
+                    className="min-w-16 justify-center font-mono uppercase tracking-tag"
                   >
                     {c.key}
                   </Badge>

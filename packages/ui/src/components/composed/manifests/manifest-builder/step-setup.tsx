@@ -104,7 +104,7 @@ export function StepSetup({
       {hubsEmpty && (
         <div
           role="alert"
-          className="border border-accent-warning/40 border-l-[length:var(--indicator-w)] border-l-accent-warning bg-accent-warning/5 p-4 flex items-start gap-3"
+          className="border border-accent-warning/40 border-l-indicator border-l-accent-warning bg-accent-warning/5 p-4 flex items-start gap-3"
         >
           <RiErrorWarningLine
             aria-hidden

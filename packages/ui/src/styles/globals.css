@@ -218,12 +218,9 @@
   --chart-ramp-5: var(--primary);
 
   /* ══════════════════════════════════════════════════════════════════════════
-     PAPER OPS CONSOLE — legacy token aliases (LAW 1)
-     The former `.ops-console` wrapper scope is retired (Phase 10d). These
-     paper-* aliases remain only because a few unmigrated paper primitives
-     (OpsPageHead on the create pages) still reference them; they resolve to
-     the canonical Violet Grid tokens at :root, so no scope class is needed.
-     Source: .design-bundle (Anthropic Design export, May 2026).
+     PAPER OPS CONSOLE — legacy token aliases fully retired (Phase 4-C).
+     OpsFrame, OpsPageHead, and the --paper-* CSS variable block are deleted.
+     All consumers migrated to canonical Violet Grid semantic tokens.
      ══════════════════════════════════════════════════════════════════════════ */
 
   --background: oklch(1 0 0);
@@ -797,6 +794,10 @@
    ══════════════════════════════════════════════════════════════════════════════ */
 
 @layer utilities {
+  /* 0. Named indicator utilities — replaces [length:var(--indicator-w)] arbitrary usage (LAW 11) */
+  .border-l-indicator { border-left-width: var(--indicator-w); }
+  .w-indicator         { width: var(--indicator-w); }
+
   /* 1. Structural Panel / Border Framing */
   .tac-fui-panel {
     position: relative;

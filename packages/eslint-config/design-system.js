@@ -94,6 +94,16 @@ export const designSystemSyntaxSelectors = [
     message:
       "❌ [TAC LAW-3] Raw em tracking value. Use a token utility: tracking-paper-04/06/08/10/12/14/18, or the Tailwind defaults (tracking-tight/normal/wide/wider/widest). For one-off, reference via tracking-[length:var(--tracking-paper-N)].",
   },
+
+  // ── Paper token guard — retired paper-* classes ──────────────────
+  // The paper-* CSS classes (paper-label, paper-stat-value, bg-paper-*)
+  // are retired. Use Violet Grid semantic tokens instead.
+  {
+    selector:
+      "JSXAttribute[name.name='className'] > Literal[value=/\\bpaper-/]",
+    message:
+      "❌ [TAC] paper-* class detected. These are retired — use Violet Grid tokens: font-mono text-2xs uppercase tracking-widest text-muted-foreground (was paper-label), font-sans font-bold tabular-nums text-foreground (was paper-stat-value).",
+  },
 ]
 
 /**

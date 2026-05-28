@@ -348,7 +348,7 @@ export function OpsInvoiceDetailLive({ id }: OpsInvoiceDetailLiveProps) {
   if (!invoice) {
     return (
       <DetailShell eyebrow="Invoice" title={id} backHref="/ops-console/finance">
-        <div className="border border-destructive/40 border-l-[length:var(--indicator-w)] border-l-destructive bg-destructive/15 p-6 flex items-start gap-3">
+        <div className="border border-destructive/40 border-l-indicator border-l-destructive bg-destructive/15 p-6 flex items-start gap-3">
           <RiErrorWarningLine
             aria-hidden
             className="size-5 text-destructive shrink-0"

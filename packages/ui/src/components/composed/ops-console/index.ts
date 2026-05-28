@@ -2,9 +2,10 @@ export { OpsShell, type OpsShellProps } from "./ops-shell"
 // OpsSidebar removed — consolidated into the shared `<Sidebar>` at
 // `@workspace/ui/components/composed/sidebar`. Import that instead.
 export { OpsTopbar, type OpsTopbarProps } from "./ops-topbar"
-export { OpsFrame, WorkflowShell, type OpsFrameProps } from "./ops-frame"
-export { OpsPageHead, type OpsPageHeadProps } from "./ops-page-head"
-// OpsButton kept — still used by OpsUpcomingCalendar (dashboard widget).
+// OpsFrame (v6 paper) retired in Phase 4-C — all consumers migrated to PageShell + inline <header>.
+// OpsPageHead (v6 paper) retired in Phase 4-C — pages now render inline <h1> directly.
+export { WorkflowShell, type WorkflowShellProps } from "./workflow-shell"
+// OpsButton kept — still used by OpsUpcomingCalendar, OpsShipmentDetailLive, OpsInvoiceDetailLive.
 export { OpsButton, opsButtonVariants, type OpsButtonProps } from "./ops-button"
 // OpsBadge (v6 paper) retired in Phase 4-C — last consumer (OpsManagementView)
 // archived; detail routes use the shadcn Badge primitive.
