@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from "motion/react"
 import { Icon, Reveal, V2Button } from "./primitives"
+import { V2TrackingWidget } from "./tracking-widget"
 import { heroContent } from "../_content"
 
 export function V2Hero() {
@@ -44,6 +45,10 @@ export function V2Hero() {
                 {heroContent.secondary.label}
               </V2Button>
             </div>
+          </Reveal>
+
+          <Reveal delay={0.34}>
+            <V2TrackingWidget />
           </Reveal>
         </div>
 

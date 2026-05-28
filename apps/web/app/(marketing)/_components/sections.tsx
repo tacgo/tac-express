@@ -6,6 +6,9 @@ import {
   servicesContent,
   networkContent,
   workflowContent,
+  codContent,
+  pricingContent,
+  testimonialsContent,
   ctaContent,
 } from "../_content"
 
@@ -17,7 +20,7 @@ export function V2Stats() {
         {statsContent.items.map((s, i) => (
           <Reveal key={s.label} delay={i * 0.07}>
             <div>
-              <div className="v2-display v2-size-stat v2-accent">{s.value}</div>
+              <div className="v2-mono v2-size-stat v2-accent">{s.value}</div>
               <div className="mt-2 font-semibold">{s.label}</div>
               <div className="v2-muted mt-1 text-sm">{s.note}</div>
             </div>
@@ -114,6 +117,152 @@ export function V2Workflow() {
                 <h3 className="v2-h3 v2-size-h3 mt-4">{s.title}</h3>
                 <p className="v2-muted mt-2 text-sm leading-relaxed">{s.body}</p>
               </div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+/* ── COD settlement spotlight ───────────────────────────────────────────── */
+export function V2Cod() {
+  return (
+    <section className="v2-section px-5 sm:px-8">
+      <div className="mx-auto max-w-6xl">
+        {/* Asymmetric header: 5 col headline / 7 col body */}
+        <div className="grid gap-8 lg:grid-cols-12 lg:items-start">
+          <Reveal className="lg:col-span-5">
+            <span className="v2-eyebrow">{codContent.eyebrow}</span>
+            <h2 className="v2-h2 v2-size-h2 mt-4">{codContent.heading}</h2>
+            <div className="mt-8">
+              <V2Button href={codContent.ctaHref} variant="ghost">
+                {codContent.ctaLabel}
+                <Icon name="arrowUpRight" size={16} />
+              </V2Button>
+            </div>
+          </Reveal>
+
+          <div className="lg:col-span-7">
+            <Reveal delay={0.1}>
+              <p className="v2-lead">{codContent.lead}</p>
+            </Reveal>
+
+            {/* KPI strip */}
+            <div className="mt-8 grid gap-px sm:grid-cols-3">
+              {codContent.stats.map((s, i) => (
+                <Reveal key={s.label} delay={0.12 + i * 0.06}>
+                  <div className="v2-cod-stat">
+                    <div className="v2-mono v2-cod-stat-value v2-accent">{s.value}</div>
+                    <div className="v2-cod-stat-label">{s.label}</div>
+                    <div className="v2-cod-stat-note">{s.note}</div>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* 3-step process */}
+        <div className="mt-14 grid gap-px sm:grid-cols-3">
+          {codContent.steps.map((s, i) => (
+            <Reveal key={s.step} delay={i * 0.08}>
+              <div className="v2-bg-surface h-full p-7">
+                <div className="v2-num">{s.step}</div>
+                <h3 className="v2-h3 v2-size-h3 mt-4">{s.title}</h3>
+                <p className="v2-muted mt-2 text-sm leading-relaxed">{s.body}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+/* ── Pricing reference ──────────────────────────────────────────────────── */
+export function V2Pricing() {
+  return (
+    <section className="v2-section v2-bg-2 px-5 sm:px-8">
+      <div className="mx-auto max-w-6xl">
+        <div className="grid gap-8 lg:grid-cols-12 lg:items-end">
+          <Reveal className="lg:col-span-7">
+            <span className="v2-eyebrow">{pricingContent.eyebrow}</span>
+            <h2 className="v2-h2 v2-size-h2 mt-4">{pricingContent.heading}</h2>
+          </Reveal>
+          <Reveal delay={0.1} className="lg:col-span-5">
+            <p className="v2-lead">{pricingContent.note}</p>
+          </Reveal>
+        </div>
+
+        <Reveal delay={0.12}>
+          <div className="mt-12 v2-price-table-wrap">
+            <table className="v2-price-table" aria-label="Reference corridor tariffs">
+              <thead>
+                <tr>
+                  <th className="v2-price-th">Lane</th>
+                  <th className="v2-price-th">Service</th>
+                  <th className="v2-price-th v2-price-num">Transit</th>
+                  <th className="v2-price-th v2-price-num">First 500 g</th>
+                  <th className="v2-price-th v2-price-num">Per 500 g above</th>
+                </tr>
+              </thead>
+              <tbody>
+                {pricingContent.tiers.map((row) => (
+                  <tr key={`${row.lane}-${row.service}`} className="v2-price-row">
+                    <td className="v2-price-td">
+                      <span className="v2-mono v2-accent">{row.lane}</span>
+                      <span className="v2-price-desc">{row.description}</span>
+                    </td>
+                    <td className="v2-price-td">
+                      <span className="v2-price-badge">{row.service}</span>
+                    </td>
+                    <td className="v2-price-td v2-price-num v2-mono">{row.transit}</td>
+                    <td className="v2-price-td v2-price-num v2-mono">{row.upTo500g}</td>
+                    <td className="v2-price-td v2-price-num v2-mono">{row.per500gAbove}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </Reveal>
+
+        <Reveal delay={0.18}>
+          <div className="mt-8">
+            <V2Button href={pricingContent.ctaHref}>
+              {pricingContent.ctaLabel}
+              <Icon name="arrow" size={16} />
+            </V2Button>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  )
+}
+
+/* ── Testimonials ───────────────────────────────────────────────────────── */
+export function V2Testimonials() {
+  return (
+    <section className="v2-section px-5 sm:px-8">
+      <div className="mx-auto max-w-6xl">
+        <Reveal>
+          <span className="v2-eyebrow">{testimonialsContent.eyebrow}</span>
+          <h2 className="v2-h2 v2-size-h2 mt-4 max-w-xl">{testimonialsContent.heading}</h2>
+        </Reveal>
+
+        <div className="mt-12 grid gap-6 md:grid-cols-3">
+          {testimonialsContent.items.map((item, i) => (
+            <Reveal key={item.company} delay={i * 0.08}>
+              <figure className="v2-testimonial h-full">
+                <blockquote className="v2-testimonial-quote">
+                  &ldquo;{item.quote}&rdquo;
+                </blockquote>
+                <figcaption className="v2-testimonial-meta">
+                  <span className="v2-mono v2-accent v2-testimonial-metric">{item.metric}</span>
+                  <span className="v2-testimonial-author">{item.author}</span>
+                  <span className="v2-testimonial-company">{item.company}</span>
+                </figcaption>
+              </figure>
             </Reveal>
           ))}
         </div>

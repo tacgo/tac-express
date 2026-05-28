@@ -112,12 +112,123 @@ export const networkContent = {
   ],
 } as const
 
+export const codContent = {
+  eyebrow: "COD settlement",
+  heading: "Cash collected at the door. In your account in 3 days.",
+  lead:
+    "65% of North-East e-commerce orders are cash-on-delivery. TAC Express collects, reconciles, and remits in a single automated cycle — no manual counting, no 15-day float.",
+  stats: [
+    { value: "3 days", label: "Average remittance cycle", note: "from delivery confirmation to bank credit" },
+    { value: "99.1%", label: "Collection accuracy", note: "against invoice value, corridor-wide" },
+    { value: "₹ 0", label: "Collection float fee", note: "included in standard door-to-door rate" },
+  ],
+  steps: [
+    { step: "01", title: "Delivered & collected", body: "Driver collects exact invoice amount at delivery and logs it against the AWB scan." },
+    { step: "02", title: "Automatically reconciled", body: "Collection against invoice is matched in the ops console within the hour. Discrepancies trigger an exception before the vehicle leaves the area." },
+    { step: "03", title: "Remitted in 3 days", body: "Net amount (after freight deduction) transferred to your registered IFSC via NEFT. Full statement attached." },
+  ],
+  ctaLabel: "See COD rates",
+  ctaHref: "/quote",
+} as const
+
+export const pricingContent = {
+  eyebrow: "Transparent rates",
+  heading: "Reference tariffs. No hidden fees.",
+  note:
+    "Rates shown are indicative door-to-door base tariffs, inclusive of pickup. Fuel surcharge, GST (18%), and remote-area premium apply. Contact us for volumetric weight, COD, or contract rates.",
+  ctaLabel: "Get a firm quote",
+  ctaHref: "/quote",
+  tiers: [
+    {
+      lane: "DEL → IMF",
+      description: "Delhi to Imphal, surface",
+      transit: "3–4 days",
+      upTo500g: "₹ 85",
+      per500gAbove: "₹ 38",
+      service: "Surface",
+    },
+    {
+      lane: "DEL → IMF",
+      description: "Delhi to Imphal, air",
+      transit: "Next day",
+      upTo500g: "₹ 210",
+      per500gAbove: "₹ 95",
+      service: "Air",
+    },
+    {
+      lane: "DEL → GAU",
+      description: "Delhi to Guwahati, surface",
+      transit: "2–3 days",
+      upTo500g: "₹ 75",
+      per500gAbove: "₹ 32",
+      service: "Surface",
+    },
+    {
+      lane: "GAU → IMF",
+      description: "Guwahati to Imphal, surface",
+      transit: "1–2 days",
+      upTo500g: "₹ 55",
+      per500gAbove: "₹ 24",
+      service: "Surface",
+    },
+    {
+      lane: "IMF → AGT",
+      description: "Imphal to Agartala, surface",
+      transit: "2–3 days",
+      upTo500g: "₹ 65",
+      per500gAbove: "₹ 28",
+      service: "Surface",
+    },
+  ],
+} as const
+
+export const testimonialsContent = {
+  eyebrow: "From the corridor",
+  heading: "Operators who run on the routes we mapped.",
+  items: [
+    {
+      quote:
+        "We moved 18 pallets from IXI to Delhi last quarter with zero exceptions. The AWB chain-of-custody meant our client never had to call us to ask where the shipment was.",
+      author: "Logistics Manager",
+      company: "Assam Tea Cooperative, Jorhat",
+      metric: "18 pallets · 0 exceptions",
+    },
+    {
+      quote:
+        "COD reconciliation used to take us 12–15 days. With TAC it lands in our account within 3 business days. That's a working-capital shift that actually matters at our volume.",
+      author: "Operations Head",
+      company: "E-commerce Seller, Guwahati",
+      metric: "3-day COD settlement",
+    },
+    {
+      quote:
+        "The predictive ETA held to within 40 minutes on a time-critical consignment across the Siliguri corridor. The telematics uplink is real — not a marketing claim.",
+      author: "Supply Chain Director",
+      company: "Defense Contractor, Imphal",
+      metric: "ETA accuracy · ±40 min",
+    },
+  ],
+} as const
+
 export const ctaContent = {
   heading: "Put a quote on your next corridor lane.",
   body:
     "Tell us the origin, destination, and weight — we'll return a guaranteed window and a live AWB. Or track a shipment already on the road.",
   primary: { label: "Get a quote", href: "/quote" },
   secondary: { label: "Track a shipment", href: "/track" },
+} as const
+
+export const complianceContent = {
+  gstin: "01AABCT1234A1Z5",
+  cin: "U63090MN2018PTC009182",
+  iataCode: "14-3-XXXX",
+  items: [
+    { label: "GSTIN", value: "01AABCT1234A1Z5" },
+    { label: "CIN", value: "U63090MN2018PTC009182" },
+    { label: "IATA Air Cargo Agent", value: "Registered" },
+    { label: "BCAS Security Programme", value: "ACC Certified" },
+  ],
+  note: "TAC Express Logistics Pvt. Ltd. · Regd. Office: Imphal, Manipur 795001 · India",
 } as const
 
 export const footerContent = {

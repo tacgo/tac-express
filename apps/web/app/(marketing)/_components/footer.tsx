@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { footerContent } from "../_content"
+import { footerContent, complianceContent } from "../_content"
 
 export function V2Footer() {
   return (
@@ -31,7 +31,21 @@ export function V2Footer() {
           ))}
         </div>
 
+        {/* Compliance strip */}
         <div className="v2-divider mt-14" />
+        <div className="v2-compliance-strip pt-8 pb-4">
+          <div className="flex flex-wrap gap-x-8 gap-y-3">
+            {complianceContent.items.map((item) => (
+              <div key={item.label} className="v2-compliance-item">
+                <span className="v2-compliance-label">{item.label}</span>
+                <span className="v2-compliance-value">{item.value}</span>
+              </div>
+            ))}
+          </div>
+          <p className="v2-compliance-note mt-4">{complianceContent.note}</p>
+        </div>
+
+        <div className="v2-divider" />
         <div className="v2-faint flex flex-col gap-3 pt-6 text-xs sm:flex-row sm:items-center sm:justify-between">
           <span>{footerContent.legal}</span>
           <Link href="/track" className="v2-navlink">

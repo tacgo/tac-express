@@ -22,9 +22,8 @@ export function V2Nav() {
         className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-5 transition-all duration-500 sm:px-8"
         style={{
           height: scrolled ? 62 : 76,
-          background: scrolled ? "color-mix(in srgb, var(--v2-bg) 88%, transparent)" : "transparent",
+          background: scrolled ? "var(--v2-bg)" : "transparent",
           borderBottom: `1px solid ${scrolled ? "var(--v2-line)" : "transparent"}`,
-          backdropFilter: scrolled ? "saturate(140%) blur(10px)" : "none",
         }}
       >
         <Link href="/" className="v2-display text-lg tracking-tight" aria-label="TAC Express home">
@@ -41,6 +40,9 @@ export function V2Nav() {
         </nav>
 
         <div className="hidden items-center gap-3 lg:flex">
+          <V2Button href="/sign-in" variant="ghost">
+            Sign in
+          </V2Button>
           <V2Button href={navContent.secondary.href} variant="ghost">
             {navContent.secondary.label}
           </V2Button>
@@ -55,8 +57,7 @@ export function V2Nav() {
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
           onClick={() => setOpen((o) => !o)}
-          className="v2-chip lg:hidden"
-          style={{ padding: "0.5rem", borderRadius: 10 }}
+          className="v2-hamburger"
         >
           <Icon name={open ? "close" : "menu"} size={20} />
         </button>
@@ -78,7 +79,8 @@ export function V2Nav() {
                 {l.label}
               </Link>
             ))}
-            <div className="mt-2 grid grid-cols-2 gap-2">
+            <div className="mt-2 grid grid-cols-3 gap-2">
+              <V2Button href="/sign-in" variant="ghost">Sign in</V2Button>
               <V2Button href={navContent.secondary.href} variant="ghost">
                 {navContent.secondary.label}
               </V2Button>

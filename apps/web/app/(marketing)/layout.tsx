@@ -1,25 +1,21 @@
 import type { Metadata } from "next"
 import type { ReactNode } from "react"
-import { Fraunces, Manrope } from "next/font/google"
+import { Noto_Serif } from "next/font/google"
 import "./v2.css"
 import { siteUrl } from "@/lib/site-url"
 import { V2Nav } from "./_components/nav"
 import { V2Footer } from "./_components/footer"
 
-// Landing v2 loads its OWN fonts (editorial serif + modern sans), scoped to
-// this route. It does not use the Violet Grid trio. See docs/LANDING-V2-POLICY.md.
-const display = Fraunces({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  style: ["normal", "italic"],
-  variable: "--v2-font-display",
-  display: "swap",
-})
-
-const body = Manrope({
+// Landing v2 aligns with the Violet Grid font trio (Outfit + IBM Plex Mono +
+// Noto Serif). Outfit and IBM Plex Mono are loaded by the root layout and
+// available as --font-sans and --font-mono. Only Noto Serif needs a dedicated
+// load here because it's the editorial/display face used for hero headings.
+// See docs/LANDING-V2-POLICY.md (font alignment update 2026-05-29).
+const display = Noto_Serif({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
-  variable: "--v2-font-body",
+  style: ["normal", "italic"],
+  variable: "--v2-font-display",
   display: "swap",
 })
 
@@ -60,7 +56,7 @@ export const metadata: Metadata = {
 
 export default function V2Layout({ children }: { children: ReactNode }) {
   return (
-    <div className={`landing-v2 ${display.variable} ${body.variable}`}>
+    <div className={`landing-v2 ${display.variable}`}>
       <V2Nav />
       <main>{children}</main>
       <V2Footer />

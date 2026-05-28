@@ -1,6 +1,6 @@
 import { siteUrl } from "@/lib/site-url"
 import { V2Hero } from "./_components/hero"
-import { V2Stats, V2Services, V2Network, V2Workflow, V2Cta } from "./_components/sections"
+import { V2Stats, V2Services, V2Cod, V2Network, V2Pricing, V2Workflow, V2Testimonials, V2Cta } from "./_components/sections"
 
 /**
  * Canonical public landing (`/`) — the editorial-minimal marketing experience,
@@ -55,8 +55,11 @@ export default function LandingPage() {
       <V2Hero />
       <V2Stats />
       <V2Services />
+      <V2Cod />
       <V2Network />
+      <V2Pricing />
       <V2Workflow />
+      <V2Testimonials />
       <V2Cta />
     </>
   )
