@@ -22,7 +22,7 @@ import {
 } from "@workspace/services/hooks/use-manifests"
 import { shipmentService } from "@workspace/services/hooks/use-shipments"
 import { useNotificationStore } from "@workspace/services/stores/notification.store"
-import { parseAwb } from "@workspace/services/awb"
+import { reconcileArrivalScan } from "@workspace/services/arrival-audit"
 import { useBarcodeScanner } from "@workspace/ui/hooks/use-barcode-scanner"
 import { RiListCheck3, RiCheckLine } from "@workspace/ui/icons"
 import { ManifestStatus } from "@workspace/types"
@@ -94,43 +94,21 @@ export function ArrivalAuditClient() {
   }, [items])
 
   const handleScan = async (raw: string) => {
-    // Delegate AWB format knowledge to the services layer (LAW 7). A barcode
-    // that isn't a well-formed AWB — e.g. a stray label or a misread — is
-    // rejected without touching state or creating any record.
-    const awb = parseAwb(raw)
-    if (!awb) {
-      return {
-        outcome: "ERROR" as const,
-        reason: `Barcode not matching — no shipment found for ${raw.trim().toUpperCase()}`,
-      }
-    }
-    const matched = items.find((i) => i.awbNumber === awb)
-    if (!matched) {
-      return {
-        outcome: "ERROR" as const,
-        reason: `Barcode not matching — no shipment found for ${awb}`,
-      }
-    }
-    if (matched.status === "SCANNED") {
-      return {
-        outcome: "DUPLICATE" as const,
-        reason: "Already received on this manifest",
-      }
-    }
-    if (matched.status === "EXCEPTION") {
-      return {
-        outcome: "ERROR" as const,
-        reason: "Flagged as an exception — cannot receive",
-      }
-    }
-    setItems((prev) =>
-      prev.map((i) =>
-        i.awbNumber === awb
-          ? { ...i, status: "SCANNED", scannedAt: new Date().toISOString() }
-          : i
+    // Classification lives in services (LAW 7); the component only applies the
+    // resulting state change. A barcode that isn't a well-formed AWB or isn't
+    // on this manifest is rejected without touching state or creating a record.
+    const result = reconcileArrivalScan(items, raw)
+    if (result.outcome === "SUCCESS" && result.matchedAwb) {
+      const awb = result.matchedAwb
+      setItems((prev) =>
+        prev.map((i) =>
+          i.awbNumber === awb
+            ? { ...i, status: "SCANNED", scannedAt: new Date().toISOString() }
+            : i
+        )
       )
-    )
-    return { outcome: "SUCCESS" as const }
+    }
+    return { outcome: result.outcome, reason: result.reason }
   }
 
   // HID barcode capture (USB keyboard-wedge, e.g. Helett HT20). Armed only
@@ -144,6 +122,15 @@ export function ArrivalAuditClient() {
     nonce: number
   } | null>(null)
   const scanNonce = React.useRef(0)
+
+  // Drop any captured-but-unconsumed scan when the manifest context changes, so
+  // a scan from manifest A can never replay against manifest B after the
+  // console remounts (its nonce tracker resets while this state would persist).
+  React.useEffect(() => {
+    setExternalScan(null)
+    scanNonce.current = 0
+  }, [manifest?.id])
+
   useBarcodeScanner({
     enabled: Boolean(manifest),
     onScan: (code) => {
