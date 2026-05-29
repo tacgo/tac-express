@@ -16,7 +16,7 @@ const TWILIO_ACCOUNT_SID = Deno.env.get("TWILIO_ACCOUNT_SID") ?? ""
 const TWILIO_AUTH_TOKEN = Deno.env.get("TWILIO_AUTH_TOKEN") ?? ""
 const TWILIO_FROM_NUMBER = Deno.env.get("TWILIO_FROM_NUMBER") ?? ""
 const FCM_SERVER_KEY = Deno.env.get("FCM_SERVER_KEY") ?? ""
-const FROM_EMAIL = Deno.env.get("NOTIFICATION_FROM_EMAIL") ?? "no-reply@tac-express.in"
+const FROM_EMAIL = Deno.env.get("NOTIFICATION_FROM_EMAIL") ?? "no-reply@tacexpress.in"
 
 interface NotificationPayload {
   user_id?: string
@@ -110,8 +110,30 @@ async function sendPush(token: string, title: string, body: string, link?: strin
   }
 }
 
+function getJwtRole(req: Request): string | null {
+  const auth = req.headers.get("Authorization") ?? ""
+  const token = auth.replace(/^Bearer\s+/i, "")
+  if (!token) return null
+  try {
+    const [, payloadB64] = token.split(".")
+    const decoded = JSON.parse(atob(payloadB64.replace(/-/g, "+").replace(/_/g, "/")))
+    return typeof decoded.role === "string" ? decoded.role : null
+  } catch {
+    return null
+  }
+}
+
 Deno.serve(async (req) => {
   if (req.method !== "POST") return new Response("Method not allowed", { status: 405 })
+
+  // Reject anon-key callers. The anon key is bundled in the browser and
+  // publicly extractable — without this check any visitor could use this
+  // function as a free Resend/Twilio/FCM relay with our credentials.
+  // Legitimate callers (contact-lead service) use the service-role client.
+  const jwtRole = getJwtRole(req)
+  if (jwtRole === "anon") {
+    return new Response(JSON.stringify({ error: "Forbidden" }), { status: 403 })
+  }
 
   let payload: NotificationPayload
   try {
