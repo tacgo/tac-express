@@ -249,7 +249,7 @@ function V7AgingCard({ bucket }: { bucket: AgingBucket }) {
       className="flex flex-col gap-1 border border-border bg-surface-elevated p-3"
     >
       <span className="t-overline text-muted-foreground">{bucket.label}</span>
-      <span className="font-mono tabular-nums text-lg font-bold text-foreground">
+      <span className="t-data-sm text-foreground">
         {bucket.amount}
       </span>
       <span className="t-caption text-muted-foreground">{bucket.sub}</span>

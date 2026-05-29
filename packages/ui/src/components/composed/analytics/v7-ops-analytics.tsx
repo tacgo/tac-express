@@ -285,7 +285,7 @@ function AnalyticsError({ onRefresh }: { onRefresh?: () => void }) {
         <RiErrorWarningLine className="size-5" aria-hidden />
       </div>
       <p className="tac-mono-label mb-1 text-destructive">Signal lost</p>
-      <h2 className="text-base font-semibold text-foreground">
+      <h2 className="t-h4 text-foreground">
         Couldn&rsquo;t load analytics
       </h2>
       <p className="mt-1 max-w-sm text-sm text-muted-foreground">
