@@ -40,6 +40,9 @@ export type AuditAction =
   // Historical non-destructive (kept for back-compat with existing RPC inserts)
   | "STATUS_CHANGE"
   | "RESOLVED"
+  // Invoice lifecycle state-changes (non-destructive; audit-after pattern)
+  | "invoice_issue"
+  | "invoice_mark_paid"
 
 export const DESTRUCTIVE_AUDIT_ACTIONS = [
   "payment_delete",

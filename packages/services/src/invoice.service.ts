@@ -4,6 +4,7 @@ import type { Invoice, InvoiceFilters } from "@workspace/types"
 import { InvoiceStatus } from "@workspace/types"
 
 import { withAudit } from "./shared/with-audit"
+import { createAuditService } from "./audit.service"
 
 /** Canonical insert shape for `invoices` rows, derived from generated DB types. */
 export type CreateInvoiceDbInput = TablesInsert<"invoices">
@@ -76,6 +77,10 @@ export function createInvoiceService(db: SupabaseClient) {
         .eq("id", id)
         .eq("status", toDbInvoiceStatus(InvoiceStatus.DRAFT))
       if (error) throw error
+      // Non-destructive audit (fire-and-forget; no before_state required for status transitions)
+      void createAuditService(db)
+        .logEvent({ action: "invoice_issue", entityType: "invoice", entityId: id })
+        .catch(() => {})
     },
 
     async markPaid(id: string, paidAt?: string): Promise<void> {
@@ -85,6 +90,9 @@ export function createInvoiceService(db: SupabaseClient) {
         .eq("id", id)
         .eq("status", toDbInvoiceStatus(InvoiceStatus.ISSUED))
       if (error) throw error
+      void createAuditService(db)
+        .logEvent({ action: "invoice_mark_paid", entityType: "invoice", entityId: id })
+        .catch(() => {})
     },
 
     async cancelInvoice(id: string): Promise<void> {
