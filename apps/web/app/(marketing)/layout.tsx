@@ -1,27 +1,12 @@
 import type { Metadata } from "next"
 import type { ReactNode } from "react"
-import { Noto_Serif } from "next/font/google"
-import "./v2.css"
 import { siteUrl } from "@/lib/site-url"
 import { V2Nav } from "./_components/nav"
 import { V2Footer } from "./_components/footer"
 
-// Landing v2 aligns with the Violet Grid font trio (Outfit + IBM Plex Mono +
-// Noto Serif). Outfit and IBM Plex Mono are loaded by the root layout and
-// available as --font-sans and --font-mono. Only Noto Serif needs a dedicated
-// load here because it's the editorial/display face used for hero headings.
-// See docs/LANDING-V2-POLICY.md (font alignment update 2026-05-29).
-const display = Noto_Serif({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  style: ["normal", "italic"],
-  variable: "--v2-font-display",
-  display: "swap",
-})
+// All three fonts (Outfit · IBM Plex Mono · Noto Serif) are loaded by the
+// root layout via next/font and set on <html>. No additional font load needed.
 
-// Canonical landing SEO (carried over from the retired V1 `/` so social shares
-// + SERP results keep their preview — see docs/launch/product-launch-readiness
-// § C.1). metadataBase resolves the relative OG image to an absolute URL.
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: "TAC Express — North-East India logistics, built for the routes nobody else maps",
@@ -56,10 +41,10 @@ export const metadata: Metadata = {
 
 export default function V2Layout({ children }: { children: ReactNode }) {
   return (
-    <div className={`landing-v2 ${display.variable}`}>
+    <>
       <V2Nav />
       <main>{children}</main>
       <V2Footer />
-    </div>
+    </>
   )
 }
