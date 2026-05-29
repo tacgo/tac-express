@@ -154,7 +154,7 @@ describe("listForInvoice", () => {
     })
   })
 
-  it("returns [] AND caches relation-missing when err.code is PGRST205", async () => {
+  it("throws on PGRST205 (relation missing) — no silent fallback after RPC is live", async () => {
     const db = makeDb({
       fromResults: {
         invoice_payments: {
@@ -164,14 +164,12 @@ describe("listForInvoice", () => {
       },
     })
     const { createPaymentService } = await freshPaymentService()
-    const svc = createPaymentService(db)
-    expect(await svc.listForInvoice("inv-1")).toEqual([])
-    // Subsequent call short-circuits — db.from is NOT called again.
-    expect(await svc.listForInvoice("inv-2")).toEqual([])
-    expect(db.from).toHaveBeenCalledTimes(1)
+    await expect(createPaymentService(db).listForInvoice("inv-1")).rejects.toMatchObject({
+      code: "PGRST205",
+    })
   })
 
-  it("returns [] for the legacy regex shape (PostgREST schema-cache miss)", async () => {
+  it("throws on schema-cache miss (regex-matched message)", async () => {
     const db = makeDb({
       fromResults: {
         invoice_payments: {
@@ -181,17 +179,21 @@ describe("listForInvoice", () => {
       },
     })
     const { createPaymentService } = await freshPaymentService()
-    expect(await createPaymentService(db).listForInvoice("inv-1")).toEqual([])
+    await expect(
+      createPaymentService(db).listForInvoice("inv-1"),
+    ).rejects.toMatchObject({ message: expect.stringContaining("invoice_payments") })
   })
 
-  it("returns [] for raw Postgres relation-does-not-exist (code 42P01)", async () => {
+  it("throws on raw Postgres relation-does-not-exist (code 42P01)", async () => {
     const db = makeDb({
       fromResults: {
         invoice_payments: { data: null, error: { code: "42P01", message: "" } },
       },
     })
     const { createPaymentService } = await freshPaymentService()
-    expect(await createPaymentService(db).listForInvoice("inv-1")).toEqual([])
+    await expect(createPaymentService(db).listForInvoice("inv-1")).rejects.toMatchObject({
+      code: "42P01",
+    })
   })
 })
 
@@ -328,95 +330,16 @@ describe("recordPayment — RPC error branches", () => {
     expect(captureExceptionMock).toHaveBeenCalledTimes(1)
   })
 
-  it("falls back to INSERT + invoice update when RPC is missing (PGRST205)", async () => {
-    // The fallback path needs THREE table interactions:
-    //   1. insert into invoice_payments
-    //   2. select advance_paid, total_amount from invoices
-    //   3. update invoices set advance_paid, balance, status, paid_at
-    const PAYMENT_ROW = {
-      id: "pay-fb-1",
-      invoice_id: "inv-1",
-      amount: 200,
-      method: "BANK_TRANSFER",
-      received_at: "2026-05-15T16:00:00Z",
-    }
-    const INVOICE_ROW = { advance_paid: 100, total_amount: 500 }
-    const db = makeDb({
-      rpcResult: {
-        data: null,
-        error: { code: "PGRST205", message: "Could not find the function" },
-      },
-      fromResults: {
-        invoice_payments: { data: PAYMENT_ROW, error: null },
-        invoices: { data: INVOICE_ROW, error: null },
-      },
-    })
-    const { createPaymentService } = await freshPaymentService()
-    const result = await createPaymentService(db).recordPayment({
-      invoiceId: "inv-1",
-      amount: 200,
-      method: "BANK_TRANSFER",
-      receivedAt: "2026-05-15T16:00:00Z",
-    })
-    expect(result.id).toBe("pay-fb-1")
-    expect(result.amount).toBe(200)
-    // Sentry NOT emitted for the missing-RPC fallback (audit § 3.2 contract).
-    expect(captureExceptionMock).not.toHaveBeenCalled()
-    // 3 .from calls in EXACT order: invoice_payments insert, invoices select,
-    // invoices update. CodeRabbit caught the weak prior assertion — pinning
-    // the call sequence + count catches regressions that skip the invoice
-    // update (which would leave advance_paid / balance / status stale on
-    // the invoice row even after a successful payment insert).
-    expect(db.from).toHaveBeenCalledTimes(3)
-    expect(db.from).toHaveBeenNthCalledWith(1, "invoice_payments")
-    expect(db.from).toHaveBeenNthCalledWith(2, "invoices")
-    expect(db.from).toHaveBeenNthCalledWith(3, "invoices")
-  })
-
-  it("throws raw insert error during fallback when INSERT fails", async () => {
-    const db = makeDb({
-      rpcResult: {
-        data: null,
-        error: { code: "PGRST205", message: "schema cache miss" },
-      },
-      fromResults: {
-        invoice_payments: { data: null, error: { code: "23505", message: "dup" } },
-      },
-    })
+  it("emits + throws on PGRST205 RPC error (no fallback — RPC is live)", async () => {
+    const errObj = { code: "PGRST205", message: "Could not find the function" }
+    const db = makeDb({ rpcResult: { data: null, error: errObj } })
     const { createPaymentService } = await freshPaymentService()
     await expect(
-      createPaymentService(db).recordPayment({
-        invoiceId: "inv-1",
-        amount: 100,
-        method: "CASH",
-      }),
-    ).rejects.toMatchObject({ code: "23505" })
-  })
-
-  it("short-circuits with clear error after relation-missing TTL is set", async () => {
-    // First call: relation-missing detected via listForInvoice (cheap setup).
-    const dbStep1 = makeDb({
-      fromResults: {
-        invoice_payments: {
-          data: null,
-          error: { code: "PGRST205", message: "Could not find" },
-        },
-      },
-    })
-    const { createPaymentService } = await freshPaymentService()
-    const svc = createPaymentService(dbStep1)
-    await svc.listForInvoice("inv-1") // sets the TTL
-
-    // Subsequent recordPayment must throw clearly, NOT attempt the RPC.
-    await expect(
-      svc.recordPayment({
-        invoiceId: "inv-1",
-        amount: 100,
-        method: "CASH",
-      }),
-    ).rejects.toThrow(/Payment recording is unavailable/)
-    // db.rpc was never called — short-circuit fired.
-    expect(dbStep1.rpc).not.toHaveBeenCalled()
+      createPaymentService(db).recordPayment({ invoiceId: "inv-1", amount: 200, method: "BANK_TRANSFER" }),
+    ).rejects.toMatchObject({ code: "PGRST205" })
+    expect(captureExceptionMock).toHaveBeenCalledTimes(1)
+    const [, tags] = captureExceptionMock.mock.calls[0]!
+    expect((tags as Record<string, string>)[SUPABASE_RPC_TAG_KEYS.rpcName]).toBe("record_invoice_payment")
   })
 })
 
@@ -626,10 +549,7 @@ describe("deletePayment (post-#134 withAudit-wrapped)", () => {
     expect(tableCalls).toEqual(["invoice_payments", "audit_logs"])
   })
 
-  it("returns silently when relation-missing TTL is already active (no audit, no delete)", async () => {
-    // Trigger the TTL via listForInvoice's PGRST205 path, then verify
-    // deletePayment short-circuits without doing anything — including
-    // not writing an audit row for a no-op.
+  it("throws when the SELECT hits PGRST205 (no silent TTL fallback — RPC is live)", async () => {
     const db = makeDb({
       fromResults: {
         invoice_payments: {
@@ -640,27 +560,10 @@ describe("deletePayment (post-#134 withAudit-wrapped)", () => {
     })
     const { createPaymentService } = await freshPaymentService()
     const svc = createPaymentService(db)
-    await svc.listForInvoice("inv-1") // triggers TTL set
-    const callsBefore = vi.mocked(db.from).mock.calls.length
-    await expect(svc.deletePayment("pay-1")).resolves.toBeUndefined()
-    expect(vi.mocked(db.from).mock.calls.length).toBe(callsBefore)
-  })
-
-  it("marks relation-missing when the SELECT hits PGRST205 on a fresh deployment", async () => {
-    const db = makeDb({
-      fromResults: {
-        invoice_payments: {
-          data: null,
-          error: { code: "PGRST205", message: "Could not find" },
-        },
-      },
-    })
-    const { createPaymentService } = await freshPaymentService()
-    const svc = createPaymentService(db)
-    // First call: SELECT errors with PGRST205 -> markRelationMissing + return.
-    await expect(svc.deletePayment("pay-1")).resolves.toBeUndefined()
-    // Second call: TTL short-circuit -> no db.from call.
-    await expect(svc.deletePayment("pay-2")).resolves.toBeUndefined()
-    expect(db.from).toHaveBeenCalledTimes(1)
+    await expect(svc.deletePayment("pay-1")).rejects.toMatchObject({ code: "PGRST205" })
+    // A second call also throws — no silent TTL caching after fallback removal.
+    await expect(svc.deletePayment("pay-2")).rejects.toMatchObject({ code: "PGRST205" })
+    // Both calls hit the DB (two separate SELECTs, one for each call).
+    expect(db.from).toHaveBeenCalledTimes(2)
   })
 })
