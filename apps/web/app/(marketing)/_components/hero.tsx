@@ -1,7 +1,10 @@
 "use client"
 
+import Link from "next/link"
 import { motion, useReducedMotion } from "motion/react"
-import { Icon, Reveal, V2Button } from "./primitives"
+import { Button } from "@workspace/ui/components/button"
+import { RiArrowRightLine, RiMapPinLine } from "@workspace/ui/icons"
+import { Reveal } from "./primitives"
 import { V2TrackingWidget } from "./tracking-widget"
 import { heroContent } from "../_content"
 
@@ -10,40 +13,58 @@ export function V2Hero() {
 
   return (
     <section className="relative overflow-hidden px-5 pb-20 pt-32 sm:px-8 lg:pb-28 lg:pt-40">
-      <div aria-hidden className="v2-grid-faint pointer-events-none absolute inset-0" />
+      {/* Dot-grid background texture — uses border token, adapts to dark/light */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 opacity-[0.35]"
+        style={{
+          backgroundImage: `radial-gradient(circle, var(--border) 1px, transparent 1px)`,
+          backgroundSize: "28px 28px",
+        }}
+      />
+      {/* Top edge accent line */}
+      <div aria-hidden className="absolute inset-x-0 top-0 h-px bg-primary/40" />
 
       <div className="relative mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-12 lg:gap-10">
-        {/* Message — wider column (asymmetric 7/5) */}
+        {/* Copy — 7 cols */}
         <div className="lg:col-span-7">
           <Reveal>
-            <span className="v2-chip">
-              <span aria-hidden className="v2-accent">●</span>
+            <div className="inline-flex items-center gap-2 border border-border bg-background/60 px-3 py-1.5 tac-mono-label-base text-muted-foreground">
+              <span className="size-1.5 animate-pulse bg-primary" aria-hidden="true" />
               {heroContent.eyebrow}
-            </span>
+            </div>
           </Reveal>
 
           <Reveal delay={0.08}>
-            <h1 className="v2-display v2-size-hero mt-7">
+            <h1 className="mt-7 text-4xl font-bold tracking-tight text-balance text-foreground sm:text-5xl lg:text-6xl">
               {heroContent.titleLead}{" "}
-              <span className="v2-serif-italic v2-accent">{heroContent.titleEmphasis}</span>{" "}
+              <em className="font-serif font-semibold not-italic text-primary">
+                {heroContent.titleEmphasis}
+              </em>{" "}
               {heroContent.titleTail}
             </h1>
           </Reveal>
 
           <Reveal delay={0.16}>
-            <p className="v2-lead mt-7 max-w-xl">{heroContent.body}</p>
+            <p className="mt-7 max-w-xl t-body text-muted-foreground">
+              {heroContent.body}
+            </p>
           </Reveal>
 
           <Reveal delay={0.24}>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
-              <V2Button href={heroContent.primary.href}>
-                {heroContent.primary.label}
-                <Icon name="arrow" size={17} />
-              </V2Button>
-              <V2Button href={heroContent.secondary.href} variant="ghost">
-                <Icon name="pin" size={17} />
-                {heroContent.secondary.label}
-              </V2Button>
+              <Button asChild>
+                <Link href={heroContent.primary.href}>
+                  {heroContent.primary.label}
+                  <RiArrowRightLine className="ml-1.5 size-4" aria-hidden="true" />
+                </Link>
+              </Button>
+              <Button asChild variant="ghost">
+                <Link href={heroContent.secondary.href}>
+                  <RiMapPinLine className="mr-1.5 size-4" aria-hidden="true" />
+                  {heroContent.secondary.label}
+                </Link>
+              </Button>
             </div>
           </Reveal>
 
@@ -52,14 +73,14 @@ export function V2Hero() {
           </Reveal>
         </div>
 
-        {/* Cinematic footage — offset column */}
+        {/* Video — 5 cols */}
         <motion.div
           className="lg:col-span-5"
           initial={reduced ? false : { opacity: 0, scale: 0.96, y: 24 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
         >
-          <div className="v2-frame relative aspect-[4/5] w-full">
+          <div className="relative aspect-[4/5] w-full border border-border shadow">
             <video
               autoPlay={!reduced}
               muted
@@ -71,10 +92,15 @@ export function V2Hero() {
             >
               <source src={heroContent.videoSrc} type="video/mp4" />
             </video>
-            <div aria-hidden className="v2-media-scrim absolute inset-x-0 bottom-0 h-1/2" />
+            {/* Scrim */}
+            <div
+              aria-hidden
+              className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-background/90 to-transparent"
+            />
+            {/* Caption */}
             <div className="absolute inset-x-0 bottom-0 flex items-center gap-2.5 p-5">
-              <span aria-hidden className="v2-pulse" />
-              <span className="v2-mono v2-on-media text-xs uppercase tracking-wide">
+              <span className="size-1.5 animate-pulse bg-primary" aria-hidden="true" />
+              <span className="font-mono text-xs uppercase tracking-widest text-foreground/70">
                 {heroContent.caption}
               </span>
             </div>

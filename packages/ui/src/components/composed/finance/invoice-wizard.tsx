@@ -974,10 +974,10 @@ function PaymentStep({
             </>
           )}
           <div className="flex items-center justify-between border-t border-border pt-2 mt-2">
-            <span className="font-mono text-xs uppercase tracking-widest text-foreground font-semibold">
+            <span className="tac-mono-label-base text-foreground">
               Total Amount
             </span>
-            <span className="font-mono text-lg font-bold text-foreground tabular-nums">
+            <span className="t-data-sm text-foreground">
               {formatINR(totals.total)}
             </span>
           </div>
@@ -992,10 +992,10 @@ function PaymentStep({
             </div>
           )}
           <div className="flex items-center justify-between border-t border-primary/20 pt-2 mt-2 bg-primary/5 -mx-4 px-4 pb-2">
-            <span className="font-mono text-xs uppercase tracking-widest text-primary font-semibold">
+            <span className="tac-mono-label">
               Balance Due
             </span>
-            <span className="font-mono text-lg font-bold text-primary tabular-nums">
+            <span className="t-data-sm text-primary">
               {formatINR(totals.balance)}
             </span>
           </div>

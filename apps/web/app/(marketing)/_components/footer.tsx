@@ -3,25 +3,31 @@ import { footerContent, complianceContent } from "../_content"
 
 export function V2Footer() {
   return (
-    <footer className="px-5 pb-12 pt-16 sm:px-8">
+    <footer className="border-t border-border px-5 pb-12 pt-16 sm:px-8">
       <div className="mx-auto max-w-6xl">
-        <div className="v2-divider" />
-        <div className="grid gap-10 pt-14 lg:grid-cols-12">
+        <div className="grid gap-10 lg:grid-cols-12">
           <div className="lg:col-span-5">
-            <div className="v2-display text-xl tracking-tight">
+            <div className="font-serif text-xl font-semibold tracking-tight text-foreground">
               {footerContent.brand.split(" ")[0]}
-              <span className="v2-accent"> {footerContent.brand.split(" ")[1]}</span>
+              <span className="text-primary"> {footerContent.brand.split(" ")[1]}</span>
             </div>
-            <p className="v2-muted mt-4 max-w-sm text-sm leading-relaxed">{footerContent.blurb}</p>
+            <p className="mt-4 max-w-sm t-body-sm text-muted-foreground">
+              {footerContent.blurb}
+            </p>
           </div>
 
           {footerContent.columns.map((col) => (
             <div key={col.title} className="lg:col-span-2">
-              <div className="v2-eyebrow">{col.title}</div>
+              <div className="tac-mono-label-base text-muted-foreground">
+                {col.title}
+              </div>
               <ul className="mt-4 space-y-3">
                 {col.links.map((l) => (
                   <li key={l.label}>
-                    <Link href={l.href} className="v2-navlink text-sm">
+                    <Link
+                      href={l.href}
+                      className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                    >
                       {l.label}
                     </Link>
                   </li>
@@ -32,23 +38,23 @@ export function V2Footer() {
         </div>
 
         {/* Compliance strip */}
-        <div className="v2-divider mt-14" />
-        <div className="v2-compliance-strip pt-8 pb-4">
+        <div className="mt-14 border-t border-border pt-8">
           <div className="flex flex-wrap gap-x-8 gap-y-3">
             {complianceContent.items.map((item) => (
-              <div key={item.label} className="v2-compliance-item">
-                <span className="v2-compliance-label">{item.label}</span>
-                <span className="v2-compliance-value">{item.value}</span>
+              <div key={item.label} className="flex items-baseline gap-2">
+                <span className="tac-mono-label-base text-muted-foreground">
+                  {item.label}
+                </span>
+                <span className="t-mono-sm text-foreground">{item.value}</span>
               </div>
             ))}
           </div>
-          <p className="v2-compliance-note mt-4">{complianceContent.note}</p>
+          <p className="mt-4 text-xs text-muted-foreground">{complianceContent.note}</p>
         </div>
 
-        <div className="v2-divider" />
-        <div className="v2-faint flex flex-col gap-3 pt-6 text-xs sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-8 flex flex-col gap-3 border-t border-border pt-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
           <span>{footerContent.legal}</span>
-          <Link href="/track" className="v2-navlink">
+          <Link href="/track" className="transition-colors hover:text-foreground">
             Track a shipment →
           </Link>
         </div>

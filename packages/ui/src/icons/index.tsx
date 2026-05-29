@@ -145,6 +145,7 @@ import {
   RiClipboardLine,
   RiGridLine,
   RiYoutubeFill,
+  RiEyeOffLine,
 } from "@remixicon/react"
 export type { RemixiconComponentType } from "@remixicon/react"
 
@@ -250,6 +251,7 @@ export const LogisticsIcons = {
   download: RiDownloadLine,
   upload: RiUploadLine,
   eye: RiEyeLine,
+  eyeOff: RiEyeOffLine,
   edit: RiEditLine,
   trash: RiDeleteBinLine,
   more: RiMoreLine,
@@ -395,4 +397,5 @@ export {
   RiArrowRightUpLine,
   RiClipboardLine,
   RiGridLine,
+  RiEyeOffLine,
 }

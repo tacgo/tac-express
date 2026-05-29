@@ -58,7 +58,7 @@ function StatTile({
       </div>
       <p
         className={cn(
-          "font-sans text-lg font-semibold tabular-nums",
+          "t-data-sm",
           tone === "warning"
             ? "text-accent-warning"
             : tone === "success"

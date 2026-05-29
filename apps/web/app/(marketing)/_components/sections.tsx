@@ -1,6 +1,20 @@
 "use client"
 
-import { Icon, Reveal, V2Button, type V2IconName } from "./primitives"
+import type React from "react"
+import Link from "next/link"
+import {
+  RiTruckLine,
+  RiPlaneLine,
+  RiBox3Line,
+  RiShieldCheckLine,
+  RiMoneyDollarCircleLine,
+  RiMapLine,
+  RiArrowRightUpLine,
+  RiArrowRightLine,
+  RiMapPinLine,
+} from "@workspace/ui/icons"
+import { Button } from "@workspace/ui/components/button"
+import { Reveal } from "./primitives"
 import {
   statsContent,
   servicesContent,
@@ -12,17 +26,28 @@ import {
   ctaContent,
 } from "../_content"
 
-/* ── Stats band ─────────────────────────────────────────────────────────── */
+type IconComp = React.ComponentType<{ className?: string }>
+
+const serviceIconMap: Record<string, IconComp> = {
+  truck: RiTruckLine,
+  plane: RiPlaneLine,
+  box: RiBox3Line,
+  shield: RiShieldCheckLine,
+  coins: RiMoneyDollarCircleLine,
+  route: RiMapLine,
+}
+
+/* ── Stats band ─────────────────────────────────────────────────────── */
 export function V2Stats() {
   return (
-    <section className="v2-bg-2 px-5 py-14 sm:px-8">
+    <section className="border-y border-border bg-muted px-5 py-14 sm:px-8">
       <div className="mx-auto grid max-w-6xl gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
         {statsContent.items.map((s, i) => (
           <Reveal key={s.label} delay={i * 0.07}>
-            <div>
-              <div className="v2-mono v2-size-stat v2-accent">{s.value}</div>
-              <div className="mt-2 font-semibold">{s.label}</div>
-              <div className="v2-muted mt-1 text-sm">{s.note}</div>
+            <div className="border-l-2 border-primary pl-5">
+              <div className="t-data text-primary">{s.value}</div>
+              <div className="mt-2 font-semibold text-foreground">{s.label}</div>
+              <div className="mt-1 text-sm text-muted-foreground">{s.note}</div>
             </div>
           </Reveal>
         ))}
@@ -31,63 +56,81 @@ export function V2Stats() {
   )
 }
 
-/* ── Services grid ──────────────────────────────────────────────────────── */
+/* ── Services grid ──────────────────────────────────────────────────── */
 export function V2Services() {
   return (
-    <section id={servicesContent.id} className="v2-section px-5 sm:px-8">
+    <section id={servicesContent.id} className="px-5 py-20 sm:px-8 lg:py-28">
       <div className="mx-auto max-w-6xl">
         <div className="grid gap-8 lg:grid-cols-12 lg:items-end">
           <Reveal className="lg:col-span-7">
-            <span className="v2-eyebrow">{servicesContent.eyebrow}</span>
-            <h2 className="v2-h2 v2-size-h2 mt-4">{servicesContent.heading}</h2>
+            <span className="tac-mono-label">
+              {servicesContent.eyebrow}
+            </span>
+            <h2 className="mt-4 font-serif text-3xl font-bold tracking-tight text-balance text-foreground sm:text-4xl">
+              {servicesContent.heading}
+            </h2>
           </Reveal>
           <Reveal delay={0.1} className="lg:col-span-5">
-            <p className="v2-lead">{servicesContent.lead}</p>
+            <p className="t-body text-muted-foreground">{servicesContent.lead}</p>
           </Reveal>
         </div>
 
         <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {servicesContent.items.map((item, i) => (
-            <Reveal key={item.title} delay={(i % 3) * 0.08}>
-              <article className="v2-card v2-card-hover h-full p-7">
-                <span className="v2-icon-tile">
-                  <Icon name={item.icon as V2IconName} size={22} />
-                </span>
-                <h3 className="v2-h3 v2-size-h3 mt-5">{item.title}</h3>
-                <p className="v2-muted mt-2.5 text-sm leading-relaxed">{item.body}</p>
-              </article>
-            </Reveal>
-          ))}
+          {servicesContent.items.map((item, i) => {
+            const IconEl = serviceIconMap[item.icon] ?? RiBox3Line
+            return (
+              <Reveal key={item.title} delay={(i % 3) * 0.08}>
+                <article className="group h-full border border-border bg-card p-7 shadow-sm transition-all duration-150 hover:border-primary/40 hover:shadow">
+                  <span aria-hidden="true" className="inline-flex h-10 w-10 items-center justify-center border border-border bg-muted text-primary transition-colors duration-150 group-hover:border-primary/40 group-hover:bg-primary/10">
+                    <IconEl className="size-5" />
+                  </span>
+                  <h3 className="mt-5 t-h4 text-foreground">{item.title}</h3>
+                  <p className="mt-2.5 t-body-sm text-muted-foreground">{item.body}</p>
+                </article>
+              </Reveal>
+            )
+          })}
         </div>
       </div>
     </section>
   )
 }
 
-/* ── Network (asymmetric: copy + region chips) ──────────────────────────── */
+/* ── Network ────────────────────────────────────────────────────────── */
 export function V2Network() {
   return (
-    <section id={networkContent.id} className="v2-section px-5 sm:px-8">
+    <section id={networkContent.id} className="px-5 py-20 sm:px-8 lg:py-28">
       <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-2 lg:items-center lg:gap-16">
         <Reveal>
-          <span className="v2-eyebrow">{networkContent.eyebrow}</span>
-          <h2 className="v2-h2 v2-size-h2 mt-4">{networkContent.heading}</h2>
-          <p className="v2-lead mt-6">{networkContent.lead}</p>
+          <span className="tac-mono-label">
+            {networkContent.eyebrow}
+          </span>
+          <h2 className="mt-4 font-serif text-3xl font-bold tracking-tight text-balance text-foreground sm:text-4xl">
+            {networkContent.heading}
+          </h2>
+          <p className="mt-6 t-body text-muted-foreground">{networkContent.lead}</p>
           <div className="mt-8">
-            <V2Button href="/services" variant="ghost">
-              Explore the network
-              <Icon name="arrowUpRight" size={16} />
-            </V2Button>
+            <Button asChild variant="ghost">
+              <Link href="/services">
+                Explore the network
+                <RiArrowRightUpLine className="ml-1.5 size-4" aria-hidden="true" />
+              </Link>
+            </Button>
           </div>
         </Reveal>
 
         <Reveal delay={0.12}>
-          <div className="v2-card p-8">
-            <div className="v2-eyebrow">Corridor coverage</div>
+          <div className="border border-border bg-card p-8 shadow-sm">
+            <div className="tac-mono-label">
+              Corridor coverage
+            </div>
             <div className="mt-5 flex flex-wrap gap-2.5">
               {networkContent.regions.map((r) => (
-                <span key={r} className="v2-chip">
-                  <Icon name="pin" size={14} className="v2-accent" />
+                <span
+                  key={r}
+                  className="inline-flex items-center gap-1.5 border border-border bg-muted px-3 py-1.5 text-xs font-medium text-foreground"
+                >
+                  <RiMapPinLine className="size-3.5 text-primary" aria-hidden="true" />
                   {r}
                 </span>
               ))}
@@ -99,23 +142,27 @@ export function V2Network() {
   )
 }
 
-/* ── Workflow (numbered steps) ──────────────────────────────────────────── */
+/* ── Workflow ────────────────────────────────────────────────────────── */
 export function V2Workflow() {
   return (
-    <section id={workflowContent.id} className="v2-section v2-bg-2 px-5 sm:px-8">
+    <section id={workflowContent.id} className="border-y border-border bg-muted px-5 py-20 sm:px-8 lg:py-28">
       <div className="mx-auto max-w-6xl">
         <Reveal className="max-w-2xl">
-          <span className="v2-eyebrow">{workflowContent.eyebrow}</span>
-          <h2 className="v2-h2 v2-size-h2 mt-4">{workflowContent.heading}</h2>
+          <span className="tac-mono-label">
+            {workflowContent.eyebrow}
+          </span>
+          <h2 className="mt-4 font-serif text-3xl font-bold tracking-tight text-balance text-foreground sm:text-4xl">
+            {workflowContent.heading}
+          </h2>
         </Reveal>
 
         <div className="mt-12 grid gap-px sm:grid-cols-2 lg:grid-cols-4">
           {workflowContent.steps.map((s, i) => (
             <Reveal key={s.step} delay={i * 0.08}>
-              <div className="v2-bg-surface h-full p-7" style={{ borderRadius: "var(--v2-radius)" }}>
-                <div className="v2-num">{s.step}</div>
-                <h3 className="v2-h3 v2-size-h3 mt-4">{s.title}</h3>
-                <p className="v2-muted mt-2 text-sm leading-relaxed">{s.body}</p>
+              <div className="h-full border border-border bg-card p-7">
+                <div className="font-mono text-3xl font-bold tabular-nums text-primary/30">{s.step}</div>
+                <h3 className="mt-4 t-h4 text-foreground">{s.title}</h3>
+                <p className="mt-2 t-body-sm text-muted-foreground">{s.body}</p>
               </div>
             </Reveal>
           ))}
@@ -125,37 +172,41 @@ export function V2Workflow() {
   )
 }
 
-/* ── COD settlement spotlight ───────────────────────────────────────────── */
+/* ── COD settlement ─────────────────────────────────────────────────── */
 export function V2Cod() {
   return (
-    <section className="v2-section px-5 sm:px-8">
+    <section className="px-5 py-20 sm:px-8 lg:py-28">
       <div className="mx-auto max-w-6xl">
-        {/* Asymmetric header: 5 col headline / 7 col body */}
         <div className="grid gap-8 lg:grid-cols-12 lg:items-start">
           <Reveal className="lg:col-span-5">
-            <span className="v2-eyebrow">{codContent.eyebrow}</span>
-            <h2 className="v2-h2 v2-size-h2 mt-4">{codContent.heading}</h2>
+            <span className="tac-mono-label">
+              {codContent.eyebrow}
+            </span>
+            <h2 className="mt-4 font-serif text-3xl font-bold tracking-tight text-balance text-foreground sm:text-4xl">
+              {codContent.heading}
+            </h2>
             <div className="mt-8">
-              <V2Button href={codContent.ctaHref} variant="ghost">
-                {codContent.ctaLabel}
-                <Icon name="arrowUpRight" size={16} />
-              </V2Button>
+              <Button asChild variant="ghost">
+                <Link href={codContent.ctaHref}>
+                  {codContent.ctaLabel}
+                  <RiArrowRightUpLine className="ml-1.5 size-4" aria-hidden="true" />
+                </Link>
+              </Button>
             </div>
           </Reveal>
 
           <div className="lg:col-span-7">
             <Reveal delay={0.1}>
-              <p className="v2-lead">{codContent.lead}</p>
+              <p className="t-body text-muted-foreground">{codContent.lead}</p>
             </Reveal>
 
-            {/* KPI strip */}
             <div className="mt-8 grid gap-px sm:grid-cols-3">
               {codContent.stats.map((s, i) => (
                 <Reveal key={s.label} delay={0.12 + i * 0.06}>
-                  <div className="v2-cod-stat">
-                    <div className="v2-mono v2-cod-stat-value v2-accent">{s.value}</div>
-                    <div className="v2-cod-stat-label">{s.label}</div>
-                    <div className="v2-cod-stat-note">{s.note}</div>
+                  <div className="border border-border bg-card p-6" style={{ borderLeft: "3px solid var(--primary)" }}>
+                    <div className="font-mono text-2xl font-bold tabular-nums text-primary">{s.value}</div>
+                    <div className="mt-1.5 text-sm font-semibold text-foreground">{s.label}</div>
+                    <div className="mt-1 text-xs text-muted-foreground">{s.note}</div>
                   </div>
                 </Reveal>
               ))}
@@ -163,14 +214,13 @@ export function V2Cod() {
           </div>
         </div>
 
-        {/* 3-step process */}
         <div className="mt-14 grid gap-px sm:grid-cols-3">
           {codContent.steps.map((s, i) => (
             <Reveal key={s.step} delay={i * 0.08}>
-              <div className="v2-bg-surface h-full p-7">
-                <div className="v2-num">{s.step}</div>
-                <h3 className="v2-h3 v2-size-h3 mt-4">{s.title}</h3>
-                <p className="v2-muted mt-2 text-sm leading-relaxed">{s.body}</p>
+              <div className="h-full border border-border bg-muted p-7">
+                <div className="font-mono text-3xl font-bold tabular-nums text-primary/30">{s.step}</div>
+                <h3 className="mt-4 t-h4 text-foreground">{s.title}</h3>
+                <p className="mt-2 t-body-sm text-muted-foreground">{s.body}</p>
               </div>
             </Reveal>
           ))}
@@ -180,46 +230,67 @@ export function V2Cod() {
   )
 }
 
-/* ── Pricing reference ──────────────────────────────────────────────────── */
+/* ── Pricing reference ──────────────────────────────────────────────── */
 export function V2Pricing() {
   return (
-    <section className="v2-section v2-bg-2 px-5 sm:px-8">
+    <section className="border-y border-border bg-muted px-5 py-20 sm:px-8 lg:py-28">
       <div className="mx-auto max-w-6xl">
         <div className="grid gap-8 lg:grid-cols-12 lg:items-end">
           <Reveal className="lg:col-span-7">
-            <span className="v2-eyebrow">{pricingContent.eyebrow}</span>
-            <h2 className="v2-h2 v2-size-h2 mt-4">{pricingContent.heading}</h2>
+            <span className="tac-mono-label">
+              {pricingContent.eyebrow}
+            </span>
+            <h2 className="mt-4 font-serif text-3xl font-bold tracking-tight text-balance text-foreground sm:text-4xl">
+              {pricingContent.heading}
+            </h2>
           </Reveal>
           <Reveal delay={0.1} className="lg:col-span-5">
-            <p className="v2-lead">{pricingContent.note}</p>
+            <p className="t-body-sm text-muted-foreground">{pricingContent.note}</p>
           </Reveal>
         </div>
 
         <Reveal delay={0.12}>
-          <div className="mt-12 v2-price-table-wrap">
-            <table className="v2-price-table" aria-label="Reference corridor tariffs">
+          <div className="mt-12 overflow-x-auto">
+            <table
+              className="w-full border-collapse border border-border"
+              aria-label="Reference corridor tariffs"
+            >
               <thead>
-                <tr>
-                  <th className="v2-price-th">Lane</th>
-                  <th className="v2-price-th">Service</th>
-                  <th className="v2-price-th v2-price-num">Transit</th>
-                  <th className="v2-price-th v2-price-num">First 500 g</th>
-                  <th className="v2-price-th v2-price-num">Per 500 g above</th>
+                <tr className="border-b border-border bg-card">
+                  {["Lane", "Service", "Transit", "First 500 g", "Per 500 g above"].map((h, i) => (
+                    <th
+                      key={h}
+                      className={`px-4 py-3 font-mono text-xs font-medium uppercase tracking-widest text-muted-foreground ${i >= 2 ? "text-right" : "text-left"}`}
+                    >
+                      {h}
+                    </th>
+                  ))}
                 </tr>
               </thead>
               <tbody>
                 {pricingContent.tiers.map((row) => (
-                  <tr key={`${row.lane}-${row.service}`} className="v2-price-row">
-                    <td className="v2-price-td">
-                      <span className="v2-mono v2-accent">{row.lane}</span>
-                      <span className="v2-price-desc">{row.description}</span>
+                  <tr
+                    key={`${row.lane}-${row.service}`}
+                    className="border-b border-border bg-background transition-colors hover:bg-muted"
+                  >
+                    <td className="px-4 py-3">
+                      <div className="font-mono text-sm font-semibold text-primary">{row.lane}</div>
+                      <div className="mt-0.5 text-xs text-muted-foreground">{row.description}</div>
                     </td>
-                    <td className="v2-price-td">
-                      <span className="v2-price-badge">{row.service}</span>
+                    <td className="px-4 py-3">
+                      <span className="border border-border bg-muted px-2 py-0.5 font-mono text-xs text-foreground">
+                        {row.service}
+                      </span>
                     </td>
-                    <td className="v2-price-td v2-price-num v2-mono">{row.transit}</td>
-                    <td className="v2-price-td v2-price-num v2-mono">{row.upTo500g}</td>
-                    <td className="v2-price-td v2-price-num v2-mono">{row.per500gAbove}</td>
+                    <td className="px-4 py-3 text-right font-mono text-sm tabular-nums text-foreground">
+                      {row.transit}
+                    </td>
+                    <td className="px-4 py-3 text-right font-mono text-sm tabular-nums text-foreground">
+                      {row.upTo500g}
+                    </td>
+                    <td className="px-4 py-3 text-right font-mono text-sm tabular-nums text-foreground">
+                      {row.per500gAbove}
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -229,10 +300,12 @@ export function V2Pricing() {
 
         <Reveal delay={0.18}>
           <div className="mt-8">
-            <V2Button href={pricingContent.ctaHref}>
-              {pricingContent.ctaLabel}
-              <Icon name="arrow" size={16} />
-            </V2Button>
+            <Button asChild>
+              <Link href={pricingContent.ctaHref}>
+                {pricingContent.ctaLabel}
+                <RiArrowRightLine className="ml-1.5 size-4" aria-hidden="true" />
+              </Link>
+            </Button>
           </div>
         </Reveal>
       </div>
@@ -240,27 +313,31 @@ export function V2Pricing() {
   )
 }
 
-/* ── Testimonials ───────────────────────────────────────────────────────── */
+/* ── Testimonials ───────────────────────────────────────────────────── */
 export function V2Testimonials() {
   return (
-    <section className="v2-section px-5 sm:px-8">
+    <section className="px-5 py-20 sm:px-8 lg:py-28">
       <div className="mx-auto max-w-6xl">
         <Reveal>
-          <span className="v2-eyebrow">{testimonialsContent.eyebrow}</span>
-          <h2 className="v2-h2 v2-size-h2 mt-4 max-w-xl">{testimonialsContent.heading}</h2>
+          <span className="tac-mono-label">
+            {testimonialsContent.eyebrow}
+          </span>
+          <h2 className="mt-4 max-w-xl font-serif text-3xl font-bold tracking-tight text-balance text-foreground sm:text-4xl">
+            {testimonialsContent.heading}
+          </h2>
         </Reveal>
 
         <div className="mt-12 grid gap-6 md:grid-cols-3">
           {testimonialsContent.items.map((item, i) => (
             <Reveal key={item.company} delay={i * 0.08}>
-              <figure className="v2-testimonial h-full">
-                <blockquote className="v2-testimonial-quote">
+              <figure className="flex h-full flex-col border border-border bg-card p-7 shadow-sm">
+                <blockquote className="flex-1 t-body-sm text-muted-foreground">
                   &ldquo;{item.quote}&rdquo;
                 </blockquote>
-                <figcaption className="v2-testimonial-meta">
-                  <span className="v2-mono v2-accent v2-testimonial-metric">{item.metric}</span>
-                  <span className="v2-testimonial-author">{item.author}</span>
-                  <span className="v2-testimonial-company">{item.company}</span>
+                <figcaption className="mt-6 border-t border-border pt-5">
+                  <div className="t-mono font-bold text-primary">{item.metric}</div>
+                  <div className="mt-1.5 text-sm font-semibold text-foreground">{item.author}</div>
+                  <div className="mt-0.5 text-xs text-muted-foreground">{item.company}</div>
                 </figcaption>
               </figure>
             </Reveal>
@@ -271,30 +348,32 @@ export function V2Testimonials() {
   )
 }
 
-/* ── Closing CTA ────────────────────────────────────────────────────────── */
+/* ── Closing CTA ────────────────────────────────────────────────────── */
 export function V2Cta() {
   return (
-    <section className="v2-section px-5 sm:px-8">
+    <section className="px-5 py-20 sm:px-8 lg:py-28">
       <Reveal>
         <div
-          className="mx-auto flex max-w-5xl flex-col items-center gap-7 p-10 text-center sm:p-16"
-          style={{
-            background: "var(--v2-accent-soft)",
-            borderRadius: "var(--v2-radius)",
-            boxShadow: "var(--v2-shadow)",
-          }}
+          className="mx-auto flex max-w-5xl flex-col items-center gap-7 border border-border p-10 text-center sm:p-16"
+          style={{ borderTop: "2px solid var(--primary)", background: "var(--overlay-primary-soft)" }}
         >
-          <h2 className="v2-h2 v2-size-h2 max-w-2xl">{ctaContent.heading}</h2>
-          <p className="v2-lead max-w-xl">{ctaContent.body}</p>
+          <h2 className="max-w-2xl font-serif text-3xl font-bold tracking-tight text-balance text-foreground sm:text-4xl">
+            {ctaContent.heading}
+          </h2>
+          <p className="max-w-xl t-body text-muted-foreground">{ctaContent.body}</p>
           <div className="flex flex-col gap-3 sm:flex-row">
-            <V2Button href={ctaContent.primary.href}>
-              {ctaContent.primary.label}
-              <Icon name="arrow" size={17} />
-            </V2Button>
-            <V2Button href={ctaContent.secondary.href} variant="ghost">
-              <Icon name="pin" size={17} />
-              {ctaContent.secondary.label}
-            </V2Button>
+            <Button asChild>
+              <Link href={ctaContent.primary.href}>
+                {ctaContent.primary.label}
+                <RiArrowRightLine className="ml-1.5 size-4" aria-hidden="true" />
+              </Link>
+            </Button>
+            <Button asChild variant="ghost">
+              <Link href={ctaContent.secondary.href}>
+                <RiMapPinLine className="mr-1.5 size-4" aria-hidden="true" />
+                {ctaContent.secondary.label}
+              </Link>
+            </Button>
           </div>
         </div>
       </Reveal>

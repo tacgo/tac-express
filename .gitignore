@@ -7,6 +7,10 @@ node_modules
 
 # Local audit artifacts (screenshots, traces — chrome-devtools-mcp output)
 .artifacts/
+public/ui-audit/
+
+# Next.js generated type declaration (auto-regenerated, not source)
+apps/web/next-env.d.ts
 
 # Local env files
 .env
