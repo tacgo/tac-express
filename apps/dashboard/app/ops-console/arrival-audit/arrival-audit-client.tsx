@@ -22,6 +22,8 @@ import {
 } from "@workspace/services/hooks/use-manifests"
 import { shipmentService } from "@workspace/services/hooks/use-shipments"
 import { useNotificationStore } from "@workspace/services/stores/notification.store"
+import { reconcileArrivalScan } from "@workspace/services/arrival-audit"
+import { useBarcodeScanner } from "@workspace/ui/hooks/use-barcode-scanner"
 import { RiListCheck3, RiCheckLine } from "@workspace/ui/icons"
 import { ManifestStatus } from "@workspace/types"
 
@@ -91,26 +93,51 @@ export function ArrivalAuditClient() {
     }
   }, [items])
 
-  const handleScan = async (awb: string) => {
-    const matched = items.find((i) => i.awbNumber === awb)
-    if (!matched) {
-      return {
-        outcome: "ERROR" as const,
-        reason: "AWB not on this manifest",
-      }
-    }
-    if (matched.status === "SCANNED") {
-      return { outcome: "DUPLICATE" as const, reason: "Already scanned" }
-    }
-    setItems((prev) =>
-      prev.map((i) =>
-        i.awbNumber === awb
-          ? { ...i, status: "SCANNED", scannedAt: new Date().toISOString() }
-          : i
+  const handleScan = async (raw: string) => {
+    // Classification lives in services (LAW 7); the component only applies the
+    // resulting state change. A barcode that isn't a well-formed AWB or isn't
+    // on this manifest is rejected without touching state or creating a record.
+    const result = reconcileArrivalScan(items, raw)
+    if (result.outcome === "SUCCESS" && result.matchedAwb) {
+      const awb = result.matchedAwb
+      setItems((prev) =>
+        prev.map((i) =>
+          i.awbNumber === awb
+            ? { ...i, status: "SCANNED", scannedAt: new Date().toISOString() }
+            : i
+        )
       )
-    )
-    return { outcome: "SUCCESS" as const }
+    }
+    return { outcome: result.outcome, reason: result.reason }
   }
+
+  // HID barcode capture (USB keyboard-wedge, e.g. Helett HT20). Armed only
+  // while a manifest is active, so the listener is scoped to the working
+  // session. A decoded scan is injected into the console via `externalScan`,
+  // flowing through the SAME submit()/onScan() reconcile path manual entry
+  // uses — no parallel write path. The hook ignores editable targets, so the
+  // console's focused manual input keeps accepting normal typing.
+  const [externalScan, setExternalScan] = React.useState<{
+    code: string
+    nonce: number
+  } | null>(null)
+  const scanNonce = React.useRef(0)
+
+  // Drop any captured-but-unconsumed scan when the manifest context changes, so
+  // a scan from manifest A can never replay against manifest B after the
+  // console remounts (its nonce tracker resets while this state would persist).
+  React.useEffect(() => {
+    setExternalScan(null)
+    scanNonce.current = 0
+  }, [manifest?.id])
+
+  useBarcodeScanner({
+    enabled: Boolean(manifest),
+    onScan: (code) => {
+      scanNonce.current += 1
+      setExternalScan({ code, nonce: scanNonce.current })
+    },
+  })
 
   const markException = (awb: string) => {
     setItems((prev) =>
@@ -215,6 +242,7 @@ export function ArrivalAuditClient() {
                 /* arrival-audit is locked to verify mode */
               }}
               onScan={handleScan}
+              externalScan={externalScan}
               activeManifest={{
                 id: manifest.id,
                 manifestNumber: manifest.manifestNumber,
