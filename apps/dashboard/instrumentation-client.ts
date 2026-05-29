@@ -33,6 +33,18 @@ Sentry.init({
   replaysOnErrorSampleRate: 1.0,
   sendDefaultPii: false,
 
+  beforeSend(event) {
+    if (event.extra) {
+      for (const key of ["email", "phone", "gstin", "pan", "awb", "address"]) {
+        if (key in event.extra) delete event.extra[key]
+      }
+    }
+    if (event.request?.query_string) {
+      event.request.query_string = "[SCRUBBED]"
+    }
+    return event
+  },
+
   // Distributed tracing is automatic for client/server/edge in the current
   // SDK. Scope trace-header propagation to our own origins so we never attach
   // sentry-trace/baggage headers to cross-origin third parties (Supabase,
