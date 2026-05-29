@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { Button } from "@workspace/ui/components/button"
-import { Icon } from "@workspace/ui/icons"
+import { RiArrowLeftLine } from "@workspace/ui/icons"
 import { AnimatedThemeToggler } from "@workspace/ui/components/composed/animated-theme-toggler"
 import { SignInPageClient } from "@workspace/ui/components/composed/auth/sign-in-page-client"
 import { SignInSplitLayout } from "@workspace/ui/components/composed/auth/sign-in-split-layout"
@@ -15,14 +15,10 @@ export default function SignInPage() {
       topRightSlot={
         <>
           <AnimatedThemeToggler />
-          <Button
-            variant="ghost"
-            asChild
-            className="font-sans text-sm font-semibold tracking-wide text-foreground"
-          >
+          <Button variant="ghost" asChild size="sm" className="tac-mono-label-base text-foreground gap-1.5">
             <Link href="/">
-              <Icon name="arrowLeft" className="mr-2 h-4 w-4" />
-              HOME
+              <RiArrowLeftLine className="size-3.5" aria-hidden="true" />
+              Home
             </Link>
           </Button>
         </>
