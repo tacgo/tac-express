@@ -10,13 +10,16 @@ import { cn } from "@workspace/ui/lib/utils"
 import { useSession } from "@workspace/ui/hooks/use-session"
 import { TacWordmark } from "@workspace/ui/components/primitives/tac-wordmark"
 
-// LB-5 — dashboard URL is environment-driven. The same pattern is used at
-// apps/web/app/dashboard/page.tsx (the /dashboard redirect). The fallback
-// matches the local dev port so `pnpm --filter web dev` continues to work
-// when the env var is unset; in production the owner sets
-// NEXT_PUBLIC_DASHBOARD_URL on the apps/web Vercel project — see
-// docs/launch/MASTER-LAUNCH-PLAN.md § 4.6.
-const DASHBOARD_URL = process.env.NEXT_PUBLIC_DASHBOARD_URL ?? "http://localhost:3001"
+const _rawDashboardUrl = process.env.NEXT_PUBLIC_DASHBOARD_URL
+if (!_rawDashboardUrl && process.env.NODE_ENV === "production") {
+  // Emit once at module load time — visible in Vercel function logs and
+  // Sentry breadcrumbs without crashing the nav for every page request.
+  console.error(
+    "[public-nav] NEXT_PUBLIC_DASHBOARD_URL is not set. " +
+      "Sign-in CTA and /dashboard redirect will be broken in production.",
+  )
+}
+const DASHBOARD_URL = _rawDashboardUrl ?? "http://localhost:3001"
 
 export function PublicNav() {
   const [isScrolled, setIsScrolled] = React.useState(false)
