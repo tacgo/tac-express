@@ -110,14 +110,24 @@ async function sendPush(token: string, title: string, body: string, link?: strin
   }
 }
 
-function getJwtRole(req: Request): string | null {
+// With `verify_jwt = true` in supabase/config.toml, the Supabase gateway
+// cryptographically verifies the JWT signature before forwarding to this
+// function — only Supabase-signed tokens reach this code. We apply an
+// additional default-deny role check as defence-in-depth: only
+// `service_role` (server-side callers) and `authenticated` (logged-in users)
+// are permitted. `anon` and any unrecognised role are rejected, preventing
+// the publicly-bundled anon key from being used as a free SMS/email/push relay.
+function getAllowedJwtRole(req: Request): "service_role" | "authenticated" | null {
   const auth = req.headers.get("Authorization") ?? ""
   const token = auth.replace(/^Bearer\s+/i, "")
   if (!token) return null
   try {
     const [, payloadB64] = token.split(".")
+    if (!payloadB64) return null
     const decoded = JSON.parse(atob(payloadB64.replace(/-/g, "+").replace(/_/g, "/")))
-    return typeof decoded.role === "string" ? decoded.role : null
+    const role = typeof decoded.role === "string" ? decoded.role : null
+    if (role === "service_role" || role === "authenticated") return role
+    return null
   } catch {
     return null
   }
@@ -126,12 +136,7 @@ function getJwtRole(req: Request): string | null {
 Deno.serve(async (req) => {
   if (req.method !== "POST") return new Response("Method not allowed", { status: 405 })
 
-  // Reject anon-key callers. The anon key is bundled in the browser and
-  // publicly extractable — without this check any visitor could use this
-  // function as a free Resend/Twilio/FCM relay with our credentials.
-  // Legitimate callers (contact-lead service) use the service-role client.
-  const jwtRole = getJwtRole(req)
-  if (jwtRole === "anon") {
+  if (!getAllowedJwtRole(req)) {
     return new Response(JSON.stringify({ error: "Forbidden" }), { status: 403 })
   }
 
