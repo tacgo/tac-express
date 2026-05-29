@@ -33,6 +33,7 @@ export * from "./analytics.service"
 export * from "./orbital.service"
 export * from "./admin.service"
 export * from "./scan-sync.service"
+export * from "./awb"
 export * from "./public-tracking.service"
 export * from "./realtime.service"
 
