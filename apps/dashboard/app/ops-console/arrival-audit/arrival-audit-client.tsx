@@ -35,7 +35,8 @@ export function ArrivalAuditClient() {
   })
 
   const { data: manifest } = useManifest(activeId)
-  const { data: manifestShipments = [] } = useManifestShipments(activeId)
+  const { data: manifestShipments } = useManifestShipments(activeId)
+  const stableShipments = React.useMemo(() => manifestShipments ?? [], [manifestShipments])
   const arriveMutation = useArriveManifest()
 
   // Hydrate each manifest line with consignee data for the audit list.
@@ -44,13 +45,13 @@ export function ArrivalAuditClient() {
 
   React.useEffect(() => {
     let cancelled = false
-    if (!activeId || manifestShipments.length === 0) {
+    if (!activeId || stableShipments.length === 0) {
       setItems([])
       return
     }
     setHydrating(true)
     Promise.all(
-      manifestShipments.map(async (ms) => {
+      stableShipments.map(async (ms) => {
         try {
           const ship = await shipmentService.getShipmentByAwb(ms.awb_number)
           return {
@@ -80,7 +81,7 @@ export function ArrivalAuditClient() {
     return () => {
       cancelled = true
     }
-  }, [activeId, manifestShipments])
+  }, [activeId, stableShipments])
 
   const stats = React.useMemo(() => {
     return {
