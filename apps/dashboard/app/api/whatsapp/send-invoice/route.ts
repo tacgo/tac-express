@@ -416,11 +416,12 @@ export async function POST(req: NextRequest) {
     if (origin && process.env.INVOICE_PDF_SIGNING_SECRET) {
       try {
         // Tracking URL — encoded in the QR rendered inside the PDF.
-        // Falls back to the dashboard origin alone when there's no AWB
-        // (the public /track/[awb] page handles the bare-origin case).
+        // Points at the LANDING app (/track/[awb]) so customers who scan
+        // the QR reach the public tracking page, not the operator dashboard.
+        const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://tacexpress.in"
         const trackingUrl = invoice.awbNumber
-          ? `${origin}/track/${encodeURIComponent(invoice.awbNumber)}`
-          : `${origin}/track`
+          ? `${siteUrl}/track/${encodeURIComponent(invoice.awbNumber)}`
+          : `${siteUrl}/track`
 
         const pdfData = {
           ...buildPdfData(invoice, customer),

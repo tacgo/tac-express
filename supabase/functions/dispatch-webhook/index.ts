@@ -4,6 +4,7 @@
 // with an HMAC SHA256 signature header.
 
 import { createClient } from "jsr:@supabase/supabase-js@2"
+import { reportToSentry } from "../_shared/sentry.ts"
 
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!
 const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
@@ -45,7 +46,10 @@ Deno.serve(async (req) => {
     .eq("is_active", true)
     .contains("events", [body.event_type])
 
-  if (error) return new Response(JSON.stringify({ error: error.message }), { status: 500 })
+  if (error) {
+    await reportToSentry(error, "dispatch-webhook")
+    return new Response(JSON.stringify({ error: error.message }), { status: 500 })
+  }
 
   const requestBody = JSON.stringify(body)
 

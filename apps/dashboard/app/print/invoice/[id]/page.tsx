@@ -3,6 +3,7 @@ import { cookies } from "next/headers"
 import { notFound } from "next/navigation"
 
 import { createInvoiceServerService } from "@workspace/services/server"
+import { readCompanyConfig, readBankConfig } from "@workspace/services/company-config"
 import type { InvoicePrintData } from "@workspace/ui/components/composed/finance/invoice-print-view"
 
 import { PrintInvoiceClient } from "./print-invoice-client"
@@ -44,8 +45,19 @@ export default async function PrintInvoicePage({ params, searchParams }: PagePro
   if (!invoice) notFound()
 
   const parsedNotes = parseNotesPayload(invoice.notes)
+  const company = readCompanyConfig()
+  const bank = readBankConfig()
 
   const data: InvoicePrintData = {
+    companyName: company.legalName,
+    companyAddress: company.addressLines.join(", "),
+    companyGstin: company.gstin,
+    companyPhone: company.tel,
+    companyEmail: company.email,
+    companyId: company.cin,
+    companyBankAccount: bank.account,
+    companyBankIfsc: bank.ifsc,
+    companyBankSwift: bank.swift,
     invoiceNumber: invoice.invoiceNumber,
     status: invoice.status,
     createdAt: invoice.createdAt,

@@ -249,6 +249,42 @@ jobs:
       - name: Run the full vitest unit suite (includes all sentinels)
         run: pnpm test
 
+  typecheck:
+    name: TypeScript typecheck
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    # LOAD-BEARING — gate failures BLOCK merge.
+    # pnpm typecheck was not previously wired into CI; it ran locally only.
+    # Adding it here ensures a TS error on any PR is caught mechanically,
+    # not by pre-commit discipline alone.
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Run tsc --noEmit across all packages
+        run: pnpm typecheck
+
+  lint:
+    name: ESLint (--max-warnings 0)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    # LOAD-BEARING — gate failures BLOCK merge.
+    # pnpm lint --max-warnings 0 was not previously wired into CI.
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Run ESLint with zero-warning threshold
+        run: pnpm lint -- --max-warnings 0
+
   bundle-size:
     name: Bundle size
     runs-on: ubuntu-latest

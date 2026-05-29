@@ -48,6 +48,7 @@
         "./scan-sync.service": "./src/scan-sync.service.ts",
         "./rate-card.service": "./src/rate-card.service.ts",
         "./public-tracking.service": "./src/public-tracking.service.ts",
+        "./company-config": "./src/company-config.ts",
         "./whatsapp.service": "./src/whatsapp.service.ts",
         "./whatsapp-tracked.service": "./src/whatsapp-tracked.service.ts",
         "./whatsapp/invoice-replay-payload": "./src/whatsapp/invoice-replay-payload.ts",

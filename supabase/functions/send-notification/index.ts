@@ -8,6 +8,7 @@
 //     to_email?, to_phone? }
 
 import { createClient } from "jsr:@supabase/supabase-js@2"
+import { reportToSentry } from "../_shared/sentry.ts"
 
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!
 const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
@@ -15,8 +16,7 @@ const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY") ?? ""
 const TWILIO_ACCOUNT_SID = Deno.env.get("TWILIO_ACCOUNT_SID") ?? ""
 const TWILIO_AUTH_TOKEN = Deno.env.get("TWILIO_AUTH_TOKEN") ?? ""
 const TWILIO_FROM_NUMBER = Deno.env.get("TWILIO_FROM_NUMBER") ?? ""
-const FCM_SERVER_KEY = Deno.env.get("FCM_SERVER_KEY") ?? ""
-const FROM_EMAIL = Deno.env.get("NOTIFICATION_FROM_EMAIL") ?? "no-reply@tac-express.in"
+const FROM_EMAIL = Deno.env.get("NOTIFICATION_FROM_EMAIL") ?? "no-reply@tacexpress.in"
 
 interface NotificationPayload {
   user_id?: string
@@ -86,32 +86,42 @@ async function sendSMS(to: string, message: string): Promise<void> {
   }
 }
 
-async function sendPush(token: string, title: string, body: string, link?: string): Promise<void> {
-  if (!FCM_SERVER_KEY) {
-    console.warn("FCM_SERVER_KEY not set — push skipped")
-    return
-  }
-  const payload = {
-    to: token,
-    notification: { title, body },
-    data: { link: link ?? "" },
-  }
-  const res = await fetch("https://fcm.googleapis.com/fcm/send", {
-    method: "POST",
-    headers: {
-      Authorization: `key=${FCM_SERVER_KEY}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(payload),
-  })
-  if (!res.ok) {
-    const err = await res.text()
-    throw new Error(`FCM error ${res.status}: ${err}`)
+// FCM push removed (H-5). The legacy `https://fcm.googleapis.com/fcm/send`
+// endpoint is deprecated by Google and rejected for projects created after
+// mid-2024. No code path in the repo currently calls send-notification with
+// channel="push", so the legacy implementation was dead deprecated code.
+// If push becomes in-scope, rewrite using FCM HTTP v1 (OAuth2 + service
+// account credentials) before re-introducing this path.
+
+// With `verify_jwt = true` in supabase/config.toml, the Supabase gateway
+// cryptographically verifies the JWT signature before forwarding to this
+// function — only Supabase-signed tokens reach this code. We apply an
+// additional default-deny role check as defence-in-depth: only
+// `service_role` (server-side callers) and `authenticated` (logged-in users)
+// are permitted. `anon` and any unrecognised role are rejected, preventing
+// the publicly-bundled anon key from being used as a free SMS/email/push relay.
+function getAllowedJwtRole(req: Request): "service_role" | "authenticated" | null {
+  const auth = req.headers.get("Authorization") ?? ""
+  const token = auth.replace(/^Bearer\s+/i, "")
+  if (!token) return null
+  try {
+    const [, payloadB64] = token.split(".")
+    if (!payloadB64) return null
+    const decoded = JSON.parse(atob(payloadB64.replace(/-/g, "+").replace(/_/g, "/")))
+    const role = typeof decoded.role === "string" ? decoded.role : null
+    if (role === "service_role" || role === "authenticated") return role
+    return null
+  } catch {
+    return null
   }
 }
 
 Deno.serve(async (req) => {
   if (req.method !== "POST") return new Response("Method not allowed", { status: 405 })
+
+  if (!getAllowedJwtRole(req)) {
+    return new Response(JSON.stringify({ error: "Forbidden" }), { status: 403 })
+  }
 
   let payload: NotificationPayload
   try {
@@ -141,6 +151,7 @@ Deno.serve(async (req) => {
     entity_id: payload.entity_id ?? null,
   })
   if (dbErr) {
+    await reportToSentry(dbErr, "send-notification")
     return new Response(JSON.stringify({ error: dbErr.message }), { status: 500 })
   }
 
@@ -166,13 +177,8 @@ Deno.serve(async (req) => {
     errors.push(`sms: ${(e as Error).message}`)
   }
 
-  try {
-    if ((channel === "push" || channel === "all") && fcm_token) {
-      await sendPush(fcm_token, title, body, link)
-      dispatched.push("push")
-    }
-  } catch (e) {
-    errors.push(`push: ${(e as Error).message}`)
+  if (channel === "push" && fcm_token) {
+    errors.push("push: FCM legacy endpoint removed (H-5). Re-implement with FCM v1 if needed.")
   }
 
   return new Response(

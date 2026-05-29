@@ -27,6 +27,19 @@ Sentry.init({
   tracesSampleRate: isProd ? 0.1 : 1,
   enableLogs: true,
   sendDefaultPii: false,
+  beforeSend(event) {
+    // Strip PII fields that callers might accidentally attach via `extra`.
+    if (event.extra) {
+      for (const key of ["email", "phone", "gstin", "pan", "awb", "address"]) {
+        if (key in event.extra) delete event.extra[key]
+      }
+    }
+    // Query strings on route-handler requests may carry PII (e.g. invoice PDF token).
+    if (event.request?.query_string) {
+      event.request.query_string = "[SCRUBBED]"
+    }
+    return event
+  },
 })
 
 // Bridge the backend-agnostic tagger to Sentry. `withScope` keeps each

@@ -5,20 +5,33 @@ interface PublicTrackingConfig {
   anonKey: string
 }
 
+/**
+ * Public tracking service — read-only access to AWB lookup + event history.
+ *
+ * Backed by SECURITY DEFINER RPCs (`get_public_shipment`,
+ * `get_public_tracking_events`) added in migration 20260530000003. The RPCs
+ * return a curated column projection — no receiver_phone, no addresses, no
+ * financial totals — so anon callers cannot exfiltrate PII via AWB guessing.
+ */
 export function createPublicTrackingService({ supabaseUrl, anonKey }: PublicTrackingConfig) {
-  const headers = { apikey: anonKey, Authorization: `Bearer ${anonKey}` }
+  const headers = {
+    apikey: anonKey,
+    Authorization: `Bearer ${anonKey}`,
+    "Content-Type": "application/json",
+  }
 
   return {
     async getShipmentByAwb(awb: string): Promise<ShipmentSummary | null> {
       // A network-level failure (DNS, offline, Supabase unreachable) rejects
       // the fetch. Treat it the same as a non-OK response — return null so the
-      // tracking page renders its "not found" state instead of throwing an
-      // unhandled error that crashes the route.
+      // tracking page renders its "not found" state instead of throwing.
       try {
-        const res = await fetch(
-          `${supabaseUrl}/rest/v1/shipments?awb_number=eq.${encodeURIComponent(awb)}&select=id,awb_number,status,sender_name,receiver_name,origin_hub,dest_hub,chargeable_weight,total_amount,pieces,manifest_number,service_level,created_at,updated_at`,
-          { headers, next: { revalidate: 60 } } as RequestInit
-        )
+        const res = await fetch(`${supabaseUrl}/rest/v1/rpc/get_public_shipment`, {
+          method: "POST",
+          headers,
+          body: JSON.stringify({ p_awb: awb }),
+          next: { revalidate: 60 },
+        } as RequestInit)
         if (!res.ok) return null
         const data = (await res.json()) as Record<string, unknown>[]
         const row = data[0]
@@ -31,10 +44,12 @@ export function createPublicTrackingService({ supabaseUrl, anonKey }: PublicTrac
 
     async getTrackingEvents(awb: string): Promise<TrackingEvent[]> {
       try {
-        const res = await fetch(
-          `${supabaseUrl}/rest/v1/tracking_events?awb_number=eq.${encodeURIComponent(awb)}&order=created_at.desc&select=*`,
-          { headers, next: { revalidate: 30 } } as RequestInit
-        )
+        const res = await fetch(`${supabaseUrl}/rest/v1/rpc/get_public_tracking_events`, {
+          method: "POST",
+          headers,
+          body: JSON.stringify({ p_awb: awb }),
+          next: { revalidate: 30 },
+        } as RequestInit)
         if (!res.ok) return []
         const data = (await res.json()) as Record<string, unknown>[]
         return data.map(mapPublicTrackingEvent)
@@ -55,7 +70,7 @@ function mapPublicShipment(row: Record<string, unknown>): ShipmentSummary {
     originHub: row.origin_hub,
     destHub: row.dest_hub,
     chargeableWeight: (row.chargeable_weight as number) ?? 0,
-    totalAmount: (row.total_amount as number) ?? 0,
+    totalAmount: 0,
     pieces: (row.pieces as number) ?? 1,
     manifestNumber: row.manifest_number as string | undefined,
     serviceLevel: row.service_level as ServiceLevel | undefined,
@@ -73,9 +88,7 @@ function mapPublicTrackingEvent(row: Record<string, unknown>): TrackingEvent {
     location: (row.location as string) ?? "",
     hubCode: row.hub_code as string | undefined,
     source: row.source,
-    staffId: row.staff_id as string | undefined,
-    staffName: row.staff_name as string | undefined,
-    metadata: row.metadata as Record<string, unknown> | undefined,
+    metadata: undefined,
     createdAt: row.created_at as string,
   } as TrackingEvent
 }

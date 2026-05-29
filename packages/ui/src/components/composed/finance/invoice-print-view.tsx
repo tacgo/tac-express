@@ -46,6 +46,10 @@ export interface InvoicePrintData {
   companyPhone?: string
   companyEmail?: string
   companyId?: string
+  /** Bank details rendered in the footer "Bank information" block. */
+  companyBankAccount?: string
+  companyBankIfsc?: string
+  companyBankSwift?: string
 
   /** Optional consignee block (shipment delivery address). */
   shipToName?: string
@@ -109,20 +113,11 @@ const TERMS_NUMBERED: readonly string[] = [
 const TERMS_PARAGRAPH =
   "By booking with TAC Express, the consignor agrees: contents, value, and weight must be accurately declared at booking — misdeclaration voids carrier liability; compensation for loss or damage is capped at ₹150/kg unless a higher value is declared and risk surcharge paid; illegal, contraband, hazardous (IMDG/IATA), fragile, electronic, and high-value goods move at consignor's risk unless insured at booking; consignments must be collected within 7 days of arrival, with storage at ₹55/day + GST from day 22, classified unclaimed after 45 days, and disposable after 100 days at the carrier's discretion under lien (Indian Contract Act, 1872); the carrier is not liable for delay or loss from force majeure events; all disputes are governed by Indian law, subject to exclusive jurisdiction of New Delhi courts, with claims to be filed within 6 months per the Carriage by Road Act, 2007."
 
-const COMPANY_DEFAULTS = {
-  name: "TAC Express Logistics Pvt. Ltd.",
-  address: "Imphal, Manipur, India",
-  gstin: "14AAAAA0000A1Z5",
-  phone: "+91 385 000 0000",
-  email: "ops@tacexpress.in",
-  id: "TAC-EXP-2026",
-  // Bank details rendered in the footer "Bank information" block.
-  bank: {
-    iban: "IN08 0100 0001 0751 3385 0223",
-    swift: "TACBINBB001",
-    accountNumber: "234-5133850247/023",
-  },
-} as const
+// Hardcoded company defaults removed — divergent source-of-truth from the
+// env-driven PDF generator. Callers must populate the company* + bank* props
+// from packages/services/src/company-config.ts so the HTML print and PDF
+// outputs always agree.
+const COMPANY_PLACEHOLDER = "—"
 
 /**
  * Tax invoice rendered in a TAC Express take on the minimal-violet reference:
@@ -149,12 +144,12 @@ const COMPANY_DEFAULTS = {
 const InvoicePrintView = React.forwardRef<HTMLDivElement, InvoicePrintViewProps>(
   function InvoicePrintView({ data, className }, ref) {
     const company = {
-      name: data.companyName ?? COMPANY_DEFAULTS.name,
-      address: data.companyAddress ?? COMPANY_DEFAULTS.address,
-      gstin: data.companyGstin ?? COMPANY_DEFAULTS.gstin,
-      phone: data.companyPhone ?? COMPANY_DEFAULTS.phone,
-      email: data.companyEmail ?? COMPANY_DEFAULTS.email,
-      id: data.companyId ?? COMPANY_DEFAULTS.id,
+      name: data.companyName ?? COMPANY_PLACEHOLDER,
+      address: data.companyAddress ?? COMPANY_PLACEHOLDER,
+      gstin: data.companyGstin ?? COMPANY_PLACEHOLDER,
+      phone: data.companyPhone ?? COMPANY_PLACEHOLDER,
+      email: data.companyEmail ?? COMPANY_PLACEHOLDER,
+      id: data.companyId ?? COMPANY_PLACEHOLDER,
     }
 
     const pickupCharge = data.pickupCharge ?? 0
@@ -448,13 +443,13 @@ const InvoicePrintView = React.forwardRef<HTMLDivElement, InvoicePrintViewProps>
                 </p>
                 <div className="font-mono text-pdf-10p5 leading-tight text-primary print:text-print-accent space-y-0 pt-0.5">
                   <p>
-                    <span className="font-bold">IBAN:</span> {COMPANY_DEFAULTS.bank.iban}
+                    <span className="font-bold">IFSC:</span> {data.companyBankIfsc ?? "—"}
                   </p>
                   <p>
-                    <span className="font-bold">SWIFT:</span> {COMPANY_DEFAULTS.bank.swift}
+                    <span className="font-bold">SWIFT:</span> {data.companyBankSwift ?? "—"}
                   </p>
                   <p>
-                    <span className="font-bold">A/C:</span> {COMPANY_DEFAULTS.bank.accountNumber}
+                    <span className="font-bold">A/C:</span> {data.companyBankAccount ?? "—"}
                   </p>
                 </div>
               </div>
