@@ -47,6 +47,7 @@
         "./admin.service": "./src/admin.service.ts",
         "./scan-sync.service": "./src/scan-sync.service.ts",
         "./awb": "./src/awb.ts",
+        "./arrival-audit": "./src/arrival-audit.ts",
         "./rate-card.service": "./src/rate-card.service.ts",
         "./public-tracking.service": "./src/public-tracking.service.ts",
         "./whatsapp.service": "./src/whatsapp.service.ts",
