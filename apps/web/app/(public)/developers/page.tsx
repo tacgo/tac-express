@@ -44,7 +44,7 @@ export default function DevelopersPage() {
           <p className="tac-mono-label">Quick start</p>
           <h2 className="mt-2 text-3xl font-bold">Create a shipment in 8 lines.</h2>
           <pre className="mt-6 overflow-x-auto border border-border bg-code-bg p-5 font-mono text-sm">
-            <code>{`curl https://api.tacexpress.com/v1/shipments \\
+            <code>{`curl https://api.tacexpress.in/v1/shipments \\
   -H "Authorization: Bearer tac_live_..." \\
   -H "Content-Type: application/json" \\
   -d '{

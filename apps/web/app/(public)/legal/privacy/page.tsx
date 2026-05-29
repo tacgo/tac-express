@@ -47,7 +47,7 @@ export default function PrivacyPage() {
           <h2 className="text-xl font-bold">5. Your rights</h2>
           <p>
             You may request export or deletion of your personal data by emailing
-            privacy@tacexpress.com. We respond within 30 days as required by the DPDP Act, 2023.
+            privacy@tacexpress.in. We respond within 30 days as required by the DPDP Act, 2023.
           </p>
         </section>
       </div>

@@ -27,7 +27,7 @@ export default function ContactPage() {
         <div className="mx-auto grid max-w-5xl gap-12 md:grid-cols-[1fr_2fr]">
           <aside className="space-y-4">
             <ContactRow icon={RiPhoneLine} label="Phone" value="+91 385 244 6500" />
-            <ContactRow icon={RiMailLine} label="Email" value="hello@tacexpress.com" />
+            <ContactRow icon={RiMailLine} label="Email" value="hello@tacexpress.in" />
             <ContactRow icon={RiMapPinLine} label="HQ" value="Imphal, Manipur, India" />
           </aside>
           <ContactForm />

@@ -28,7 +28,7 @@ const organizationJsonLd = {
   contactPoint: {
     "@type": "ContactPoint",
     telephone: "+91 385 244 6500",
-    email: "hello@tacexpress.com",
+    email: "hello@tacexpress.in",
     contactType: "customer service",
     availableLanguage: ["en"],
   },
