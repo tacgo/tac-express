@@ -78,6 +78,14 @@ interface ScanningConsoleProps {
   onToggleDebug?: () => void
   /** Children rendered to the right of the console (e.g. POD capture in DELIVER). */
   rightRail?: React.ReactNode
+  /**
+   * A scan injected from outside the console — e.g. a hardware HID scanner
+   * owned by the parent screen. Each distinct submission must carry a fresh
+   * `nonce` so repeat scans of the same code still register. Routed through
+   * the IDENTICAL `submit()` path as manual entry: same feed, same outcome
+   * handling. The console adds no global listener of its own.
+   */
+  externalScan?: { code: string; nonce: number } | null
   className?: string
 }
 
@@ -129,6 +137,7 @@ export function ScanningConsole({
   failedCount = 0,
   onToggleDebug,
   rightRail,
+  externalScan,
   className,
 }: ScanningConsoleProps) {
   const [tab, setTab] = React.useState<"manual" | "camera">("manual")
@@ -153,30 +162,43 @@ export function ScanningConsole({
     if (tab === "manual") inputRef.current?.focus()
   }, [tab])
 
-  const submit = async (raw: string) => {
-    const awb = raw.trim().toUpperCase()
-    if (!awb) return
-    try {
-      const r = await onScan(awb, mode)
-      const item: ScanFeedItem = {
-        id: `${awb}-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
-        awb,
-        outcome: r.outcome,
-        reason: r.reason,
-        at: Date.now(),
+  const submit = React.useCallback(
+    async (raw: string) => {
+      const awb = raw.trim().toUpperCase()
+      if (!awb) return
+      try {
+        const r = await onScan(awb, mode)
+        const item: ScanFeedItem = {
+          id: `${awb}-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+          awb,
+          outcome: r.outcome,
+          reason: r.reason,
+          at: Date.now(),
+        }
+        setFeed((f) => [item, ...f].slice(0, 100))
+      } catch (err) {
+        const item: ScanFeedItem = {
+          id: `${awb}-${Date.now()}`,
+          awb,
+          outcome: "ERROR",
+          reason: (err as Error).message,
+          at: Date.now(),
+        }
+        setFeed((f) => [item, ...f].slice(0, 100))
       }
-      setFeed((f) => [item, ...f].slice(0, 100))
-    } catch (err) {
-      const item: ScanFeedItem = {
-        id: `${awb}-${Date.now()}`,
-        awb,
-        outcome: "ERROR",
-        reason: (err as Error).message,
-        at: Date.now(),
-      }
-      setFeed((f) => [item, ...f].slice(0, 100))
-    }
-  }
+    },
+    [onScan, mode]
+  )
+
+  // Hardware-scanner inlet: route an externally injected scan through the same
+  // submit() path manual entry uses. The nonce guard means a re-render alone
+  // never re-submits — only a genuinely new scan does.
+  const lastScanNonce = React.useRef<number>(0)
+  React.useEffect(() => {
+    if (!externalScan || externalScan.nonce === lastScanNonce.current) return
+    lastScanNonce.current = externalScan.nonce
+    if (externalScan.code) void submit(externalScan.code)
+  }, [externalScan, submit])
 
   const counts = {
     success: feed.filter((f) => f.outcome === "SUCCESS").length,
