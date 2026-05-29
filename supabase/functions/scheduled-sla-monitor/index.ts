@@ -3,6 +3,7 @@
 // in-app notifications + an exception row for each breach not yet flagged.
 
 import { createClient } from "jsr:@supabase/supabase-js@2"
+import { reportToSentry } from "../_shared/sentry.ts"
 
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!
 const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
@@ -15,7 +16,10 @@ Deno.serve(async () => {
   const { data: breaches, error } = await supabase.rpc("detect_sla_breaches", {
     p_lookahead_hours: 0,
   })
-  if (error) return new Response(JSON.stringify({ error: error.message }), { status: 500 })
+  if (error) {
+    await reportToSentry(error, "scheduled-sla-monitor")
+    return new Response(JSON.stringify({ error: error.message }), { status: 500 })
+  }
 
   let flagged = 0
   for (const breach of breaches ?? []) {
