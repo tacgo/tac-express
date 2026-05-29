@@ -254,8 +254,14 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
-      NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
-      NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+      # Public (NEXT_PUBLIC_*) values, shipped to the browser anyway. Several
+      # pages construct the Supabase browser client at module load, which throws
+      # if these are absent — failing Next's static-prerender pass. The repo
+      # secrets are currently unset, so fall back to dummy values: the build only
+      # needs the presence check to pass (no network calls during prerender).
+      # Real staging secrets, if configured later, take precedence.
+      NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL || 'https://dummy.supabase.co' }}
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'dummy.anon.key' }}
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
