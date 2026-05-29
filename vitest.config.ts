@@ -46,6 +46,12 @@ export default defineConfig({
         find: /^@workspace\/services\/(.+)$/,
         replacement: path.resolve(__dirname, './packages/services/src/$1.ts'),
       },
+      // `@/` maps to apps/web root (the Next.js convention for that app).
+      // Required for apps/web test files that import from `@/lib/*`.
+      {
+        find: /^@\/(.+)$/,
+        replacement: path.resolve(__dirname, './apps/web/$1'),
+      },
       // Catchall for the remaining workspace packages — relied on by existing
       // services tests; leave behavior unchanged.
       {
