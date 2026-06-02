@@ -8,12 +8,23 @@ interface CookieStore {
 }
 
 function getEnv() {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  let url = process.env.NEXT_PUBLIC_SUPABASE_URL
+  let key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
   if (!url || !key) {
-    throw new Error(
-      "Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY"
-    )
+    // During Next.js build time (SSG), these variables might not be present.
+    // Return dummy values so module-level `createBrowserClient()` doesn't crash the build.
+    if (
+      typeof process !== "undefined" &&
+      process.env.NODE_ENV === "production" &&
+      !process.env.NEXT_PUBLIC_SUPABASE_URL
+    ) {
+      url = "https://build-time-dummy.supabase.co"
+      key = "build-time-dummy-key"
+    } else {
+      throw new Error(
+        "Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY"
+      )
+    }
   }
   return { url, key }
 }
