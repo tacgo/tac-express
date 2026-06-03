@@ -254,8 +254,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
-      NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
-      NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+      NEXT_PUBLIC_SUPABASE_URL: "http://localhost:54321"
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: "dummy"
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
