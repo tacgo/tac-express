@@ -54,6 +54,7 @@ export function AuditClient() {
     React.useState<(typeof ENTITIES)[number]>("all")
   const [action, setAction] = React.useState<(typeof ACTIONS)[number]>("all")
   const [search, setSearch] = React.useState("")
+  const deferredSearch = React.useDeferredValue(search)
   const [expandedId, setExpandedId] = React.useState<string | null>(null)
 
   const query = useAuditLogs({
@@ -62,9 +63,11 @@ export function AuditClient() {
     limit: 100,
   })
 
+  // Optimize search: Deferred value ensures typing remains responsive
+  // even if the audit log list is large and filtering is expensive.
   const filtered = React.useMemo(() => {
     if (!query.data) return []
-    const term = search.trim().toLowerCase()
+    const term = deferredSearch.trim().toLowerCase()
     if (!term) return query.data.data
     return query.data.data.filter(
       (row) =>
@@ -73,7 +76,7 @@ export function AuditClient() {
         (row.entityId ?? "").toLowerCase().includes(term) ||
         (row.userId ?? "").toLowerCase().includes(term)
     )
-  }, [query.data, search])
+  }, [query.data, deferredSearch])
 
   return (
     <PageShell width="wide">

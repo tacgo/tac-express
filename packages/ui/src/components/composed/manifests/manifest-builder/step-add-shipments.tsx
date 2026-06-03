@@ -77,6 +77,7 @@ export function StepAddShipments({
   const [manualValue, setManualValue] = React.useState("")
   const [scanLog, setScanLog] = React.useState<ScanLogEntry[]>([])
   const [search, setSearch] = React.useState("")
+  const deferredSearch = React.useDeferredValue(search)
   const inputRef = React.useRef<HTMLInputElement>(null)
 
   const stats = React.useMemo(() => {
@@ -120,16 +121,18 @@ export function StepAddShipments({
     }
   }, [tab])
 
+  // Optimize search: Deferred value prevents main thread blocking when typing
+  // and filtering through large lists of scanned shipments.
   const filteredRows = React.useMemo(() => {
-    if (!search.trim()) return rows
-    const q = search.toLowerCase()
+    if (!deferredSearch.trim()) return rows
+    const q = deferredSearch.toLowerCase()
     return rows.filter(
       (r) =>
         r.awbNumber.toLowerCase().includes(q) ||
         r.consigneeName?.toLowerCase().includes(q) ||
         r.consignorName?.toLowerCase().includes(q)
     )
-  }, [rows, search])
+  }, [rows, deferredSearch])
 
   return (
     <div
