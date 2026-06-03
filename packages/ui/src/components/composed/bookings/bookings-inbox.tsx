@@ -84,6 +84,7 @@ export function BookingsInbox({
   const [rejectingId, setRejectingId] = React.useState<string | null>(null)
   const [rejectReason, setRejectReason] = React.useState("")
   const [search, setSearch] = React.useState("")
+  const deferredSearch = React.useDeferredValue(search)
 
   const counts = React.useMemo(() => {
     const c: Record<BookingStatus, number> = {
@@ -96,8 +97,10 @@ export function BookingsInbox({
     return c
   }, [bookings])
 
+  // Optimize search: Deferred value prevents main thread blocking when typing
+  // and filtering through large booking lists.
   const filtered = React.useMemo(() => {
-    const term = search.trim().toLowerCase()
+    const term = deferredSearch.trim().toLowerCase()
     return bookings.filter((b) => {
       if (tab !== "ALL" && b.status !== tab) return false
       if (!term) return true
@@ -108,7 +111,7 @@ export function BookingsInbox({
         b.awbNumber?.toLowerCase().includes(term)
       )
     })
-  }, [bookings, tab, search])
+  }, [bookings, tab, deferredSearch])
 
   return (
     <section
