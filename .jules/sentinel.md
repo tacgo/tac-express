@@ -1,0 +1,4 @@
+## 2024-05-30 - Client-Side XSS Mitigation in Notes Panel
+**Vulnerability:** The `NotesPanel` component rendered rich-text using `dangerouslySetInnerHTML` with `note.bodyHtml`. While there was a comment suggesting server-side sanitization, client-side rendering was vulnerable if the server-side mechanism failed or was bypassed.
+**Learning:** React components dealing with rich-text should implement defense-in-depth by explicitly sanitizing the HTML on the client side before inserting it via `dangerouslySetInnerHTML`, rather than solely relying on the server.
+**Prevention:** Always use a library like `isomorphic-dompurify` (which works on both client and SSR environments) to sanitize content dynamically inserted using `dangerouslySetInnerHTML` in React to protect against Cross-Site Scripting (XSS).
