@@ -50,10 +50,15 @@ export function ArrivalAuditClient() {
       return
     }
     setHydrating(true)
-    Promise.all(
-      stableShipments.map(async (ms) => {
-        try {
-          const ship = await shipmentService.getShipmentByAwb(ms.awb_number)
+
+    const fetchShipments = async () => {
+      try {
+        const awbs = stableShipments.map(ms => ms.awb_number)
+        const shipments = await shipmentService.getShipmentsByAwbs(awbs)
+        const shipmentMap = new Map(shipments.map(s => [s.awbNumber as string, s]))
+
+        const rows = stableShipments.map(ms => {
+          const ship = shipmentMap.get(ms.awb_number)
           return {
             awbNumber: ms.awb_number,
             consigneeName: ship?.receiver?.name ?? "—",
@@ -62,22 +67,30 @@ export function ArrivalAuditClient() {
             weightKg: ms.chargeable_weight ?? ship?.weight?.chargeable ?? 0,
             status: "PENDING" as const,
           }
-        } catch {
-          return {
+        })
+
+        if (!cancelled) {
+          setItems(rows)
+          setHydrating(false)
+        }
+      } catch (_error) {
+        // Fallback if the bulk fetch fails
+        if (!cancelled) {
+          const fallbackRows = stableShipments.map(ms => ({
             awbNumber: ms.awb_number,
             consigneeName: "—",
             pieces: ms.pieces ?? 0,
             weightKg: ms.chargeable_weight ?? 0,
             status: "PENDING" as const,
-          }
+          }))
+          setItems(fallbackRows)
+          setHydrating(false)
         }
-      })
-    ).then((rows) => {
-      if (!cancelled) {
-        setItems(rows)
-        setHydrating(false)
       }
-    })
+    }
+
+    fetchShipments()
+
     return () => {
       cancelled = true
     }
