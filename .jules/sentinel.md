@@ -1,0 +1,4 @@
+## 2024-05-20 - [XSS via dangerouslySetInnerHTML in React UI Components]
+**Vulnerability:** A cross-site scripting (XSS) vulnerability was identified in `notes-panel.tsx` where user-provided HTML (`note.bodyHtml`) was injected directly into the DOM using `dangerouslySetInnerHTML` without any client-side sanitization.
+**Learning:** The previous code included comments stating that the upstream rich-text editor and the backend consumer "should" sanitize the HTML. This violates the "Trust nothing, verify everything" philosophy. Blindly trusting upstream sanitization leads to vulnerabilities if those defenses fail or are bypassed. React components must defensively sanitize HTML at the rendering boundary.
+**Prevention:** Always use `isomorphic-dompurify` directly at the call site when using `dangerouslySetInnerHTML` to render dynamic or user-generated HTML in React components, regardless of the expected sanitization state from upstream sources.
