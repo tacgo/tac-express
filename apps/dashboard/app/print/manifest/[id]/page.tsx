@@ -40,7 +40,7 @@ export default async function PrintManifestPage({ params }: PageProps) {
     .getShipmentsByAwbs(awbs)
     .catch(() => [])
 
-  const shipmentMap = new Map(shipments.map(s => [s.awbNumber, s]))
+  const shipmentMap = new Map(shipments.map(s => [s.awbNumber as string, s]))
 
   const lines: ManifestPrintViewLine[] = manifestShipments.map((ms) => {
     const ship = shipmentMap.get(ms.awb_number)

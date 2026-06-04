@@ -55,7 +55,7 @@ export function ArrivalAuditClient() {
       try {
         const awbs = stableShipments.map(ms => ms.awb_number)
         const shipments = await shipmentService.getShipmentsByAwbs(awbs)
-        const shipmentMap = new Map(shipments.map(s => [s.awbNumber, s]))
+        const shipmentMap = new Map(shipments.map(s => [s.awbNumber as string, s]))
 
         const rows = stableShipments.map(ms => {
           const ship = shipmentMap.get(ms.awb_number)
