@@ -11,6 +11,12 @@ function getEnv() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL
   const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
   if (!url || !key) {
+    // 🛡️ Sentinel: Do not throw an error during build-time prerendering if env vars are missing.
+    // Next.js static generation executes client/server code without public env vars in some setups.
+    // Throwing an error breaks the build process.
+    if (process.env.NODE_ENV === "production" && process.env.NEXT_PHASE === "phase-production-build") {
+      return { url: "https://build-time-mock.supabase.co", key: "build-time-mock-key" }
+    }
     throw new Error(
       "Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY"
     )

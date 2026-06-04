@@ -67,7 +67,8 @@
                                            "BOOTSTRAP_BASELINE",
                                            "AXE_FAIL_ON_VIOLATIONS",
                                            "SUPABASE_SERVICE_ROLE_KEY",
-                                           "NEXT_PUBLIC_SUPABASE_URL"
+                                           "NEXT_PUBLIC_SUPABASE_URL",
+                                           "NEXT_PHASE"
                                        ]
                            },
                   "format":  {
