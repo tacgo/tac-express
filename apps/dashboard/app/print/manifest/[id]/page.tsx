@@ -35,29 +35,32 @@ export default async function PrintManifestPage({ params }: PageProps) {
     .catch(() => [])
 
   // Hydrate each manifest line with the matching shipment payload.
-  const lines: ManifestPrintViewLine[] = await Promise.all(
-    manifestShipments.map(async (ms) => {
-      const ship = await shipmentService
-        .getShipmentByAwb(ms.awb_number)
-        .catch(() => null)
-      const consigneeName = ship?.receiver?.name ?? "—"
-      const consigneeCity = ship?.receiver?.address?.city ?? undefined
-      const destination = (ship?.destHub ?? manifest.destHub).replace(
-        /_/g,
-        " "
-      )
-      const result: ManifestPrintViewLine = {
-        awbNumber: ms.awb_number,
-        consigneeName,
-        consigneeCity,
-        destination,
-        pieces: ship?.pieces ?? ms.pieces ?? 0,
-        weightKg: ship?.weight?.chargeable ?? ms.chargeable_weight ?? 0,
-        remarks: ship?.serviceLevel,
-      }
-      return result
-    })
-  )
+  const awbs = manifestShipments.map(ms => ms.awb_number)
+  const shipments = await shipmentService
+    .getShipmentsByAwbs(awbs)
+    .catch(() => [])
+
+  const shipmentMap = new Map(shipments.map(s => [s.awbNumber, s]))
+
+  const lines: ManifestPrintViewLine[] = manifestShipments.map((ms) => {
+    const ship = shipmentMap.get(ms.awb_number)
+    const consigneeName = ship?.receiver?.name ?? "—"
+    const consigneeCity = ship?.receiver?.address?.city ?? undefined
+    const destination = (ship?.destHub ?? manifest.destHub).replace(
+      /_/g,
+      " "
+    )
+    const result: ManifestPrintViewLine = {
+      awbNumber: ms.awb_number,
+      consigneeName,
+      consigneeCity,
+      destination,
+      pieces: ship?.pieces ?? ms.pieces ?? 0,
+      weightKg: ship?.weight?.chargeable ?? ms.chargeable_weight ?? 0,
+      remarks: ship?.serviceLevel,
+    }
+    return result
+  })
 
   return <PrintManifestClient manifest={manifest} lines={lines} />
 }

@@ -61,6 +61,20 @@ export function createShipmentService(db: SupabaseClient) {
       return data ? mapShipment(data) : null
     },
 
+    /**
+     * Fetch multiple shipments in a single query to avoid N+1 issues when
+     * resolving lists of AWBs (e.g., manifest details, arrival audit).
+     */
+    async getShipmentsByAwbs(awbs: string[]): Promise<Shipment[]> {
+      if (awbs.length === 0) return []
+      const { data, error } = await db
+        .from("shipments")
+        .select("*")
+        .in("awb_number", awbs)
+      if (error) throw error
+      return (data ?? []).map(mapShipment)
+    },
+
     async getTrackingEvents(awbNumber: string): Promise<TrackingEvent[]> {
       const { data, error } = await db
         .from("tracking_events")

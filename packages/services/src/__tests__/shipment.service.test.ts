@@ -27,7 +27,7 @@ import {
  * Scope (JS-side only, no real Postgres):
  *   - getShipments: 9 filter/branch combinations (default+order, status,
  *     originHub, destHub, search, pageSize, null-data, error, multi-filter)
- *   - getShipmentById / getShipmentByAwb: found / null / error each
+ *   - getShipmentById / getShipmentByAwb / getShipmentsByAwbs: found / null / error each
  *   - getTrackingEvents: rows / null / error
  *   - createShipment: happy + payload capture / error
  *   - generateAwbNumber: full withRpc decision tree (success / empty data
@@ -372,6 +372,62 @@ describe("getShipmentByAwb", () => {
     const { createShipmentService } = await freshShipmentService()
     await expect(
       createShipmentService(db).getShipmentByAwb("TAC26001"),
+    ).rejects.toMatchObject({ code: "57P01" })
+  })
+})
+
+// ─── getShipmentsByAwbs ──────────────────────────────────────────────────────
+
+describe("getShipmentsByAwbs", () => {
+  it("returns empty array if awbs is empty without querying", async () => {
+    const db = makeDb({})
+    const { createShipmentService } = await freshShipmentService()
+    const shipments = await createShipmentService(db).getShipmentsByAwbs([])
+    expect(shipments).toEqual([])
+    expect(db.from).not.toHaveBeenCalled()
+  })
+
+  it("queries .in('awb_number', awbs) + returns mapped Shipments", async () => {
+    const db = makeDb({})
+    const { builder, spy } = makeBuilderSpy({
+      data: [
+        { id: "ship-1", awb_number: "TAC26001", status: "CREATED" },
+        { id: "ship-2", awb_number: "TAC26002", status: "IN_TRANSIT" },
+      ],
+      error: null,
+    })
+    vi.mocked(db.from).mockReturnValue(builder)
+    const { createShipmentService } = await freshShipmentService()
+    const shipments = await createShipmentService(db).getShipmentsByAwbs(["TAC26001", "TAC26002"])
+
+    expect(shipments).toHaveLength(2)
+    expect(shipments[0]!.awbNumber).toBe("TAC26001")
+    expect(shipments[1]!.awbNumber).toBe("TAC26002")
+
+    const inCalls = spy.calls.in.map(([col, val]) => ({ col, val }))
+    expect(inCalls).toContainEqual({ col: "awb_number", val: ["TAC26001", "TAC26002"] })
+  })
+
+  it("handles null data correctly", async () => {
+    const db = makeDb({})
+    const { builder } = makeBuilderSpy({
+      data: null,
+      error: null,
+    })
+    vi.mocked(db.from).mockReturnValue(builder)
+    const { createShipmentService } = await freshShipmentService()
+    expect(await createShipmentService(db).getShipmentsByAwbs(["TAC26001"])).toEqual([])
+  })
+
+  it("throws on DB error", async () => {
+    const db = makeDb({
+      fromResults: {
+        shipments: { data: null, error: { message: "PG_ERR", code: "57P01" } },
+      },
+    })
+    const { createShipmentService } = await freshShipmentService()
+    await expect(
+      createShipmentService(db).getShipmentsByAwbs(["TAC26001"]),
     ).rejects.toMatchObject({ code: "57P01" })
   })
 })
@@ -851,6 +907,7 @@ describe("Sentry tag emission (negative assertion)", () => {
     await service.getShipments()
     await service.getShipmentById("ship-1")
     await service.getShipmentByAwb("AWB")
+    await service.getShipmentsByAwbs(["AWB"])
     await service.getTrackingEvents("AWB")
     await service.createShipment({} as never)
     await service.updateStatus("ship-1", ShipmentStatus.DELIVERED)
