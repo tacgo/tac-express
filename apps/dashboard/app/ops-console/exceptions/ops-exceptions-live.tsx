@@ -23,5 +23,8 @@ function toRow(e: ExceptionSummary): ExceptionRow {
 export function OpsExceptionsLive() {
   useRealtimeExceptions()
   const { data = [] } = useExceptions({})
-  return <V7OpsExceptions rows={data.map(toRow)} />
+  // ⚡ Bolt: Memoize rows to prevent unnecessary re-renders in TanStack Table
+  // since .map creates a new array reference on every render
+  const rows = React.useMemo(() => data.map(toRow), [data])
+  return <V7OpsExceptions rows={rows} />
 }
