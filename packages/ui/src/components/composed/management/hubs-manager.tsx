@@ -167,6 +167,7 @@ export function HubsManager({
       ) : hubs.length === 0 ? (
         <EmptyState
           icon={<RiBuilding4Line />}
+          eyebrow="Setup"
           title="No hubs configured"
           description="Add the first hub to enable shipment routing across the network."
           action={

@@ -79,6 +79,7 @@ function V7OpsWhatsAppFailedSends({
                 aria-hidden
               />
             }
+            eyebrow="All clear"
             title="Queue clear — no failed sends"
             description={`Every WhatsApp notification in the last ${windowDays}-day window was delivered. Failures surface here for one-click retry.`}
           />

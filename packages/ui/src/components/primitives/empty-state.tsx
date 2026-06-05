@@ -4,6 +4,8 @@ import { cn } from "@workspace/ui/lib/utils"
 
 interface EmptyStateProps {
   icon?: ReactNode
+  /** Contextual label above the title. Defaults to "No data". Pass null to hide. */
+  eyebrow?: string | null
   title: string
   description?: string
   action?: ReactNode
@@ -13,6 +15,7 @@ interface EmptyStateProps {
 
 function EmptyState({
   icon,
+  eyebrow = "No data",
   title,
   description,
   action,
@@ -38,7 +41,7 @@ function EmptyState({
           {icon}
         </div>
       ) : null}
-      <p className="tac-mono-label mb-1">No data</p>
+      {eyebrow !== null && <p className="tac-mono-label mb-1">{eyebrow}</p>}
       {/*
         Heading is <h2>, not <h3>: when EmptyState is rendered directly under
         a PageHeader's <h1> (e.g. /ops-console/audit, /ops-console/notifications

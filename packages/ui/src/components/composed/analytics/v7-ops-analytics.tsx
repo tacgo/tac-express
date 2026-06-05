@@ -252,6 +252,7 @@ function AnalyticsEmpty() {
   return (
     <EmptyState
       icon={<RiSignalTowerLine className="size-5" aria-hidden />}
+      eyebrow="Pending"
       title="No telemetry yet"
       description="Analytics will populate as shipments process through the network. KPIs and trend charts come online with the first delivered manifest."
       action={
