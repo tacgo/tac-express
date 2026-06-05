@@ -264,6 +264,11 @@ jobs:
           node-version: 22
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      - name: Copy env files
+        run: |
+          cp .env.example .env
+          cp apps/dashboard/.env.example apps/dashboard/.env
+          cp apps/web/.env.example apps/web/.env
       - name: Build dashboard
         run: pnpm --filter dashboard build
       - name: Measure bundle size
