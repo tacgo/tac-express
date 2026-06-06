@@ -25,8 +25,11 @@ function toRow(c: Customer): CustomerRow {
 }
 
 export function OpsCustomersLive() {
-  const { data = [] } = useCustomers({})
-  const rows = data.map(toRow)
+  const { data } = useCustomers({})
+  // ⚡ Bolt: Memoize the mapped array to maintain referential equality.
+  // Without this, every render creates a new array, forcing the underlying
+  // DataTable to re-render and lose its internal state (sort/pagination).
+  const rows = React.useMemo(() => (data ?? []).map(toRow), [data])
   // Canonical v7 — v6 paper view retired in Phase 4 composition unification.
   return <V7OpsCustomers rows={rows} />
 }
