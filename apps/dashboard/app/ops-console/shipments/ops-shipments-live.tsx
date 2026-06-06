@@ -46,7 +46,10 @@ function titleCase(s: string): string {
 export function OpsShipmentsLive() {
   useRealtimeShipments()
   const query = useShipments({})
-  const rows = (query.data ?? []).map(toRow)
+  // ⚡ Bolt: Memoize the mapped array to maintain referential equality.
+  // Without this, every render creates a new array, forcing the underlying
+  // DataTable to re-render and lose its internal state (sort/pagination).
+  const rows = React.useMemo(() => (query.data ?? []).map(toRow), [query.data])
 
   // Canonical v7 — v6 paper view retired in Phase 4/5 composition unification.
   return (

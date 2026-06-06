@@ -1,0 +1,3 @@
+## 2024-06-06 - Prevent Table Re-renders with Memoized Array Mapping
+**Learning:** Passing mapped API data (e.g., `data.map(toRow)`) directly to composed layout components like `V7OpsCustomers` or `DataTable` creates a new array reference on every render. Because the underlying TanStack React Table expects stable references for its `data` prop, breaking referential equality forces the table to unnecessarily re-render and reset its internal state (like row selection, pagination, and sorting).
+**Action:** Always wrap `.map()` transformations in `React.useMemo` (e.g., `React.useMemo(() => data.map(toRow), [data])`) when passing the result to `V7Ops*` components, data tables, or composed lists.
