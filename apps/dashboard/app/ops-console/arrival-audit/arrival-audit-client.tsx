@@ -151,11 +151,13 @@ export function ArrivalAuditClient() {
     }
   }
 
-  const candidateOptions = candidates.map((c) => ({
+  // ⚡ Bolt: memoize mapped API data to prevent TanStack table re-renders
+  // and internal state resets on every render by preserving referential equality
+  const candidateOptions = React.useMemo(() => candidates.map((c) => ({
     value: c.id,
     label: `${c.manifestNumber}`,
     meta: `${c.originHub} → ${c.destHub}`,
-  }))
+  })), [candidates])
 
   return (
     <PageShell width="wide">
