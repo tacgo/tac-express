@@ -33,7 +33,7 @@ function toHub(h: HubInventoryItem): HubInventory {
  */
 export function OpsInventoryLive() {
   const queryClient = useQueryClient()
-  const { data = [], isFetching } = useInventoryByHub()
+  const query = useInventoryByHub()
 
   const handleRefresh = React.useCallback(() => {
     void queryClient.invalidateQueries({
@@ -41,9 +41,11 @@ export function OpsInventoryLive() {
     })
   }, [queryClient])
 
-  const hubs = data.map(toHub)
+  // ⚡ Bolt: memoize mapped API data to prevent TanStack table re-renders
+  // and internal state resets on every render by preserving referential equality
+  const hubs = React.useMemo(() => (query.data ?? []).map(toHub), [query.data])
 
   return (
-    <V7OpsInventory hubs={hubs} isLoading={isFetching} onRefresh={handleRefresh} />
+    <V7OpsInventory hubs={hubs} isLoading={query.isFetching} onRefresh={handleRefresh} />
   )
 }

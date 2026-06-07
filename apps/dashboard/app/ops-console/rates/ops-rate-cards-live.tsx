@@ -25,8 +25,11 @@ function toRow(rc: RateCard): RateCardRow {
 }
 
 export function OpsRateCardsLive() {
-  const { data = [] } = useRateCards({ isActive: true })
-  const rows = data.map(toRow)
+  const query = useRateCards({ isActive: true })
+
+  // ⚡ Bolt: memoize mapped API data to prevent TanStack table re-renders
+  // and internal state resets on every render by preserving referential equality
+  const rows = React.useMemo(() => (query.data ?? []).map(toRow), [query.data])
   // Canonical v7 composition — the v6 paper view was retired in the Phase 4
   // composition unification (one component per route, no design-version fork).
   return <V7OpsRateCards rows={rows} />

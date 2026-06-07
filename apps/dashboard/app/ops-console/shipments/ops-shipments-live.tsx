@@ -46,7 +46,10 @@ function titleCase(s: string): string {
 export function OpsShipmentsLive() {
   useRealtimeShipments()
   const query = useShipments({})
-  const rows = (query.data ?? []).map(toRow)
+
+  // ⚡ Bolt: memoize mapped API data to prevent TanStack table re-renders
+  // and internal state resets on every render by preserving referential equality
+  const rows = React.useMemo(() => (query.data ?? []).map(toRow), [query.data])
 
   // Canonical v7 — v6 paper view retired in Phase 4/5 composition unification.
   return (

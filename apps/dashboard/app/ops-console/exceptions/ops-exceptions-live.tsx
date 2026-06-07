@@ -22,6 +22,11 @@ function toRow(e: ExceptionSummary): ExceptionRow {
 
 export function OpsExceptionsLive() {
   useRealtimeExceptions()
-  const { data = [] } = useExceptions({})
-  return <V7OpsExceptions rows={data.map(toRow)} />
+  const query = useExceptions({})
+
+  // ⚡ Bolt: memoize mapped API data to prevent TanStack table re-renders
+  // and internal state resets on every render by preserving referential equality
+  const rows = React.useMemo(() => (query.data ?? []).map(toRow), [query.data])
+
+  return <V7OpsExceptions rows={rows} />
 }

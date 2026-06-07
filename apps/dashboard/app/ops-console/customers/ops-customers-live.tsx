@@ -25,8 +25,11 @@ function toRow(c: Customer): CustomerRow {
 }
 
 export function OpsCustomersLive() {
-  const { data = [] } = useCustomers({})
-  const rows = data.map(toRow)
+  const query = useCustomers({})
+
+  // ⚡ Bolt: memoize mapped API data to prevent TanStack table re-renders
+  // and internal state resets on every render by preserving referential equality
+  const rows = React.useMemo(() => (query.data ?? []).map(toRow), [query.data])
   // Canonical v7 — v6 paper view retired in Phase 4 composition unification.
   return <V7OpsCustomers rows={rows} />
 }
