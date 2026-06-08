@@ -10,3 +10,5 @@ export const metadata: Metadata = {
 export default function ShiftReportPage() {
   return <ShiftReportClient />
 }
+
+export const dynamic = "force-dynamic"
