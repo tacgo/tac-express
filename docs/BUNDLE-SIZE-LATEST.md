@@ -31,7 +31,7 @@
 | 12 | `apps/dashboard/.next/static/chunks/0p7kul_4tkzl6.js` | 98.9 KB |
 | 13 | `apps/dashboard/.next/static/chunks/10ok2qj20k9-..js` | 98.9 KB |
 | 14 | `apps/dashboard/.next/static/chunks/08~67pqx_ce~k.js` | 84.6 KB |
-| 15 | `apps/dashboard/.next/static/chunks/0cwup8ezw6bb1.js` | 80.3 KB |
+| 15 | `apps/dashboard/.next/static/chunks/00jawmf6_dslb.js` | 80.3 KB |
 
 ## Per-route bundle (First Load JS)
 
