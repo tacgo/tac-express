@@ -11,3 +11,5 @@ export const metadata: Metadata = {
 export default function BookingsPage() {
   return <BookingsClient />
 }
+
+export const dynamic = "force-dynamic"

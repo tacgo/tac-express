@@ -22,3 +22,5 @@ export default function TrackIndexPage() {
     </div>
   )
 }
+
+export const dynamic = "force-dynamic"
