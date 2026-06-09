@@ -2,6 +2,8 @@ import type { Metadata } from "next"
 
 import { ArrivalAuditClient } from "./arrival-audit-client"
 
+export const dynamic = "force-dynamic"
+
 export const metadata: Metadata = {
   title: "Arrival Audit · TAC Express",
   description:
