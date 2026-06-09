@@ -8,6 +8,14 @@ interface CookieStore {
 }
 
 function getEnv() {
+  // Graceful fallback for CI environments building without credentials
+  if (process.env.CI && (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY)) {
+    return {
+      url: process.env.NEXT_PUBLIC_SUPABASE_URL || "https://placeholder-project.supabase.co",
+      key: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "placeholder-anon-key",
+    }
+  }
+
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL
   const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
   if (!url || !key) {
@@ -59,6 +67,14 @@ export function createServerClient(cookieStore: CookieStore) {
  * meant for one-shot request-scoped use inside server handlers.
  */
 export function createServiceRoleClient() {
+  if (process.env.CI && (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY)) {
+    return supabaseCreateClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL || "https://placeholder-project.supabase.co",
+      process.env.SUPABASE_SERVICE_ROLE_KEY || "placeholder-service-key",
+      { auth: { autoRefreshToken: false, persistSession: false } }
+    )
+  }
+
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY
   if (!url || !key) {
