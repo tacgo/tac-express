@@ -38,7 +38,9 @@ function toRow(m: ManifestSummary): ManifestRow {
 export function OpsManifestsLive() {
   useRealtimeManifests()
   const query = useManifests({})
-  const items = (query.data ?? []).map(toRow)
+  // Wrap map transformation in useMemo to maintain referential equality
+  // and prevent unnecessary TanStack table re-renders/state resets
+  const items = React.useMemo(() => (query.data ?? []).map(toRow), [query.data])
 
   // Canonical v7 — v6 paper view retired in Phase 5 composition unification.
   return (
