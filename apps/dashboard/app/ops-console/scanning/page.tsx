@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic"
 import type { Metadata } from "next"
 
 import { V7OpsScanning } from "@workspace/ui/components/composed/scanning/v7-ops-scanning"
