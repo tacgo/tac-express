@@ -23,5 +23,8 @@ function toRow(e: ExceptionSummary): ExceptionRow {
 export function OpsExceptionsLive() {
   useRealtimeExceptions()
   const { data = [] } = useExceptions({})
-  return <V7OpsExceptions rows={data.map(toRow)} />
+  // Wrap map transformation in useMemo to maintain referential equality
+  // and prevent unnecessary TanStack table re-renders/state resets
+  const rows = React.useMemo(() => data.map(toRow), [data])
+  return <V7OpsExceptions rows={rows} />
 }

@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic"
 import type { Metadata } from "next"
 
 import { SignInPageClient } from "@workspace/ui/components/composed/auth/sign-in-page-client"
