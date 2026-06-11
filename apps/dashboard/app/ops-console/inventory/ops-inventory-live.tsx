@@ -41,7 +41,9 @@ export function OpsInventoryLive() {
     })
   }, [queryClient])
 
-  const hubs = data.map(toHub)
+  // Memoize mapped array to prevent breaking referential equality and
+  // triggering unnecessary table re-renders in V7OpsInventory.
+  const hubs = React.useMemo(() => data.map(toHub), [data])
 
   return (
     <V7OpsInventory hubs={hubs} isLoading={isFetching} onRefresh={handleRefresh} />

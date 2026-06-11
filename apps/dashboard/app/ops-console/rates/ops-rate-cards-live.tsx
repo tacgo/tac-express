@@ -26,7 +26,11 @@ function toRow(rc: RateCard): RateCardRow {
 
 export function OpsRateCardsLive() {
   const { data = [] } = useRateCards({ isActive: true })
-  const rows = data.map(toRow)
+
+  // Memoize mapped array to prevent breaking referential equality and
+  // triggering unnecessary table re-renders in V7OpsRateCards.
+  const rows = React.useMemo(() => data.map(toRow), [data])
+
   // Canonical v7 composition — the v6 paper view was retired in the Phase 4
   // composition unification (one component per route, no design-version fork).
   return <V7OpsRateCards rows={rows} />
