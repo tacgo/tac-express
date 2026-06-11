@@ -12,6 +12,8 @@ import { ScrollArea } from "@workspace/ui/components/primitives/scroll-area"
 import { Switch } from "@workspace/ui/components/primitives/switch"
 import { Label } from "@workspace/ui/components/primitives/label"
 import { RichTextEditor } from "@workspace/ui/components/primitives/rich-text-editor"
+import DOMPurify from "isomorphic-dompurify"
+
 import { EmptyState } from "@workspace/ui/components/primitives/empty-state"
 import {
   RiBookOpenLine,
@@ -231,9 +233,8 @@ function NoteRow({
       <div
         className="prose prose-sm max-w-none text-foreground dark:prose-invert"
         // The rich-text editor produces sanitized HTML on the way in.
-        // For belt-and-braces, the consumer should also DOMPurify it
-        // server-side before persisting.
-        dangerouslySetInnerHTML={{ __html: note.bodyHtml }}
+        // For belt-and-braces, we sanitize again with DOMPurify to prevent XSS.
+        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(note.bodyHtml) }}
       />
     </li>
   )
