@@ -9,3 +9,4 @@ export const metadata: Metadata = {
 export default function OpsConsoleScanningPage() {
   return <V7OpsScanning />
 }
+export const dynamic = "force-dynamic"
