@@ -38,7 +38,10 @@ function toRow(m: ManifestSummary): ManifestRow {
 export function OpsManifestsLive() {
   useRealtimeManifests()
   const query = useManifests({})
-  const items = (query.data ?? []).map(toRow)
+
+  // BOLT OPTIMIZATION: Memoize mapped items to prevent V7OpsManifests
+  // (and its TanStack table instance) from re-rendering and losing state on poll.
+  const items = React.useMemo(() => (query.data ?? []).map(toRow), [query.data])
 
   // Canonical v7 — v6 paper view retired in Phase 5 composition unification.
   return (
