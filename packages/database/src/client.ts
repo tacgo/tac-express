@@ -8,8 +8,8 @@ interface CookieStore {
 }
 
 function getEnv() {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://your-project-ref.supabase.co"
-  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "eyJ..."
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
   if (!url || !key) {
     throw new Error(
       "Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY"
@@ -59,8 +59,8 @@ export function createServerClient(cookieStore: CookieStore) {
  * meant for one-shot request-scoped use inside server handlers.
  */
 export function createServiceRoleClient() {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://your-project-ref.supabase.co"
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY || "eyJ..."
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY
   if (!url || !key) {
     throw new Error(
       "Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY"
