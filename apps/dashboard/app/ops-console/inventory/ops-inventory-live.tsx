@@ -41,7 +41,8 @@ export function OpsInventoryLive() {
     })
   }, [queryClient])
 
-  const hubs = data.map(toHub)
+  // ⚡ Bolt: Memoize mapped rows to preserve referential equality and prevent V7OpsInventory from re-rendering
+  const hubs = React.useMemo(() => data.map(toHub), [data])
 
   return (
     <V7OpsInventory hubs={hubs} isLoading={isFetching} onRefresh={handleRefresh} />

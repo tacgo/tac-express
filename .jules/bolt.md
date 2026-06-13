@@ -1,0 +1,3 @@
+## 2024-06-13 - Memoizing Mapped API Data for Composed List Components
+**Learning:** Passing newly mapped arrays directly from API data hooks into TanStack table or composed list components (like `V7Ops*`) breaks referential equality on every render, triggering unnecessary nested re-renders and resetting internal state.
+**Action:** Always wrap `.map()` transformations of API data in `React.useMemo` when passing to complex UI components to preserve object references and optimize rendering performance.

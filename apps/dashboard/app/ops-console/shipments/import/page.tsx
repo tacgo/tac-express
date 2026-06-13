@@ -6,3 +6,4 @@ export const metadata: Metadata = { title: "Bulk Import — Shipments — TAC Ex
 export default function ShipmentImportPage() {
   return <BulkImportClient />
 }
+export const dynamic = 'force-dynamic'
