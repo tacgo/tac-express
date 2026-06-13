@@ -1,0 +1,4 @@
+## 2025-06-13 - XSS Vulnerability in NotesPanel
+**Vulnerability:** Found `dangerouslySetInnerHTML` rendering unsanitized user-generated rich text (`note.bodyHtml`) in `packages/ui/src/components/composed/notes/notes-panel.tsx`.
+**Learning:** Even if the rich-text editor purports to sanitize input or we expect server-side sanitization, defense-in-depth requires sanitizing user-generated content immediately before rendering it. Furthermore, standard `dompurify` can cause React SSR hydration mismatches, so `isomorphic-dompurify` must be used for safe cross-environment execution.
+**Prevention:** Always apply `DOMPurify.sanitize(html)` immediately before passing dynamic HTML to `dangerouslySetInnerHTML`. Relying on prior sanitization steps provides insufficient assurance at the rendering boundary.
