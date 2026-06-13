@@ -11,3 +11,4 @@ export const metadata: Metadata = {
 export default function ArrivalAuditPage() {
   return <ArrivalAuditClient />
 }
+export const dynamic = 'force-dynamic'

@@ -10,3 +10,4 @@ import { redirect } from "next/navigation"
 export default function RootPage() {
   redirect("/ops-console")
 }
+export const dynamic = 'force-dynamic'
