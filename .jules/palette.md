@@ -1,0 +1,3 @@
+## 2024-06-14 - Add tac-focus-premium to native select
+**Learning:** Native `<select>` elements, when used to bypass Radix Select for performance (like in the ops-bar `HubContextSwitcher`), still require the project-standard custom focus ring (`tac-focus-premium`) to ensure consistent keyboard accessibility and focus visibility with the rest of the application. The default `focus:border-primary` alone is insufficient for clear focus indication.
+**Action:** Always include `focus-visible:tac-focus-premium` on native interactive elements (`<select>`, `<input>`, `<button>`) even if they aren't wrapping a standard design system primitive, to maintain uniform accessibility standards across the app.
