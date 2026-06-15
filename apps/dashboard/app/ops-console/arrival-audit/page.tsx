@@ -8,6 +8,8 @@ export const metadata: Metadata = {
     "Reconcile inbound manifests at arrival — scan each AWB and resolve shortages.",
 }
 
+export const dynamic = "force-dynamic"
+
 export default function ArrivalAuditPage() {
   return <ArrivalAuditClient />
 }

@@ -194,7 +194,7 @@ function FileDropzone({
               <button
                 type="button"
                 onClick={() => remove(f.id)}
-                className="absolute right-1 top-1 flex size-6 items-center justify-center border border-border bg-background opacity-0 transition-opacity group-hover/dropzone-file:opacity-100 focus-visible:opacity-100"
+                className="absolute right-1 top-1 flex size-6 items-center justify-center border border-border bg-background opacity-0 transition-opacity group-hover/dropzone-file:opacity-100 focus-visible:opacity-100 focus-visible:outline-none focus-visible:tac-focus-premium"
                 aria-label={`Remove ${f.file.name}`}
               >
                 <RiCloseLine className="size-3" />
