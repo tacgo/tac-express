@@ -110,7 +110,7 @@ jobs:
       - name: Install Supabase CLI
         uses: supabase/setup-cli@v1
         with:
-          version: 1.145.4
+          version: 2.98.2
       - name: Start Supabase (db + auth + storage only — minimal)
         # --exclude trims the boot to ~60s on GH runners by skipping
         # services we don't need to validate migrations. Container names

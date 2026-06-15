@@ -130,7 +130,7 @@ jobs:
         if: vars.MIGRATION_DEPLOY_ENABLED == 'true'
         uses: supabase/setup-cli@v1
         with:
-          version: 1.145.4
+          version: 2.98.2
 
       - name: Link to production project
         if: vars.MIGRATION_DEPLOY_ENABLED == 'true'
