@@ -1,0 +1,3 @@
+## 2025-06-15 - Consistent Premium Focus for Native Elements
+**Learning:** Raw native `<button>` and `<Link>` elements, when not wrapping a standard design system primitive like `<Button>`, often miss the global custom focus ring (`tac-focus-premium`) and fall back to the browser default or inconsistent Tailwind ring utilities. This breaks keyboard accessibility patterns across the app.
+**Action:** Always explicitly append `focus-visible:outline-none focus-visible:tac-focus-premium` to the `className` of any native interactive elements (`<button>`, `<a>`, `<Link>`) inside custom composed components (like `notification-bell`, `file-dropzone`, `error-boundary`, etc.) to ensure consistent premium focus bloom.

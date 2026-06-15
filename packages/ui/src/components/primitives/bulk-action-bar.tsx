@@ -30,7 +30,7 @@ function BulkActionBar({ selectedCount, onClear, actions, className }: BulkActio
           type="button"
           onClick={onClear}
           aria-label="Clear selection"
-          className="inline-flex size-7 items-center justify-center border border-border tac-fui-hover"
+          className="inline-flex size-7 items-center justify-center border border-border tac-fui-hover focus-visible:outline-none focus-visible:tac-focus-premium"
         >
           <RiCloseLine className="size-4" aria-hidden="true" />
         </button>
