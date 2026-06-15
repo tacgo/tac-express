@@ -41,7 +41,7 @@ export function OpsInventoryLive() {
     })
   }, [queryClient])
 
-  const hubs = data.map(toHub)
+  const hubs = React.useMemo(() => data.map(toHub), [data])
 
   return (
     <V7OpsInventory hubs={hubs} isLoading={isFetching} onRefresh={handleRefresh} />
