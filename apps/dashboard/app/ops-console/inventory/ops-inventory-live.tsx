@@ -33,7 +33,7 @@ function toHub(h: HubInventoryItem): HubInventory {
  */
 export function OpsInventoryLive() {
   const queryClient = useQueryClient()
-  const { data = [], isFetching } = useInventoryByHub()
+  const { data, isFetching } = useInventoryByHub()
 
   const handleRefresh = React.useCallback(() => {
     void queryClient.invalidateQueries({
@@ -41,7 +41,11 @@ export function OpsInventoryLive() {
     })
   }, [queryClient])
 
-  const hubs = data.map(toHub)
+  // ⚡ Bolt Optimization: Memoize mapped API data
+  // What: Wraps the `.map()` transformation in `React.useMemo` and uses fallback `data ?? []` inline.
+  // Why: Prevents passing a new array reference on every render, especially avoiding `data = []` defaults causing changing references during loading.
+  // Impact: Avoids unnecessary deep re-renders of the V7OpsInventory component.
+  const hubs = React.useMemo(() => (data ?? []).map(toHub), [data])
 
   return (
     <V7OpsInventory hubs={hubs} isLoading={isFetching} onRefresh={handleRefresh} />

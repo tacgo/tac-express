@@ -46,7 +46,12 @@ function titleCase(s: string): string {
 export function OpsShipmentsLive() {
   useRealtimeShipments()
   const query = useShipments({})
-  const rows = (query.data ?? []).map(toRow)
+
+  // ⚡ Bolt Optimization: Memoize mapped API data
+  // What: Wraps the `.map()` transformation in `React.useMemo`.
+  // Why: Prevents passing a new array reference to the TanStack table on every render.
+  // Impact: Avoids unnecessary deep re-renders of the V7OpsShipments list and state resets.
+  const rows = React.useMemo(() => (query.data ?? []).map(toRow), [query.data])
 
   // Canonical v7 — v6 paper view retired in Phase 4/5 composition unification.
   return (
