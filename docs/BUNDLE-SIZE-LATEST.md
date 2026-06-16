@@ -18,12 +18,12 @@
 | Rank | File | Size |
 |---:|---|---:|
 | 1 | `apps/dashboard/.next/static/chunks/13yar80_k58hr.js` | 885.0 KB |
-| 2 | `apps/dashboard/.next/static/chunks/00s4g7072sdlc.js` | 541.7 KB |
+| 2 | `apps/dashboard/.next/static/chunks/0lve6z-sm70y9.js` | 541.7 KB |
 | 3 | `apps/dashboard/.next/static/chunks/0x61ah4w.cfmd.js` | 430.4 KB |
 | 4 | `apps/dashboard/.next/static/chunks/16caag~5_nv_h.js` | 393.5 KB |
 | 5 | `apps/dashboard/.next/static/chunks/0p1d70.1f53nf.js` | 371.4 KB |
 | 6 | `apps/dashboard/.next/static/chunks/0vjtb66hkrm7z.js` | 339.8 KB |
-| 7 | `apps/dashboard/.next/static/chunks/0wc6l4ulgox5r.js` | 234.3 KB |
+| 7 | `apps/dashboard/.next/static/chunks/0e0rwg1oducb2.js` | 234.4 KB |
 | 8 | `apps/dashboard/.next/static/chunks/0ispkf6dq3_5f.js` | 138.6 KB |
 | 9 | `apps/dashboard/.next/static/chunks/0.44cagn.di2e.js` | 117.1 KB |
 | 10 | `apps/dashboard/.next/static/chunks/03~yq9q893hmn.js` | 110.0 KB |

@@ -6,6 +6,8 @@ export const metadata: Metadata = {
   title: "Scanning — TAC Express Ops Console",
 }
 
+export const dynamic = "force-dynamic";
+
 export default function OpsConsoleScanningPage() {
   return <V7OpsScanning />
 }
