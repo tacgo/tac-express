@@ -7,6 +7,8 @@ export const metadata: Metadata = {
   description: "Track your TAC Express shipment or submit a new booking.",
 }
 
+export const dynamic = "force-dynamic";
+
 export default function TrackIndexPage() {
   return (
     <div className="space-y-6">
