@@ -1,0 +1,3 @@
+## 2025-05-16 - Ensure correct keyboard navigation styling for custom interactive elements
+**Learning:** Native interactive elements (e.g. `<button>`, `<Link>`) inside custom components (like `NotificationBell`) missing the `focus-visible:outline-none focus-visible:tac-focus-premium` utility classes will break keyboard navigation aesthetics and deviate from the TAC Express premium focus styling guidelines. Using default `focus-visible:ring-ring` does not match the app's established design language for focus rings.
+**Action:** Always apply `focus-visible:outline-none focus-visible:tac-focus-premium` instead of generic `focus-visible:ring-*` or missing focus states for interactive elements that are not standard design system primitives.
