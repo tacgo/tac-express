@@ -1,0 +1,3 @@
+## 2025-01-20 - Missing memoization causes table re-renders
+**Learning:** When fetching API data and applying an inline `.map()` transformation before passing it to TanStack table or composed list components, the referential equality of the data array breaks on every render. This forces unnecessary deep re-renders of the table and resets its internal state (like sorting/pagination) if not handled properly.
+**Action:** Always wrap `.map()` transformations of API data in `React.useMemo` when passing the result into complex `V7Ops*` view components.

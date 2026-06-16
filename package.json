@@ -27,9 +27,13 @@
     "clean": "node -e \"const fs=require('node:fs'),p=require('node:path'),roots=['.'].concat(fs.existsSync('apps')?fs.readdirSync('apps').map(d=>p.join('apps',d)):[]).concat(fs.existsSync('packages')?fs.readdirSync('packages').map(d=>p.join('packages',d)):[]),targets=['.next','.turbo','out','dist','coverage','playwright-report','test-results','.tsbuildinfo'];for(const r of roots){if(!fs.existsSync(r))continue;for(const t of targets){const f=p.join(r,t);if(fs.existsSync(f)){fs.rmSync(f,{recursive:true,force:true});console.log('removed',f)}}};for(const f of fs.readdirSync('.').filter(x=>x.endsWith('.tsbuildinfo'))){fs.rmSync(f,{force:true});console.log('removed',f)}\""
   },
   "devDependencies": {
+    "@opentelemetry/core": "^2.8.0",
+    "@opentelemetry/resources": "^2.8.0",
+    "@opentelemetry/sdk-trace-base": "^2.8.0",
     "@vitejs/plugin-react": "^6.0.1",
     "@workspace/eslint-config": "workspace:*",
     "@workspace/typescript-config": "workspace:*",
+    "esbuild": "^0.28.1",
     "happy-dom": "^20.9.0",
     "prettier": "^3.8.1",
     "prettier-plugin-tailwindcss": "^0.7.2",

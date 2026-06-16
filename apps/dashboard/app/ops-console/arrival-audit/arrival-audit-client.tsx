@@ -30,9 +30,10 @@ export function ArrivalAuditClient() {
   const addNotification = useNotificationStore((s) => s.addNotification)
 
   // Manifests waiting for arrival audit (in DEPARTED state)
-  const { data: candidates = [] } = useManifests({
+  const { data: candidatesQueryData } = useManifests({
     status: [ManifestStatus.DEPARTED],
   })
+  const candidates = React.useMemo(() => candidatesQueryData ?? [], [candidatesQueryData])
 
   const { data: manifest } = useManifest(activeId)
   const { data: manifestShipments } = useManifestShipments(activeId)
@@ -151,11 +152,15 @@ export function ArrivalAuditClient() {
     }
   }
 
-  const candidateOptions = candidates.map((c) => ({
-    value: c.id,
-    label: `${c.manifestNumber}`,
-    meta: `${c.originHub} → ${c.destHub}`,
-  }))
+  const candidateOptions = React.useMemo(
+    () =>
+      candidates.map((c) => ({
+        value: c.id,
+        label: `${c.manifestNumber}`,
+        meta: `${c.originHub} → ${c.destHub}`,
+      })),
+    [candidates]
+  )
 
   return (
     <PageShell width="wide">

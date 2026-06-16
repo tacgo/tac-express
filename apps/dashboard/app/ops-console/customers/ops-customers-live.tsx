@@ -25,8 +25,13 @@ function toRow(c: Customer): CustomerRow {
 }
 
 export function OpsCustomersLive() {
-  const { data = [] } = useCustomers({})
-  const rows = data.map(toRow)
+  const { data } = useCustomers({})
+
+  // ⚡ Bolt Optimization: Memoize mapped API data
+  // What: Wraps the `.map()` transformation in `React.useMemo` and uses fallback `data ?? []` inline.
+  // Why: Prevents passing a new array reference to the TanStack table on every render, especially avoiding `data = []` defaults causing changing references during loading.
+  // Impact: Avoids unnecessary deep re-renders of the V7OpsCustomers list and state resets.
+  const rows = React.useMemo(() => (data ?? []).map(toRow), [data])
   // Canonical v7 — v6 paper view retired in Phase 4 composition unification.
   return <V7OpsCustomers rows={rows} />
 }
