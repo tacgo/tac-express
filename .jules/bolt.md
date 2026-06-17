@@ -1,0 +1,3 @@
+## 2024-06-17 - React.useMemo Destructuring Pattern for API Data
+**Learning:** When using React.useMemo to optimize API data transformations, setting default array values during destructuring (e.g., `const { data = [] } = useQuery()`) creates unstable references during loading states on every render, which triggers unnecessary table re-renders and internal state resets in composed list components like V7Ops*.
+**Action:** Destructure the raw value and apply the fallback inline inside `React.useMemo` (e.g., `React.useMemo(() => (data ?? []).map(...), [data])`) instead of defaulting at the destructure site.
