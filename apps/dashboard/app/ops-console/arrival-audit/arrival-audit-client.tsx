@@ -30,9 +30,11 @@ export function ArrivalAuditClient() {
   const addNotification = useNotificationStore((s) => s.addNotification)
 
   // Manifests waiting for arrival audit (in DEPARTED state)
-  const { data: candidates = [] } = useManifests({
+  const { data } = useManifests({
     status: [ManifestStatus.DEPARTED],
   })
+  // ⚡ Bolt: Maintain referential equality during component updates
+  const candidates = React.useMemo(() => data ?? [], [data])
 
   const { data: manifest } = useManifest(activeId)
   const { data: manifestShipments } = useManifestShipments(activeId)
