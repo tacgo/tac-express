@@ -267,7 +267,7 @@ jobs:
       - name: Build dashboard
         run: pnpm --filter dashboard build
       - name: Measure bundle size
-        run: pnpm measure:bundle
+        run: node scripts/measure-bundle-size.mjs
       - name: Upload bundle report
         if: always()
         uses: actions/upload-artifact@v4
