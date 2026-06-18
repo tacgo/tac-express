@@ -1,0 +1,3 @@
+## 2024-06-18 - Missing React.useMemo around data transformations
+**Learning:** When passing mapped API data to TanStack table or composed list components, doing `.map()` or `.filter()` directly in the render body creates unstable references. This triggers unnecessary table re-renders and internal state resets. Also, setting default array values during destructuring (e.g. `const { data = [] } = useQuery()`) creates unstable references during loading states on every render.
+**Action:** Always wrap the `.map()` transformation in `React.useMemo` to prevent breaking referential equality. Destructure the raw value and apply the fallback inline (e.g., `React.useMemo(() => (data ?? []).map(...), [data])`).
