@@ -5,6 +5,8 @@
 import * as React from "react"
 import { formatDistanceToNow, parseISO } from "date-fns"
 
+import DOMPurify from "isomorphic-dompurify"
+
 import { cn } from "@workspace/ui/lib/utils"
 import { Button } from "@workspace/ui/components/button"
 import { Badge } from "@workspace/ui/components/primitives/badge"
@@ -230,10 +232,11 @@ function NoteRow({
       </header>
       <div
         className="prose prose-sm max-w-none text-foreground dark:prose-invert"
-        // The rich-text editor produces sanitized HTML on the way in.
-        // For belt-and-braces, the consumer should also DOMPurify it
-        // server-side before persisting.
-        dangerouslySetInnerHTML={{ __html: note.bodyHtml }}
+        // 🛡️ Sentinel: Sanitize HTML content with isomorphic-dompurify to mitigate Cross-Site Scripting (XSS)
+        // attacks via maliciously crafted or tampered notes content. The rich-text editor does its own
+        // sanitization on input, but it's essential to sanitize on output as well to ensure defense-in-depth,
+        // and isomorphic-dompurify ensures this runs consistently on both SSR and CSR avoiding hydration errors.
+        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(note.bodyHtml) }}
       />
     </li>
   )
