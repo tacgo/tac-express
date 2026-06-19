@@ -1,0 +1,3 @@
+## 2024-05-24 - Unstable Array Destructuring with useQuery
+**Learning:** Destructuring `useQuery` data with a default array (e.g., `const { data = [] } = useQuery()`) creates a new array reference on every render while the query is in a loading state. This breaks referential equality and causes unnecessary re-renders when passed down to composed list components (like TanStack tables or `V7Ops*` components).
+**Action:** Avoid setting default array values during `useQuery` destructuring. Instead, destructure the raw value and apply the fallback inline within a `React.useMemo` hook (e.g., `React.useMemo(() => (data ?? []).map(...), [data])`) to ensure stable references and prevent performance degradation.
