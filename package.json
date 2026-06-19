@@ -53,7 +53,12 @@
     ],
     "overrides": {
       "fast-uri": ">=3.1.2",
-      "postcss": ">=8.5.10"
+      "postcss": ">=8.5.10",
+      "@opentelemetry/core": ">=2.8.0"
     }
+  },
+  "dependencies": {
+    "@types/dompurify": "^3.2.0",
+    "dompurify": "^3.4.11"
   }
 }
