@@ -14,7 +14,8 @@ interface ShipmentNotesTabProps {
 }
 
 export function ShipmentNotesTab({ shipmentId }: ShipmentNotesTabProps) {
-  const { data: notes = [], isLoading } = useNotes("SHIPMENT", shipmentId)
+  const { data: rawNotes, isLoading } = useNotes("SHIPMENT", shipmentId)
+  const notes = React.useMemo(() => rawNotes ?? [], [rawNotes])
   const createNote = useCreateNote()
   const deleteNote = useDeleteNote("SHIPMENT", shipmentId)
 

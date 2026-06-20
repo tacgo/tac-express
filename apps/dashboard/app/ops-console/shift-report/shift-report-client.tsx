@@ -27,7 +27,8 @@ type Duration = (typeof DURATIONS)[number]
 export function ShiftReportClient() {
   const [hours, setHours] = React.useState<Duration>(8)
   const [hubCode, setHubCode] = React.useState<string>("")
-  const { data: hubs = [] } = useHubs(true)
+  const { data: rawHubs } = useHubs(true)
+  const hubs = React.useMemo(() => rawHubs ?? [], [rawHubs])
   const report = useShiftReport({
     hours,
     hubCode: hubCode || undefined,

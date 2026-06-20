@@ -21,7 +21,8 @@ import {
 export function BookingsClient() {
   const router = useRouter()
   const addNotification = useNotificationStore((s) => s.addNotification)
-  const { data: bookings = [], isLoading } = useBookings({ limit: 200 })
+  const { data: rawBookings, isLoading } = useBookings({ limit: 200 })
+  const bookings = React.useMemo(() => rawBookings ?? [], [rawBookings])
   const approve = useApproveBooking()
   const reject = useRejectBooking()
   const convert = useConvertBookingToShipment()

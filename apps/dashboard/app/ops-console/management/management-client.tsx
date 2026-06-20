@@ -48,7 +48,8 @@ export function ManagementClient() {
   const setActiveStatus = useSetActiveStatus()
   const addNotification = useNotificationStore((s) => s.addNotification)
 
-  const { data: hubs = [], isLoading: hubsLoading } = useHubs(false)
+  const { data: rawHubs, isLoading: hubsLoading } = useHubs(false)
+  const hubs = React.useMemo(() => rawHubs ?? [], [rawHubs])
   const createHub = useCreateHub()
   const updateHub = useUpdateHub()
   const toggleHubActive = useToggleHubActive()
