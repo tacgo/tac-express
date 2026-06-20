@@ -40,7 +40,7 @@ export function V2TrackingWidget() {
             if (error) setError(null)
           }}
           placeholder="e.g. TAC-DEL-2026-00419"
-          className="h-10 flex-1 border border-border bg-background px-4 font-mono text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary"
+          className="h-10 flex-1 border border-border bg-background px-4 font-mono text-sm text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:tac-focus-premium"
           aria-label="AWB or cargo ID"
           aria-describedby={error ? "track-error" : undefined}
           autoCapitalize="characters"
@@ -49,7 +49,7 @@ export function V2TrackingWidget() {
         />
         <button
           type="submit"
-          className="flex h-10 w-10 shrink-0 items-center justify-center border border-l-0 border-border bg-primary text-primary-foreground hover:bg-primary/90"
+          className="flex h-10 w-10 shrink-0 items-center justify-center border border-l-0 border-border bg-primary text-primary-foreground hover:bg-primary/90 focus-visible:outline-none focus-visible:tac-focus-premium"
           aria-label="Track shipment"
         >
           <RiArrowRightLine className="size-4" aria-hidden="true" />
