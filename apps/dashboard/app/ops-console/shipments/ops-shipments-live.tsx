@@ -46,7 +46,8 @@ function titleCase(s: string): string {
 export function OpsShipmentsLive() {
   useRealtimeShipments()
   const query = useShipments({})
-  const rows = (query.data ?? []).map(toRow)
+  const data = React.useMemo(() => query.data ?? [], [query.data])
+  const rows = React.useMemo(() => data.map(toRow), [data])
 
   // Canonical v7 — v6 paper view retired in Phase 4/5 composition unification.
   return (

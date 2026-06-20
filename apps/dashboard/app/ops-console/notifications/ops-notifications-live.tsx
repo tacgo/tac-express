@@ -32,7 +32,8 @@ const SERVICES: SystemService[] = [
 export function OpsNotificationsLive() {
   const { user } = useSession()
   const userId = user?.id
-  const { data: all = [] } = useNotificationsForUser(userId, { limit: 50 })
+  const { data: rawAll } = useNotificationsForUser(userId, { limit: 50 })
+  const all = React.useMemo(() => rawAll ?? [], [rawAll])
   const { data: unread = 0 } = useUnreadNotificationCount(userId)
 
   return (

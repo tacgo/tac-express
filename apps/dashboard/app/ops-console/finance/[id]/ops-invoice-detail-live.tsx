@@ -181,7 +181,8 @@ interface OpsInvoiceDetailLiveProps {
 export function OpsInvoiceDetailLive({ id }: OpsInvoiceDetailLiveProps) {
   const addNotification = useNotificationStore((s) => s.addNotification)
   const { data: invoice, isLoading } = useInvoice(id)
-  const { data: payments = [] } = usePaymentsForInvoice(id)
+  const { data: rawPayments } = usePaymentsForInvoice(id)
+  const payments = React.useMemo(() => rawPayments ?? [], [rawPayments])
   const issueInvoice = useIssueInvoice()
   const markPaid = useMarkPaid()
   const cancelInvoice = useCancelInvoice()

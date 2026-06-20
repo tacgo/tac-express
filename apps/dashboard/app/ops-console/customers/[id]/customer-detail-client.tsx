@@ -39,10 +39,11 @@ export function CustomerDetailClient({ customerId }: CustomerDetailClientProps) 
   const updateCustomer = useUpdateCustomer()
 
   // Notes thread
-  const { data: notes = [], isLoading: notesLoading } = useNotes(
+  const { data: rawNotes, isLoading: notesLoading } = useNotes(
     "CUSTOMER",
     customerId
   )
+  const notes = React.useMemo(() => rawNotes ?? [], [rawNotes])
   const createNote = useCreateNote()
   const deleteNote = useDeleteNote("CUSTOMER", customerId)
 

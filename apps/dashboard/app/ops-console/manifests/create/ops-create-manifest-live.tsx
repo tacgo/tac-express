@@ -48,7 +48,8 @@ import type {
  */
 export function OpsCreateManifestLive() {
   const router = useRouter()
-  const { data: hubs = [] } = useHubs(true)
+  const { data: rawHubs } = useHubs(true)
+  const hubs = React.useMemo(() => rawHubs ?? [], [rawHubs])
   const createManifest = useCreateManifest()
   const addAwb = useAddShipmentToManifest()
   const closeManifest = useCloseManifest()

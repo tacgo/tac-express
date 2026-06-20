@@ -38,7 +38,8 @@ function toRow(m: ManifestSummary): ManifestRow {
 export function OpsManifestsLive() {
   useRealtimeManifests()
   const query = useManifests({})
-  const items = (query.data ?? []).map(toRow)
+  const data = React.useMemo(() => query.data ?? [], [query.data])
+  const items = React.useMemo(() => data.map(toRow), [data])
 
   // Canonical v7 — v6 paper view retired in Phase 5 composition unification.
   return (

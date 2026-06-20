@@ -7,7 +7,8 @@ import { RiBuilding4Line, RiArrowDownSLine } from "@workspace/ui/icons"
 import { cn } from "@workspace/ui/lib/utils"
 
 export function HubContextSwitcher({ className }: { className?: string }) {
-  const { data: hubs = [], isLoading } = useHubs()
+  const { data: rawHubs, isLoading } = useHubs()
+  const hubs = React.useMemo(() => rawHubs ?? [], [rawHubs])
   const { activeHubCode, setActiveHub } = useHubStore()
 
   const activeHub = hubs.find((h) => h.code === activeHubCode) ?? null
