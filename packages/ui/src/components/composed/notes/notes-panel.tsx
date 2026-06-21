@@ -4,6 +4,7 @@
 
 import * as React from "react"
 import { formatDistanceToNow, parseISO } from "date-fns"
+import DOMPurify from "isomorphic-dompurify"
 
 import { cn } from "@workspace/ui/lib/utils"
 import { Button } from "@workspace/ui/components/button"
@@ -230,10 +231,10 @@ function NoteRow({
       </header>
       <div
         className="prose prose-sm max-w-none text-foreground dark:prose-invert"
-        // The rich-text editor produces sanitized HTML on the way in.
-        // For belt-and-braces, the consumer should also DOMPurify it
-        // server-side before persisting.
-        dangerouslySetInnerHTML={{ __html: note.bodyHtml }}
+        // [SECURITY] Sanitizing HTML client-side to prevent XSS. Even though
+        // rich-text output should be sanitized server-side, we must never trust
+        // server data directly in dangerouslySetInnerHTML.
+        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(note.bodyHtml) }}
       />
     </li>
   )
