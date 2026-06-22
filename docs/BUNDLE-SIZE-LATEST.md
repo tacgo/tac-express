@@ -7,31 +7,31 @@
 
 | Category | Size |
 |---|---|
-| JavaScript chunks | 5.76 MB |
-| CSS | 214.1 KB |
+| JavaScript chunks | 5.84 MB |
+| CSS | 214.6 KB |
 | Media (fonts, images) | 1.18 MB |
 | Other | 0 B |
-| **Total static** | **7.16 MB** |
+| **Total static** | **7.23 MB** |
 
 ## Largest JS chunks
 
 | Rank | File | Size |
 |---:|---|---:|
-| 1 | `apps/dashboard/.next/static/chunks/13yar80_k58hr.js` | 885.0 KB |
-| 2 | `apps/dashboard/.next/static/chunks/0i291-r2rama..js` | 541.7 KB |
-| 3 | `apps/dashboard/.next/static/chunks/0x61ah4w.cfmd.js` | 430.4 KB |
-| 4 | `apps/dashboard/.next/static/chunks/0d3hhnpu71dlo.js` | 393.5 KB |
-| 5 | `apps/dashboard/.next/static/chunks/0p1d70.1f53nf.js` | 371.4 KB |
-| 6 | `apps/dashboard/.next/static/chunks/0vjtb66hkrm7z.js` | 339.8 KB |
-| 7 | `apps/dashboard/.next/static/chunks/0smi~xbh9zpc..js` | 234.3 KB |
-| 8 | `apps/dashboard/.next/static/chunks/0ispkf6dq3_5f.js` | 138.6 KB |
-| 9 | `apps/dashboard/.next/static/chunks/0.44cagn.di2e.js` | 117.1 KB |
+| 1 | `apps/dashboard/.next/static/chunks/11~s3er5-.jv6.js` | 901.1 KB |
+| 2 | `apps/dashboard/.next/static/chunks/10cln5qkwhedr.js` | 547.0 KB |
+| 3 | `apps/dashboard/.next/static/chunks/0cp3yt6gt7-i9.js` | 430.4 KB |
+| 4 | `apps/dashboard/.next/static/chunks/08wq5kzzqodpl.js` | 422.8 KB |
+| 5 | `apps/dashboard/.next/static/chunks/060gcrl-5axdr.js` | 389.7 KB |
+| 6 | `apps/dashboard/.next/static/chunks/0dkqg34~w8q82.js` | 339.8 KB |
+| 7 | `apps/dashboard/.next/static/chunks/01_ps43.u193..js` | 236.3 KB |
+| 8 | `apps/dashboard/.next/static/chunks/0o85q_yvbi9qu.js` | 138.6 KB |
+| 9 | `apps/dashboard/.next/static/chunks/18a6_q9ehq.v1.js` | 117.8 KB |
 | 10 | `apps/dashboard/.next/static/chunks/03~yq9q893hmn.js` | 110.0 KB |
-| 11 | `apps/dashboard/.next/static/chunks/045ndk0o4~da~.js` | 107.0 KB |
-| 12 | `apps/dashboard/.next/static/chunks/0p7kul_4tkzl6.js` | 98.9 KB |
-| 13 | `apps/dashboard/.next/static/chunks/10ok2qj20k9-..js` | 98.9 KB |
-| 14 | `apps/dashboard/.next/static/chunks/0eu891a-~nyqz.js` | 84.6 KB |
-| 15 | `apps/dashboard/.next/static/chunks/0fner~48vcu~r.js` | 80.3 KB |
+| 11 | `apps/dashboard/.next/static/chunks/113y34i.rdi0g.js` | 107.1 KB |
+| 12 | `apps/dashboard/.next/static/chunks/0jr6jp4d8itov.js` | 98.9 KB |
+| 13 | `apps/dashboard/.next/static/chunks/15tb6k-6pmqvq.js` | 98.9 KB |
+| 14 | `apps/dashboard/.next/static/chunks/00iekv8357-i-.js` | 85.8 KB |
+| 15 | `apps/dashboard/.next/static/chunks/0130-p2gpbosg.js` | 81.4 KB |
 
 ## Per-route bundle (First Load JS)
 

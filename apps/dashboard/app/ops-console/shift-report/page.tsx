@@ -7,6 +7,8 @@ export const metadata: Metadata = {
   description: "Trailing operations summary by hub and duration.",
 }
 
+export const dynamic = "force-dynamic"
+
 export default function ShiftReportPage() {
   return <ShiftReportClient />
 }
