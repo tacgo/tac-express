@@ -94,6 +94,7 @@ export function ShipmentDetailTabs({
 function ComingSoon({ label }: { label: string }) {
   return (
     <EmptyState
+      label="Setup"
       icon={<RiBookOpenLine />}
       title={label}
       description="This panel lights up in a later phase of the rollout."

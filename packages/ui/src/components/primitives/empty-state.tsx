@@ -3,6 +3,8 @@ import type { ReactNode } from "react"
 import { cn } from "@workspace/ui/lib/utils"
 
 interface EmptyStateProps {
+  /** Optional eyebrow label (defaults to "No data" if omitted) */
+  label?: string
   icon?: ReactNode
   title: string
   description?: string
@@ -12,6 +14,7 @@ interface EmptyStateProps {
 }
 
 function EmptyState({
+  label = "No data",
   icon,
   title,
   description,
@@ -38,7 +41,7 @@ function EmptyState({
           {icon}
         </div>
       ) : null}
-      <p className="tac-mono-label mb-1">No data</p>
+      <p className="tac-mono-label mb-1">{label}</p>
       {/*
         Heading is <h2>, not <h3>: when EmptyState is rendered directly under
         a PageHeader's <h1> (e.g. /ops-console/audit, /ops-console/notifications

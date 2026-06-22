@@ -158,6 +158,7 @@ export function BookingsInbox({
                 </div>
               ) : filtered.length === 0 ? (
                 <EmptyState
+                  label={tab === "PENDING" ? "Queue clear" : "No results"}
                   icon={<RiBox3Line />}
                   title="No bookings"
                   description={
