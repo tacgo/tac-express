@@ -116,6 +116,7 @@ export function NotificationInbox({
                 </div>
               ) : filtered.length === 0 ? (
                 <EmptyState
+                  label={tab === "unread" ? "Queue clear" : "No data"}
                   icon={<RiNotification3Line />}
                   title={
                     tab === "unread"
