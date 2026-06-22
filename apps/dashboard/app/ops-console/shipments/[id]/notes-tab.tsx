@@ -14,13 +14,13 @@ interface ShipmentNotesTabProps {
 }
 
 export function ShipmentNotesTab({ shipmentId }: ShipmentNotesTabProps) {
-  const { data: notes = [], isLoading } = useNotes("SHIPMENT", shipmentId)
+  const { data: notes, isLoading } = useNotes("SHIPMENT", shipmentId)
   const createNote = useCreateNote()
   const deleteNote = useDeleteNote("SHIPMENT", shipmentId)
 
   return (
     <NotesPanel
-      notes={notes}
+      notes={notes ?? []}
       loading={isLoading}
       onCreate={async (input) => {
         await createNote.mutateAsync({

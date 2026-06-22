@@ -8,6 +8,8 @@ export const metadata: Metadata = {
     "Public booking requests. Approve, reject, or convert to shipments.",
 }
 
+export const dynamic = "force-dynamic"
+
 export default function BookingsPage() {
   return <BookingsClient />
 }

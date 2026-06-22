@@ -13,7 +13,7 @@ export function SupportInboxLive() {
   // Fetch the full set (RLS gates to MANAGER+; a lower-role session gets zero
   // rows). Search + status-tab filtering happen client-side in the view —
   // lead volume is low for a launching product.
-  const { data = [], isLoading, isError } = useContactLeads({})
+  const { data, isLoading, isError } = useContactLeads({})
   const update = useUpdateContactLeadStatus()
 
   const onStatusChange = React.useCallback(
@@ -25,7 +25,7 @@ export function SupportInboxLive() {
 
   return (
     <V7ContactLeads
-      leads={data}
+      leads={data ?? []}
       isLoading={isLoading}
       isError={isError}
       onStatusChange={onStatusChange}

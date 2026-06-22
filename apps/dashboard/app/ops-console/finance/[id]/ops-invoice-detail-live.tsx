@@ -181,7 +181,7 @@ interface OpsInvoiceDetailLiveProps {
 export function OpsInvoiceDetailLive({ id }: OpsInvoiceDetailLiveProps) {
   const addNotification = useNotificationStore((s) => s.addNotification)
   const { data: invoice, isLoading } = useInvoice(id)
-  const { data: payments = [] } = usePaymentsForInvoice(id)
+  const { data: payments } = usePaymentsForInvoice(id)
   const issueInvoice = useIssueInvoice()
   const markPaid = useMarkPaid()
   const cancelInvoice = useCancelInvoice()
@@ -669,7 +669,7 @@ export function OpsInvoiceDetailLive({ id }: OpsInvoiceDetailLiveProps) {
           </div>
         </SurfaceCard>
 
-        <PaymentTimeline payments={payments} onDelete={handleDeletePayment} />
+        <PaymentTimeline payments={payments ?? []} onDelete={handleDeletePayment} />
       </DetailShell>
 
       <RecordPaymentDialog

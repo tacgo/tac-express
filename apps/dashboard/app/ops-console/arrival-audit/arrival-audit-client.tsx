@@ -30,7 +30,7 @@ export function ArrivalAuditClient() {
   const addNotification = useNotificationStore((s) => s.addNotification)
 
   // Manifests waiting for arrival audit (in DEPARTED state)
-  const { data: candidates = [] } = useManifests({
+  const { data: candidates } = useManifests({
     status: [ManifestStatus.DEPARTED],
   })
 
@@ -151,7 +151,7 @@ export function ArrivalAuditClient() {
     }
   }
 
-  const candidateOptions = candidates.map((c) => ({
+  const candidateOptions = (candidates ?? []).map((c) => ({
     value: c.id,
     label: `${c.manifestNumber}`,
     meta: `${c.originHub} → ${c.destHub}`,
@@ -174,7 +174,7 @@ export function ArrivalAuditClient() {
             value={activeId}
             onChange={setActiveId}
             placeholder={
-              candidates.length === 0
+              (candidates ?? []).length === 0
                 ? "No departed manifests waiting"
                 : "Select a manifest in transit"
             }

@@ -7,10 +7,10 @@ import { RiBuilding4Line, RiArrowDownSLine } from "@workspace/ui/icons"
 import { cn } from "@workspace/ui/lib/utils"
 
 export function HubContextSwitcher({ className }: { className?: string }) {
-  const { data: hubs = [], isLoading } = useHubs()
+  const { data: hubs, isLoading } = useHubs()
   const { activeHubCode, setActiveHub } = useHubStore()
 
-  const activeHub = hubs.find((h) => h.code === activeHubCode) ?? null
+  const activeHub = (hubs ?? []).find((h) => h.code === activeHubCode) ?? null
 
   if (isLoading) {
     return (
@@ -38,7 +38,7 @@ export function HubContextSwitcher({ className }: { className?: string }) {
         aria-label="Switch active hub"
       >
         <option value="">ALL HUBS</option>
-        {hubs.map((hub) => (
+        {(hubs ?? []).map((hub) => (
           <option key={hub.code} value={hub.code}>
             {hub.code} — {hub.city}
           </option>

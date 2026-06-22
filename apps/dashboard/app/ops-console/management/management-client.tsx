@@ -48,7 +48,7 @@ export function ManagementClient() {
   const setActiveStatus = useSetActiveStatus()
   const addNotification = useNotificationStore((s) => s.addNotification)
 
-  const { data: hubs = [], isLoading: hubsLoading } = useHubs(false)
+  const { data: hubs, isLoading: hubsLoading } = useHubs(false)
   const createHub = useCreateHub()
   const updateHub = useUpdateHub()
   const toggleHubActive = useToggleHubActive()
@@ -162,7 +162,7 @@ export function ManagementClient() {
 
   const hubOptions = React.useMemo(
     () =>
-      hubs
+      (hubs ?? [])
         .filter((h) => h.isActive)
         .map((h) => ({ value: h.code, label: `${h.code} · ${h.name}` })),
     [hubs],
@@ -223,7 +223,7 @@ export function ManagementClient() {
 
         <TabsContent value="hubs" className="pt-4">
           <HubsManager
-            hubs={hubs}
+            hubs={hubs ?? []}
             loading={hubsLoading}
             onCreate={handleCreateHub}
             onUpdate={handleUpdateHub}

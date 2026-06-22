@@ -39,7 +39,7 @@ export function CustomerDetailClient({ customerId }: CustomerDetailClientProps) 
   const updateCustomer = useUpdateCustomer()
 
   // Notes thread
-  const { data: notes = [], isLoading: notesLoading } = useNotes(
+  const { data: notes, isLoading: notesLoading } = useNotes(
     "CUSTOMER",
     customerId
   )
@@ -139,7 +139,7 @@ export function CustomerDetailClient({ customerId }: CustomerDetailClientProps) 
 
   const notesTab = (
     <NotesPanel
-      notes={notes}
+      notes={notes ?? []}
       loading={notesLoading}
       onCreate={async (input) => {
         await createNote.mutateAsync({
