@@ -1,0 +1,3 @@
+## 2024-05-24 - Prevent unstable array references from useQuery
+**Learning:** Destructuring `data = []` from `useQuery` creates a new array reference on every render while `isLoading` is true. When this array is subsequently passed into `.map()` and wrapped in `useMemo([data])`, or passed directly to table components, it breaks referential equality and causes expensive downstream re-renders or table state resets.
+**Action:** Never destructure default array values from `useQuery` or other hooks. Always destructure the raw value `const { data } = useQuery(...)` and provide the fallback inline right at the point of iteration: `(data ?? []).map(...)`.

@@ -32,12 +32,12 @@ const SERVICES: SystemService[] = [
 export function OpsNotificationsLive() {
   const { user } = useSession()
   const userId = user?.id
-  const { data: all = [] } = useNotificationsForUser(userId, { limit: 50 })
+  const { data: all } = useNotificationsForUser(userId, { limit: 50 })
   const { data: unread = 0 } = useUnreadNotificationCount(userId)
 
   return (
     <V7OpsNotifications
-      totalNotifications={all.length}
+      totalNotifications={(all ?? []).length}
       unreadNotifications={typeof unread === "number" ? unread : 0}
       channels={CHANNELS}
       services={SERVICES}
