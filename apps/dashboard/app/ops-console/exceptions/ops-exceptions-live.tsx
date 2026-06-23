@@ -22,6 +22,10 @@ function toRow(e: ExceptionSummary): ExceptionRow {
 
 export function OpsExceptionsLive() {
   useRealtimeExceptions()
-  const { data = [] } = useExceptions({})
-  return <V7OpsExceptions rows={data.map(toRow)} />
+  const { data } = useExceptions({})
+  // Memoise the data mapping so the array reference remains stable across renders.
+  // This prevents the composed v7 list components from triggering expensive
+  // deep updates or resetting internal state while the query is refetching.
+  const rows = React.useMemo(() => (data ?? []).map(toRow), [data])
+  return <V7OpsExceptions rows={rows} />
 }

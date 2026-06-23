@@ -1,0 +1,3 @@
+## 2024-06-23 - Prevent table re-renders by preserving referential equality
+**Learning:** Destructuring API responses with default empty arrays (e.g., `const { data = [] } = useQuery()`) allocates a new array on every render while the query is loading or refetching. This breaks referential equality when the array is mapped into table rows or list items, causing expensive deep updates in composed list components (like `V7Ops*`) and resetting internal component state.
+**Action:** Avoid default array assignment during destructuring. Instead, destructure the raw value and use `React.useMemo` to memoize the data mapping process using the nullish coalescing operator: `const rows = React.useMemo(() => (data ?? []).map(toRow), [data])`.

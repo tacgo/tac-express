@@ -38,7 +38,10 @@ function toRow(m: ManifestSummary): ManifestRow {
 export function OpsManifestsLive() {
   useRealtimeManifests()
   const query = useManifests({})
-  const items = (query.data ?? []).map(toRow)
+  // Memoise the data mapping so the array reference remains stable across renders.
+  // This prevents the composed v7 list components from triggering expensive
+  // deep updates or resetting internal state while the query is refetching.
+  const items = React.useMemo(() => (query.data ?? []).map(toRow), [query.data])
 
   // Canonical v7 — v6 paper view retired in Phase 5 composition unification.
   return (
