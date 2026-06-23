@@ -134,9 +134,8 @@ function Wizard({
                 disabled={!clickable}
                 onClick={() => clickable && onStepClick?.(idx)}
                 className={cn(
-                  "flex w-full items-center gap-3 px-4 py-3 text-left",
+                  "focus-visible:outline-none focus-visible:tac-focus-premium flex w-full items-center gap-3 px-4 py-3 text-left",
                   "transition-colors duration-[var(--duration-fast)] ease-linear",
-                  "focus:outline-none focus-visible:outline-1 focus-visible:[outline-offset:var(--outline-offset-inset)] focus-visible:outline-primary",
                   clickable ? "hover:bg-accent/50" : "cursor-default"
                 )}
               >

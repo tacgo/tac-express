@@ -51,7 +51,7 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
           <button
             type="button"
             onClick={this.reset}
-            className="mt-4 inline-flex items-center justify-center border border-border bg-background px-3 py-1.5 text-sm font-medium tac-fui-hover"
+            className="focus-visible:outline-none focus-visible:tac-focus-premium mt-4 inline-flex items-center justify-center border border-border bg-background px-3 py-1.5 text-sm font-medium tac-fui-hover"
           >
             Reset
           </button>
