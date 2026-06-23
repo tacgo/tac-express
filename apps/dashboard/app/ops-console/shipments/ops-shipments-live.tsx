@@ -46,7 +46,10 @@ function titleCase(s: string): string {
 export function OpsShipmentsLive() {
   useRealtimeShipments()
   const query = useShipments({})
-  const rows = (query.data ?? []).map(toRow)
+  // Memoise the data mapping so the array reference remains stable across renders.
+  // This prevents the composed v7 list components from triggering expensive
+  // deep updates or resetting internal state while the query is refetching.
+  const rows = React.useMemo(() => (query.data ?? []).map(toRow), [query.data])
 
   // Canonical v7 — v6 paper view retired in Phase 4/5 composition unification.
   return (
