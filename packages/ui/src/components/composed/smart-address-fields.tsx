@@ -279,7 +279,7 @@ function IndianCityCombobox({
                   // eslint-disable-next-line no-restricted-syntax -- CommandEmpty action: native button needed for cmdk's event propagation outside CommandItem
                   <button
                     type="button"
-                    className="flex w-full items-center gap-2 px-2 py-2 text-left text-sm hover:bg-muted"
+                    className="flex w-full items-center gap-2 px-2 py-2 text-left text-sm hover:bg-muted focus-visible:outline-none focus-visible:tac-focus-premium"
                     onClick={() => {
                       onChange?.(trimmedQuery)
                       setQuery("")
