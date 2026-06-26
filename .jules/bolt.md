@@ -1,0 +1,3 @@
+## 2024-06-26 - Prevent Table Re-renders with useMemo
+**Learning:** When passing mapped API data to TanStack table or composed list components (e.g., V7Ops*), missing `React.useMemo` around the `.map()` transformation breaks referential equality and triggers unnecessary table re-renders and internal state resets.
+**Action:** Always wrap the `.map()` transformation in `React.useMemo` and avoid setting default array values during destructuring (e.g., `const { data = [] } = useQuery()`). Instead, destructure the raw value and apply the fallback inline (e.g., `React.useMemo(() => (data ?? []).map(...), [data])`).
