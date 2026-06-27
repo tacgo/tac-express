@@ -73,7 +73,7 @@ function NotificationBell() {
         <button
           data-slot="notifications-trigger"
           type="button"
-          className="relative flex h-8 w-8 items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors"
+          className="relative flex h-8 w-8 items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors focus-visible:outline-none focus-visible:tac-focus-premium"
           aria-label={`Notifications${unreadCount > 0 ? ` (${unreadCount} unread)` : ""}`}
         >
           <RiNotification3Line className="h-4 w-4" />
