@@ -3,7 +3,7 @@
   "$comment": "Bundle-size budgets for the dashboard. Each limit is a hard CI gate — exceeding any of them fails the architecture-gates workflow. Update deliberately, with a same-PR justification.",
   "baseline": {
     "capturedAt": "2026-05-13",
-    "totalStaticBytes": 7600000,
+    "totalStaticBytes": 7450000,
     "largestChunkBytes": 920000,
     "jsBytes": 6280000,
     "comment": "Updated 2026-06-27: raised totalStaticBytes to account for isomorphic-dompurify security dependency."
