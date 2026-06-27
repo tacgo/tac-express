@@ -1,0 +1,3 @@
+## 2025-01-14 - React useMemo array mapping anti-pattern
+**Learning:** When using React.useMemo to optimize API data transformations (e.g., from useQuery), destructuring with default arrays creates unstable references during loading states, causing child components to re-render. Also, mapping API results directly into TanStack tables without useMemo breaks referential equality and resets internal table state.
+**Action:** Always destructure the raw value without a default array, then apply the fallback inline inside React.useMemo: `const rows = React.useMemo(() => (data ?? []).map(toRow), [data])`.

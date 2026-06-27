@@ -46,7 +46,9 @@ function titleCase(s: string): string {
 export function OpsShipmentsLive() {
   useRealtimeShipments()
   const query = useShipments({})
-  const rows = (query.data ?? []).map(toRow)
+  // ⚡ Bolt: Memoise mapped API rows to preserve referential equality.
+  // Reduces V7OpsShipments re-renders and prevents internal table state resets.
+  const rows = React.useMemo(() => (query.data ?? []).map(toRow), [query.data])
 
   // Canonical v7 — v6 paper view retired in Phase 4/5 composition unification.
   return (
