@@ -43,7 +43,7 @@ const BLOCK_SITES: BlockSite[] = [
     routePath: "/api/diagnostics/sentry",
     filePath: join(
       REPO_ROOT,
-      "apps/dashboard/app/api/diagnostics/sentry/route.ts",
+      "apps/dashboard/app/api/diagnostics/sentry/route.ts"
     ),
     surface: "/api/diagnostics/sentry",
   },
@@ -51,16 +51,13 @@ const BLOCK_SITES: BlockSite[] = [
     routePath: "/api/whatsapp/send-invoice",
     filePath: join(
       REPO_ROOT,
-      "apps/dashboard/app/api/whatsapp/send-invoice/route.ts",
+      "apps/dashboard/app/api/whatsapp/send-invoice/route.ts"
     ),
     surface: "/api/whatsapp/send-invoice",
   },
   {
     routePath: "/api/whatsapp/test",
-    filePath: join(
-      REPO_ROOT,
-      "apps/dashboard/app/api/whatsapp/test/route.ts",
-    ),
+    filePath: join(REPO_ROOT, "apps/dashboard/app/api/whatsapp/test/route.ts"),
     surface: "/api/whatsapp/test",
   },
 ]
@@ -73,7 +70,7 @@ describe("BLOCK-sites captureRbacDenial adoption", () => {
       it("imports captureRbacDenial from @workspace/auth", () => {
         // Allow either {captureRbacDenial} alone or part of a multi-import
         expect(source).toMatch(
-          /import\s+\{[^}]*\bcaptureRbacDenial\b[^}]*\}\s+from\s+["']@workspace\/auth["']/,
+          /import\s+\{[^}]*\bcaptureRbacDenial\b[^}]*\}\s+from\s+["']@workspace\/auth["']/
         )
       })
 
@@ -92,7 +89,9 @@ describe("BLOCK-sites captureRbacDenial adoption", () => {
         // The audit doc § 2.1 specifies OPS_STAFF as the "no role / not
         // authenticated" sentinel — puts the unauthenticated bucket at the
         // lowest rank without leaking identity.
-        expect(source).toMatch(/actualRole:\s*role\s*\?\?\s*UserRole\.OPS_STAFF/)
+        expect(source).toMatch(
+          /actualRole:\s*role\s*\?\?\s*UserRole\.OPS_STAFF/
+        )
       })
     })
   }

@@ -12,7 +12,10 @@ import {
 function toRow(rc: RateCard): RateCardRow {
   return {
     route: `${rc.originHub.replace(/_/g, " ")} → ${rc.destHub.replace(/_/g, " ")}`,
-    service: rc.serviceLevel === "PRIORITY" || rc.serviceLevel === "EXPRESS" ? "Priority" : "Standard",
+    service:
+      rc.serviceLevel === "PRIORITY" || rc.serviceLevel === "EXPRESS"
+        ? "Priority"
+        : "Standard",
     slab:
       rc.weightSlabMax === Number.POSITIVE_INFINITY
         ? `${rc.weightSlabMin}–∞`

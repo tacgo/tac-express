@@ -69,7 +69,7 @@ export function ManagementClient() {
     // confirmations is unnecessary risk.
     const maskedEmail = input.email.replace(
       /^(.).*?(@.*)$/,
-      (_, first: string, domain: string) => `${first}***${domain}`,
+      (_, first: string, domain: string) => `${first}***${domain}`
     )
     addNotification({
       type: "info",
@@ -152,9 +152,7 @@ export function ManagementClient() {
     } catch (err) {
       addNotification({
         type: "error",
-        title: isActive
-          ? "Failed to activate hub"
-          : "Failed to deactivate hub",
+        title: isActive ? "Failed to activate hub" : "Failed to deactivate hub",
         message: String(err),
       })
     }
@@ -165,7 +163,7 @@ export function ManagementClient() {
       hubs
         .filter((h) => h.isActive)
         .map((h) => ({ value: h.code, label: `${h.code} · ${h.name}` })),
-    [hubs],
+    [hubs]
   )
 
   return (
@@ -175,13 +173,9 @@ export function ManagementClient() {
         title="Operations & Access"
         description="Staff, hubs, tariffs, and role-based permissions in one place."
         actions={
-          <Button
-            type="button"
-            size="sm"
-            onClick={() => setInviteOpen(true)}
-          >
+          <Button type="button" size="sm" onClick={() => setInviteOpen(true)}>
             <RiUserAddLine aria-hidden="true" />
-            <span className="ml-1.5 font-mono uppercase tracking-wider">
+            <span className="ml-1.5 font-mono tracking-wider uppercase">
               Invite staff
             </span>
           </Button>
@@ -253,4 +247,3 @@ export function ManagementClient() {
     </PageShell>
   )
 }
-

@@ -20,7 +20,7 @@ export function SupportInboxLive() {
     (id: string, status: ContactLeadStatus) => {
       update.mutate({ id, status })
     },
-    [update],
+    [update]
   )
 
   return (
@@ -29,7 +29,7 @@ export function SupportInboxLive() {
       isLoading={isLoading}
       isError={isError}
       onStatusChange={onStatusChange}
-      updatingId={update.isPending ? update.variables?.id ?? null : null}
+      updatingId={update.isPending ? (update.variables?.id ?? null) : null}
     />
   )
 }

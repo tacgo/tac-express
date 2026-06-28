@@ -30,7 +30,9 @@ export default async function PrintLabelPage({ params }: PageProps) {
   /* Real Code 128 + Data Matrix encoded server-side. See the same
    * pattern in `apps/dashboard/app/print/invoice-label/[id]/page.tsx`
    * for rationale — labels must scan, not just look right. */
-  const { code128Svg, dataMatrixSvg } = encodeShippingLabelBarcodes(shipment.awbNumber)
+  const { code128Svg, dataMatrixSvg } = encodeShippingLabelBarcodes(
+    shipment.awbNumber
+  )
 
   return (
     <PrintLabelClient

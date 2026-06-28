@@ -34,22 +34,37 @@ async function requireManager(): Promise<GateResult> {
 
   const user = await auth.getUser().catch((err: unknown) => {
     log.warn(
-      { err: err instanceof Error ? { message: err.message, name: err.name } : { value: String(err) } },
-      "auth.getUser failed",
+      {
+        err:
+          err instanceof Error
+            ? { message: err.message, name: err.name }
+            : { value: String(err) },
+      },
+      "auth.getUser failed"
     )
     return null
   })
   if (!user) {
-    return { allowed: false, response: NextResponse.json({ error: "Unauthorized" }, { status: 401 }) }
+    return {
+      allowed: false,
+      response: NextResponse.json({ error: "Unauthorized" }, { status: 401 }),
+    }
   }
   const adminService = createAdminServerService(cookieStore)
-  const profile = await adminService.getProfileById(user.id).catch((err: unknown) => {
-    log.warn(
-      { err: err instanceof Error ? { message: err.message, name: err.name } : { value: String(err) } },
-      "adminService.getProfileById failed",
-    )
-    return null
-  })
+  const profile = await adminService
+    .getProfileById(user.id)
+    .catch((err: unknown) => {
+      log.warn(
+        {
+          err:
+            err instanceof Error
+              ? { message: err.message, name: err.name }
+              : { value: String(err) },
+        },
+        "adminService.getProfileById failed"
+      )
+      return null
+    })
 
   const rawRole = profile?.role
   const role = Object.values(UserRole).includes(rawRole as UserRole)
@@ -64,8 +79,11 @@ async function requireManager(): Promise<GateResult> {
     return {
       allowed: false,
       response: NextResponse.json(
-        { error: "Insufficient permissions. Sentry diagnostics require MANAGER or above." },
-        { status: 403 },
+        {
+          error:
+            "Insufficient permissions. Sentry diagnostics require MANAGER or above.",
+        },
+        { status: 403 }
       ),
     }
   }
@@ -88,7 +106,7 @@ async function requireManager(): Promise<GateResult> {
             "X-RateLimit-Remaining": String(rl.remaining),
             "X-RateLimit-Reset": String(rl.reset),
           },
-        },
+        }
       ),
     }
   }
@@ -136,7 +154,7 @@ export async function POST() {
   if (!dsn) {
     return NextResponse.json(
       { ok: false, reason: "No DSN configured — Sentry is fail-quiet." },
-      { status: 503 },
+      { status: 503 }
     )
   }
 
@@ -144,7 +162,9 @@ export async function POST() {
   // No PII in tags (deterministic strings only) per the tagger contract.
   const eventId = Sentry.captureException(
     new Error("Sentry wiring diagnostic — synthetic verification event"),
-    { tags: { diagnostic: "sentry-wiring", surface: "/api/diagnostics/sentry" } },
+    {
+      tags: { diagnostic: "sentry-wiring", surface: "/api/diagnostics/sentry" },
+    }
   )
   await Sentry.flush(2000)
 

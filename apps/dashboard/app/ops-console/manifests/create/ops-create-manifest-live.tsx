@@ -60,12 +60,12 @@ export function OpsCreateManifestLive() {
         value: h.id,
         label: `${h.name} · ${h.code}`,
       })),
-    [hubs],
+    [hubs]
   )
 
   const hubByCode = React.useCallback(
     (id: string) => hubs.find((h) => h.id === id)?.code ?? id,
-    [hubs],
+    [hubs]
   )
 
   const handleSetupCommit = async (setup: ManifestSetupValue) => {

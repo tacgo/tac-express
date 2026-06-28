@@ -69,10 +69,10 @@ export function OpsWhatsAppFailedSendsClient({
   // "may this fire?"; `inflightIds` state mirrors it for the render.
   const inflightLock = React.useRef<Set<UUID>>(new Set())
   const [inflightIds, setInflightIds] = React.useState<Set<UUID>>(
-    () => new Set(),
+    () => new Set()
   )
   const [errorsById, setErrorsById] = React.useState<Map<UUID, string>>(
-    () => new Map(),
+    () => new Map()
   )
 
   const rowState = React.useCallback(
@@ -101,7 +101,7 @@ export function OpsWhatsAppFailedSendsClient({
         lastError: errorsById.get(rowId) ?? null,
       }
     },
-    [canRetry, errorsById, inflightIds, initialRows],
+    [canRetry, errorsById, inflightIds, initialRows]
   )
 
   const onRetry = React.useCallback(
@@ -168,12 +168,12 @@ export function OpsWhatsAppFailedSendsClient({
         return next
       })
     },
-    [router],
+    [router]
   )
 
   const retryConfig: FailedSendsTableRetryConfig = React.useMemo(
     () => ({ rowState, onRetry }),
-    [rowState, onRetry],
+    [rowState, onRetry]
   )
 
   return (
