@@ -10,10 +10,7 @@ import { Redis } from "@upstash/redis"
 const url = process.env.UPSTASH_REDIS_REST_URL
 const token = process.env.UPSTASH_REDIS_REST_TOKEN
 
-const redis =
-  url && token
-    ? new Redis({ url, token })
-    : null
+const redis = url && token ? new Redis({ url, token }) : null
 
 /**
  * Public-API rate limit: sliding window, 60 req / minute / identifier.
@@ -109,9 +106,7 @@ export async function checkPublicApi(
   return publicApiRateLimit.limit(identifier)
 }
 
-export async function checkAuth(
-  identifier: string
-): Promise<RateLimitResult> {
+export async function checkAuth(identifier: string): Promise<RateLimitResult> {
   if (!authRateLimit) return noopResult
   return authRateLimit.limit(identifier)
 }

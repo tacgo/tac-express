@@ -124,8 +124,7 @@ const RISK_RE = /^\*\*Risk:\*\*\s+(.+?)\s*$/
 const REFS_FENCE_OPEN_RE = /^```refs\s*$/
 const REFS_FENCE_CLOSE_RE = /^```\s*$/
 const REF_LINE_RE = /^([a-z][a-z_]*):\s+(\S.*?)\s*$/
-const OPT_OUT_RE =
-  /^`refs:\s+none\s+—\s+not-sentinel-checked\s+\(([^)]+)\)`/
+const OPT_OUT_RE = /^`refs:\s+none\s+—\s+not-sentinel-checked\s+\(([^)]+)\)`/
 
 /**
  * Parse the backlog file into a list of items. Throws (via expect.fail) on a
@@ -163,7 +162,7 @@ function parseBacklog(): BacklogItem[] {
     if (REFS_FENCE_OPEN_RE.test(line)) {
       if (inRefsFence) {
         malformations.push(
-          `line ${lineNumber}: nested \`\`\`refs fence opener inside an unclosed fence`,
+          `line ${lineNumber}: nested \`\`\`refs fence opener inside an unclosed fence`
         )
       }
       inRefsFence = true
@@ -184,7 +183,7 @@ function parseBacklog(): BacklogItem[] {
       if (!refMatch) {
         malformations.push(
           `line ${lineNumber}: malformed refs line "${line}" — ` +
-            `expected "<kind>: <value>"`,
+            `expected "<kind>: <value>"`
         )
         continue
       }
@@ -225,7 +224,7 @@ function parseBacklog(): BacklogItem[] {
 
   if (malformations.length > 0) {
     expect.fail(
-      "backlog file format invalid:\n  - " + malformations.join("\n  - "),
+      "backlog file format invalid:\n  - " + malformations.join("\n  - ")
     )
   }
 
@@ -252,7 +251,7 @@ describe("backlog file structural invariants", () => {
     // defeats the forcing function. The whatsapp_sends item (W1) is the
     // permanent dogfood case until it's rotated out post-Sprint.
     const itemsWithRefs = ITEMS.filter(
-      (item) => item.refs !== null && item.refs.length > 0,
+      (item) => item.refs !== null && item.refs.length > 0
     )
     expect(itemsWithRefs.length).toBeGreaterThan(0)
   })
@@ -262,7 +261,7 @@ describe("backlog file structural invariants", () => {
     // contributor adds a backlog item and forgets the refs decision. The
     // sentinel must catch that, not silently let it through.
     const silentSkips = ITEMS.filter(
-      (item) => !item.optOut && (item.refs === null || item.refs.length === 0),
+      (item) => !item.optOut && (item.refs === null || item.refs.length === 0)
     )
     if (silentSkips.length > 0) {
       const lines = silentSkips
@@ -270,7 +269,7 @@ describe("backlog file structural invariants", () => {
           (item) =>
             `  - "${item.id} — ${item.title}" (heading line ${item.headingLine}): ` +
             `no refs block AND no \`refs: none — not-sentinel-checked (...)\` ` +
-            `opt-out. Add one or the other.`,
+            `opt-out. Add one or the other.`
         )
         .join("\n")
       expect.fail("Backlog items without refs decision:\n" + lines)
@@ -345,14 +344,14 @@ const KIND_HANDLERS: Record<string, KindHandler> = {
           `file does not exist: ${value}\n` +
             `  fix: either create the file, update the ref to point at the actual ` +
             `artifact, or mark the item with \`refs: none — not-sentinel-checked ` +
-            `(<reason>)\` if the work is not yet started.`,
+            `(<reason>)\` if the work is not yet started.`
         )
       }
       // Catalog #11: .isFile() not just existsSync — existsSync passes on dirs.
       if (!statSync(path).isFile()) {
         throw new Error(
           `path exists but is not a file: ${value}\n` +
-            `  fix: ref must point at a file, not a directory.`,
+            `  fix: ref must point at a file, not a directory.`
         )
       }
     },
@@ -365,7 +364,7 @@ const KIND_HANDLERS: Record<string, KindHandler> = {
       const sep = value.indexOf("::")
       if (sep < 0) {
         throw new Error(
-          `symbol ref must be in the form "<file>::<name>", got "${value}"`,
+          `symbol ref must be in the form "<file>::<name>", got "${value}"`
         )
       }
       const filePart = value.slice(0, sep)
@@ -374,7 +373,7 @@ const KIND_HANDLERS: Record<string, KindHandler> = {
       if (!existsSync(path) || !statSync(path).isFile()) {
         throw new Error(
           `symbol ref's file does not exist: ${filePart}\n` +
-            `  fix: update the file portion of the ref.`,
+            `  fix: update the file portion of the ref.`
         )
       }
       const source = readFileSync(path, "utf8")
@@ -382,7 +381,7 @@ const KIND_HANDLERS: Record<string, KindHandler> = {
         throw new Error(
           `symbol "${symbolPart}" not found in ${filePart}\n` +
             `  fix: either restore the symbol, update the ref to the new symbol ` +
-            `name, or remove the ref if the symbol was intentionally retired.`,
+            `name, or remove the ref if the symbol was intentionally retired.`
         )
       }
     },
@@ -398,11 +397,11 @@ const KIND_HANDLERS: Record<string, KindHandler> = {
       const migrationFiles = walk(MIGRATIONS_DIR, (f) => f.endsWith(".sql"))
       const createRe = new RegExp(
         `create\\s+table\\s+(if\\s+not\\s+exists\\s+)?(public\\.)?${escapeRegex(value)}\\b`,
-        "i",
+        "i"
       )
       const commentRe = new RegExp(
         `comment\\s+on\\s+table\\s+public\\.${escapeRegex(value)}\\b`,
-        "i",
+        "i"
       )
       const hit = migrationFiles.some((f) => {
         const text = readFileSync(f, "utf8")
@@ -414,7 +413,7 @@ const KIND_HANDLERS: Record<string, KindHandler> = {
             `supabase/migrations/\n` +
             `  fix: either land the migration that creates the table, update the ` +
             `ref to the correct table name, or remove the ref if the table was ` +
-            `intentionally dropped.`,
+            `intentionally dropped.`
         )
       }
     },
@@ -437,7 +436,7 @@ const KIND_HANDLERS: Record<string, KindHandler> = {
             `supabase/\n` +
             `  fix: either land the RPC migration + a JS-side caller, update the ` +
             `ref to the correct RPC name, or remove the ref if the RPC was ` +
-            `intentionally retired.`,
+            `intentionally retired.`
         )
       }
     },
@@ -461,7 +460,7 @@ describe("backlog reference existence (per item × per ref)", () => {
                 `  known kinds: ${Object.keys(KIND_HANDLERS).join(", ")}\n` +
                 `  fix: add a handler to KIND_HANDLERS in ` +
                 `apps/dashboard/__tests__/backlog-refs-drift.test.ts, OR fix the ` +
-                `kind name in the backlog file.`,
+                `kind name in the backlog file.`
             )
           }
           try {
@@ -475,7 +474,7 @@ describe("backlog reference existence (per item × per ref)", () => {
                 `  error: ${message.split("\n")[0]}\n${message
                   .split("\n")
                   .slice(1)
-                  .join("\n")}`,
+                  .join("\n")}`
             )
           }
         })

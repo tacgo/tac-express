@@ -14,7 +14,7 @@ export default function TrackIndexPage() {
         <h1 className="font-heading text-2xl font-bold tracking-tight">
           Track or book
         </h1>
-        <p className="font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
+        <p className="font-mono text-ui-10 tracking-widest text-muted-foreground uppercase">
           Enter a CN number to track, or submit a new booking request
         </p>
       </div>

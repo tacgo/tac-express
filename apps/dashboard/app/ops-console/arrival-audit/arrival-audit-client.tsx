@@ -36,7 +36,10 @@ export function ArrivalAuditClient() {
 
   const { data: manifest } = useManifest(activeId)
   const { data: manifestShipments } = useManifestShipments(activeId)
-  const stableShipments = React.useMemo(() => manifestShipments ?? [], [manifestShipments])
+  const stableShipments = React.useMemo(
+    () => manifestShipments ?? [],
+    [manifestShipments]
+  )
   const arriveMutation = useArriveManifest()
 
   // Hydrate each manifest line with consignee data for the audit list.
@@ -114,16 +117,13 @@ export function ArrivalAuditClient() {
 
   const markException = (awb: string) => {
     setItems((prev) =>
-      prev.map((i) =>
-        i.awbNumber === awb ? { ...i, status: "EXCEPTION" } : i
-      )
+      prev.map((i) => (i.awbNumber === awb ? { ...i, status: "EXCEPTION" } : i))
     )
   }
 
   const finalize = async () => {
     if (!manifest) return
-    const remaining =
-      stats.total - stats.scanned - stats.exceptions
+    const remaining = stats.total - stats.scanned - stats.exceptions
     if (remaining > 0) {
       const proceed = window.confirm(
         `${remaining} shipments are still pending. Mark them as exceptions and finalize?`
@@ -230,7 +230,7 @@ export function ArrivalAuditClient() {
           </div>
 
           {hydrating && (
-            <p className="font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
+            <p className="font-mono text-ui-10 tracking-widest text-muted-foreground uppercase">
               Loading manifest contents…
             </p>
           )}

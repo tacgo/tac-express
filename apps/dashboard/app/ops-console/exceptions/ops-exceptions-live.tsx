@@ -15,7 +15,7 @@ function toRow(e: ExceptionSummary): ExceptionRow {
     awb: e.awbNumber ?? "—",
     status: e.status,
     sender: e.severity, // surface the severity in the sender column slot
-    receiver: e.type,   // and the exception type in the receiver column slot
+    receiver: e.type, // and the exception type in the receiver column slot
     route: e.description.slice(0, 40),
   }
 }

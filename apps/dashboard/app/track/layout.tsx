@@ -23,7 +23,7 @@ export default function TrackLayout({
           >
             TAC <span className="text-primary">Express</span>
           </Link>
-          <p className="font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
+          <p className="font-mono text-ui-10 tracking-widest text-muted-foreground uppercase">
             Public tracking
           </p>
         </div>

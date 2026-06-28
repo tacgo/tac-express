@@ -12,10 +12,16 @@ export const dynamic = "force-dynamic"
 export default function Page() {
   return (
     <PageShell>
-      <header className="pb-4 border-b border-border">
-        <p className="font-mono text-2xs uppercase tracking-widest text-muted-foreground">Business</p>
-        <h1 className="font-sans text-2xl font-bold text-foreground mt-0.5">New Customer</h1>
-        <p className="t-body-sm text-muted-foreground mt-1">Contact + GST + billing address.</p>
+      <header className="border-b border-border pb-4">
+        <p className="font-mono text-2xs tracking-widest text-muted-foreground uppercase">
+          Business
+        </p>
+        <h1 className="mt-0.5 font-sans text-2xl font-bold text-foreground">
+          New Customer
+        </h1>
+        <p className="t-body-sm mt-1 text-muted-foreground">
+          Contact + GST + billing address.
+        </p>
       </header>
       <OpsCreateCustomerLive />
     </PageShell>
