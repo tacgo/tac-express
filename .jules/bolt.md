@@ -1,0 +1,3 @@
+## 2025-02-27 - Unstable references from data destructuring and unmemoized mapping
+**Learning:** Destructuring with a default array (e.g. `const { data = [] } = useQuery()`) creates a new array reference on every render while data is fetching/loading. Furthermore, mapping this directly without memoization recreates rows/components leading to unnecessary re-renders. This is an anti-pattern when rendering complex views or tables (like TanStack table).
+**Action:** Avoid default arrays in destructuring data. Destructure the raw value and use `React.useMemo(() => (data ?? []).map(...), [data])` to preserve referential equality and prevent re-rendering loops/performance degradation.

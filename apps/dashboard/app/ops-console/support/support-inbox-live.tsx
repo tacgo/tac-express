@@ -6,14 +6,16 @@ import {
   useContactLeads,
   useUpdateContactLeadStatus,
 } from "@workspace/services/hooks/use-contact-leads"
-import type { ContactLeadStatus } from "@workspace/types"
+import type { ContactLeadStatus, ContactLeadRow } from "@workspace/types"
 import { V7ContactLeads } from "@workspace/ui/components/composed/support/v7-contact-leads"
+
+const EMPTY_LEADS: ContactLeadRow[] = []
 
 export function SupportInboxLive() {
   // Fetch the full set (RLS gates to MANAGER+; a lower-role session gets zero
   // rows). Search + status-tab filtering happen client-side in the view —
   // lead volume is low for a launching product.
-  const { data = [], isLoading, isError } = useContactLeads({})
+  const { data, isLoading, isError } = useContactLeads({})
   const update = useUpdateContactLeadStatus()
 
   const onStatusChange = React.useCallback(
@@ -25,7 +27,8 @@ export function SupportInboxLive() {
 
   return (
     <V7ContactLeads
-      leads={data}
+      // ⚡ Bolt: Use a stable reference instead of an inline fallback to prevent unnecessary re-renders during loading
+      leads={data ?? EMPTY_LEADS}
       isLoading={isLoading}
       isError={isError}
       onStatusChange={onStatusChange}
