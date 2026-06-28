@@ -75,6 +75,7 @@ function DialogContent({
               variant="ghost"
               size="icon"
               className="absolute top-3 right-3"
+              aria-label="Close"
               data-slot="dialog-close-button"
             >
               <RiCloseLine />
