@@ -1,3 +1,3 @@
-## 2024-05-14 - React useMemo Destructuring Anti-pattern
-**Learning:** When using React.useMemo to optimize API data transformations, setting default array values during destructuring (e.g., `const { data = [] } = useQuery()`) creates unstable references during loading states on every render.
-**Action:** Always destructure the raw value and apply the fallback inline (e.g., `React.useMemo(() => (data ?? []).map(...), [data])`) to preserve referential equality and prevent unnecessary re-renders of downstream components.
+## 2026-06-29 - Next.js Prerendering Supabase URL Issue
+**Learning:** During the static generation phase of Next.js builds, referencing `process.env.NEXT_PUBLIC_SUPABASE_URL` via top-level constants in API service files (`createBrowserClient` call in module scope) will fail without environment variables unless the route is forced to be dynamic. This breaks the CI build when ENV vars are stripped in Github actions.
+**Action:** Append `export const dynamic = 'force-dynamic'` to the top-level page components (like `arrival-audit/page.tsx`) that import these services so Next.js skips static prerendering, preserving the build in CI.
