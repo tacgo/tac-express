@@ -1,0 +1,3 @@
+## 2026-06-29 - Next.js Prerendering Supabase URL Issue
+**Learning:** During the static generation phase of Next.js builds, referencing `process.env.NEXT_PUBLIC_SUPABASE_URL` via top-level constants in API service files (`createBrowserClient` call in module scope) will fail without environment variables unless the route is forced to be dynamic. This breaks the CI build when ENV vars are stripped in Github actions.
+**Action:** Append `export const dynamic = 'force-dynamic'` to the top-level page components (like `arrival-audit/page.tsx`) that import these services so Next.js skips static prerendering, preserving the build in CI.
