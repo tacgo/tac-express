@@ -28,12 +28,13 @@ export function OpsDashboardLive({ initialKpis }: OpsDashboardLiveProps) {
   const kpisQuery = useDashboardKPIs()
   const upcomingQuery = useUpcomingOperations(5)
   const kpis = kpisQuery.data ?? initialKpis
-  const upcomingItems = (upcomingQuery.data ?? []).map((op: UpcomingOp) => ({
+  // ⚡ Bolt: Wrapped mapping in useMemo and removed array destructuring default to preserve referential equality and prevent table re-renders during loading.
+  const upcomingItems = React.useMemo(() => (upcomingQuery.data ?? []).map((op: UpcomingOp) => ({
     id: op.id,
     label: op.title,
     eta: op.eta,
     etaDate: op.etaDate,
-  }))
+  })), [upcomingQuery.data])
 
   // Canonical v7 — v6 paper OpsDashboard retired in Phase 5 composition unification.
   return (

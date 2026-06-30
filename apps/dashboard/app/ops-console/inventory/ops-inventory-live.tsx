@@ -33,7 +33,7 @@ function toHub(h: HubInventoryItem): HubInventory {
  */
 export function OpsInventoryLive() {
   const queryClient = useQueryClient()
-  const { data = [], isFetching } = useInventoryByHub()
+  const { data, isFetching } = useInventoryByHub()
 
   const handleRefresh = React.useCallback(() => {
     void queryClient.invalidateQueries({
@@ -41,7 +41,8 @@ export function OpsInventoryLive() {
     })
   }, [queryClient])
 
-  const hubs = data.map(toHub)
+  // ⚡ Bolt: Wrapped mapping in useMemo and removed array destructuring default to preserve referential equality and prevent table re-renders during loading.
+  const hubs = React.useMemo(() => (data ?? []).map(toHub), [data])
 
   return (
     <V7OpsInventory hubs={hubs} isLoading={isFetching} onRefresh={handleRefresh} />
