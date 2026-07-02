@@ -48,7 +48,7 @@ import type {
  */
 export function OpsCreateManifestLive() {
   const router = useRouter()
-  const { data: hubs = [] } = useHubs(true)
+  const { data: rawHubs } = useHubs(true)
   const createManifest = useCreateManifest()
   const addAwb = useAddShipmentToManifest()
   const closeManifest = useCloseManifest()
@@ -56,16 +56,16 @@ export function OpsCreateManifestLive() {
 
   const hubOptions = React.useMemo(
     () =>
-      hubs.map((h) => ({
+      (rawHubs ?? []).map((h) => ({
         value: h.id,
         label: `${h.name} · ${h.code}`,
       })),
-    [hubs],
+    [rawHubs],
   )
 
   const hubByCode = React.useCallback(
-    (id: string) => hubs.find((h) => h.id === id)?.code ?? id,
-    [hubs],
+    (id: string) => (rawHubs ?? []).find((h) => h.id === id)?.code ?? id,
+    [rawHubs],
   )
 
   const handleSetupCommit = async (setup: ManifestSetupValue) => {
