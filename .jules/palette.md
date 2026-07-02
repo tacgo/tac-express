@@ -1,0 +1,3 @@
+## 2024-05-18 - Explicit ARIA Labels on Dialog Close Buttons
+**Learning:** Radix primitives that wrap icon-only buttons via `asChild` (like `DialogPrimitive.Close` or `SheetPrimitive.Close`) should have an explicit `aria-label` directly on the `Button` element. While Radix might manage its own labels, relying on the visually hidden `<span className="sr-only">` inside is insufficient for some screen readers, which might announce the button twice or inconsistently depending on how `asChild` merging behaves.
+**Action:** Always add an explicit `aria-label` to icon-only buttons (`size="icon"`), even when used as `asChild` triggers or when they contain an `sr-only` span, to guarantee a robust, single announcement.
