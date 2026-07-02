@@ -21,14 +21,14 @@ import {
 export function BookingsClient() {
   const router = useRouter()
   const addNotification = useNotificationStore((s) => s.addNotification)
-  const { data: bookings = [], isLoading } = useBookings({ limit: 200 })
+  const { data: rawBookings, isLoading } = useBookings({ limit: 200 })
   const approve = useApproveBooking()
   const reject = useRejectBooking()
   const convert = useConvertBookingToShipment()
 
   const rows: BookingRow[] = React.useMemo(
     () =>
-      bookings.map((b) => {
+      (rawBookings ?? []).map((b) => {
         const totalCount = b.volumeMatrix.reduce((s, r) => s + r.count, 0)
         const totalWeight = b.volumeMatrix.reduce(
           (s, r) => s + r.weight * r.count,
@@ -59,7 +59,7 @@ export function BookingsClient() {
           createdAt: b.createdAt,
         }
       }),
-    [bookings]
+    [rawBookings]
   )
 
   return (

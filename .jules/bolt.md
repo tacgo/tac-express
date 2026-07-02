@@ -1,0 +1,3 @@
+## 2025-02-12 - Prevent unstable React references in Destructured Queries
+**Learning:** Destructuring React Query results with default empty arrays (`const { data = [] } = useQuery()`) creates a new array reference on every render during loading states or before data is fetched. If this variable is passed to `useMemo` dependency arrays, it breaks memoization and forces expensive re-computations or table re-renders.
+**Action:** When destructuring query results that may be undefined, destructure the raw value first (`const { data: rawData } = useQuery()`) and apply the fallback inline inside the `useMemo` block (e.g. `(rawData ?? []).map(...)`), while placing the raw reference `rawData` in the dependency array.
