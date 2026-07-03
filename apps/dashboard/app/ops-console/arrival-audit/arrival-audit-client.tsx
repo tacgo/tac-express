@@ -30,9 +30,10 @@ export function ArrivalAuditClient() {
   const addNotification = useNotificationStore((s) => s.addNotification)
 
   // Manifests waiting for arrival audit (in DEPARTED state)
-  const { data: candidates = [] } = useManifests({
+  const { data: candidatesData } = useManifests({
     status: [ManifestStatus.DEPARTED],
   })
+  const candidates = React.useMemo(() => candidatesData ?? [], [candidatesData])
 
   const { data: manifest } = useManifest(activeId)
   const { data: manifestShipments } = useManifestShipments(activeId)
