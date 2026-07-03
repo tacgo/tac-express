@@ -56,8 +56,5 @@
       "postcss": ">=8.5.10",
       "@opentelemetry/core": ">=2.8.0"
     }
-  },
-  "dependencies": {
-    "@opentelemetry/core": "2.8.0"
   }
 }
