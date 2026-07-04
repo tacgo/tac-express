@@ -1,0 +1,3 @@
+## 2025-05-30 - Prevent unnecessary Table re-renders with React.useMemo
+**Learning:** Destructuring with a default empty array (e.g., `const { data = [] } = useQuery() `) creates a new array reference on every render during loading states or before data is fetched. When this array is passed to `.map()` to format rows for TanStack Table components or Composed Lists, it causes unnecessary re-renders of the table because the reference is unstable.
+**Action:** Always destructure the raw value `const { data } = useQuery()` and apply the default inline within a `React.useMemo` dependency block: `const rows = React.useMemo(() => (data ?? []).map(toRow), [data])`. This ensures referential equality and prevents the table from re-rendering unecessarily.
