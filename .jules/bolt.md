@@ -1,0 +1,3 @@
+## 2026-07-05 - Prevent TanStack Table Re-renders with stable references
+**Learning:** Destructuring with a default array value (e.g., `const { data = [] } = useQuery()`) or applying `?? []` inline without memoization creates a new array reference on every render during loading/fetching states. When passed to TanStack Table or composed list components, this breaks referential equality, triggering unnecessary full re-renders and resetting internal table state.
+**Action:** When passing mapped API data to TanStack table or composed list components, always destructure the raw value and wrap the `.map()` transformation in `React.useMemo` (e.g., `React.useMemo(() => (data ?? []).map(...), [data])`) to ensure stable references.
