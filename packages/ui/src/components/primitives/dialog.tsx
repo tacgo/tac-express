@@ -76,6 +76,7 @@ function DialogContent({
               size="icon"
               className="absolute top-3 right-3"
               data-slot="dialog-close-button"
+              aria-label="Close"
             >
               <RiCloseLine />
               <span className="sr-only">Close</span>
