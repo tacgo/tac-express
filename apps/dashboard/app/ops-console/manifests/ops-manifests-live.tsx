@@ -38,7 +38,10 @@ function toRow(m: ManifestSummary): ManifestRow {
 export function OpsManifestsLive() {
   useRealtimeManifests()
   const query = useManifests({})
-  const items = (query.data ?? []).map(toRow)
+
+  // ⚡ Bolt: Memoize mapped API data to prevent breaking referential
+  // equality and triggering unnecessary table re-renders on every render.
+  const items = React.useMemo(() => (query.data ?? []).map(toRow), [query.data])
 
   // Canonical v7 — v6 paper view retired in Phase 5 composition unification.
   return (
