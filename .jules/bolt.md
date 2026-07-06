@@ -1,0 +1,3 @@
+## 2024-05-19 - Use React.useMemo for API data transformation
+**Learning:** Default array destructuring for data returned from hooks (like `useQuery`) followed by mapping outside of `useMemo` breaks referential equality in React, causing tables and other list components to unnecessarily re-render on every render pass when the component is updating or loading.
+**Action:** When passing mapped API data to TanStack table or composed list components, always wrap the `.map()` transformation in `React.useMemo` to maintain stable references. Also avoid setting default array values during destructuring (e.g. `const { data = [] } = ...`), instead default inline inside the useMemo callback (e.g. `React.useMemo(() => (data ?? []).map(...), [data])`).
