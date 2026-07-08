@@ -3,7 +3,7 @@
   "$comment": "Bundle-size budgets for the dashboard. Each limit is a hard CI gate — exceeding any of them fails the architecture-gates workflow. Update deliberately, with a same-PR justification.",
   "baseline": {
     "capturedAt": "2026-05-13",
-    "totalStaticBytes": 7500000,
+    "totalStaticBytes": 7600000,
     "largestChunkBytes": 920000,
     "jsBytes": 6300000,
     "comment": "Updated 2026-07-08: Added @opentelemetry/core ^2.8.0 security patch in root overrides to fix npm audit."
