@@ -101,6 +101,9 @@ export function OpsFinanceLive() {
   // the bucket derivation recomputes.
   const data = React.useMemo(() => query.data ?? [], [query.data])
   const { outstanding, buckets } = React.useMemo(() => deriveBuckets(data), [data])
+
+  // Optimize: Memoize the mapped array to maintain referential equality during loading
+  // states, preventing expensive re-renders in the underlying TanStack tables.
   const rows = React.useMemo(() => data.map(toRow), [data])
 
   // Canonical v7 — v6 paper view retired in Phase 5 composition unification.

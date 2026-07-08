@@ -25,8 +25,11 @@ function toRow(c: Customer): CustomerRow {
 }
 
 export function OpsCustomersLive() {
-  const { data = [] } = useCustomers({})
-  const rows = data.map(toRow)
+  const { data } = useCustomers({})
+
+  // Optimize: Memoize the mapped array to maintain referential equality during loading
+  // states, preventing expensive re-renders in the underlying TanStack tables.
+  const rows = React.useMemo(() => (data ?? []).map(toRow), [data])
   // Canonical v7 — v6 paper view retired in Phase 4 composition unification.
   return <V7OpsCustomers rows={rows} />
 }

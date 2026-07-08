@@ -1,0 +1,3 @@
+## 2024-05-24 - Stable References in TanStack UI Components
+**Learning:** Destructuring with a default fallback (e.g. `const { data = [] } = useQuery()`) and directly passing `data.map()` to composed UI components (like `V7OpsShipments` wrapping `DataTable`) breaks referential equality on every render during loading/fetching states. This causes expensive internal resets and re-renders in the underlying TanStack tables.
+**Action:** Always extract the raw data, supply the default inline within a `React.useMemo` block, and map it stably: `const rows = React.useMemo(() => (query.data ?? []).map(toRow), [query.data])`.
