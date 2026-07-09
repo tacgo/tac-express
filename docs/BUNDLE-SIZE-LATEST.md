@@ -7,11 +7,11 @@
 
 | Category | Size |
 |---|---|
-| JavaScript chunks | 5.79 MB |
+| JavaScript chunks | 5.76 MB |
 | CSS | 214.1 KB |
 | Media (fonts, images) | 1.18 MB |
 | Other | 0 B |
-| **Total static** | **7.18 MB** |
+| **Total static** | **7.16 MB** |
 
 ## Largest JS chunks
 
@@ -20,8 +20,8 @@
 | 1 | `apps/dashboard/.next/static/chunks/13yar80_k58hr.js` | 885.0 KB |
 | 2 | `apps/dashboard/.next/static/chunks/0rm-d7-_pgtpw.js` | 541.7 KB |
 | 3 | `apps/dashboard/.next/static/chunks/0x61ah4w.cfmd.js` | 430.4 KB |
-| 4 | `apps/dashboard/.next/static/chunks/0nd..702hv4~s.js` | 398.4 KB |
-| 5 | `apps/dashboard/.next/static/chunks/16caag~5_nv_h.js` | 393.5 KB |
+| 4 | `apps/dashboard/.next/static/chunks/16caag~5_nv_h.js` | 393.5 KB |
+| 5 | `apps/dashboard/.next/static/chunks/0p1d70.1f53nf.js` | 371.4 KB |
 | 6 | `apps/dashboard/.next/static/chunks/0vjtb66hkrm7z.js` | 339.8 KB |
 | 7 | `apps/dashboard/.next/static/chunks/0wc6l4ulgox5r.js` | 234.3 KB |
 | 8 | `apps/dashboard/.next/static/chunks/0ispkf6dq3_5f.js` | 138.6 KB |
