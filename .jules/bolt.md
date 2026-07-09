@@ -1,0 +1,3 @@
+## 2025-03-01 - Missing Memoization on API Data Transformations for TanStack Table
+**Learning:** Passing unmemoized mapped arrays directly into TanStack Table implementations (`V7Ops*` components) breaks referential equality, causing expensive table re-renders and internal state resets on every parent render. Additionally, destructuring defaults like `const { data = [] } = useQuery()` creates a new array reference on every render during loading states.
+**Action:** Always destructure the raw value `const { data } = useQuery()` and apply the fallback inline inside a `React.useMemo(() => (data ?? []).map(...), [data])` block to maintain referential equality for composed list components.
