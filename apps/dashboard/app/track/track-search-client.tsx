@@ -39,7 +39,7 @@ export function TrackSearchClient() {
           aria-invalid={awb.length > 0 && !valid}
           className="font-mono text-base tracking-widest"
         />
-        <p className="font-mono text-ui-10 tracking-widest text-muted-foreground uppercase">
+        <p className="font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
           Format · TAC followed by 8 to 11 digits
         </p>
       </div>

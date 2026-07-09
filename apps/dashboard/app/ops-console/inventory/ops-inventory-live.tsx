@@ -44,10 +44,6 @@ export function OpsInventoryLive() {
   const hubs = data.map(toHub)
 
   return (
-    <V7OpsInventory
-      hubs={hubs}
-      isLoading={isFetching}
-      onRefresh={handleRefresh}
-    />
+    <V7OpsInventory hubs={hubs} isLoading={isFetching} onRefresh={handleRefresh} />
   )
 }

@@ -17,17 +17,10 @@ export const dynamic = "force-dynamic"
 export default function OpsCreateShipmentPage() {
   return (
     <WorkflowShell>
-      <header className="border-b border-border pb-4">
-        <p className="font-mono text-2xs tracking-widest text-muted-foreground uppercase">
-          Operations
-        </p>
-        <h1 className="mt-0.5 font-sans text-2xl font-bold text-foreground">
-          New Shipment
-        </h1>
-        <p className="t-body-sm mt-1 text-muted-foreground">
-          Capture sender + receiver + parcel details. AWB is generated
-          server-side on commit.
-        </p>
+      <header className="pb-4 border-b border-border">
+        <p className="font-mono text-2xs uppercase tracking-widest text-muted-foreground">Operations</p>
+        <h1 className="font-sans text-2xl font-bold text-foreground mt-0.5">New Shipment</h1>
+        <p className="t-body-sm text-muted-foreground mt-1">Capture sender + receiver + parcel details. AWB is generated server-side on commit.</p>
       </header>
       <OpsCreateShipmentLive />
     </WorkflowShell>

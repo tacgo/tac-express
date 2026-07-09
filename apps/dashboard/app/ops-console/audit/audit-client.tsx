@@ -84,9 +84,9 @@ export function AuditClient() {
       />
 
       <div className="flex flex-wrap items-center gap-3">
-        <div className="relative min-w-64 flex-1">
+        <div className="relative flex-1 min-w-64">
           <RiSearchLine
-            className="absolute top-1/2 left-2 size-4 -translate-y-1/2 text-muted-foreground"
+            className="absolute left-2 top-1/2 size-4 -translate-y-1/2 text-muted-foreground"
             aria-hidden="true"
           />
           <Input
@@ -125,7 +125,7 @@ export function AuditClient() {
 
       {!query.isLoading && filtered.length > 0 && (
         <div className="border border-border bg-background">
-          <div className="grid grid-cols-[150px_110px_140px_1fr_140px_140px_32px] border-b border-border bg-muted/40 px-3 py-2 font-mono text-ui-10 tracking-widest text-muted-foreground uppercase">
+          <div className="grid grid-cols-[150px_110px_140px_1fr_140px_140px_32px] border-b border-border bg-muted/40 px-3 py-2 font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
             <span>Time</span>
             <span>Action</span>
             <span>Entity</span>
@@ -144,7 +144,7 @@ export function AuditClient() {
                     setExpandedId((prev) => (prev === log.id ? null : log.id))
                   }
                   aria-expanded={isOpen}
-                  className="grid h-auto w-full grid-cols-[150px_140px_140px_1fr_140px_32px] items-center rounded-none border-b border-border px-3 py-2 text-left text-sm font-normal transition-colors last:border-0 hover:bg-muted/30 hover:text-foreground"
+                  className="grid h-auto w-full grid-cols-[150px_140px_140px_1fr_140px_32px] items-center border-b border-border px-3 py-2 text-left text-sm font-normal transition-colors last:border-0 hover:bg-muted/30 hover:text-foreground rounded-none"
                 >
                   <span className="font-mono text-ui-11 text-muted-foreground">
                     {new Date(log.createdAt).toLocaleString()}
@@ -152,7 +152,7 @@ export function AuditClient() {
                   <span>
                     <ActionBadge action={log.action} />
                   </span>
-                  <span className="truncate font-mono text-ui-11 tracking-widest uppercase">
+                  <span className="truncate font-mono text-ui-11 uppercase tracking-widest">
                     {log.entityType}
                   </span>
                   <span className="truncate">{log.description}</span>
@@ -172,14 +172,23 @@ export function AuditClient() {
                   <div className="grid gap-3 border-b border-border bg-muted/10 px-4 py-4 last:border-0 md:grid-cols-[1fr_2fr]">
                     <div className="space-y-2 font-mono text-ui-11">
                       <Detail label="Audit ID" value={log.id} />
-                      <Detail label="Entity ID" value={log.entityId ?? "—"} />
-                      <Detail label="Actor" value={log.userId ?? "system"} />
+                      <Detail
+                        label="Entity ID"
+                        value={log.entityId ?? "—"}
+                      />
+                      <Detail
+                        label="Actor"
+                        value={log.userId ?? "system"}
+                      />
                     </div>
                     {/* AuditDiffViewer accepts before / after state. For
                         destructive ops there is no after-state (the row
                         is gone); we render the before_state snapshot
                         alone so an auditor can see what was destroyed. */}
-                    <AuditDiffViewer before={log.beforeState} after={null} />
+                    <AuditDiffViewer
+                      before={log.beforeState}
+                      after={null}
+                    />
                   </div>
                 )}
               </React.Fragment>
@@ -205,7 +214,7 @@ function Filter({ label, options, value, onChange }: FilterProps) {
         className="size-3.5 text-muted-foreground"
         aria-hidden="true"
       />
-      <span className="font-mono tracking-wider text-muted-foreground uppercase">
+      <span className="font-mono uppercase tracking-wider text-muted-foreground">
         {label}
       </span>
       {/* eslint-disable-next-line no-restricted-syntax -- Native select for audit filter; simple direct binding, Radix Select adds unnecessary Popover for this compact control */}
@@ -245,10 +254,10 @@ function ActionBadge({ action }: { action: AuditLog["action"] }) {
 function Detail({ label, value }: { label: string; value: string }) {
   return (
     <div>
-      <p className="font-mono text-ui-10 tracking-widest text-muted-foreground uppercase">
+      <p className="font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
         {label}
       </p>
-      <p className="font-mono text-ui-11 break-all">{value}</p>
+      <p className="break-all font-mono text-ui-11">{value}</p>
     </div>
   )
 }

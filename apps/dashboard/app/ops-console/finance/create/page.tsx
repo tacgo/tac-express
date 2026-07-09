@@ -4,9 +4,7 @@ import { WorkflowShell } from "@workspace/ui/components/composed/ops-console"
 
 import { OpsCreateInvoiceLive } from "./ops-create-invoice-live"
 
-export const metadata: Metadata = {
-  title: "New Invoice — TAC Express Ops Console",
-}
+export const metadata: Metadata = { title: "New Invoice — TAC Express Ops Console" }
 export const dynamic = "force-dynamic"
 
 // OpsPageHead is rendered inside OpsCreateInvoiceLive so the header can

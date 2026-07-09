@@ -143,8 +143,7 @@ describe("ci-watch-pr.mjs (closes #122 — stale-sha auto-detection)", () => {
       expect(source).toMatch(/parsePositiveIntEnv|Number\.isFinite/)
       // No bare Number(process.env.X) without a guard at the assignment sites.
       // Allow Number(process.env.X) inside the helper itself (it does the validation).
-      const bareNumberEnv =
-        source.match(/Number\(process\.env\.[A-Z_]+\s*\?\?/g) ?? []
+      const bareNumberEnv = source.match(/Number\(process\.env\.[A-Z_]+\s*\?\?/g) ?? []
       expect(bareNumberEnv).toHaveLength(0)
     })
   })

@@ -45,9 +45,7 @@ describe("API-routes pino migration sentinel (#102)", () => {
           // Strip inline single-line comments (best-effort — doesn't handle
           // strings containing `//`, which is fine for our routes).
           const codeOnly = line.replace(/\/\/.*$/, "")
-          if (
-            /\bconsole\s*\.\s*(log|warn|error|info|debug)\s*\(/.test(codeOnly)
-          ) {
+          if (/\bconsole\s*\.\s*(log|warn|error|info|debug)\s*\(/.test(codeOnly)) {
             offenders.push(`  L${i + 1}: ${line.trim()}`)
           }
         })
@@ -57,7 +55,7 @@ describe("API-routes pino migration sentinel (#102)", () => {
               offenders.join("\n") +
               `\n\nThese routes were migrated to pino in PR γ (#102 Sprint 1 ` +
               `Observability bullet). Use \`logger.{info,warn,error,debug}\` ` +
-              `from "@/lib/logger" instead. See apps/dashboard/lib/logger.ts.`
+              `from "@/lib/logger" instead. See apps/dashboard/lib/logger.ts.`,
           )
         }
         expect(offenders).toEqual([])
@@ -65,7 +63,7 @@ describe("API-routes pino migration sentinel (#102)", () => {
 
       it('imports logger from "@/lib/logger"', () => {
         expect(source).toMatch(
-          /import\s+\{\s*logger\s*\}\s+from\s+["']@\/lib\/logger["']/
+          /import\s+\{\s*logger\s*\}\s+from\s+["']@\/lib\/logger["']/,
         )
       })
 

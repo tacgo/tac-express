@@ -16,9 +16,7 @@ interface PageProps {
 }
 
 /** Dynamic title so browser tab + PDF filename carry the invoice number. */
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { id } = await params
   const cookieStore = await cookies()
   const invoiceService = createInvoiceServerService(cookieStore)
@@ -63,10 +61,7 @@ function parseNotesPayload(raw?: string): InvoiceNotesPayload {
  * - This route reads consignor / consignee / weight from the JSON `notes`
  *   blob the wizard persists on each invoice.
  */
-export default async function PrintInvoiceLabelPage({
-  params,
-  searchParams,
-}: PageProps) {
+export default async function PrintInvoiceLabelPage({ params, searchParams }: PageProps) {
   const { id } = await params
   const { print: printParam } = await searchParams
 
@@ -109,9 +104,7 @@ export default async function PrintInvoiceLabelPage({
    * an AWB containing characters Code 128 can't represent), let the
    * error propagate — the print page returning 5xx is a louder signal
    * than rendering an unscannable label. */
-  const { code128Svg, dataMatrixSvg } = encodeShippingLabelBarcodes(
-    data.awbNumber
-  )
+  const { code128Svg, dataMatrixSvg } = encodeShippingLabelBarcodes(data.awbNumber)
 
   return (
     <PrintInvoiceLabelClient

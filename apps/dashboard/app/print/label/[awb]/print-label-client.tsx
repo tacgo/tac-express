@@ -72,7 +72,7 @@ export function PrintLabelClient({
           <span className="ml-1.5">Back</span>
         </Button>
         <div className="flex flex-col items-center">
-          <p className="font-mono text-ui-10 tracking-widest text-muted-foreground uppercase">
+          <p className="font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
             Shipping Label · 4×6 thermal (FBA 7-zone)
           </p>
           <p className="font-mono text-sm font-semibold text-foreground">
@@ -90,7 +90,10 @@ export function PrintLabelClient({
         </PrintButton>
       </div>
 
-      <div data-print-target="label" className="flex justify-center">
+      <div
+        data-print-target="label"
+        className="flex justify-center"
+      >
         <ShippingLabel
           ref={labelRef}
           data={labelData}

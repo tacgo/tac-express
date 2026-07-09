@@ -52,9 +52,7 @@ import { useFormAutosave } from "@workspace/ui/hooks/use-form-autosave"
 
 const DRAFT_KEY = "invoice_draft"
 
-function normalizeInvoiceDraft(
-  draft: Partial<InvoiceWizardState>
-): InvoiceWizardState {
+function normalizeInvoiceDraft(draft: Partial<InvoiceWizardState>): InvoiceWizardState {
   const merged: InvoiceWizardState = { ...INITIAL_INVOICE_STATE, ...draft }
   return normalizeBillingDraft(merged)
 }
@@ -74,12 +72,10 @@ export function OpsCreateInvoiceLive() {
         label: c.name,
         meta: c.gstin ?? c.phone,
       })),
-    [customerList]
+    [customerList],
   )
 
-  const [state, setState] = React.useState<InvoiceWizardState>(
-    INITIAL_INVOICE_STATE
-  )
+  const [state, setState] = React.useState<InvoiceWizardState>(INITIAL_INVOICE_STATE)
   const [currentIndex, setCurrentIndex] = React.useState(0)
   const [isLookingUp, setIsLookingUp] = React.useState(false)
   const [restorePromptShown, setRestorePromptShown] = React.useState(false)
@@ -106,7 +102,7 @@ export function OpsCreateInvoiceLive() {
     if (draft && !restorePromptShown) {
       setRestorePromptShown(true)
       const shouldRestore = window.confirm(
-        "We found an unfinished invoice draft from a previous session. Restore it?"
+        "We found an unfinished invoice draft from a previous session. Restore it?",
       )
       if (shouldRestore) {
         setState(normalizeInvoiceDraft(draft))
@@ -120,9 +116,7 @@ export function OpsCreateInvoiceLive() {
       generateAwb
         .mutateAsync()
         .then((awb) =>
-          setState((prev) =>
-            prev.awbNumber ? prev : { ...prev, awbNumber: awb }
-          )
+          setState((prev) => (prev.awbNumber ? prev : { ...prev, awbNumber: awb })),
         )
         .catch((err) => {
           addNotification({
@@ -181,9 +175,8 @@ export function OpsCreateInvoiceLive() {
       }
       const baseFreight = Math.round(weight * rate.ratePerKg * 100) / 100
       const fuelSurcharge =
-        Math.round(
-          ((weight * rate.ratePerKg * rate.fuelSurchargePct) / 100) * 100
-        ) / 100
+        Math.round(((weight * rate.ratePerKg * rate.fuelSurchargePct) / 100) * 100) /
+        100
       patchState({
         ratePerKg: rate.ratePerKg,
         baseFreight,
@@ -218,8 +211,7 @@ export function OpsCreateInvoiceLive() {
       const invoice = await createInvoice.mutateAsync({
         awb_number: state.awbNumber.trim().toUpperCase(),
         customer_id: state.customerId || null,
-        customer_name:
-          state.customerName || state.awbNumber.trim().toUpperCase(),
+        customer_name: state.customerName || state.awbNumber.trim().toUpperCase(),
         customer_gstin: state.customerGstin || null,
         payment_mode: state.paymentMode as PaymentMode,
         base_freight: state.baseFreight,
@@ -283,9 +275,7 @@ export function OpsCreateInvoiceLive() {
         msg.includes("row-level security") ||
         msg.includes("permission")
       const isFkViolation =
-        msg.includes("409") ||
-        msg.includes("foreign key") ||
-        msg.includes("violates")
+        msg.includes("409") || msg.includes("foreign key") || msg.includes("violates")
       addNotification({
         type: "error",
         title: "Failed to create invoice",

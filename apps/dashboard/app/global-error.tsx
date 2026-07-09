@@ -31,13 +31,13 @@ export default function GlobalError({ error }: GlobalErrorProps) {
       <body>
         <div className="flex min-h-screen items-center justify-center bg-background p-6 text-foreground">
           <div className="max-w-md space-y-3 text-center">
-            <h1 className="font-mono text-sm tracking-widest text-destructive uppercase">
+            <h1 className="font-mono text-sm uppercase tracking-widest text-destructive">
               Something went wrong
             </h1>
             <p className="font-sans text-sm text-muted-foreground">
               The dashboard hit an unexpected error and couldn&apos;t render
-              this page. Our ops team has been notified — please reload and try
-              again.
+              this page. Our ops team has been notified — please reload and
+              try again.
             </p>
             {error.digest && (
               <p className="font-mono text-2xs text-muted-foreground/70">

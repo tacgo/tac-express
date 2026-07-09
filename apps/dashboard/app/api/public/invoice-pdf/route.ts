@@ -57,7 +57,7 @@ async function loadHeaderImage(): Promise<Buffer | null> {
     cachedHeaderImageError = err instanceof Error ? err.message : String(err)
     log.warn(
       { err: { message: cachedHeaderImageError } },
-      "header image not found — rendering without banner"
+      "header image not found — rendering without banner",
     )
     return null
   }
@@ -78,30 +78,28 @@ export async function GET(req: NextRequest) {
     assertCompanyConfig()
   } catch (err) {
     log.error(
-      {
-        err:
-          err instanceof Error
-            ? { message: err.message, name: err.name }
-            : { value: String(err) },
-      },
-      "company/bank config invalid"
+      { err: err instanceof Error ? { message: err.message, name: err.name } : { value: String(err) } },
+      "company/bank config invalid",
     )
     return new Response(
       JSON.stringify({
         error: "Invoice PDF cannot render",
         detail: err instanceof Error ? err.message : String(err),
       }),
-      { status: 500, headers: { "Content-Type": "application/json" } }
+      { status: 500, headers: { "Content-Type": "application/json" } },
     )
   }
 
   /* ─── 1. Verify signature ─── */
   const result = verifyInvoicePdfToken({ p, s })
   if (!result.ok) {
-    return new Response(JSON.stringify({ error: result.error }), {
-      status: result.error.includes("Missing") ? 400 : 401,
-      headers: { "Content-Type": "application/json" },
-    })
+    return new Response(
+      JSON.stringify({ error: result.error }),
+      {
+        status: result.error.includes("Missing") ? 400 : 401,
+        headers: { "Content-Type": "application/json" },
+      }
+    )
   }
 
   /* ─── 2. Load the header banner ─── */
@@ -122,7 +120,9 @@ export async function GET(req: NextRequest) {
 
   /* ─── 3. Generate QR (optional — degrades gracefully if it fails) ─── */
   const trackingUrl = result.payload.data.trackingUrl ?? undefined
-  const qrPng = trackingUrl ? await generateQrPng({ text: trackingUrl }) : null
+  const qrPng = trackingUrl
+    ? await generateQrPng({ text: trackingUrl })
+    : null
 
   /* ─── 4. Render the PDF ─── */
   let buffer: Buffer
@@ -136,13 +136,10 @@ export async function GET(req: NextRequest) {
   } catch (err) {
     log.error(
       {
-        err:
-          err instanceof Error
-            ? { message: err.message, name: err.name }
-            : { value: String(err) },
+        err: err instanceof Error ? { message: err.message, name: err.name } : { value: String(err) },
         invoiceNumber: result.payload.data.invoiceNumber,
       },
-      "PDF render failed"
+      "PDF render failed",
     )
     return new Response(
       JSON.stringify({

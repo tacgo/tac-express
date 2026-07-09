@@ -42,7 +42,10 @@ export default async function PrintManifestPage({ params }: PageProps) {
         .catch(() => null)
       const consigneeName = ship?.receiver?.name ?? "—"
       const consigneeCity = ship?.receiver?.address?.city ?? undefined
-      const destination = (ship?.destHub ?? manifest.destHub).replace(/_/g, " ")
+      const destination = (ship?.destHub ?? manifest.destHub).replace(
+        /_/g,
+        " "
+      )
       const result: ManifestPrintViewLine = {
         awbNumber: ms.awb_number,
         consigneeName,

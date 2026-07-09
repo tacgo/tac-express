@@ -34,10 +34,7 @@ import { Input } from "@workspace/ui/components/primitives/input"
  * SurfaceCard grid). No services, hooks, or handlers changed.
  */
 
-const STATUS_TONE: Record<
-  string,
-  "neutral" | "ok" | "warn" | "err" | "violet"
-> = {
+const STATUS_TONE: Record<string, "neutral" | "ok" | "warn" | "err" | "violet"> = {
   DRAFT: "neutral",
   BUILDING: "warn",
   OPEN: "warn",
@@ -85,9 +82,7 @@ export function OpsManifestDetailLive({ id }: OpsManifestDetailLiveProps) {
     arriveManifest.isPending ||
     reconcileManifest.isPending
 
-  async function handleAction(
-    action: "close" | "depart" | "arrive" | "reconcile"
-  ) {
+  async function handleAction(action: "close" | "depart" | "arrive" | "reconcile") {
     try {
       if (action === "close") await closeManifest.mutateAsync(id)
       else if (action === "depart") await departManifest.mutateAsync(id)
@@ -98,7 +93,10 @@ export function OpsManifestDetailLive({ id }: OpsManifestDetailLiveProps) {
       // page showing the prior status long enough that automation tools (and
       // operators) think nothing happened. Promise.all so the next action
       // button doesn't show until both manifest + shipments are fresh.
-      await Promise.all([manifestQuery.refetch(), shipmentsQuery.refetch()])
+      await Promise.all([
+        manifestQuery.refetch(),
+        shipmentsQuery.refetch(),
+      ])
       addNotification({
         type: "success",
         title: "Status updated",
@@ -131,11 +129,7 @@ export function OpsManifestDetailLive({ id }: OpsManifestDetailLiveProps) {
 
   if (manifestQuery.isPending) {
     return (
-      <DetailShell
-        eyebrow="Manifest"
-        title="…"
-        backHref="/ops-console/manifests"
-      >
+      <DetailShell eyebrow="Manifest" title="…" backHref="/ops-console/manifests">
         <Skeleton className="h-4 w-2/3" />
         <Skeleton className="h-32 w-full" />
       </DetailShell>
@@ -144,18 +138,14 @@ export function OpsManifestDetailLive({ id }: OpsManifestDetailLiveProps) {
 
   if (manifestQuery.isError || !m) {
     return (
-      <DetailShell
-        eyebrow="Manifest"
-        title={id}
-        backHref="/ops-console/manifests"
-      >
-        <div className="flex items-start gap-3 border border-l-[length:var(--indicator-w)] border-destructive/40 border-l-destructive bg-destructive/15 p-6">
+      <DetailShell eyebrow="Manifest" title={id} backHref="/ops-console/manifests">
+        <div className="border border-destructive/40 border-l-[length:var(--indicator-w)] border-l-destructive bg-destructive/15 p-6 flex items-start gap-3">
           <RiErrorWarningLine
             aria-hidden
-            className="size-5 shrink-0 text-destructive"
+            className="size-5 text-destructive shrink-0"
           />
           <div>
-            <div className="font-mono text-2xs tracking-widest text-destructive uppercase">
+            <div className="font-mono text-2xs uppercase tracking-widest text-destructive">
               NOT FOUND
             </div>
             <p className="t-body-sm mt-1">
@@ -181,8 +171,8 @@ export function OpsManifestDetailLive({ id }: OpsManifestDetailLiveProps) {
         <Badge
           variant="outline"
           className={cn(
-            "font-mono tracking-tag uppercase",
-            STATUS_TONE_CLASS[STATUS_TONE[m.status] ?? "neutral"]
+            "font-mono uppercase tracking-tag",
+            STATUS_TONE_CLASS[STATUS_TONE[m.status] ?? "neutral"],
           )}
         >
           {m.status}
@@ -192,13 +182,11 @@ export function OpsManifestDetailLive({ id }: OpsManifestDetailLiveProps) {
         <>
           <SurfaceCard density="compact">
             <div className={FIELD_LABEL}>Shipments</div>
-            <div className="t-data-md mt-1 text-foreground">
-              {m.totalShipments}
-            </div>
+            <div className="t-data-md text-foreground mt-1">{m.totalShipments}</div>
           </SurfaceCard>
           <SurfaceCard density="compact">
             <div className={FIELD_LABEL}>Total Weight</div>
-            <div className="t-data-md mt-1 text-foreground">
+            <div className="t-data-md text-foreground mt-1">
               {m.totalWeight.toFixed(1)} kg
             </div>
             <div className={cn(FIELD_LABEL, "mt-2")}>{m.totalPieces} pcs</div>
@@ -216,7 +204,7 @@ export function OpsManifestDetailLive({ id }: OpsManifestDetailLiveProps) {
             </div>
             {m.departureDate && (
               <>
-                <div className={cn(FIELD_LABEL, "mt-3 mb-1")}>Departure</div>
+                <div className={cn(FIELD_LABEL, "mb-1 mt-3")}>Departure</div>
                 <div className="t-mono">
                   {new Date(m.departureDate).toLocaleString("en-IN", {
                     day: "2-digit",
@@ -305,8 +293,8 @@ export function OpsManifestDetailLive({ id }: OpsManifestDetailLiveProps) {
                   <Badge
                     variant="outline"
                     className={cn(
-                      "font-mono tracking-tag uppercase",
-                      STATUS_TONE_CLASS.neutral
+                      "font-mono uppercase tracking-tag",
+                      STATUS_TONE_CLASS.neutral,
                     )}
                   >
                     {s.status}
@@ -325,7 +313,7 @@ export function OpsManifestDetailLive({ id }: OpsManifestDetailLiveProps) {
       {m.notes && (
         <SurfaceCard>
           <div className={cn(FIELD_LABEL, "mb-2")}>Notes</div>
-          <p className="font-mono text-xs whitespace-pre-line text-foreground">
+          <p className="font-mono text-xs text-foreground whitespace-pre-line">
             {m.notes}
           </p>
         </SurfaceCard>

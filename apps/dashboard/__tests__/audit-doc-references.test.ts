@@ -43,7 +43,7 @@ import { describe, expect, it } from "vitest"
 const REPO_ROOT = join(__dirname, "..", "..", "..")
 const AUDIT_DOC_PATH = join(
   REPO_ROOT,
-  "docs/audits/2026-05-15-rbac-denial-audit.md"
+  "docs/audits/2026-05-15-rbac-denial-audit.md",
 )
 const AUDIT_DOC_DIR = dirname(AUDIT_DOC_PATH)
 
@@ -68,16 +68,16 @@ const audit = readFileSync(AUDIT_DOC_PATH, "utf8")
  */
 const LINK_TARGETS = Array.from(
   audit.matchAll(
-    /\[[^\]]+\]\(((?:\.{1,2}\/)[^)#\s]+)(?:#[^) \t]+)?(?:\s+"[^"]*")?\)/g
+    /\[[^\]]+\]\(((?:\.{1,2}\/)[^)#\s]+)(?:#[^) \t]+)?(?:\s+"[^"]*")?\)/g,
   ),
-  (m) => m[1]!
+  (m) => m[1]!,
 )
 
 // Strip optional `:line` suffixes that may appear in some doc styles
 // (defensive — current convention is line numbers in prose, not in
 // the link target, but cover both). Then de-dupe.
 const LINK_PATHS_UNIQUE = Array.from(
-  new Set(LINK_TARGETS.map((t) => t.split(":")[0]!))
+  new Set(LINK_TARGETS.map((t) => t.split(":")[0]!)),
 )
 
 // ─── 2. Symbol-presence: hardcoded RPC + route surface inventory ─────────────

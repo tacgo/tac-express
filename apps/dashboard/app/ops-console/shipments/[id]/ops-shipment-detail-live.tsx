@@ -36,15 +36,9 @@ import { ShipmentDetailTabs } from "@workspace/ui/components/composed/shipments/
  * services, hooks, or data paths changed.
  */
 
-function statusTone(
-  status: string
-): "neutral" | "ok" | "warn" | "err" | "violet" {
+function statusTone(status: string): "neutral" | "ok" | "warn" | "err" | "violet" {
   if (status === "DELIVERED") return "ok"
-  if (
-    status.includes("EXCEPTION") ||
-    status === "RTO" ||
-    status === "CANCELLED"
-  )
+  if (status.includes("EXCEPTION") || status === "RTO" || status === "CANCELLED")
     return "err"
   if (status === "IN_TRANSIT" || status.startsWith("OUT_FOR")) return "warn"
   return "violet"
@@ -102,11 +96,7 @@ export function OpsShipmentDetailLive({ id }: Props) {
 
   if (shipmentQuery.isPending) {
     return (
-      <DetailShell
-        eyebrow="Shipment"
-        title="…"
-        backHref="/ops-console/shipments"
-      >
+      <DetailShell eyebrow="Shipment" title="…" backHref="/ops-console/shipments">
         <div className="space-y-3">
           <Skeleton className="h-4 w-2/3" />
           <Skeleton className="h-4 w-1/2" />
@@ -118,18 +108,11 @@ export function OpsShipmentDetailLive({ id }: Props) {
 
   if (shipmentQuery.isError || !shipment) {
     return (
-      <DetailShell
-        eyebrow="Shipment"
-        title={id}
-        backHref="/ops-console/shipments"
-      >
-        <div className="flex items-start gap-3 border border-l-[length:var(--indicator-w)] border-destructive/40 border-l-destructive bg-destructive/15 p-6">
-          <RiErrorWarningLine
-            aria-hidden
-            className="size-5 shrink-0 text-destructive"
-          />
+      <DetailShell eyebrow="Shipment" title={id} backHref="/ops-console/shipments">
+        <div className="border border-destructive/40 border-l-[length:var(--indicator-w)] border-l-destructive bg-destructive/15 p-6 flex items-start gap-3">
+          <RiErrorWarningLine aria-hidden className="size-5 text-destructive shrink-0" />
           <div>
-            <div className="font-mono text-2xs tracking-widest text-destructive uppercase">
+            <div className="font-mono text-2xs uppercase tracking-widest text-destructive">
               NOT FOUND
             </div>
             <p className="t-body-sm mt-1">
@@ -146,13 +129,13 @@ export function OpsShipmentDetailLive({ id }: Props) {
 
   const overview = (
     <div className="space-y-4">
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <SurfaceCard>
           <div className={cn(FIELD_LABEL, "mb-2")}>Sender</div>
           <div className="t-body-sm font-semibold text-foreground">
             {shipment.sender?.name}
           </div>
-          <div className="mt-1 font-mono text-xs text-muted-foreground">
+          <div className="font-mono text-xs text-muted-foreground mt-1">
             {shipment.sender?.phone}
           </div>
           {shipment.sender?.email && (
@@ -161,13 +144,13 @@ export function OpsShipmentDetailLive({ id }: Props) {
             </div>
           )}
           {shipment.sender?.address && (
-            <div className="t-body-sm mt-2 text-foreground">
+            <div className="t-body-sm text-foreground mt-2">
               {shipment.sender.address.line1}
               {shipment.sender.address.line2
                 ? `, ${shipment.sender.address.line2}`
                 : ""}
-              , {shipment.sender.address.city}, {shipment.sender.address.state}{" "}
-              - {shipment.sender.address.zip}
+              , {shipment.sender.address.city}, {shipment.sender.address.state} -{" "}
+              {shipment.sender.address.zip}
             </div>
           )}
         </SurfaceCard>
@@ -176,7 +159,7 @@ export function OpsShipmentDetailLive({ id }: Props) {
           <div className="t-body-sm font-semibold text-foreground">
             {shipment.receiver?.name}
           </div>
-          <div className="mt-1 font-mono text-xs text-muted-foreground">
+          <div className="font-mono text-xs text-muted-foreground mt-1">
             {shipment.receiver?.phone}
           </div>
           {shipment.receiver?.email && (
@@ -185,41 +168,40 @@ export function OpsShipmentDetailLive({ id }: Props) {
             </div>
           )}
           {shipment.receiver?.address && (
-            <div className="t-body-sm mt-2 text-foreground">
+            <div className="t-body-sm text-foreground mt-2">
               {shipment.receiver.address.line1}
               {shipment.receiver.address.line2
                 ? `, ${shipment.receiver.address.line2}`
                 : ""}
-              , {shipment.receiver.address.city},{" "}
-              {shipment.receiver.address.state} -{" "}
+              , {shipment.receiver.address.city}, {shipment.receiver.address.state} -{" "}
               {shipment.receiver.address.zip}
             </div>
           )}
         </SurfaceCard>
       </div>
 
-      <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         <SurfaceCard density="compact">
           <div className={FIELD_LABEL}>Dead Wt</div>
-          <div className="mt-1 font-sans text-lg font-bold tabular-nums">
+          <div className="font-sans font-bold text-lg mt-1 tabular-nums">
             {shipment.weight?.dead?.toFixed(1) ?? "—"} kg
           </div>
         </SurfaceCard>
         <SurfaceCard density="compact">
           <div className={FIELD_LABEL}>Volumetric</div>
-          <div className="mt-1 font-sans text-lg font-bold tabular-nums">
+          <div className="font-sans font-bold text-lg mt-1 tabular-nums">
             {shipment.weight?.volumetric?.toFixed(1) ?? "—"} kg
           </div>
         </SurfaceCard>
         <SurfaceCard density="compact" className="border-t-2 border-t-primary">
           <div className={FIELD_LABEL}>Chargeable</div>
-          <div className="mt-1 font-sans text-lg font-bold tabular-nums">
+          <div className="font-sans font-bold text-lg mt-1 tabular-nums">
             {chargeable.toFixed(1)} kg
           </div>
         </SurfaceCard>
         <SurfaceCard density="compact" className="border-t-2 border-t-primary">
           <div className={FIELD_LABEL}>Total</div>
-          <div className="mt-1 font-sans text-lg font-bold tabular-nums">
+          <div className="font-sans font-bold text-lg mt-1 tabular-nums">
             ₹{totalAmount.toLocaleString("en-IN")}
           </div>
         </SurfaceCard>
@@ -271,8 +253,8 @@ export function OpsShipmentDetailLive({ id }: Props) {
         <Badge
           variant="outline"
           className={cn(
-            "font-mono tracking-tag uppercase",
-            STATUS_TONE_CLASS[statusTone(shipment.status)]
+            "font-mono uppercase tracking-tag",
+            STATUS_TONE_CLASS[statusTone(shipment.status)],
           )}
         >
           {shipment.status}
@@ -294,13 +276,11 @@ export function OpsShipmentDetailLive({ id }: Props) {
         <>
           <SurfaceCard density="compact">
             <div className={FIELD_LABEL}>Pieces</div>
-            <div className="t-data-md mt-1 text-foreground">
-              {shipment.pieces ?? 1}
-            </div>
+            <div className="t-data-md text-foreground mt-1">{shipment.pieces ?? 1}</div>
           </SurfaceCard>
           <SurfaceCard density="compact">
             <div className={FIELD_LABEL}>Total</div>
-            <div className="t-data-md mt-1 text-foreground">
+            <div className="t-data-md text-foreground mt-1">
               ₹{totalAmount.toLocaleString("en-IN")}
             </div>
           </SurfaceCard>
@@ -309,9 +289,7 @@ export function OpsShipmentDetailLive({ id }: Props) {
             <div className="t-mono">
               {shipment.serviceLevel} · {shipment.paymentMode}
             </div>
-            <div className={cn(FIELD_LABEL, "mt-3 mb-1")}>
-              Estimated Delivery
-            </div>
+            <div className={cn(FIELD_LABEL, "mb-1 mt-3")}>Estimated Delivery</div>
             <div className="t-mono">
               {computeEta({
                 status: shipment.status,
@@ -319,14 +297,14 @@ export function OpsShipmentDetailLive({ id }: Props) {
                 serviceLevel: shipment.serviceLevel,
               })}
             </div>
-            <div className={cn(FIELD_LABEL, "mt-3 mb-1")}>Created</div>
+            <div className={cn(FIELD_LABEL, "mb-1 mt-3")}>Created</div>
             <div className="t-mono">{fmtTime(shipment.createdAt)}</div>
             {shipment.manifestNumber && (
               <>
-                <div className={cn(FIELD_LABEL, "mt-3 mb-1")}>Manifest</div>
+                <div className={cn(FIELD_LABEL, "mb-1 mt-3")}>Manifest</div>
                 <Link
                   href={`/manifests/${shipment.manifestId}`}
-                  className="t-mono focus-visible:tac-focus-premium text-primary hover:underline focus-visible:outline-none"
+                  className="t-mono text-primary hover:underline focus-visible:outline-none focus-visible:tac-focus-premium"
                 >
                   {shipment.manifestNumber}
                 </Link>
@@ -350,11 +328,7 @@ export function OpsShipmentDetailLive({ id }: Props) {
 
       {/* Tabs — overview / tracking / notes / files / audit. Files + Audit
           fall through to ShipmentDetailTabs' built-in ComingSoon. */}
-      <ShipmentDetailTabs
-        overview={overview}
-        tracking={tracking}
-        notes={notes}
-      />
+      <ShipmentDetailTabs overview={overview} tracking={tracking} notes={notes} />
     </DetailShell>
   )
 }
@@ -367,5 +341,5 @@ const ShipmentNotesPanel = React.lazy(() =>
     default: function NotesProxy({ shipmentId }: { shipmentId: string }) {
       return <m.ShipmentNotesTab shipmentId={shipmentId} />
     },
-  }))
+  })),
 )

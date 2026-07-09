@@ -21,20 +21,22 @@ export default function DashboardNotFound() {
       className="flex min-h-hero-vh items-center justify-center p-6"
     >
       <div className="max-w-md space-y-4 text-center">
-        <p className="font-mono text-2xs tracking-widest text-muted-foreground uppercase">
+        <p className="font-mono text-2xs uppercase tracking-widest text-muted-foreground">
           404 · Resource not found
         </p>
-        <h1 className="t-h2 text-foreground">We couldn&apos;t find that</h1>
+        <h1 className="t-h2 text-foreground">
+          We couldn&apos;t find that
+        </h1>
         <p className="font-sans text-sm text-muted-foreground">
-          The record may have been deleted, the URL may be malformed, or you may
-          not have access to it. Check the AWB / ID against the source system,
-          or head back to the dashboard.
+          The record may have been deleted, the URL may be malformed, or you
+          may not have access to it. Check the AWB / ID against the source
+          system, or head back to the dashboard.
         </p>
         <div className="flex items-center justify-center gap-2 pt-2">
           <Button asChild size="sm">
             <Link href="/ops-console">
               <RiHomeLine aria-hidden="true" />
-              <span className="ml-1.5 font-mono tracking-wider uppercase">
+              <span className="ml-1.5 font-mono uppercase tracking-wider">
                 Back to dashboard
               </span>
             </Link>

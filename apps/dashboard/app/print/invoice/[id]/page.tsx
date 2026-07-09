@@ -19,19 +19,14 @@ interface PageProps {
  * number, e.g. "INV-2026-01014 · Print · TAC Express". Critical when the
  * user has several invoice print tabs open and needs to identify them.
  */
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { id } = await params
   const cookieStore = await cookies()
   const invoiceService = createInvoiceServerService(cookieStore)
   const invoice = await invoiceService.getInvoiceById(id).catch(() => null)
 
   if (!invoice) {
-    return {
-      title: "Print Invoice · TAC Express",
-      description: "Invoice for printing",
-    }
+    return { title: "Print Invoice · TAC Express", description: "Invoice for printing" }
   }
   return {
     title: `${invoice.invoiceNumber} · Print · TAC Express`,
@@ -39,10 +34,7 @@ export async function generateMetadata({
   }
 }
 
-export default async function PrintInvoicePage({
-  params,
-  searchParams,
-}: PageProps) {
+export default async function PrintInvoicePage({ params, searchParams }: PageProps) {
   const { id } = await params
   const { print: printParam } = await searchParams
   const cookieStore = await cookies()
@@ -64,9 +56,7 @@ export default async function PrintInvoicePage({
     customerGstin: invoice.customerGstin,
     customerPhone: parsedNotes.consignor?.phone,
     customerEmail: parsedNotes.consignor?.email,
-    customerId: invoice.customerId
-      ? `CUST-${invoice.customerId.slice(0, 8).toUpperCase()}`
-      : undefined,
+    customerId: invoice.customerId ? `CUST-${invoice.customerId.slice(0, 8).toUpperCase()}` : undefined,
     billingAddress: parsedNotes.billingAddress,
     baseFreight: invoice.baseFreight,
     docketCharge: invoice.docketCharge,
@@ -93,18 +83,8 @@ export default async function PrintInvoicePage({
 interface NotesPayload {
   freeText?: string
   billingAddress?: string
-  consignor?: {
-    name?: string
-    phone?: string
-    address?: string
-    email?: string
-  }
-  consignee?: {
-    name?: string
-    phone?: string
-    address?: string
-    email?: string
-  }
+  consignor?: { name?: string; phone?: string; address?: string; email?: string }
+  consignee?: { name?: string; phone?: string; address?: string; email?: string }
 }
 
 function parseNotesPayload(raw?: string): NotesPayload {
@@ -116,9 +96,7 @@ function parseNotesPayload(raw?: string): NotesPayload {
     return {
       freeText: typeof parsed.notes === "string" ? parsed.notes : undefined,
       billingAddress:
-        typeof parsed.billingAddress === "string"
-          ? parsed.billingAddress
-          : undefined,
+        typeof parsed.billingAddress === "string" ? parsed.billingAddress : undefined,
       consignor: parsed.consignor as NotesPayload["consignor"],
       consignee: parsed.consignee as NotesPayload["consignee"],
     }

@@ -20,10 +20,7 @@ interface PrintInvoiceClientProps {
   autoPrint?: boolean
 }
 
-export function PrintInvoiceClient({
-  data,
-  autoPrint,
-}: PrintInvoiceClientProps) {
+export function PrintInvoiceClient({ data, autoPrint }: PrintInvoiceClientProps) {
   const router = useRouter()
   const ref = React.useRef<HTMLDivElement>(null)
 
@@ -50,7 +47,7 @@ export function PrintInvoiceClient({
           <span className="ml-1.5">Back</span>
         </Button>
         <div className="flex flex-col items-center">
-          <p className="font-mono text-ui-10 tracking-widest text-muted-foreground uppercase">
+          <p className="font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
             Tax Invoice · A4
           </p>
           <p className="font-mono text-sm font-semibold text-foreground">

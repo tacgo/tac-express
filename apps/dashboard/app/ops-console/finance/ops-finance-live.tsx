@@ -45,8 +45,7 @@ function deriveBuckets(invoices: InvoiceSummary[]): {
   buckets: AgingBucket[]
 } {
   const now = Date.now()
-  const days = (iso: string) =>
-    Math.floor((now - new Date(iso).getTime()) / 86_400_000)
+  const days = (iso: string) => Math.floor((now - new Date(iso).getTime()) / 86_400_000)
   const current: InvoiceSummary[] = []
   const b1: InvoiceSummary[] = []
   const b2: InvoiceSummary[] = []
@@ -59,14 +58,11 @@ function deriveBuckets(invoices: InvoiceSummary[]): {
     else if (age <= 60) b2.push(inv)
     else b3.push(inv)
   }
-  const sum = (xs: InvoiceSummary[]) =>
-    xs.reduce((acc, x) => acc + x.balance, 0)
+  const sum = (xs: InvoiceSummary[]) => xs.reduce((acc, x) => acc + x.balance, 0)
   const outstanding = sum(current) + sum(b1) + sum(b2) + sum(b3)
   const totalCount = current.length + b1.length + b2.length + b3.length
   const pct = (xs: InvoiceSummary[]) =>
-    totalCount === 0
-      ? 0
-      : Math.round((sum(xs) / Math.max(outstanding, 1)) * 100)
+    totalCount === 0 ? 0 : Math.round((sum(xs) / Math.max(outstanding, 1)) * 100)
   return {
     outstanding,
     buckets: [
@@ -104,10 +100,7 @@ export function OpsFinanceLive() {
   // — otherwise `?? []` allocates a fresh empty array on every render and
   // the bucket derivation recomputes.
   const data = React.useMemo(() => query.data ?? [], [query.data])
-  const { outstanding, buckets } = React.useMemo(
-    () => deriveBuckets(data),
-    [data]
-  )
+  const { outstanding, buckets } = React.useMemo(() => deriveBuckets(data), [data])
   const rows = React.useMemo(() => data.map(toRow), [data])
 
   // Canonical v7 — v6 paper view retired in Phase 5 composition unification.

@@ -21,9 +21,7 @@ interface PageProps {
   params: Promise<{ awb: string }>
 }
 
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { awb } = await params
   return {
     title: `Track ${awb} · TAC Express`,
@@ -38,7 +36,9 @@ export default async function PublicTrackingPage({ params }: PageProps) {
   const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
   if (!supabaseUrl || !anonKey) {
-    return <NotFound awb={awb} reason="Tracking is currently unavailable." />
+    return (
+      <NotFound awb={awb} reason="Tracking is currently unavailable." />
+    )
   }
 
   const tracking = createPublicTrackingService({ supabaseUrl, anonKey })
@@ -62,7 +62,7 @@ export default async function PublicTrackingPage({ params }: PageProps) {
     <div className="space-y-6">
       <header className="flex flex-wrap items-start justify-between gap-3 border-b border-border pb-4">
         <div>
-          <p className="font-mono text-ui-10 tracking-widest text-muted-foreground uppercase">
+          <p className="font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
             CN Number
           </p>
           <h1 className="mt-1 font-mono text-2xl font-bold tracking-widest">
@@ -92,15 +92,18 @@ export default async function PublicTrackingPage({ params }: PageProps) {
         />
         <Stat label="Mode" value={isAirService ? "Air" : "Surface"} />
         <Stat label="Created" value={fmtDate(shipment.createdAt)} />
-        <Stat label="ETA" value={computeEta(shipment)} />
+        <Stat
+          label="ETA"
+          value={computeEta(shipment)}
+        />
       </section>
 
       <section className="space-y-3 border border-border bg-card p-4">
-        <p className="font-mono text-ui-10 tracking-widest text-muted-foreground uppercase">
+        <p className="font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
           Tracking history
         </p>
         {events.length === 0 ? (
-          <p className="font-mono text-ui-10 tracking-widest text-muted-foreground uppercase">
+          <p className="font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
             No tracking events yet — your shipment is being prepared.
           </p>
         ) : (
@@ -111,13 +114,13 @@ export default async function PublicTrackingPage({ params }: PageProps) {
                   className="absolute mt-1 block size-2 bg-primary"
                   style={{ left: "-5px" }}
                 />
-                <p className="font-mono text-ui-11 font-semibold tracking-widest uppercase">
+                <p className="font-mono text-ui-11 font-semibold uppercase tracking-widest">
                   {e.status}
                 </p>
                 <p className="text-xs text-muted-foreground">
                   {e.location ?? e.hubCode ?? "—"}
                 </p>
-                <p className="font-mono text-ui-10 tracking-widest text-muted-foreground uppercase">
+                <p className="font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
                   {fmtDateTime(e.createdAt)}
                 </p>
               </li>
@@ -127,13 +130,13 @@ export default async function PublicTrackingPage({ params }: PageProps) {
       </section>
 
       <section className="border border-border bg-muted/30 p-4">
-        <p className="font-mono text-ui-10 tracking-widest text-muted-foreground uppercase">
+        <p className="font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
           Need help?
         </p>
         <p className="mt-1 text-sm">
           Contact our operations team and quote your CN number{" "}
-          <span className="font-mono font-semibold">{shipment.awbNumber}</span>.
-          We never share sender or receiver details on this page — for full
+          <span className="font-mono font-semibold">{shipment.awbNumber}</span>
+          . We never share sender or receiver details on this page — for full
           shipment details, please sign in.
         </p>
       </section>
@@ -146,7 +149,7 @@ function NotFound({ awb, reason }: { awb: string; reason: string }) {
     <div className="space-y-4 border border-dashed border-border bg-card p-8 text-center">
       <RiBox3Line className="mx-auto size-8 text-muted-foreground" />
       <div>
-        <p className="font-mono text-ui-10 tracking-widest text-muted-foreground uppercase">
+        <p className="font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
           Tracking · {awb}
         </p>
         <p className="mt-1 font-heading text-base font-semibold">
@@ -156,7 +159,7 @@ function NotFound({ awb, reason }: { awb: string; reason: string }) {
       </div>
       <Link
         href="/track"
-        className="inline-flex items-center gap-1.5 border border-border px-3 py-1.5 font-mono text-ui-11 tracking-widest text-foreground uppercase transition-colors hover:border-primary hover:text-primary"
+        className="inline-flex items-center gap-1.5 border border-border px-3 py-1.5 font-mono text-ui-11 uppercase tracking-widest text-foreground transition-colors hover:border-primary hover:text-primary"
       >
         Try another CN
         <RiArrowRightLine className="size-3.5" />
@@ -168,7 +171,7 @@ function NotFound({ awb, reason }: { awb: string; reason: string }) {
 function RouteEndpoint({ code, label }: { code: string; label: string }) {
   return (
     <div className="text-center">
-      <p className="font-mono text-ui-10 tracking-widest text-muted-foreground uppercase">
+      <p className="font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
         {label}
       </p>
       <p className="font-heading text-xl font-semibold tracking-tight">
@@ -181,7 +184,7 @@ function RouteEndpoint({ code, label }: { code: string; label: string }) {
 function Stat({ label, value }: { label: string; value: string }) {
   return (
     <div className="border border-border bg-card p-3">
-      <p className="font-mono text-ui-10 tracking-widest text-muted-foreground uppercase">
+      <p className="font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
         {label}
       </p>
       <p className="mt-1 font-mono text-sm font-semibold">{value}</p>

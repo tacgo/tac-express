@@ -14,39 +14,19 @@ import {
 
 // Channels + services are static reference data — not driven by an API yet.
 const CHANNELS = [
-  {
-    key: "SYSTEM",
-    title: "System",
-    description: "Platform alerts, scheduled jobs, sync state",
-  },
-  {
-    key: "OPS",
-    title: "Operations",
-    description: "Manifests, scans, dispatch, exceptions",
-  },
-  {
-    key: "FINANCE",
-    title: "Finance",
-    description: "Invoices, payments, COD, settlement",
-  },
-  {
-    key: "CUSTOMER",
-    title: "Customer",
-    description: "Customer-initiated bookings + WhatsApp replies",
-  },
-  {
-    key: "SLA",
-    title: "SLA",
-    description: "Breach warnings, due-soon alerts, escalations",
-  },
+  { key: "SYSTEM",   title: "System",     description: "Platform alerts, scheduled jobs, sync state" },
+  { key: "OPS",      title: "Operations", description: "Manifests, scans, dispatch, exceptions" },
+  { key: "FINANCE",  title: "Finance",    description: "Invoices, payments, COD, settlement" },
+  { key: "CUSTOMER", title: "Customer",   description: "Customer-initiated bookings + WhatsApp replies" },
+  { key: "SLA",      title: "SLA",        description: "Breach warnings, due-soon alerts, escalations" },
 ]
 
 const SERVICES: SystemService[] = [
-  { name: "API", status: "Operational" },
-  { name: "Database", status: "Operational" },
-  { name: "Realtime", status: "Operational" },
+  { name: "API",         status: "Operational" },
+  { name: "Database",    status: "Operational" },
+  { name: "Realtime",    status: "Operational" },
   { name: "PDF Service", status: "Operational" },
-  { name: "Webhooks", status: "Operational" },
+  { name: "Webhooks",    status: "Operational" },
 ]
 
 export function OpsNotificationsLive() {

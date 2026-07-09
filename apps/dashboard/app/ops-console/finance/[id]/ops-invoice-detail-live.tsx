@@ -58,10 +58,7 @@ import {
  * SurfaceCard grid). No services, hooks, or handlers changed.
  */
 
-const STATUS_TONE: Record<
-  InvoiceStatus,
-  "neutral" | "ok" | "warn" | "err" | "violet"
-> = {
+const STATUS_TONE: Record<InvoiceStatus, "neutral" | "ok" | "warn" | "err" | "violet"> = {
   [InvoiceStatus.DRAFT]: "warn",
   [InvoiceStatus.ISSUED]: "violet",
   [InvoiceStatus.PAID]: "ok",
@@ -98,15 +95,11 @@ function parseNotes(raw?: string): ParsedNotes | null {
           ? parsed.natureOfQuantity
           : undefined,
       declaredValue:
-        typeof parsed.declaredValue === "string"
-          ? parsed.declaredValue
-          : undefined,
+        typeof parsed.declaredValue === "string" ? parsed.declaredValue : undefined,
       consignor: parsed.consignor as ParsedNotes["consignor"],
       consignee: parsed.consignee as ParsedNotes["consignee"],
       billingAddress:
-        typeof parsed.billingAddress === "string"
-          ? parsed.billingAddress
-          : undefined,
+        typeof parsed.billingAddress === "string" ? parsed.billingAddress : undefined,
       actualWeightKg: parsed.actualWeightKg as ParsedNotes["actualWeightKg"],
       externalAwbNumber:
         typeof parsed.externalAwbNumber === "string"
@@ -152,7 +145,7 @@ function ChargeRow({
       <span
         className={cn(
           "t-mono",
-          accent ? "font-semibold text-primary" : "text-foreground"
+          accent ? "text-primary font-semibold" : "text-foreground",
         )}
       >
         {value}
@@ -174,7 +167,7 @@ function MetaField({
   return (
     <div className={cn("space-y-1", className)}>
       <p className={FIELD_LABEL}>{label}</p>
-      <p className="font-mono text-xs break-words whitespace-pre-line text-foreground">
+      <p className="font-mono text-xs text-foreground whitespace-pre-line break-words">
         {value}
       </p>
     </div>
@@ -205,10 +198,7 @@ export function OpsInvoiceDetailLive({ id }: OpsInvoiceDetailLiveProps) {
   const whatsappTest = useWhatsappTest(true)
   const whatsappAvailable = whatsappTest.data?.ok !== false
 
-  const parsedNotes = React.useMemo(
-    () => parseNotes(invoice?.notes),
-    [invoice?.notes]
-  )
+  const parsedNotes = React.useMemo(() => parseNotes(invoice?.notes), [invoice?.notes])
 
   async function handleIssue() {
     try {
@@ -320,11 +310,7 @@ export function OpsInvoiceDetailLive({ id }: OpsInvoiceDetailLiveProps) {
         return
       }
 
-      addNotification({
-        type: "error",
-        title: "Payment failed",
-        message: String(err),
-      })
+      addNotification({ type: "error", title: "Payment failed", message: String(err) })
     }
   }
 
@@ -362,13 +348,13 @@ export function OpsInvoiceDetailLive({ id }: OpsInvoiceDetailLiveProps) {
   if (!invoice) {
     return (
       <DetailShell eyebrow="Invoice" title={id} backHref="/ops-console/finance">
-        <div className="border-l-indicator flex items-start gap-3 border border-destructive/40 border-l-destructive bg-destructive/15 p-6">
+        <div className="border border-destructive/40 border-l-indicator border-l-destructive bg-destructive/15 p-6 flex items-start gap-3">
           <RiErrorWarningLine
             aria-hidden
-            className="size-5 shrink-0 text-destructive"
+            className="size-5 text-destructive shrink-0"
           />
           <div>
-            <div className="font-mono text-2xs tracking-widest text-destructive uppercase">
+            <div className="font-mono text-2xs uppercase tracking-widest text-destructive">
               NOT FOUND
             </div>
             <p className="t-body-sm mt-1">Could not load invoice.</p>
@@ -399,8 +385,8 @@ export function OpsInvoiceDetailLive({ id }: OpsInvoiceDetailLiveProps) {
           <Badge
             variant="outline"
             className={cn(
-              "font-mono tracking-tag uppercase",
-              STATUS_TONE_CLASS[STATUS_TONE[invoice.status] ?? "neutral"]
+              "font-mono uppercase tracking-tag",
+              STATUS_TONE_CLASS[STATUS_TONE[invoice.status] ?? "neutral"],
             )}
           >
             {invoice.status}
@@ -419,9 +405,7 @@ export function OpsInvoiceDetailLive({ id }: OpsInvoiceDetailLiveProps) {
             <Button
               variant="ghost"
               size="sm"
-              onClick={() =>
-                window.open(`/print/invoice/${id}?print=1`, "_blank")
-              }
+              onClick={() => window.open(`/print/invoice/${id}?print=1`, "_blank")}
             >
               <RiPrinterLine aria-hidden className="size-3" />
               Print / PDF
@@ -444,8 +428,8 @@ export function OpsInvoiceDetailLive({ id }: OpsInvoiceDetailLiveProps) {
                 title={
                   whatsappAvailable
                     ? undefined
-                    : (whatsappTest.data?.error ??
-                      "WhatsApp send is currently unavailable — check the WHATSAPP_ENABLED kill switch or WPBox upstream.")
+                    : whatsappTest.data?.error ??
+                      "WhatsApp send is currently unavailable — check the WHATSAPP_ENABLED kill switch or WPBox upstream."
                 }
                 aria-label={
                   whatsappAvailable
@@ -463,7 +447,7 @@ export function OpsInvoiceDetailLive({ id }: OpsInvoiceDetailLiveProps) {
           <>
             <SurfaceCard density="compact">
               <div className={FIELD_LABEL}>Total</div>
-              <div className="t-data-md mt-1 text-foreground">
+              <div className="t-data-md text-foreground mt-1">
                 {fmtINR(invoice.totalAmount)}
               </div>
             </SurfaceCard>
@@ -472,9 +456,7 @@ export function OpsInvoiceDetailLive({ id }: OpsInvoiceDetailLiveProps) {
               <div
                 className={cn(
                   "t-data-md mt-1",
-                  invoice.balance > 0
-                    ? "text-accent-warning"
-                    : "text-accent-success"
+                  invoice.balance > 0 ? "text-accent-warning" : "text-accent-success",
                 )}
               >
                 {fmtINR(invoice.balance)}
@@ -490,13 +472,13 @@ export function OpsInvoiceDetailLive({ id }: OpsInvoiceDetailLiveProps) {
               <div className="t-mono">{fmtDate(invoice.createdAt)}</div>
               {invoice.issuedAt && (
                 <>
-                  <div className={cn(FIELD_LABEL, "mt-3 mb-1")}>Issued</div>
+                  <div className={cn(FIELD_LABEL, "mb-1 mt-3")}>Issued</div>
                   <div className="t-mono">{fmtDate(invoice.issuedAt)}</div>
                 </>
               )}
               {invoice.dueDate && (
                 <>
-                  <div className={cn(FIELD_LABEL, "mt-3 mb-1")}>Due</div>
+                  <div className={cn(FIELD_LABEL, "mb-1 mt-3")}>Due</div>
                   <div className="t-mono">{fmtDate(invoice.dueDate)}</div>
                 </>
               )}
@@ -505,10 +487,10 @@ export function OpsInvoiceDetailLive({ id }: OpsInvoiceDetailLiveProps) {
         }
       >
         <SurfaceCard>
-          <div className="mb-4 flex items-start justify-between gap-4 border-b border-border pb-3">
+          <div className="flex items-start justify-between gap-4 border-b border-border pb-3 mb-4">
             <div className="space-y-0.5">
               <p className={FIELD_LABEL}>Invoice</p>
-              <p className="font-sans text-base font-bold tracking-wide text-primary uppercase">
+              <p className="font-sans text-base font-bold uppercase tracking-wide text-primary">
                 {invoice.invoiceNumber}
               </p>
             </div>
@@ -529,49 +511,28 @@ export function OpsInvoiceDetailLive({ id }: OpsInvoiceDetailLiveProps) {
               <ChargeRow label="GSTIN" value={invoice.customerGstin} />
             )}
             <ChargeRow label="Payment Mode" value={invoice.paymentMode} />
-            <ChargeRow
-              label="Base Freight"
-              value={fmtINR(invoice.baseFreight)}
-            />
+            <ChargeRow label="Base Freight" value={fmtINR(invoice.baseFreight)} />
             {invoice.docketCharge > 0 && (
-              <ChargeRow
-                label="Docket Charge"
-                value={fmtINR(invoice.docketCharge)}
-              />
+              <ChargeRow label="Docket Charge" value={fmtINR(invoice.docketCharge)} />
             )}
             {invoice.pickupCharge > 0 && (
-              <ChargeRow
-                label="Pickup Charge"
-                value={fmtINR(invoice.pickupCharge)}
-              />
+              <ChargeRow label="Pickup Charge" value={fmtINR(invoice.pickupCharge)} />
             )}
             {invoice.packingCharge > 0 && (
-              <ChargeRow
-                label="Packing Charge"
-                value={fmtINR(invoice.packingCharge)}
-              />
+              <ChargeRow label="Packing Charge" value={fmtINR(invoice.packingCharge)} />
             )}
             {invoice.fuelSurcharge > 0 && (
-              <ChargeRow
-                label="Fuel Surcharge"
-                value={fmtINR(invoice.fuelSurcharge)}
-              />
+              <ChargeRow label="Fuel Surcharge" value={fmtINR(invoice.fuelSurcharge)} />
             )}
             {invoice.handlingFee > 0 && (
-              <ChargeRow
-                label="Handling Fee"
-                value={fmtINR(invoice.handlingFee)}
-              />
+              <ChargeRow label="Handling Fee" value={fmtINR(invoice.handlingFee)} />
             )}
             {invoice.insurance > 0 && (
               <ChargeRow label="Insurance" value={fmtINR(invoice.insurance)} />
             )}
             <ChargeRow label="Subtotal" value={fmtINR(subtotal)} />
             {invoice.discount > 0 && (
-              <ChargeRow
-                label="Discount"
-                value={`− ${fmtINR(invoice.discount)}`}
-              />
+              <ChargeRow label="Discount" value={`− ${fmtINR(invoice.discount)}`} />
             )}
             {invoice.discount > 0 && (
               <ChargeRow label="Taxable" value={fmtINR(taxable)} />
@@ -587,16 +548,16 @@ export function OpsInvoiceDetailLive({ id }: OpsInvoiceDetailLiveProps) {
             )}
           </div>
 
-          <div className="mt-3 flex items-center justify-between border-t-2 border-foreground/80 pt-3">
-            <span className="font-mono text-xs font-bold tracking-badge text-foreground uppercase">
+          <div className="flex items-center justify-between border-t-2 border-foreground/80 pt-3 mt-3">
+            <span className="font-mono text-xs font-bold uppercase tracking-badge text-foreground">
               Total
             </span>
-            <span className="font-sans text-lg font-bold text-primary tabular-nums">
+            <span className="font-sans text-lg font-bold tabular-nums text-primary">
               {fmtINR(invoice.totalAmount)}
             </span>
           </div>
 
-          <div className="mt-2 space-y-0 border-t border-dashed border-border pt-2">
+          <div className="space-y-0 border-t border-dashed border-border pt-2 mt-2">
             {invoice.advancePaid > 0 && (
               <ChargeRow
                 label="Advance Paid"
@@ -621,18 +582,9 @@ export function OpsInvoiceDetailLive({ id }: OpsInvoiceDetailLiveProps) {
               <div className={cn(FIELD_LABEL, "mb-3")}>Shipment metadata</div>
 
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                <MetaField
-                  label="Booking date"
-                  value={parsedNotes.bookingDate}
-                />
-                <MetaField
-                  label="Nature of goods"
-                  value={parsedNotes.natureOfQuantity}
-                />
-                <MetaField
-                  label="Declared value"
-                  value={parsedNotes.declaredValue}
-                />
+                <MetaField label="Booking date" value={parsedNotes.bookingDate} />
+                <MetaField label="Nature of goods" value={parsedNotes.natureOfQuantity} />
+                <MetaField label="Declared value" value={parsedNotes.declaredValue} />
                 <MetaField
                   label="Actual weight"
                   value={
@@ -646,57 +598,32 @@ export function OpsInvoiceDetailLive({ id }: OpsInvoiceDetailLiveProps) {
                   label="External AWB"
                   value={parsedNotes.externalAwbNumber}
                 />
-                <MetaField
-                  label="Billing address"
-                  value={parsedNotes.billingAddress}
-                />
+                <MetaField label="Billing address" value={parsedNotes.billingAddress} />
               </div>
 
               {(parsedNotes.consignor || parsedNotes.consignee) && (
-                <div className="mt-4 grid grid-cols-1 gap-4 border-t border-border pt-4 sm:grid-cols-2">
+                <div className="grid grid-cols-1 gap-4 border-t border-border pt-4 mt-4 sm:grid-cols-2">
                   {parsedNotes.consignor && (
                     <div className="space-y-1.5">
-                      <p className={cn(FIELD_LABEL, "text-primary")}>
-                        Consignor
-                      </p>
-                      <MetaField
-                        label="Name"
-                        value={parsedNotes.consignor.name}
-                      />
-                      <MetaField
-                        label="Phone"
-                        value={parsedNotes.consignor.phone}
-                      />
-                      <MetaField
-                        label="Address"
-                        value={parsedNotes.consignor.address}
-                      />
+                      <p className={cn(FIELD_LABEL, "text-primary")}>Consignor</p>
+                      <MetaField label="Name" value={parsedNotes.consignor.name} />
+                      <MetaField label="Phone" value={parsedNotes.consignor.phone} />
+                      <MetaField label="Address" value={parsedNotes.consignor.address} />
                     </div>
                   )}
                   {parsedNotes.consignee && (
                     <div className="space-y-1.5">
-                      <p className={cn(FIELD_LABEL, "text-primary")}>
-                        Consignee
-                      </p>
-                      <MetaField
-                        label="Name"
-                        value={parsedNotes.consignee.name}
-                      />
-                      <MetaField
-                        label="Phone"
-                        value={parsedNotes.consignee.phone}
-                      />
-                      <MetaField
-                        label="Address"
-                        value={parsedNotes.consignee.address}
-                      />
+                      <p className={cn(FIELD_LABEL, "text-primary")}>Consignee</p>
+                      <MetaField label="Name" value={parsedNotes.consignee.name} />
+                      <MetaField label="Phone" value={parsedNotes.consignee.phone} />
+                      <MetaField label="Address" value={parsedNotes.consignee.address} />
                     </div>
                   )}
                 </div>
               )}
 
               {(parsedNotes.freeText || parsedNotes.remarks) && (
-                <div className="mt-4 grid grid-cols-1 gap-4 border-t border-border pt-4 sm:grid-cols-2">
+                <div className="grid grid-cols-1 gap-4 border-t border-border pt-4 mt-4 sm:grid-cols-2">
                   <MetaField label="Notes" value={parsedNotes.freeText} />
                   <MetaField label="Remarks" value={parsedNotes.remarks} />
                 </div>
@@ -708,11 +635,7 @@ export function OpsInvoiceDetailLive({ id }: OpsInvoiceDetailLiveProps) {
           <div className={cn(FIELD_LABEL, "mb-3")}>Actions</div>
           <div className="flex flex-wrap items-center gap-2">
             {invoice.status === InvoiceStatus.DRAFT && (
-              <Button
-                size="sm"
-                onClick={handleIssue}
-                disabled={isActionLoading}
-              >
+              <Button size="sm" onClick={handleIssue} disabled={isActionLoading}>
                 Issue Invoice
               </Button>
             )}
@@ -727,11 +650,7 @@ export function OpsInvoiceDetailLive({ id }: OpsInvoiceDetailLiveProps) {
                   <RiMoneyDollarCircleLine aria-hidden className="size-3" />
                   Record Payment
                 </Button>
-                <Button
-                  size="sm"
-                  onClick={handleMarkPaid}
-                  disabled={isActionLoading}
-                >
+                <Button size="sm" onClick={handleMarkPaid} disabled={isActionLoading}>
                   Mark Fully Paid
                 </Button>
               </>

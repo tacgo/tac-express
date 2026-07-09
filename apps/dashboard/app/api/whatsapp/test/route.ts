@@ -60,11 +60,8 @@ export async function GET(req: NextRequest) {
       surface: "/api/whatsapp/test",
     })
     return NextResponse.json(
-      {
-        error:
-          "Insufficient permissions. WhatsApp diagnostics require MANAGER or above.",
-      },
-      { status: 403 }
+      { error: "Insufficient permissions. WhatsApp diagnostics require MANAGER or above." },
+      { status: 403 },
     )
   }
 
@@ -85,7 +82,7 @@ export async function GET(req: NextRequest) {
           "X-RateLimit-Remaining": String(rl.remaining),
           "X-RateLimit-Reset": String(rl.reset),
         },
-      }
+      },
     )
   }
 

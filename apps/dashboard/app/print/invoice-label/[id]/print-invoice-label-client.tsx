@@ -42,22 +42,15 @@ export function PrintInvoiceLabelClient({
   return (
     <div className="min-h-screen bg-background p-6">
       <div className="mx-auto mb-6 flex max-w-xl items-center justify-between gap-3 print:hidden">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => router.back()}
-          aria-label="Back"
-        >
+        <Button variant="outline" size="sm" onClick={() => router.back()} aria-label="Back">
           <RiArrowLeftLine aria-hidden="true" />
           <span className="ml-1.5">Back</span>
         </Button>
         <div className="flex flex-col items-center">
-          <p className="font-mono text-ui-10 tracking-widest text-muted-foreground uppercase">
+          <p className="font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
             Shipping Label · 4×6 thermal (FBA 7-zone)
           </p>
-          <p className="font-mono text-sm font-semibold text-foreground">
-            {data.awbNumber}
-          </p>
+          <p className="font-mono text-sm font-semibold text-foreground">{data.awbNumber}</p>
         </div>
         <PrintButton
           contentRef={labelRef}

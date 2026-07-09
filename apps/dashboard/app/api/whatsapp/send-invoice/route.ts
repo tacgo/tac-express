@@ -144,7 +144,7 @@ export async function POST(req: NextRequest) {
         error:
           "WhatsApp sending is disabled. Set WHATSAPP_ENABLED=true to enable.",
       },
-      { status: 503 }
+      { status: 503 },
     )
   }
 
@@ -182,7 +182,7 @@ export async function POST(req: NextRequest) {
         error:
           "Insufficient permissions. Sending invoices via WhatsApp requires MANAGER or above.",
       },
-      { status: 403 }
+      { status: 403 },
     )
   }
 
@@ -203,7 +203,7 @@ export async function POST(req: NextRequest) {
           "X-RateLimit-Remaining": String(rl.remaining),
           "X-RateLimit-Reset": String(rl.reset),
         },
-      }
+      },
     )
   }
 
@@ -216,7 +216,7 @@ export async function POST(req: NextRequest) {
     if (err instanceof z.ZodError) {
       return NextResponse.json(
         { error: "Invalid request body", issues: err.issues },
-        { status: 400 }
+        { status: 400 },
       )
     }
     return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 })
@@ -261,9 +261,7 @@ export async function POST(req: NextRequest) {
    */
   const customerService = createCustomerServerService(cookieStore)
   const customer = invoice.customerId
-    ? await customerService
-        .getCustomerById(invoice.customerId)
-        .catch(() => null)
+    ? await customerService.getCustomerById(invoice.customerId).catch(() => null)
     : null
 
   const notesPhones = extractPhonesFromInvoice(invoice)
@@ -275,7 +273,7 @@ export async function POST(req: NextRequest) {
   const expectedNormalised = new Set(
     expectedRawPhones
       .map((p) => normalizePhone(p))
-      .filter((p): p is string => Boolean(p))
+      .filter((p): p is string => Boolean(p)),
   )
 
   /**
@@ -288,12 +286,8 @@ export async function POST(req: NextRequest) {
    * MANAGER-authored invoice), but the ambiguity that would normally
    * warrant a UI confirm step doesn't exist.
    */
-  const consignorPhone = notesPhones.consignor
-    ? normalizePhone(notesPhones.consignor)
-    : null
-  const consigneePhone = notesPhones.consignee
-    ? normalizePhone(notesPhones.consignee)
-    : null
+  const consignorPhone = notesPhones.consignor ? normalizePhone(notesPhones.consignor) : null
+  const consigneePhone = notesPhones.consignee ? normalizePhone(notesPhones.consignee) : null
   const isDuplicateContact =
     consignorPhone !== null &&
     consigneePhone !== null &&
@@ -308,7 +302,7 @@ export async function POST(req: NextRequest) {
     if (!normalisedRequest) {
       return NextResponse.json(
         { error: `Phone "${parsed.phone}" could not be normalised to E.164` },
-        { status: 400 }
+        { status: 400 },
       )
     }
     if (expectedNormalised.has(normalisedRequest)) {
@@ -338,7 +332,7 @@ export async function POST(req: NextRequest) {
               "shipment contacts. To send to a different number, set " +
               "`overridePhone: true` (requires ADMIN role).",
           },
-          { status: 403 }
+          { status: 403 },
         )
       }
       if (!isAdmin) {
@@ -348,7 +342,7 @@ export async function POST(req: NextRequest) {
               "Override-phone requires ADMIN role or above. The supplied " +
               "phone is not on record for this invoice.",
           },
-          { status: 403 }
+          { status: 403 },
         )
       }
       rawPhone = parsed.phone
@@ -369,7 +363,7 @@ export async function POST(req: NextRequest) {
   if (!rawPhone) {
     return NextResponse.json(
       { error: "No phone number found for this invoice" },
-      { status: 422 }
+      { status: 422 },
     )
   }
 
@@ -377,7 +371,7 @@ export async function POST(req: NextRequest) {
   if (!phone) {
     return NextResponse.json(
       { error: `Phone "${rawPhone}" could not be normalised to E.164` },
-      { status: 400 }
+      { status: 400 },
     )
   }
 
@@ -398,7 +392,7 @@ export async function POST(req: NextRequest) {
           err instanceof Error ? err.message : String(err)
         }`,
       },
-      { status: 503 }
+      { status: 503 },
     )
   }
 
@@ -413,12 +407,9 @@ export async function POST(req: NextRequest) {
    *
    * Skipped silently if the signing secret isn't configured — the
    * dialog's manual URL field still works as a fallback.                */
-  let resolvedMediaUrl =
-    parsed.mode === "template" ? parsed.templateMediaUrl : undefined
-  let resolvedMediaFilename =
-    parsed.mode === "template" ? parsed.templateMediaFilename : undefined
-  let resolvedMediaKind =
-    parsed.mode === "template" ? parsed.templateMediaKind : undefined
+  let resolvedMediaUrl = parsed.mode === "template" ? parsed.templateMediaUrl : undefined
+  let resolvedMediaFilename = parsed.mode === "template" ? parsed.templateMediaFilename : undefined
+  let resolvedMediaKind = parsed.mode === "template" ? parsed.templateMediaKind : undefined
 
   if (parsed.mode === "template" && !resolvedMediaUrl) {
     const origin = resolvePublicOrigin(req)
@@ -444,17 +435,12 @@ export async function POST(req: NextRequest) {
             mediaUrlLength: resolvedMediaUrl.length,
             hasTrackingUrl: Boolean(trackingUrl),
           },
-          "auto-generated signed PDF URL"
+          "auto-generated signed PDF URL",
         )
       } catch (err) {
         log.warn(
-          {
-            err:
-              err instanceof Error
-                ? { message: err.message, name: err.name }
-                : { value: String(err) },
-          },
-          "could not auto-generate signed PDF URL"
+          { err: err instanceof Error ? { message: err.message, name: err.name } : { value: String(err) } },
+          "could not auto-generate signed PDF URL",
         )
       }
     }
@@ -472,7 +458,7 @@ export async function POST(req: NextRequest) {
       usingOverride,
       isDuplicateContact,
     },
-    "sending invoice via WhatsApp"
+    "sending invoice via WhatsApp",
   )
 
   // invoiceId + userId are forwarded to the tracked wrapper so the
@@ -516,7 +502,7 @@ export async function POST(req: NextRequest) {
         rawResponseHead: result.rawResponse?.slice(0, 200),
         errorMsg: result.error,
       },
-      "WhatsApp send failed"
+      "WhatsApp send failed",
     )
     return NextResponse.json(
       {
@@ -526,7 +512,7 @@ export async function POST(req: NextRequest) {
         attemptedFormats: result.attemptedFormats,
         mode,
       },
-      { status: 502 }
+      { status: 502 },
     )
   }
 
@@ -551,7 +537,7 @@ export async function POST(req: NextRequest) {
             ? result.data.slice(0, 200)
             : JSON.stringify(result.data ?? null).slice(0, 200),
       },
-      "WhatsApp send returned no WAMID — treating as silent rejection"
+      "WhatsApp send returned no WAMID — treating as silent rejection",
     )
     return NextResponse.json(
       {
@@ -567,13 +553,13 @@ export async function POST(req: NextRequest) {
             : JSON.stringify(result.data ?? null),
         mode,
       },
-      { status: 502 }
+      { status: 502 },
     )
   }
 
   log.info(
     { invoiceNumber: invoice.invoiceNumber, mode, wamid },
-    "WhatsApp send OK"
+    "WhatsApp send OK",
   )
 
   return NextResponse.json({
@@ -602,7 +588,7 @@ export async function POST(req: NextRequest) {
  */
 function buildPdfData(
   invoice: InvoiceLike,
-  customer: { phone?: string | null; address?: unknown } | null
+  customer: { phone?: string | null; address?: unknown } | null,
 ): InvoicePdfData {
   let billingAddress: string | undefined
   // Prefer a structured billingAddress out of the notes JSON the wizard
@@ -612,10 +598,7 @@ function buildPdfData(
       const trimmed = invoice.notes.trim()
       if (trimmed.startsWith("{")) {
         const parsed = JSON.parse(trimmed) as { billingAddress?: unknown }
-        if (
-          typeof parsed.billingAddress === "string" &&
-          parsed.billingAddress
-        ) {
+        if (typeof parsed.billingAddress === "string" && parsed.billingAddress) {
           billingAddress = parsed.billingAddress
         }
       }
@@ -692,12 +675,8 @@ function extractPhonesFromInvoice(invoice: InvoiceLike): InvoiceNotesPhones {
       consignee?: { phone?: string }
     }
     return {
-      consignor: parsed.consignor?.phone
-        ? String(parsed.consignor.phone)
-        : null,
-      consignee: parsed.consignee?.phone
-        ? String(parsed.consignee.phone)
-        : null,
+      consignor: parsed.consignor?.phone ? String(parsed.consignor.phone) : null,
+      consignee: parsed.consignee?.phone ? String(parsed.consignee.phone) : null,
     }
   } catch {
     return empty

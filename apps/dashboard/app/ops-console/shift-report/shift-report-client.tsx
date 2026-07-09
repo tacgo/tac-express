@@ -15,7 +15,10 @@ import {
   ToggleGroupItem,
 } from "@workspace/ui/components/primitives/toggle-group"
 import { ShiftReportView } from "@workspace/ui/components/composed/shift-report/shift-report-view"
-import { RiRefreshLine, RiDownloadLine } from "@workspace/ui/icons"
+import {
+  RiRefreshLine,
+  RiDownloadLine,
+} from "@workspace/ui/icons"
 
 const DURATIONS = [4, 8, 12, 24] as const
 
@@ -134,7 +137,7 @@ export function ShiftReportClient() {
                 value={String(d)}
                 aria-label={`${d} hours`}
               >
-                <span className="font-mono text-ui-11 tracking-widest uppercase">
+                <span className="font-mono text-ui-11 uppercase tracking-widest">
                   {d} HRS
                 </span>
               </ToggleGroupItem>
@@ -157,7 +160,7 @@ export function ShiftReportClient() {
         <ShiftReportView data={report.data} loading={report.isFetching} />
       )}
       {!report.data && report.isLoading && (
-        <p className="font-mono text-ui-10 tracking-widest text-muted-foreground uppercase">
+        <p className="font-mono text-ui-10 uppercase tracking-widest text-muted-foreground">
           Loading shift report…
         </p>
       )}

@@ -18,15 +18,12 @@ function toKpis(k: DomainAnalyticsKpis | undefined): AnalyticsKpis {
     inTransit: k?.inTransit.value ?? 0,
     openExceptions: k?.openExceptions.value ?? 0,
     avgDeliveryDays:
-      k?.avgDeliveryDays.value == null
-        ? "N/A"
-        : String(k.avgDeliveryDays.value),
+      k?.avgDeliveryDays.value == null ? "N/A" : String(k.avgDeliveryDays.value),
   }
 }
 
 export function OpsAnalyticsLive() {
-  const { data, isLoading, isError, dataUpdatedAt, refetch } =
-    useAnalyticsKpis()
+  const { data, isLoading, isError, dataUpdatedAt, refetch } = useAnalyticsKpis()
   const lastUpdated = dataUpdatedAt
     ? new Date(dataUpdatedAt).toLocaleTimeString("en-IN", {
         hour: "2-digit",

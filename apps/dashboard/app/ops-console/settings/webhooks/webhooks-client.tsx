@@ -14,12 +14,7 @@ import { Input } from "@workspace/ui/components/primitives/input"
 import { Badge } from "@workspace/ui/components/primitives/badge"
 import { EmptyState } from "@workspace/ui/components/primitives/empty-state"
 import { SkeletonRows } from "@workspace/ui/components/primitives/skeleton"
-import {
-  RiPlugLine,
-  RiAddLine,
-  RiDeleteBinLine,
-  RiCheckLine,
-} from "@workspace/ui/icons"
+import { RiPlugLine, RiAddLine, RiDeleteBinLine, RiCheckLine } from "@workspace/ui/icons"
 
 export function WebhooksClient() {
   const list = useWebhooks()
@@ -31,9 +26,7 @@ export function WebhooksClient() {
   const [events, setEvents] = React.useState<WebhookEvent[]>([])
 
   function toggleEvent(evt: WebhookEvent) {
-    setEvents((prev) =>
-      prev.includes(evt) ? prev.filter((x) => x !== evt) : [...prev, evt]
-    )
+    setEvents((prev) => (prev.includes(evt) ? prev.filter((x) => x !== evt) : [...prev, evt]))
   }
 
   async function submit() {
@@ -53,17 +46,13 @@ export function WebhooksClient() {
       />
 
       <div className="tac-fui-panel space-y-4 p-5">
-        <p className="border-b border-border pb-2 font-mono text-xs tracking-wider text-muted-foreground uppercase">
+        <p className="border-b border-border pb-2 font-mono text-xs uppercase tracking-wider text-muted-foreground">
           New endpoint
         </p>
 
         <div className="grid gap-3 md:grid-cols-2">
           <Field label="Name">
-            <Input
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Production WMS sync"
-            />
+            <Input value={name} onChange={(e) => setName(e.target.value)} placeholder="Production WMS sync" />
           </Field>
           <Field label="URL">
             <Input
@@ -76,9 +65,7 @@ export function WebhooksClient() {
         </div>
 
         <div>
-          <p className="mb-2 font-mono text-2xs tracking-wider text-muted-foreground uppercase">
-            Events
-          </p>
+          <p className="mb-2 font-mono text-2xs uppercase tracking-wider text-muted-foreground">Events</p>
           <div className="flex flex-wrap gap-2">
             {WEBHOOK_EVENTS.map((evt) => {
               const active = events.includes(evt)
@@ -89,15 +76,11 @@ export function WebhooksClient() {
                   aria-pressed={active}
                   onClick={() => toggleEvent(evt)}
                   className={
-                    "tac-fui-hover h-auto gap-1 border px-2 py-1 font-mono text-xs tracking-wider uppercase " +
-                    (active
-                      ? "border-primary bg-primary/10 text-primary hover:bg-primary/15"
-                      : "border-border text-muted-foreground")
+                    "h-auto gap-1 border px-2 py-1 font-mono text-xs uppercase tracking-wider tac-fui-hover " +
+                    (active ? "border-primary bg-primary/10 text-primary hover:bg-primary/15" : "border-border text-muted-foreground")
                   }
                 >
-                  {active ? (
-                    <RiCheckLine className="size-3" aria-hidden="true" />
-                  ) : null}
+                  {active ? <RiCheckLine className="size-3" aria-hidden="true" /> : null}
                   {evt}
                 </Button>
               )
@@ -106,12 +89,7 @@ export function WebhooksClient() {
         </div>
 
         <div className="flex justify-end">
-          <Button
-            onClick={submit}
-            disabled={
-              !name || !url || events.length === 0 || createMut.isPending
-            }
-          >
+          <Button onClick={submit} disabled={!name || !url || events.length === 0 || createMut.isPending}>
             <RiAddLine className="mr-1 size-4" aria-hidden="true" />
             Create webhook
           </Button>
@@ -119,9 +97,7 @@ export function WebhooksClient() {
       </div>
 
       <div className="space-y-2">
-        <p className="font-mono text-xs tracking-wider text-muted-foreground uppercase">
-          Active subscriptions
-        </p>
+        <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground">Active subscriptions</p>
         {list.isLoading && <SkeletonRows rows={3} />}
         {!list.isLoading && (list.data?.length ?? 0) === 0 && (
           <EmptyState
@@ -131,34 +107,22 @@ export function WebhooksClient() {
           />
         )}
         {(list.data ?? []).map((wh) => (
-          <div
-            key={wh.id}
-            className="tac-fui-panel flex items-start justify-between gap-3 p-4"
-          >
+          <div key={wh.id} className="tac-fui-panel flex items-start justify-between gap-3 p-4">
             <div className="min-w-0 flex-1">
               <div className="flex items-center gap-2">
-                <h3 className="truncate font-medium text-foreground">
-                  {wh.name}
-                </h3>
+                <h3 className="truncate font-medium text-foreground">{wh.name}</h3>
                 {wh.isActive ? (
-                  <Badge
-                    variant="default"
-                    className="border-accent-success bg-accent-success/15 text-accent-success"
-                  >
+                  <Badge variant="default" className="bg-accent-success/15 text-accent-success border-accent-success">
                     Active
                   </Badge>
                 ) : (
                   <Badge variant="outline">Disabled</Badge>
                 )}
                 {wh.failureCount > 0 && (
-                  <Badge variant="destructive">
-                    {wh.failureCount} failures
-                  </Badge>
+                  <Badge variant="destructive">{wh.failureCount} failures</Badge>
                 )}
               </div>
-              <p className="mt-1 truncate font-mono text-xs text-muted-foreground">
-                {wh.url}
-              </p>
+              <p className="mt-1 truncate font-mono text-xs text-muted-foreground">{wh.url}</p>
               <div className="mt-2 flex flex-wrap gap-1">
                 {wh.events.map((e) => (
                   <Badge key={e} variant="outline" className="font-mono">
@@ -187,16 +151,10 @@ export function WebhooksClient() {
   )
 }
 
-function Field({
-  label,
-  children,
-}: {
-  label: string
-  children: React.ReactNode
-}) {
+function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <label className="space-y-1">
-      <span className="block font-mono text-2xs tracking-wider text-muted-foreground uppercase">
+      <span className="block font-mono text-2xs uppercase tracking-wider text-muted-foreground">
         {label}
       </span>
       {children}
