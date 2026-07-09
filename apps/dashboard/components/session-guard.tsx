@@ -24,7 +24,7 @@ export function SessionGuard() {
       if (event !== "SIGNED_OUT") return
       const redirect = resolveSignOutRedirect(
         window.location.pathname,
-        window.location.search,
+        window.location.search
       )
       if (redirect !== null) router.replace(redirect)
     })

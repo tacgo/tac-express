@@ -66,7 +66,7 @@ export async function POST(req: NextRequest) {
         error:
           "WhatsApp sending is disabled. Set WHATSAPP_ENABLED=true to enable.",
       },
-      { status: 503 },
+      { status: 503 }
     )
   }
 
@@ -92,11 +92,11 @@ export async function POST(req: NextRequest) {
         userId: user.id,
         errorMsg: err instanceof Error ? err.message : String(err),
       },
-      "getProfileById threw — surfacing as 500",
+      "getProfileById threw — surfacing as 500"
     )
     return NextResponse.json(
       { error: "Internal error reading operator profile." },
-      { status: 500 },
+      { status: 500 }
     )
   }
   const role = profile?.role as UserRole | undefined
@@ -111,7 +111,7 @@ export async function POST(req: NextRequest) {
         error:
           "Insufficient permissions. Retrying a WhatsApp send requires MANAGER or above.",
       },
-      { status: 403 },
+      { status: 403 }
     )
   }
 
@@ -125,7 +125,7 @@ export async function POST(req: NextRequest) {
     if (err instanceof z.ZodError) {
       return NextResponse.json(
         { error: "Invalid request body", issues: err.issues },
-        { status: 400 },
+        { status: 400 }
       )
     }
     return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 })
@@ -148,7 +148,7 @@ export async function POST(req: NextRequest) {
           "X-RateLimit-Remaining": String(rl.remaining),
           "X-RateLimit-Reset": String(rl.reset),
         },
-      },
+      }
     )
   }
 
@@ -179,7 +179,7 @@ export async function POST(req: NextRequest) {
           "X-RateLimit-Remaining": String(retryRl.remaining),
           "X-RateLimit-Reset": String(retryRl.reset),
         },
-      },
+      }
     )
   }
 
@@ -197,18 +197,18 @@ export async function POST(req: NextRequest) {
         originalSendId: parsed.originalSendId,
         errorMsg: err instanceof Error ? err.message : String(err),
       },
-      "getWhatsappSendById threw — surfacing as 500",
+      "getWhatsappSendById threw — surfacing as 500"
     )
     return NextResponse.json(
       { error: "Internal error reading failed-send record." },
-      { status: 500 },
+      { status: 500 }
     )
   }
 
   if (!failedRow) {
     return NextResponse.json(
       { error: "Failed send not found, or not visible to this user." },
-      { status: 404 },
+      { status: 404 }
     )
   }
 
@@ -217,7 +217,7 @@ export async function POST(req: NextRequest) {
       {
         error: `This send is no longer in a retryable state (status=${failedRow.status}). Refresh the page.`,
       },
-      { status: 409 },
+      { status: 409 }
     )
   }
 
@@ -229,17 +229,16 @@ export async function POST(req: NextRequest) {
         error:
           "Template-message retries are not supported in this view yet. Re-send from the invoice detail page.",
       },
-      { status: 422 },
+      { status: 422 }
     )
   }
 
   if (failedRow.invoice_id === null) {
     return NextResponse.json(
       {
-        error:
-          "Replay is supported only for invoice-linked sends in V1.",
+        error: "Replay is supported only for invoice-linked sends in V1.",
       },
-      { status: 422 },
+      { status: 422 }
     )
   }
 
@@ -253,7 +252,7 @@ export async function POST(req: NextRequest) {
   let invoice: InvoiceLike | null
   try {
     invoice = (await invoiceService.getInvoiceById(
-      failedRow.invoice_id,
+      failedRow.invoice_id
     )) as InvoiceLike | null
   } catch (err) {
     log.error(
@@ -261,11 +260,11 @@ export async function POST(req: NextRequest) {
         invoiceId: failedRow.invoice_id,
         errorMsg: err instanceof Error ? err.message : String(err),
       },
-      "getInvoiceById threw — surfacing as 500",
+      "getInvoiceById threw — surfacing as 500"
     )
     return NextResponse.json(
       { error: "Internal error reading invoice record." },
-      { status: 500 },
+      { status: 500 }
     )
   }
 
@@ -275,7 +274,7 @@ export async function POST(req: NextRequest) {
         error:
           "Invoice no longer readable. It may have been cancelled or deleted since the original send.",
       },
-      { status: 422 },
+      { status: 422 }
     )
   }
 
@@ -293,7 +292,7 @@ export async function POST(req: NextRequest) {
       attemptNo: failedRow.attempt_no,
       userId: user.id,
     },
-    "retrying WhatsApp send",
+    "retrying WhatsApp send"
   )
 
   let outcome: Awaited<ReturnType<typeof trackedSvc.retryWhatsappSend>>
@@ -314,11 +313,11 @@ export async function POST(req: NextRequest) {
         invoiceNumber: invoice.invoiceNumber,
         errorMsg: err instanceof Error ? err.message : String(err),
       },
-      "retryWhatsappSend threw",
+      "retryWhatsappSend threw"
     )
     return NextResponse.json(
       { error: "Retry threw unexpectedly. See server logs." },
-      { status: 502 },
+      { status: 502 }
     )
   }
 
@@ -330,7 +329,7 @@ export async function POST(req: NextRequest) {
         newSendId: outcome.newSendId,
         errorMsg: outcome.result.error,
       },
-      "retry attempt failed",
+      "retry attempt failed"
     )
     return NextResponse.json(
       {
@@ -338,7 +337,7 @@ export async function POST(req: NextRequest) {
         error: outcome.result.error,
         newSendId: outcome.newSendId,
       },
-      { status: 502 },
+      { status: 502 }
     )
   }
 
@@ -348,7 +347,7 @@ export async function POST(req: NextRequest) {
       invoiceNumber: invoice.invoiceNumber,
       newSendId: outcome.newSendId,
     },
-    "retry succeeded",
+    "retry succeeded"
   )
 
   return NextResponse.json({

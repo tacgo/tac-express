@@ -59,10 +59,10 @@ function tooManyRequests(reset: number): NextResponse {
       headers: {
         "content-type": "application/json",
         "retry-after": String(
-          Math.max(1, Math.ceil((reset - Date.now()) / 1000)),
+          Math.max(1, Math.ceil((reset - Date.now()) / 1000))
         ),
       },
-    },
+    }
   )
 }
 
@@ -90,7 +90,8 @@ export async function proxy(req: NextRequest): Promise<NextResponse> {
   // crashes every request and the dev overlay surfaces the trace.
   // Falling through to the unauthenticated branch below redirects the
   // visitor to /sign-in cleanly and lets them re-auth.
-  let user: Awaited<ReturnType<typeof supabase.auth.getUser>>["data"]["user"] = null
+  let user: Awaited<ReturnType<typeof supabase.auth.getUser>>["data"]["user"] =
+    null
   try {
     const result = await supabase.auth.getUser()
     user = result.data.user
