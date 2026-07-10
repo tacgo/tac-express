@@ -32,9 +32,10 @@ export function OpsAnalyticsLive() {
       })
     : undefined
 
+  const kpis = React.useMemo(() => toKpis(data), [data])
   return (
     <V7OpsAnalytics
-      kpis={toKpis(data)}
+      kpis={kpis}
       isLoading={isLoading}
       isError={isError}
       lastUpdated={lastUpdated}
