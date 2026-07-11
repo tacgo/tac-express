@@ -1,0 +1,3 @@
+## 2026-05-18 - Ensure interactive elements have explicit focus states
+**Learning:** The "Violet Grid" design system relies on `focus-visible:tac-focus-premium` instead of generic Tailwind focus rings to maintain a consistent custom bloom on focus. Many standalone `<button>`, icon `<Button>` variants, and `<Link>` elements omit this, creating a poor keyboard navigation experience where users cannot see their current focus target.
+**Action:** Whenever adding an interactive element (buttons, links, form fields, triggers), always explicitly append `focus-visible:outline-none focus-visible:tac-focus-premium` (or the component-specific focus class) to ensure proper keyboard focus tracking and accessibility.

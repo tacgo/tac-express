@@ -86,7 +86,7 @@ function SignInForm({ onSubmit, error, isLoading, className }: SignInFormProps) 
             size="icon"
             onClick={() => setShowPassword((v) => !v)}
             aria-label={showPassword ? "Hide password" : "Show password"}
-            className="absolute right-1.5 top-1/2 size-6 -translate-y-1/2 text-muted-foreground hover:bg-transparent hover:text-foreground"
+            className="absolute right-1.5 top-1/2 size-6 -translate-y-1/2 text-muted-foreground hover:bg-transparent hover:text-foreground focus-visible:outline-none focus-visible:tac-focus-premium"
           >
             {showPassword ? (
               <RiEyeOffLine className="size-4" aria-hidden="true" />

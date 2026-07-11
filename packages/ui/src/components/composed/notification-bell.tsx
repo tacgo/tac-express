@@ -58,7 +58,7 @@ function NotificationBell() {
         type="button"
         variant="ghost"
         size="icon"
-        className="relative h-8 w-8 text-muted-foreground hover:text-foreground hover:bg-muted/50"
+        className="relative h-8 w-8 text-muted-foreground hover:text-foreground hover:bg-muted/50 focus-visible:outline-none focus-visible:tac-focus-premium"
         aria-label="Notifications"
       >
         <RiNotification3Line className="h-4 w-4" />
@@ -73,7 +73,7 @@ function NotificationBell() {
         <button
           data-slot="notifications-trigger"
           type="button"
-          className="relative flex h-8 w-8 items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors"
+          className="relative flex h-8 w-8 items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors focus-visible:outline-none focus-visible:tac-focus-premium"
           aria-label={`Notifications${unreadCount > 0 ? ` (${unreadCount} unread)` : ""}`}
         >
           <RiNotification3Line className="h-4 w-4" />
@@ -118,7 +118,7 @@ function NotificationBell() {
                 type="button"
                 variant="ghost"
                 onClick={markAllRead}
-                className="h-auto px-1 py-0.5 font-mono text-2xs uppercase tracking-widest text-muted-foreground hover:text-foreground"
+                className="h-auto px-1 py-0.5 font-mono text-2xs uppercase tracking-widest text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:tac-focus-premium"
               >
                 Mark all read
               </Button>
@@ -234,7 +234,7 @@ function NotificationBell() {
                       variant="ghost"
                       size="icon"
                       onClick={() => removeNotification(n.id)}
-                      className="shrink-0 h-5 w-5 text-muted-foreground/50 hover:text-destructive"
+                      className="shrink-0 h-5 w-5 text-muted-foreground/50 hover:text-destructive focus-visible:outline-none focus-visible:tac-focus-premium"
                       aria-label={`Dismiss ${n.title}`}
                     >
                       <RiCloseLine className="h-3.5 w-3.5" />
@@ -252,7 +252,7 @@ function NotificationBell() {
             <Link
               href="/ops-console/notifications"
               onClick={() => setOpen(false)}
-              className="font-mono text-2xs uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors"
+              className="font-mono text-2xs uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:tac-focus-premium"
             >
               View all →
             </Link>
