@@ -1,0 +1,3 @@
+## 2025-07-12 - Mapped API data performance
+**Learning:** When passing mapped API data to TanStack table or composed list components (e.g., `V7Ops*`), wrapping the `.map()` transformation in `React.useMemo` is required to prevent breaking referential equality and triggering unnecessary table re-renders and internal state resets.
+**Action:** Always destructure the raw value and apply the fallback inline (e.g., `React.useMemo(() => (data ?? []).map(...), [data])`). Avoid setting default array values during destructuring (e.g., `const { data = [] } = useQuery()`) as it creates unstable references.
