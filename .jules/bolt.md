@@ -1,0 +1,3 @@
+## 2024-07-13 - [TanStack Table Re-renders & Destructuring Defaults]
+ **Learning:** Using default values during API data destructuring (e.g., `const { data = [] } = useQuery()`) creates unstable array references during loading states. When combined with unmemoized `.map()` transformations passed to TanStack tables (like `V7Ops*` components), it triggers unnecessary, expensive table re-renders and internal state resets on every React render pass.
+ **Action:** Always destructure the raw value without a default (`const { data } = useQuery()`), and apply the fallback inline within a `React.useMemo` block (e.g., `React.useMemo(() => (data ?? []).map(...), [data])`) to ensure referential equality for list and table components.
