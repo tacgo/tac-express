@@ -1,0 +1,4 @@
+## 2024-07-14 - Fix Weak Webhook Secret Generation
+**Vulnerability:** Weak random number generation using `Math.random()` as a fallback when `crypto` is undefined.
+**Learning:** In certain server-side environments without a global `crypto`, `Math.random()` fallback generates predictable secrets for webhooks, leaving them vulnerable to attacks or signature forgery. Using the native `crypto.getRandomValues` or `node:crypto.randomBytes` ensures a cryptographically secure pseudo-random number generator (CSPRNG) is always used.
+**Prevention:** Always use secure methods like `node:crypto` `randomBytes` or standard global `crypto.getRandomValues()` instead of providing weak fallbacks using `Math.random()`. If a secure RNG is unavailable, the application should throw an error rather than generating insecure secrets.
