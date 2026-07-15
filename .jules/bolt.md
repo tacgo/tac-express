@@ -1,0 +1,3 @@
+## 2024-07-15 - Prevent Unnecessary Table Re-renders with Memoized API Data
+**Learning:** Destructuring API query data with a default empty array (e.g. `const { data = [] } = useQuery()`) and passing `.map()` transformed data directly to TanStack table or composed list components like `V7Ops*` creates unstable references on every render, triggering expensive table re-renders and internal state resets.
+**Action:** Avoid default array values during destructuring. Instead, destructure the raw value and wrap the `.map()` transformation inline with `React.useMemo(() => (data ?? []).map(...), [data])` to ensure referential equality.

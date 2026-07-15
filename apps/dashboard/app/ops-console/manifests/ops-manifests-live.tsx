@@ -38,7 +38,9 @@ function toRow(m: ManifestSummary): ManifestRow {
 export function OpsManifestsLive() {
   useRealtimeManifests()
   const query = useManifests({})
-  const items = (query.data ?? []).map(toRow)
+  // perf: memoize the items array so the V7OpsManifests table has a stable reference
+  // Expected impact: Eliminates redundant re-renders of the table during hook loading states
+  const items = React.useMemo(() => (query.data ?? []).map(toRow), [query.data])
 
   // Canonical v7 — v6 paper view retired in Phase 5 composition unification.
   return (

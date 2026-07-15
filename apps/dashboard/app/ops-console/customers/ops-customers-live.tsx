@@ -25,8 +25,10 @@ function toRow(c: Customer): CustomerRow {
 }
 
 export function OpsCustomersLive() {
-  const { data = [] } = useCustomers({})
-  const rows = data.map(toRow)
+  const { data } = useCustomers({})
+  // perf: memoize the rows array so the V7OpsCustomers table has a stable reference
+  // Expected impact: Eliminates redundant re-renders of the table during hook loading states
+  const rows = React.useMemo(() => (data ?? []).map(toRow), [data])
   // Canonical v7 — v6 paper view retired in Phase 4 composition unification.
   return <V7OpsCustomers rows={rows} />
 }
