@@ -175,7 +175,7 @@ function NotificationsEmpty() {
           aria-hidden
           className="size-8 text-muted-foreground mx-auto"
         />
-        <p className="tac-mono-label mt-3">No data</p>
+        <p className="tac-mono-label mt-3">Inbox clear</p>
         <p className="t-h4 text-foreground mt-1.5">No notifications yet</p>
         <p className="t-caption text-muted-foreground mt-1 max-w-sm">
           We&rsquo;ll surface alerts and shipment events here as they arrive.
