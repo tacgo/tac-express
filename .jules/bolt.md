@@ -1,0 +1,3 @@
+## 2024-07-16 - Memoization of Mapped API Data
+**Learning:** Destructuring React Query results with default array values (e.g., `const { data = [] } = useQuery()`) and directly mapping the data in the render cycle creates an unstable reference on every render. This forces heavy composed components like TanStack tables (`V7Ops*`) to re-render constantly and resets their internal state (e.g. row selection, pagination).
+**Action:** Always wrap `.map()` transformations of API data in a `React.useMemo` dependency array (e.g. `React.useMemo(() => (data ?? []).map(...), [data])`) to preserve referential equality when passed down to composed table components.
