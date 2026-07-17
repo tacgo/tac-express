@@ -11,6 +11,7 @@ import { Badge } from "@workspace/ui/components/primitives/badge"
 import { ScrollArea } from "@workspace/ui/components/primitives/scroll-area"
 import { Switch } from "@workspace/ui/components/primitives/switch"
 import { Label } from "@workspace/ui/components/primitives/label"
+import DOMPurify from 'isomorphic-dompurify'
 import { RichTextEditor } from "@workspace/ui/components/primitives/rich-text-editor"
 import { EmptyState } from "@workspace/ui/components/primitives/empty-state"
 import {
@@ -233,7 +234,7 @@ function NoteRow({
         // The rich-text editor produces sanitized HTML on the way in.
         // For belt-and-braces, the consumer should also DOMPurify it
         // server-side before persisting.
-        dangerouslySetInnerHTML={{ __html: note.bodyHtml }}
+        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(note.bodyHtml) }}
       />
     </li>
   )
