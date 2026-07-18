@@ -49,7 +49,7 @@ export function V2TrackingWidget() {
         />
         <button
           type="submit"
-          className="flex h-10 w-10 shrink-0 items-center justify-center border border-l-0 border-border bg-primary text-primary-foreground hover:bg-primary/90"
+          className="flex h-10 w-10 shrink-0 items-center justify-center border border-l-0 border-border bg-primary text-primary-foreground hover:bg-primary/90 focus-visible:outline-none focus-visible:tac-focus-premium"
           aria-label="Track shipment"
         >
           <RiArrowRightLine className="size-4" aria-hidden="true" />
