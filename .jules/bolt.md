@@ -1,0 +1,3 @@
+## 2024-05-24 - Stable References for V7Ops Components
+**Learning:** Setting default array values during `useQuery` destructuring (e.g., `const { data = [] } = useQuery()`) or mapping data without memoization creates unstable array references during loading and data refreshes. When this is passed to TanStack table or composed list components like `V7Ops*`, it breaks referential equality and triggers expensive, unnecessary re-renders.
+**Action:** Always destructure the raw value from `useQuery` and apply the fallback inline within a `React.useMemo` block (e.g., `React.useMemo(() => (data ?? []).map(...), [data])`).
