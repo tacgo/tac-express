@@ -1,0 +1,3 @@
+## 2025-07-19 - Avoid unstable arrays in API mapping
+**Learning:** Default destructuring (`const { data = [] } = useQuery()`) or inline mapping `(query.data ?? []).map` breaks referential equality, causing frequent and expensive table re-renders in TanStack tables, as a fresh empty array is allocated on every render.
+**Action:** When extracting data for list components or tables, destructure the original reference (or use `query.data`), and perform the mapping within a `React.useMemo` dependency array tracking the actual data reference: `React.useMemo(() => (query.data ?? []).map(toRow), [query.data])`.
