@@ -1,0 +1,4 @@
+## 2025-02-27 - [High] Cross-Site Scripting (XSS) in Notes Panel
+**Vulnerability:** The NotesPanel component (`packages/ui/src/components/composed/notes/notes-panel.tsx`) directly rendered rich text HTML (`note.bodyHtml`) into the DOM using `dangerouslySetInnerHTML` without any client-side sanitization.
+**Learning:** While the rich-text editor might produce sanitized HTML, we cannot trust that the backend stored it securely or that it wasn't modified maliciously by another user. Direct rendering of unescaped HTML creates a significant XSS risk.
+**Prevention:** Always use a sanitization library like `isomorphic-dompurify` to wrap dynamic HTML content before passing it to `dangerouslySetInnerHTML`. We use `isomorphic-dompurify` specifically to avoid SSR hydration mismatches that occur with the standard `dompurify` package.
