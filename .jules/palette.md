@@ -1,0 +1,3 @@
+## 2024-07-23 - Add tac-focus-premium to native interactive elements
+**Learning:** Native interactive elements (`<select>`, `<input>`, `<button>`, `<a>`, `<Link>`) must explicitly use `focus-visible:outline-none focus-visible:tac-focus-premium` to ensure consistent custom focus rings and keyboard accessibility across the application, especially when used as Radix UI triggers via `asChild`. The tracking widget search input and track button and nav theme toggle / menu button are currently missing these.
+**Action:** Always add `focus-visible:outline-none focus-visible:tac-focus-premium` to native interactive elements that are custom styled.
