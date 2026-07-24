@@ -1,0 +1,3 @@
+## 2024-07-24 - Prevent React Table Re-renders with Stable Array References
+**Learning:** Using default array values during destructuring (e.g., `const { data = [] } = useQuery()`) or fallback arrays without memoization (e.g., `query.data ?? []`) creates unstable references on every render, especially during loading states. When this mapped data is passed to composed list or TanStack table components, it breaks referential equality and triggers unnecessary table re-renders and internal state resets.
+**Action:** Destructure the raw value and apply the fallback inline within a `React.useMemo` block (e.g., `React.useMemo(() => (data ?? []).map(...), [data])`).
