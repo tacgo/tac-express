@@ -75,7 +75,7 @@
     "@workspace/types": "workspace:*",
     "@workspace/typescript-config": "workspace:*",
     "eslint": "^9.39.2",
-    "next": "16.2.6",
+    "next": "16.2.11",
     "shadcn": "4.7.0",
     "tailwindcss": "^4.1.18",
     "typescript": "^5.9.3"
