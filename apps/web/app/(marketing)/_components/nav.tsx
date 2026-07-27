@@ -20,7 +20,7 @@ function ThemeToggle() {
       type="button"
       aria-label={resolvedTheme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
       onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
-      className="flex size-9 items-center justify-center border border-border bg-background text-muted-foreground transition-colors hover:text-foreground"
+      className="flex size-9 items-center justify-center border border-border bg-background text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:tac-focus-premium"
     >
       {resolvedTheme === "dark" ? (
         <RiSunLine className="size-4" aria-hidden="true" />
@@ -74,7 +74,7 @@ export function V2Nav() {
             <Link
               key={l.label}
               href={l.href}
-              className="text-muted-foreground transition-colors duration-150 hover:text-foreground"
+              className="text-muted-foreground transition-colors duration-150 hover:text-foreground focus-visible:outline-none focus-visible:tac-focus-premium"
             >
               {l.label}
             </Link>
@@ -102,7 +102,7 @@ export function V2Nav() {
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
           onClick={() => setOpen((o) => !o)}
-          className="flex size-9 items-center justify-center border border-border bg-background text-foreground lg:hidden"
+          className="flex size-9 items-center justify-center border border-border bg-background text-foreground lg:hidden focus-visible:outline-none focus-visible:tac-focus-premium"
         >
           {open ? (
             <RiCloseLine className="size-5" aria-hidden="true" />
@@ -121,7 +121,7 @@ export function V2Nav() {
                   key={l.label}
                   href={l.href}
                   onClick={() => setOpen(false)}
-                  className="px-3 py-2.5 text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground"
+                  className="px-3 py-2.5 text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:tac-focus-premium"
                 >
                   {l.label}
                 </Link>
