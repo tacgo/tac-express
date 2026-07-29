@@ -1,5 +1,7 @@
 "use client"
 
+import DOMPurify from "isomorphic-dompurify"
+
 
 
 import * as React from "react"
@@ -233,7 +235,7 @@ function NoteRow({
         // The rich-text editor produces sanitized HTML on the way in.
         // For belt-and-braces, the consumer should also DOMPurify it
         // server-side before persisting.
-        dangerouslySetInnerHTML={{ __html: note.bodyHtml }}
+        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(note.bodyHtml) }}
       />
     </li>
   )
