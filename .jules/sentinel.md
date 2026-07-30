@@ -1,0 +1,4 @@
+## 2024-05-24 - Cross-Site Scripting (XSS) in Notes Panel
+**Vulnerability:** The NotesPanel component uses `dangerouslySetInnerHTML` to render user-provided note content without server-side sanitization. Although it assumes the rich-text editor sanitized it on the way in, an attacker could potentially bypass the editor and submit malicious HTML directly via the API, which would then be executed in other users' browsers when viewing the note.
+**Learning:** When rendering user-generated content, client-side sanitization on input is insufficient. Content must always be sanitized before being rendered with `dangerouslySetInnerHTML`, even if it's expected to be safe.
+**Prevention:** Always use a robust HTML sanitization library (like DOMPurify) before rendering any user-provided HTML, especially when using `dangerouslySetInnerHTML`. Prefer `isomorphic-dompurify` in React components to avoid SSR hydration issues.
