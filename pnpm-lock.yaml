@@ -461,9 +461,6 @@ importers:
       date-fns:
         specifier: ^3.6.0
         version: 3.6.0
-      dompurify:
-        specifier: ^3.4.12
-        version: 3.4.12
       dotted-map:
         specifier: ^3.1.0
         version: 3.1.0
