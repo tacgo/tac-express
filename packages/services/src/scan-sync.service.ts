@@ -20,14 +20,16 @@ export function createScanSyncService(db: SupabaseClient) {
     async bulkSync(events: ScanEvent[]): Promise<{ synced: string[]; failed: string[] }> {
       const synced: string[] = []
       const failed: string[] = []
-      for (const event of events) {
-        try {
-          await this.syncScanEvent(event)
+      // OPTIMIZATION: Process scan syncs concurrently instead of sequentially
+      const results = await Promise.allSettled(events.map(event => this.syncScanEvent(event)))
+
+      events.forEach((event, index) => {
+        if (results[index]?.status === "fulfilled") {
           synced.push(event.id)
-        } catch {
+        } else {
           failed.push(event.id)
         }
-      }
+      })
       return { synced, failed }
     },
   }
