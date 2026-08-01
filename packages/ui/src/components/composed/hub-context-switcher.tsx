@@ -32,7 +32,7 @@ export function HubContextSwitcher({ className }: { className?: string }) {
         className={cn(
           "h-8 pl-7 pr-6 border border-border bg-background",
           "font-mono text-xs uppercase tracking-[0.15em] text-foreground",
-          "hover:border-primary/50 focus:outline-none focus:border-primary",
+          "hover:border-primary/50 focus:outline-none focus:border-primary focus-visible:outline-none focus-visible:tac-focus-premium",
           "appearance-none cursor-pointer transition-colors",
         )}
         aria-label="Switch active hub"
