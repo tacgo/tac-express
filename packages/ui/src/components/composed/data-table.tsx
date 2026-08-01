@@ -161,6 +161,46 @@ interface DataTableProps<TData, TValue> {
  *
  * See `docs/VIOLET-GRID-V6-EVOLUTION.md` § 4 (Layout Intelligence).
  */
+
+/**
+ * ⚡ Bolt Optimization: DebouncedSearchInput
+ * Prevents re-rendering the entire table on every keystroke during search.
+ * Updates local state immediately for input responsiveness, but debounces
+ * the table filter update (which triggers a full table re-render).
+ */
+function DebouncedSearchInput({
+  value: initialValue,
+  onChange,
+  debounce = 300,
+  ...props
+}: Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange"> & {
+  value: string
+  onChange: (value: string) => void
+  debounce?: number
+}) {
+  const [value, setValue] = React.useState(initialValue)
+  const onChangeRef = React.useRef(onChange)
+
+  React.useEffect(() => {
+    onChangeRef.current = onChange
+  }, [onChange])
+
+  React.useEffect(() => {
+    setValue(initialValue)
+  }, [initialValue])
+
+  React.useEffect(() => {
+    const timeout = setTimeout(() => {
+      onChangeRef.current(value)
+    }, debounce)
+    return () => clearTimeout(timeout)
+  }, [value, debounce])
+
+  return (
+    <input {...props} value={value} onChange={e => setValue(e.target.value)} />
+  )
+}
+
 function DataTable<TData, TValue>({
   columns,
   data,
@@ -226,12 +266,12 @@ function DataTable<TData, TValue>({
               <label htmlFor="data-table-search" className="sr-only">
                 {searchPlaceholder}
               </label>
-              <input
+              <DebouncedSearchInput
                 id="data-table-search"
                 aria-label={searchPlaceholder}
                 placeholder={searchPlaceholder}
                 value={(table.getColumn(searchKey)?.getFilterValue() as string) ?? ""}
-                onChange={(e) => table.getColumn(searchKey)?.setFilterValue(e.target.value)}
+                onChange={(value) => table.getColumn(searchKey)?.setFilterValue(value)}
                 className={cn(
                   "h-8 w-64 border border-border bg-background px-3 text-xs font-mono uppercase tracking-wider",
                   "placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary"
