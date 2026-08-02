@@ -3,6 +3,7 @@
 
 
 import * as React from "react"
+import DOMPurify from "isomorphic-dompurify"
 import { formatDistanceToNow, parseISO } from "date-fns"
 
 import { cn } from "@workspace/ui/lib/utils"
@@ -233,7 +234,9 @@ function NoteRow({
         // The rich-text editor produces sanitized HTML on the way in.
         // For belt-and-braces, the consumer should also DOMPurify it
         // server-side before persisting.
-        dangerouslySetInnerHTML={{ __html: note.bodyHtml }}
+        // SECURITY: We use isomorphic-dompurify to sanitize note.bodyHtml on the client
+        // to prevent XSS vulnerabilities, ensuring any malicious script tags bypass the server checks are neutralized.
+        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(note.bodyHtml) }}
       />
     </li>
   )
