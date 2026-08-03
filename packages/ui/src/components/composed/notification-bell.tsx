@@ -216,7 +216,7 @@ function NotificationBell() {
                           handleActivate()
                           setOpen(false)
                         }}
-                        className="flex flex-1 min-w-0 items-start gap-3 focus:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                        className="flex flex-1 min-w-0 items-start gap-3 focus:outline-none focus-visible:outline-none focus-visible:tac-focus-premium"
                       >
                         {mainBody}
                       </Link>
@@ -224,7 +224,7 @@ function NotificationBell() {
                       <Button
                         variant="ghost"
                         onClick={handleActivate}
-                        className="flex flex-1 h-auto min-w-0 items-start gap-3 px-0 py-0 text-left font-normal hover:bg-transparent focus-visible:ring-1 focus-visible:ring-ring"
+                        className="flex flex-1 h-auto min-w-0 items-start gap-3 px-0 py-0 text-left font-normal hover:bg-transparent focus-visible:outline-none focus-visible:tac-focus-premium"
                       >
                         {mainBody}
                       </Button>
