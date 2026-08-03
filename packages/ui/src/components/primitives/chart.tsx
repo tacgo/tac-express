@@ -112,7 +112,8 @@ function ChartContainer({
   )
 
   return (
-    <ChartContext.Provider value={{ config }}>
+    <ChartContext.Provider value={React.useMemo(() => ({ config }), [config])}>
+      {/* ⚡ Bolt: Memoized context value to prevent unnecessary re-renders of inner chart components when the wrapper re-renders */}
       <div
         data-slot="chart"
         data-chart={chartId}
