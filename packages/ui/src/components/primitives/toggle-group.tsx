@@ -33,7 +33,8 @@ function ToggleGroup({
       )}
       {...props}
     >
-      <ToggleGroupContext.Provider value={{ variant, size }}>
+      {/* ⚡ Bolt: Memoized context value to prevent unnecessary re-renders of child ToggleGroupItems when parent re-renders */}
+      <ToggleGroupContext.Provider value={React.useMemo(() => ({ variant, size }), [variant, size])}>
         {children}
       </ToggleGroupContext.Provider>
     </ToggleGroupPrimitive.Root>
