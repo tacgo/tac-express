@@ -25,8 +25,11 @@ function toRow(c: Customer): CustomerRow {
 }
 
 export function OpsCustomersLive() {
-  const { data = [] } = useCustomers({})
-  const rows = data.map(toRow)
+  const query = useCustomers({})
+
+  // Memoize data and mapped rows to prevent unnecessary re-renders of the DataTable
+  const data = React.useMemo(() => query.data ?? [], [query.data])
+  const rows = React.useMemo(() => data.map(toRow), [data])
   // Canonical v7 — v6 paper view retired in Phase 4 composition unification.
   return <V7OpsCustomers rows={rows} />
 }

@@ -1,0 +1,3 @@
+## 2023-10-24 - Memoize mapped React lists for DataTables
+**Learning:** In the Ops Console live pages (e.g. `ops-shipments-live.tsx`, `ops-manifests-live.tsx`), the underlying `DataTable` re-renders unnecessarily if the `rows` prop changes reference on every render. Expressions like `(query.data ?? []).map(toRow)` allocate a new array and new row objects even when the data is unchanged, causing deep re-renders of the table.
+**Action:** Always wrap data array transformations like `.map(toRow)` in `React.useMemo` (e.g. `const rows = React.useMemo(() => data.map(toRow), [data])`) to provide a stable reference to complex list components.

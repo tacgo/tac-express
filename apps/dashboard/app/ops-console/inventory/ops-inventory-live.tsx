@@ -33,7 +33,10 @@ function toHub(h: HubInventoryItem): HubInventory {
  */
 export function OpsInventoryLive() {
   const queryClient = useQueryClient()
-  const { data = [], isFetching } = useInventoryByHub()
+  const query = useInventoryByHub()
+
+  // Memoize data and mapped hubs to prevent unnecessary re-renders of the DataTable
+  const data = React.useMemo(() => query.data ?? [], [query.data])
 
   const handleRefresh = React.useCallback(() => {
     void queryClient.invalidateQueries({
@@ -41,9 +44,9 @@ export function OpsInventoryLive() {
     })
   }, [queryClient])
 
-  const hubs = data.map(toHub)
+  const hubs = React.useMemo(() => data.map(toHub), [data])
 
   return (
-    <V7OpsInventory hubs={hubs} isLoading={isFetching} onRefresh={handleRefresh} />
+    <V7OpsInventory hubs={hubs} isLoading={query.isFetching} onRefresh={handleRefresh} />
   )
 }
