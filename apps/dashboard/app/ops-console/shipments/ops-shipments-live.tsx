@@ -46,7 +46,10 @@ function titleCase(s: string): string {
 export function OpsShipmentsLive() {
   useRealtimeShipments()
   const query = useShipments({})
-  const rows = (query.data ?? []).map(toRow)
+
+  // Memoize data and mapped rows to prevent unnecessary re-renders of the DataTable
+  const data = React.useMemo(() => query.data ?? [], [query.data])
+  const rows = React.useMemo(() => data.map(toRow), [data])
 
   // Canonical v7 — v6 paper view retired in Phase 4/5 composition unification.
   return (

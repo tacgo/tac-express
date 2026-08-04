@@ -22,6 +22,10 @@ function toRow(e: ExceptionSummary): ExceptionRow {
 
 export function OpsExceptionsLive() {
   useRealtimeExceptions()
-  const { data = [] } = useExceptions({})
-  return <V7OpsExceptions rows={data.map(toRow)} />
+  const query = useExceptions({})
+
+  // Memoize data and mapped rows to prevent unnecessary re-renders of the DataTable
+  const data = React.useMemo(() => query.data ?? [], [query.data])
+  const rows = React.useMemo(() => data.map(toRow), [data])
+  return <V7OpsExceptions rows={rows} />
 }
