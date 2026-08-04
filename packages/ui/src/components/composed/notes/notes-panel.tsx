@@ -3,6 +3,7 @@
 
 
 import * as React from "react"
+import DOMPurify from "isomorphic-dompurify"
 import { formatDistanceToNow, parseISO } from "date-fns"
 
 import { cn } from "@workspace/ui/lib/utils"
@@ -228,12 +229,12 @@ function NoteRow({
           )}
         </div>
       </header>
-      <div
+            <div
         className="prose prose-sm max-w-none text-foreground dark:prose-invert"
         // The rich-text editor produces sanitized HTML on the way in.
         // For belt-and-braces, the consumer should also DOMPurify it
-        // server-side before persisting.
-        dangerouslySetInnerHTML={{ __html: note.bodyHtml }}
+        // server-side before persisting. We also sanitize here just in case.
+        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(note.bodyHtml) }}
       />
     </li>
   )
