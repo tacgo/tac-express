@@ -1,0 +1,3 @@
+## 2024-08-04 - Native Interactive Elements Premium Focus
+**Learning:** Native interactive elements like `<button>` and components like `Button` or `Link` used across the dashboard (e.g., in notification-bell.tsx) often lack the global custom focus ring (`focus-visible:tac-focus-premium`), leading to poor keyboard navigation accessibility and inconsistent design system compliance. Some also mix outdated `focus-visible:ring-ring`.
+**Action:** When working on interactive elements, always verify that `focus-visible:outline-none focus-visible:tac-focus-premium` are applied explicitly for consistent custom focus rings and keyboard accessibility across the application.
