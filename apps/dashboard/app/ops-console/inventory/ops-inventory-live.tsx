@@ -41,7 +41,8 @@ export function OpsInventoryLive() {
     })
   }, [queryClient])
 
-  const hubs = data.map(toHub)
+  // ⚡ Bolt: Memoize array mapping to prevent unnecessary deep re-renders of DataTable
+  const hubs = React.useMemo(() => data.map(toHub), [data])
 
   return (
     <V7OpsInventory hubs={hubs} isLoading={isFetching} onRefresh={handleRefresh} />
