@@ -3,9 +3,9 @@
   "$comment": "Bundle-size budgets for the dashboard. Each limit is a hard CI gate — exceeding any of them fails the architecture-gates workflow. Update deliberately, with a same-PR justification.",
   "baseline": {
     "capturedAt": "2026-05-13",
-    "totalStaticBytes": 7423000,
+    "totalStaticBytes": 7600000,
     "largestChunkBytes": 920000,
-    "jsBytes": 6280000,
-    "comment": "Updated 2026-05-13 (PR #53): largestChunkBytes raised 906000 → 920000 (+14 KB headroom). Reason: wizard restoration adds back ~1100 lines of InvoiceWizard + 4 step-files + ManifestBuilderWizard + 322L CreateShipmentForm into the chunks the affected routes load. Worst chunk grew 884.7 KB → 885.1 KB. Held the +5% convention. Tracked in docs/BUNDLE-SIZE-LATEST.md after every architecture-gates run."
+    "jsBytes": 6400000,
+    "comment": "Updated 2026-05-13 (PR #53): largestChunkBytes raised 906000 → 920000 (+14 KB headroom). Reason: wizard restoration adds back ~1100 lines of InvoiceWizard + 4 step-files + ManifestBuilderWizard + 322L CreateShipmentForm into the chunks the affected routes load. Worst chunk grew 884.7 KB → 885.1 KB. Held the +5% convention. Tracked in docs/BUNDLE-SIZE-LATEST.md after every architecture-gates run.\nUpdated 2026-08-10: Increased totalStaticBytes to 7600000 and jsBytes to 6400000. Reason: Added isomorphic-dompurify and dompurify for XSS sanitization in NotesPanel."
   }
 }
