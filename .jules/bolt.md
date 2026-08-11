@@ -1,0 +1,3 @@
+## Memory
+* When memoizing array mappings from query hooks, avoid destructuring with a default empty array (e.g., `const { data = [] } = useQuery()`) because it creates a new array reference on every render when undefined, breaking memoization. Instead, retain the query object and use nullish coalescing inside the `React.useMemo` (e.g., `const rows = React.useMemo(() => (query.data ?? []).map(toRow), [query.data])`).
+* To prevent unnecessary deep re-renders of `DataTable` components (e.g., in Ops Console live views), always wrap array mappings with `React.useMemo` (e.g., `const rows = React.useMemo(() => data.map(toRow), [data])`) to provide a stable reference and avoid breaking table memoization.
