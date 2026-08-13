@@ -1,0 +1,4 @@
+## 2025-02-23 - Prevent XSS in dynamically injected HTML using DOMPurify
+**Vulnerability:** XSS vulnerability in `NotesPanel` via `dangerouslySetInnerHTML`. The component was directly injecting `note.bodyHtml` into the DOM.
+**Learning:** `dangerouslySetInnerHTML` is inherently dangerous and must not be used with untrusted input. If malicious HTML is saved as a note, it could execute arbitrary JavaScript in the context of the user viewing the note, leading to session hijacking or unauthorized actions. Rich text editor inputs may already have some sanitization but defense-in-depth requires it at the rendering stage as well.
+**Prevention:** Always wrap variables passed to `dangerouslySetInnerHTML` with `DOMPurify.sanitize()` to ensure safe HTML rendering. When used in Next.js or isomorphic environments (client + server), prefer the `isomorphic-dompurify` package alongside `dompurify` to prevent type resolution or SSR issues.
