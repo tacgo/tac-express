@@ -1,0 +1,3 @@
+## 2025-02-28 - Component Array Mapping causes unnecessary re-renders
+**Learning:** Destructuring with a default empty array (e.g. `const { data = [] } = useQuery()`) and mapping arrays directly on every render causes deep re-renders down the tree, specifically with components like `DataTable` that check object references.
+**Action:** When mapping array data fetched from a query hook for table or list consumption, return the full query object, nullish coalesce during mapping (`query.data ?? []`), and wrap it in a `React.useMemo` to provide a stable reference and preserve memoization boundaries.
