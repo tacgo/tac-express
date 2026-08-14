@@ -13,6 +13,7 @@ import { Switch } from "@workspace/ui/components/primitives/switch"
 import { Label } from "@workspace/ui/components/primitives/label"
 import { RichTextEditor } from "@workspace/ui/components/primitives/rich-text-editor"
 import { EmptyState } from "@workspace/ui/components/primitives/empty-state"
+import DOMPurify from "isomorphic-dompurify"
 import {
   RiBookOpenLine,
   RiSendPlaneLine,
@@ -233,7 +234,7 @@ function NoteRow({
         // The rich-text editor produces sanitized HTML on the way in.
         // For belt-and-braces, the consumer should also DOMPurify it
         // server-side before persisting.
-        dangerouslySetInnerHTML={{ __html: note.bodyHtml }}
+        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(note.bodyHtml) }}
       />
     </li>
   )
