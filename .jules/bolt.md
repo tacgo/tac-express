@@ -1,0 +1,3 @@
+## 2024-08-15 - React Component Array Mapping Memoization
+**Learning:** Destructuring hooks with empty array fallbacks (e.g. `const { data = [] } = useQuery()`) and directly mapping them (e.g. `data.map()`) creates a new array reference on every render when data is undefined. This causes unnecessary deep re-renders in optimized child components (like `DataTable`s relying on reference equality to skip rendering).
+**Action:** When extracting arrays from hook queries, maintain the query object and memoize the array mapping inside a `React.useMemo()` hook, using nullish coalescing to handle undefined states (e.g., `const rows = React.useMemo(() => (query.data ?? []).map(toRow), [query.data])`). This provides a stable array reference across renders.
