@@ -6,6 +6,6 @@
     "totalStaticBytes": 7600000,
     "largestChunkBytes": 920000,
     "jsBytes": 6280000,
-    "comment": "Updated 2026-08-15: totalStaticBytes raised 7423000 → 7600000. Reason: added isomorphic-dompurify and dompurify for NotesPanel XSS fix."
+    "comment": "Updated 2026-08-15: totalStaticBytes raised 7423000 → 7600000. Reason: added dompurify for NotesPanel XSS fix."
   }
 }
