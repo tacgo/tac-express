@@ -22,6 +22,11 @@ function toRow(e: ExceptionSummary): ExceptionRow {
 
 export function OpsExceptionsLive() {
   useRealtimeExceptions()
-  const { data = [] } = useExceptions({})
-  return <V7OpsExceptions rows={data.map(toRow)} />
+  const { data } = useExceptions({})
+
+  // ⚡ Bolt: Memoize array mapping to prevent unnecessary deep re-renders of the DataTable.
+  // Using nullish coalescing here (instead of default destructuring) prevents creating
+  // a new empty array on every render when data is undefined.
+  const rows = React.useMemo(() => (data ?? []).map(toRow), [data])
+  return <V7OpsExceptions rows={rows} />
 }

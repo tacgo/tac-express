@@ -25,8 +25,12 @@ function toRow(c: Customer): CustomerRow {
 }
 
 export function OpsCustomersLive() {
-  const { data = [] } = useCustomers({})
-  const rows = data.map(toRow)
+  const { data } = useCustomers({})
+
+  // ⚡ Bolt: Memoize array mapping to prevent unnecessary deep re-renders of the DataTable.
+  // Using nullish coalescing here (instead of default destructuring) prevents creating
+  // a new empty array on every render when data is undefined.
+  const rows = React.useMemo(() => (data ?? []).map(toRow), [data])
   // Canonical v7 — v6 paper view retired in Phase 4 composition unification.
   return <V7OpsCustomers rows={rows} />
 }
