@@ -38,7 +38,11 @@ function toRow(m: ManifestSummary): ManifestRow {
 export function OpsManifestsLive() {
   useRealtimeManifests()
   const query = useManifests({})
-  const items = (query.data ?? []).map(toRow)
+
+  // ⚡ Bolt: Memoize array mapping to prevent unnecessary deep re-renders of the DataTable.
+  // Using nullish coalescing here (instead of default destructuring) prevents creating
+  // a new empty array on every render when data is undefined.
+  const items = React.useMemo(() => (query.data ?? []).map(toRow), [query.data])
 
   // Canonical v7 — v6 paper view retired in Phase 5 composition unification.
   return (
