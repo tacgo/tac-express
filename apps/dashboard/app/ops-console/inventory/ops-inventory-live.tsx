@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { useMemo } from "react"
 import { useQueryClient } from "@tanstack/react-query"
 
 import { useInventoryByHub } from "@workspace/services/hooks/use-analytics"

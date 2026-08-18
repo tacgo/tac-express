@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { useMemo } from "react"
 
 import { useExceptions } from "@workspace/services/hooks/use-exceptions"
 import { useRealtimeExceptions } from "@workspace/services/hooks/use-realtime"

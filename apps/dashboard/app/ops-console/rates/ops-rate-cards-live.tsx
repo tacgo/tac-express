@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { useMemo } from "react"
 
 import { useRateCards } from "@workspace/services/hooks/use-rate-cards"
 import type { RateCard } from "@workspace/types"

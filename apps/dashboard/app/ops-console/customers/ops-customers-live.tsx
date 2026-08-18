@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { useMemo } from "react"
 
 import { useCustomers } from "@workspace/services/hooks/use-customers"
 import type { Customer } from "@workspace/types"
