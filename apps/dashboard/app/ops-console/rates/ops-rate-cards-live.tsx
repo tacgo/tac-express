@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { useMemo } from "react"
 
 import { useRateCards } from "@workspace/services/hooks/use-rate-cards"
 import type { RateCard } from "@workspace/types"
@@ -25,8 +26,9 @@ function toRow(rc: RateCard): RateCardRow {
 }
 
 export function OpsRateCardsLive() {
-  const { data = [] } = useRateCards({ isActive: true })
-  const rows = data.map(toRow)
+  const query = useRateCards({ isActive: true })
+  // ⚡ Bolt: Prevent DataTable re-renders by preserving array reference and memoizing row mapping
+  const rows = React.useMemo(() => (query.data ?? []).map(toRow), [query.data])
   // Canonical v7 composition — the v6 paper view was retired in the Phase 4
   // composition unification (one component per route, no design-version fork).
   return <V7OpsRateCards rows={rows} />

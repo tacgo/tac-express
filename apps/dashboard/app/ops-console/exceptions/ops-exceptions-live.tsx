@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { useMemo } from "react"
 
 import { useExceptions } from "@workspace/services/hooks/use-exceptions"
 import { useRealtimeExceptions } from "@workspace/services/hooks/use-realtime"
@@ -22,6 +23,8 @@ function toRow(e: ExceptionSummary): ExceptionRow {
 
 export function OpsExceptionsLive() {
   useRealtimeExceptions()
-  const { data = [] } = useExceptions({})
-  return <V7OpsExceptions rows={data.map(toRow)} />
+  const query = useExceptions({})
+  // ⚡ Bolt: Prevent DataTable re-renders by preserving array reference and memoizing row mapping
+  const rows = React.useMemo(() => (query.data ?? []).map(toRow), [query.data])
+  return <V7OpsExceptions rows={rows} />
 }
