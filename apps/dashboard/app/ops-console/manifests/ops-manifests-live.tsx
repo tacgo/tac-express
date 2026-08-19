@@ -38,7 +38,8 @@ function toRow(m: ManifestSummary): ManifestRow {
 export function OpsManifestsLive() {
   useRealtimeManifests()
   const query = useManifests({})
-  const items = (query.data ?? []).map(toRow)
+  // Memoize items to prevent deep re-renders in DataTable when the query reference changes
+  const items = React.useMemo(() => (query.data ?? []).map(toRow), [query.data])
 
   // Canonical v7 — v6 paper view retired in Phase 5 composition unification.
   return (
