@@ -1,0 +1,3 @@
+## 2025-05-15 - Notification Bell Keyboard Accessibility
+**Learning:** The `PopoverTrigger` with `asChild` renders a native `<button>` element which loses the default `Button` component styles, including critical focus indicators. Similarly, explicit `focus-visible:ring-ring` overrides break the custom `.tac-focus-premium` focus outline.
+**Action:** When using Radix `asChild` with native elements, ensure `focus-visible:outline-none focus-visible:tac-focus-premium` classes and proper border radius are explicitly provided to maintain consistent keyboard accessibility and design system focus states.
