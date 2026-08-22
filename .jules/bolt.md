@@ -1,3 +1,0 @@
-## 2024-08-22 - Memoize DataTable Array Mappings
-**Learning:** When passing array mappings to `DataTable` components in Ops Console live views, failing to wrap the mapping in `React.useMemo` (or destructuring with a default empty array like `const { data = [] } = useQuery()`) creates a new array reference on every render. This breaks the table's internal memoization and causes unnecessary deep re-renders.
-**Action:** Always wrap array mappings with `React.useMemo` (e.g., `const rows = React.useMemo(() => (query.data ?? []).map(toRow), [query.data])`) when deriving rows from query hooks to provide a stable reference and preserve performance.
