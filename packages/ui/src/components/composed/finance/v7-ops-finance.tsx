@@ -192,7 +192,7 @@ function V7OpsFinance({
           </h2>
           <Link
             href="/ops-console/finance/create"
-            className="t-caption text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="t-caption text-primary hover:underline focus-visible:outline-none focus-visible:tac-focus-premium"
           >
             + New Invoice
           </Link>
@@ -207,7 +207,7 @@ function V7OpsFinance({
               <li key={row.id}>
                 <Link
                   href={row.detailHref ?? `/ops-console/finance/${row.id}`}
-                  className="grid grid-cols-[1fr_auto_auto] items-center gap-3 px-1 py-2 hover:bg-surface-hover transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  className="grid grid-cols-[1fr_auto_auto] items-center gap-3 px-1 py-2 hover:bg-surface-hover transition-colors focus-visible:outline-none focus-visible:tac-focus-premium"
                 >
                   <span className="min-w-0 flex flex-col">
                     <span className="t-data text-foreground truncate">
