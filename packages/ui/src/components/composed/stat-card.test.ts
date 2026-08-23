@@ -37,7 +37,7 @@ describe("statCardVariants — KPI surface tiers", () => {
 
   it("interactive adds keyboard focus ring + hover lift", () => {
     const cls = statCardVariants({ interactive: true })
-    expect(cls).toContain("focus-visible:ring-2")
+    expect(cls).toContain("focus-visible:tac-focus-premium")
     expect(cls).toContain("cursor-pointer")
   })
 
