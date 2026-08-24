@@ -485,7 +485,7 @@ function HubsSection({
                         variant="ghost"
                         size="icon"
                         onClick={cancelEdit}
-                        aria-label="Cancel"
+                        aria-label="Cancel editing"
                         className="text-muted-foreground h-7 w-7"
                       >
                         <RiCloseLine className="size-3.5" aria-hidden />
