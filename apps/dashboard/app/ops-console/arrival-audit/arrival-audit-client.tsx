@@ -151,11 +151,12 @@ export function ArrivalAuditClient() {
     }
   }
 
-  const candidateOptions = candidates.map((c) => ({
+  // ⚡ Bolt: Memoize the array mapping to maintain a stable reference and prevent unnecessary re-renders of the Combobox.
+  const candidateOptions = React.useMemo(() => candidates.map((c) => ({
     value: c.id,
     label: `${c.manifestNumber}`,
     meta: `${c.originHub} → ${c.destHub}`,
-  }))
+  })), [candidates])
 
   return (
     <PageShell width="wide">
