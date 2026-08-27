@@ -1,4 +1,4 @@
-## 2023-10-25 - Defense-in-Depth for dangerouslySetInnerHTML
-**Vulnerability:** XSS risk due to relying solely on server-side sanitization for user-generated notes.
-**Learning:** dangerouslySetInnerHTML was being used with note.bodyHtml assuming the backend sanitized it. This lacks defense-in-depth.
-**Prevention:** Always use client-side sanitization (e.g., DOMPurify.sanitize()) with isomorphic-dompurify when rendering HTML.
+## 2026-08-27 - Fail Securely on Missing Crypto
+**Vulnerability:** Webhook secrets were being generated using `Math.random()` as a fallback, which is cryptographically insecure and allows signature forgery.
+**Learning:** Silently falling back to an insecure RNG mechanism when `crypto` is unavailable violates the "fail securely" principle.
+**Prevention:** Never use `Math.random()` for security secrets. Always throw an error if a secure CSRNG (like `crypto.getRandomValues`) is unavailable.
