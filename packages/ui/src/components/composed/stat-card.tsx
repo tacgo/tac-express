@@ -36,7 +36,7 @@ const statCardVariants = cva(
         hero: "p-[var(--spacing-card-pad-lg)] shadow-[var(--shadow-brutal)]",
       },
       interactive: {
-        true: "cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-ring motion-safe:hover:-translate-x-0.5 motion-safe:hover:-translate-y-0.5 motion-safe:hover:shadow-[var(--shadow-brutal)]",
+        true: "cursor-pointer outline-none focus-visible:tac-focus-premium motion-safe:hover:-translate-x-0.5 motion-safe:hover:-translate-y-0.5 motion-safe:hover:shadow-[var(--shadow-brutal)]",
         false: "",
       },
     },
