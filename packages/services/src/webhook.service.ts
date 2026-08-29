@@ -99,7 +99,8 @@ function generateSecret(): string {
   if (typeof crypto !== "undefined" && "getRandomValues" in crypto) {
     crypto.getRandomValues(bytes)
   } else {
-    for (let i = 0; i < bytes.length; i++) bytes[i] = Math.floor(Math.random() * 256)
+    // 🛡️ Sentinel: Fail securely if a CSPRNG is unavailable.
+    throw new Error("Secure random number generation is not supported in this environment.")
   }
   return Array.from(bytes)
     .map((b) => b.toString(16).padStart(2, "0"))
