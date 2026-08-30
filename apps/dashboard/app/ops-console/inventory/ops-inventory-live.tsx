@@ -33,7 +33,7 @@ function toHub(h: HubInventoryItem): HubInventory {
  */
 export function OpsInventoryLive() {
   const queryClient = useQueryClient()
-  const { data = [], isFetching } = useInventoryByHub()
+  const query = useInventoryByHub()
 
   const handleRefresh = React.useCallback(() => {
     void queryClient.invalidateQueries({
@@ -41,9 +41,12 @@ export function OpsInventoryLive() {
     })
   }, [queryClient])
 
-  const hubs = data.map(toHub)
+  // ⚡ Bolt: Memoize the array mapping to maintain a stable reference and avoid
+  // breaking memoization of child components. Use nullish coalescing instead of
+  // destructuring with default `[]` which creates a new array on every render.
+  const hubs = React.useMemo(() => (query.data ?? []).map(toHub), [query.data])
 
   return (
-    <V7OpsInventory hubs={hubs} isLoading={isFetching} onRefresh={handleRefresh} />
+    <V7OpsInventory hubs={hubs} isLoading={query.isFetching} onRefresh={handleRefresh} />
   )
 }
