@@ -25,8 +25,11 @@ function toRow(rc: RateCard): RateCardRow {
 }
 
 export function OpsRateCardsLive() {
-  const { data = [] } = useRateCards({ isActive: true })
-  const rows = data.map(toRow)
+  const query = useRateCards({ isActive: true })
+  // ⚡ Bolt: Memoize the array mapping to maintain a stable reference and avoid
+  // breaking memoization of child components. Use nullish coalescing instead of
+  // destructuring with default `[]` which creates a new array on every render.
+  const rows = React.useMemo(() => (query.data ?? []).map(toRow), [query.data])
   // Canonical v7 composition — the v6 paper view was retired in the Phase 4
   // composition unification (one component per route, no design-version fork).
   return <V7OpsRateCards rows={rows} />
