@@ -475,7 +475,7 @@ function HubsSection({
                         variant="ghost"
                         size="icon"
                         onClick={() => commitEdit(code)}
-                        aria-label="Save"
+                        aria-label={`Save rename for ${code}`}
                         className="text-accent-success hover:bg-accent-success/15 h-7 w-7"
                       >
                         <RiCheckLine className="size-3.5" aria-hidden />
@@ -485,7 +485,7 @@ function HubsSection({
                         variant="ghost"
                         size="icon"
                         onClick={cancelEdit}
-                        aria-label="Cancel"
+                        aria-label={`Cancel rename for ${code}`}
                         className="text-muted-foreground h-7 w-7"
                       >
                         <RiCloseLine className="size-3.5" aria-hidden />

@@ -244,7 +244,7 @@ export function HubsManager({
                       variant="ghost"
                       size="icon"
                       onClick={() => openEdit(h)}
-                      aria-label="Edit hub"
+                      aria-label={`Edit hub ${h.id}`}
                       className="size-7"
                     >
                       <RiEditLine className="size-3.5" />
