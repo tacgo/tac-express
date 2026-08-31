@@ -99,7 +99,10 @@ function generateSecret(): string {
   if (typeof crypto !== "undefined" && "getRandomValues" in crypto) {
     crypto.getRandomValues(bytes)
   } else {
-    throw new Error("Secure random number generator is not available.")
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const nodeCrypto = require("node:crypto")
+    const randomBytes = nodeCrypto.randomBytes(bytes.length)
+    for (let i = 0; i < bytes.length; i++) bytes[i] = randomBytes[i]
   }
   return Array.from(bytes)
     .map((b) => b.toString(16).padStart(2, "0"))
