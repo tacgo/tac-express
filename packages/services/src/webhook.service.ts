@@ -99,7 +99,8 @@ function generateSecret(): string {
   if (typeof crypto !== "undefined" && "getRandomValues" in crypto) {
     crypto.getRandomValues(bytes)
   } else {
-    for (let i = 0; i < bytes.length; i++) bytes[i] = Math.floor(Math.random() * 256)
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    bytes.set(require("node:crypto").randomBytes(bytes.length))
   }
   return Array.from(bytes)
     .map((b) => b.toString(16).padStart(2, "0"))
