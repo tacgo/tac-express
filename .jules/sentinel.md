@@ -1,4 +1,4 @@
 ## 2025-02-18 - Math.random() as Cryptographic Fallback
 **Vulnerability:** Found Math.random() being used as a fallback for generating webhook secrets if crypto.getRandomValues is unavailable.
-**Learning:** Math.random() is not a cryptographically secure pseudo-random number generator (CSPRNG). Using it for security secrets (like webhook signing keys) can lead to predictable secrets.
-**Prevention:** If Web Crypto (crypto.getRandomValues) is unavailable, fallback to Node.js crypto via an inline require('node:crypto').randomBytes() instead of using Math.random().
+**Learning:** Math.random() is not a cryptographically secure pseudo-random number generator (CSPRNG). Using it for security secrets (like webhook signing keys) can lead to predictable secrets. Also, when falling back to `node:crypto`, ensure that `require` is available and that the exact number of required random bytes are requested to prevent zero-padding flaws. If no secure generator is available, throw an error.
+**Prevention:** If Web Crypto (crypto.getRandomValues) is unavailable, fallback to Node.js crypto via an inline require('node:crypto').randomBytes() ensuring to use the exact length needed, and checking if `require` is defined first. Throw an error if neither is available instead of using Math.random().
