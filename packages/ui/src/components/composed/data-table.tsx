@@ -55,9 +55,12 @@ function DataTableFacetedFilter<TData>({
 }) {
   const facets = column.getFacetedUniqueValues()
   const selected = new Set((column.getFilterValue() as string[]) ?? [])
-  const options = Array.from(facets.keys())
-    .filter((v): v is string => typeof v === "string")
-    .sort()
+  // ⚡ Bolt: Memoize options derived from facets to avoid re-sorting on every render
+  const options = React.useMemo(() => {
+    return Array.from(facets.keys())
+      .filter((v): v is string => typeof v === "string")
+      .sort()
+  }, [facets])
 
   return (
     <DropdownMenu>
