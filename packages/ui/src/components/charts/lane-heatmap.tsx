@@ -32,16 +32,20 @@ export function LaneHeatmap({
   minimumCells = 1,
   className,
 }: LaneHeatmapProps) {
-  const nonZero = cells.filter((c) => c.value > 0)
-  if (nonZero.length < minimumCells) {
-    return <ChartEmptyState count={nonZero.length} minimum={minimumCells} />
-  }
-
-  const cap = max ?? Math.max(...cells.map((c) => c.value), 1)
+  let count = 0
+  let computedMax = 1
   const lookup = new Map<string, number>()
   for (const c of cells) {
+    if (c.value > 0) count++
+    if (c.value > computedMax) computedMax = c.value
     lookup.set(`${c.origin}${c.destination}`, c.value)
   }
+
+  if (count < minimumCells) {
+    return <ChartEmptyState count={count} minimum={minimumCells} />
+  }
+
+  const cap = max ?? computedMax // ⚡ Bolt: Loop replaces Math.max(...cells) and .filter to prevent call stack size exceeded and GC spikes
 
   return (
     <div
