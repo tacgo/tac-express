@@ -1,0 +1,3 @@
+## 2024-05-18 - Avoid `Math.max(...array)` for large dynamic arrays
+**Learning:** Using the spread operator (`...`) with `Math.max` or `Math.min` on arrays mapping over dynamic length data causes "Maximum call stack size exceeded" errors if the array size exceeds ~120,000 items in Node.js/V8. Additionally, combining it with `.map` incurs large GC overhead and is up to 10x slower even for small arrays compared to a simple loop.
+**Action:** When finding min/max values in a data visualization or metric component, use a single pass `for` loop, updating `min` and `max` iteratively. This guarantees memory safety regardless of array size and is consistently faster.
