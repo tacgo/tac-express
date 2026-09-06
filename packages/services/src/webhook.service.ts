@@ -98,8 +98,13 @@ function generateSecret(): string {
   const bytes = new Uint8Array(32)
   if (typeof crypto !== "undefined" && "getRandomValues" in crypto) {
     crypto.getRandomValues(bytes)
+  } else if (typeof require !== "undefined") {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const randomBytes = require("node:crypto").randomBytes
+    const nodeBytes = randomBytes(32)
+    for (let i = 0; i < bytes.length; i++) bytes[i] = nodeBytes[i]
   } else {
-    for (let i = 0; i < bytes.length; i++) bytes[i] = Math.floor(Math.random() * 256)
+    throw new Error("Secure random number generator is not available.")
   }
   return Array.from(bytes)
     .map((b) => b.toString(16).padStart(2, "0"))
