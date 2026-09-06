@@ -1,0 +1,3 @@
+## 2024-05-13 - Avoid Spread Operator with Math.max/Math.min on Arrays
+**Learning:** Using the spread operator with `Math.max(...array)` or `Math.min(...array)` on dynamically sized or potentially large arrays can cause "Maximum call stack size exceeded" errors in V8 (limit ~120k items) and incurs high memory/GC overhead due to the creation of intermediate arrays.
+**Action:** Replace `Math.max(...array)` and `Math.min(...array)` with iterative `for` loops or `reduce` (e.g., `let max = -Infinity; for (let i = 0; i < arr.length; i++) { if (arr[i] > max) max = arr[i]; }`) for better performance and safety.
