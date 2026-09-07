@@ -35,7 +35,8 @@ export function RankBarChart({
   }
 
   const visible = items.slice(0, limit)
-  const max = Math.max(...visible.map((i) => i.value), 1)
+  // ⚡ Bolt: Replace Math.max(...map) with reduce to prevent call stack exceeded errors and avoid array allocation
+  const max = visible.reduce((m, i) => (i.value > m ? i.value : m), 1)
 
   return (
     <ol
