@@ -131,8 +131,16 @@ function Spark({ path }: { path: { d: string; fillD: string } }) {
  */
 function buildStepPath(points: SparkPoint[]): { d: string; fillD: string } {
   const ys = points.map((p) => p.y)
-  const min = Math.min(...ys)
-  const max = Math.max(...ys)
+  // ⚡ Bolt: Replace Math.min/max(...array) with iterative loop to prevent call stack size exceeded errors on large arrays and reduce GC overhead
+  let min = Infinity
+  let max = -Infinity
+  for (let i = 0; i < ys.length; i++) {
+    const val = ys[i]!
+    if (val < min) min = val
+    if (val > max) max = val
+  }
+  if (min === Infinity) min = 0
+  if (max === -Infinity) max = 0
   const range = max - min || 1
   const stepX = points.length > 1 ? 100 / (points.length - 1) : 100
 
