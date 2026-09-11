@@ -178,11 +178,19 @@ export function ScanningConsole({
     }
   }
 
-  const counts = {
-    success: feed.filter((f) => f.outcome === "SUCCESS").length,
-    duplicate: feed.filter((f) => f.outcome === "DUPLICATE").length,
-    error: feed.filter((f) => f.outcome === "ERROR").length,
-  }
+  // ⚡ Bolt: Memoize and combine 3 separate array passes into a single O(N) reduce
+  // to avoid recalculating counts every second when the `elapsed` timer ticks.
+  const counts = React.useMemo(() => {
+    return feed.reduce(
+      (acc, f) => {
+        if (f.outcome === "SUCCESS") acc.success++
+        else if (f.outcome === "DUPLICATE") acc.duplicate++
+        else if (f.outcome === "ERROR") acc.error++
+        return acc
+      },
+      { success: 0, duplicate: 0, error: 0 }
+    )
+  }, [feed])
   const successRate =
     feed.length > 0 ? Math.round((counts.success / feed.length) * 100) : 0
 
