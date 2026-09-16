@@ -130,9 +130,14 @@ function Spark({ path }: { path: { d: string; fillD: string } }) {
  * Output is normalized to a 0–100 × 0–24 viewBox.
  */
 function buildStepPath(points: SparkPoint[]): { d: string; fillD: string } {
-  const ys = points.map((p) => p.y)
-  const min = Math.min(...ys)
-  const max = Math.max(...ys)
+  // Optimization: Single-pass iterative loop instead of Math.max(...array)
+  // to avoid V8 call stack size limits on large dynamically sized arrays.
+  let min = Infinity
+  let max = -Infinity
+  for (const p of points) {
+    if (p.y < min) min = p.y
+    if (p.y > max) max = p.y
+  }
   const range = max - min || 1
   const stepX = points.length > 1 ? 100 / (points.length - 1) : 100
 
