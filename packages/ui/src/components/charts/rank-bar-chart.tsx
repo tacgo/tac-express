@@ -35,7 +35,14 @@ export function RankBarChart({
   }
 
   const visible = items.slice(0, limit)
-  const max = Math.max(...visible.map((i) => i.value), 1)
+  // ⚡ Bolt Optimization: Use a single-pass loop instead of map() + Math.max(...spread)
+  // Avoids intermediate array allocations and "Maximum call stack size exceeded" errors
+  let max = 1
+  for (let i = 0; i < visible.length; i++) {
+    if (visible[i]!.value > max) {
+      max = visible[i]!.value
+    }
+  }
 
   return (
     <ol

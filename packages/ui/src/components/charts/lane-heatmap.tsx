@@ -37,11 +37,17 @@ export function LaneHeatmap({
     return <ChartEmptyState count={nonZero.length} minimum={minimumCells} />
   }
 
-  const cap = max ?? Math.max(...cells.map((c) => c.value), 1)
   const lookup = new Map<string, number>()
+  // ⚡ Bolt Optimization: Use a single-pass loop instead of map() + Math.max(...spread)
+  // Avoids intermediate array allocations and "Maximum call stack size exceeded" errors
+  let computedMax = 1
   for (const c of cells) {
     lookup.set(`${c.origin}${c.destination}`, c.value)
+    if (c.value > computedMax) {
+      computedMax = c.value
+    }
   }
+  const cap = max ?? computedMax
 
   return (
     <div
