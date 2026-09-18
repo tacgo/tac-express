@@ -1,0 +1,30 @@
+
+> tac-express@0.0.1 dev /app
+> turbo dev --filter dashboard
+
+• turbo 2.9.6
+
+   • Packages in scope: dashboard
+   • Running dev in 1 packages
+   • Remote caching disabled
+
+dashboard:dev: cache bypass, force executing 45d00baddb8cf9b7
+dashboard:dev:
+dashboard:dev: > dashboard@0.0.1 dev /app/apps/dashboard
+dashboard:dev: > next dev --turbopack --port 3001
+dashboard:dev:
+dashboard:dev: ▲ Next.js 16.2.6 (Turbopack)
+dashboard:dev: - Local:         http://localhost:3001
+dashboard:dev: - Network:       http://192.168.0.2:3001
+dashboard:dev: ✓ Ready in 1077ms
+dashboard:dev: Attention: Next.js now collects completely anonymous telemetry regarding usage.
+dashboard:dev: This information is used to shape Next.js' roadmap and prioritize features.
+dashboard:dev: You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+dashboard:dev: https://nextjs.org/telemetry
+dashboard:dev:
+dashboard:dev: ○ Compiling instrumentation Node.js ...
+dashboard:dev: - Experiments (use with caution):
+dashboard:dev:   · clientTraceMetadata
+dashboard:dev:
+dashboard:dev: ○ Compiling /sign-in/[[...sign-in]] ...
+dashboard:dev:  GET /sign-in?next=%2F 200 in 22.9s (next.js: 20.8s, proxy.ts: 17ms, application-code: 2.1s)
