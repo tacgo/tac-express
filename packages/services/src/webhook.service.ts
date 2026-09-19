@@ -95,11 +95,15 @@ export function createWebhookService(db: SupabaseClient) {
 }
 
 function generateSecret(): string {
-  const bytes = new Uint8Array(32)
+  const length = 32
+  let bytes = new Uint8Array(length)
   if (typeof crypto !== "undefined" && "getRandomValues" in crypto) {
     crypto.getRandomValues(bytes)
+  } else if (typeof require !== "undefined") {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    bytes = new Uint8Array(require("node:crypto").randomBytes(length))
   } else {
-    for (let i = 0; i < bytes.length; i++) bytes[i] = Math.floor(Math.random() * 256)
+    throw new Error("No secure random number generator available")
   }
   return Array.from(bytes)
     .map((b) => b.toString(16).padStart(2, "0"))
