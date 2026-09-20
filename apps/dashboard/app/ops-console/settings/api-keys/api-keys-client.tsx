@@ -96,6 +96,7 @@ export function ApiKeysClient() {
               onClick={() => {
                 navigator.clipboard?.writeText(revealed.key)
               }}
+              aria-label="Copy key"
             >
               <RiFileCopyLine className="size-4" aria-hidden="true" />
             </Button>
